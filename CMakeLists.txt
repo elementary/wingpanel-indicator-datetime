@@ -20,7 +20,7 @@ project (datetime)
 # Configuration
 include (GNUInstallDirs)
 set (DATADIR "${CMAKE_INSTALL_FULL_LIBDIR}/wingpanel")
-set (PKGDATADIR "${DATADIR}/${CMAKE_PROJECT_NAME}")
+set (PKGDATADIR "${DATADIR}")
 set (GETTEXT_PACKAGE "${CMAKE_PROJECT_NAME}-indicator")
 list (APPEND CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake)
 

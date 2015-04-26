@@ -21,7 +21,7 @@ public class DateTime.Indicator : Wingpanel.Indicator {
 	private Gtk.Grid main_grid;
 
 	public Indicator () {
-		Object (code_name: Indicator.DATETIME,
+		Object (code_name: Wingpanel.Indicator.DATETIME,
 				display_name: _("Date & Time"),
 				description:_("The date and time indicator"));
 	}
