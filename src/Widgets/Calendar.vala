@@ -20,4 +20,16 @@ public class DateTime.Widgets.Calendar : Gtk.Calendar {
 		this.margin_start = 10;
 		this.margin_end = 10;
 	}
+
+	public void show_today () {
+		var local_time = new GLib.DateTime.now_local ();
+
+		if (local_time == null) {
+			critical ("Can't get the local time.");
+			return;
+		}
+
+		this.select_month (local_time.get_month (), local_time.get_year ());
+		this.select_day (local_time.get_day_of_month ());
+	}
 }
