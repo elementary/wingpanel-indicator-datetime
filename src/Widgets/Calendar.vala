@@ -21,4 +21,3 @@ public class DateTime.Widgets.Calendar : Gtk.Calendar {
 		this.margin_end = 10;
 	}
 }
-
