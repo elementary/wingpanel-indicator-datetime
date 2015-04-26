@@ -16,9 +16,11 @@
  */
 
 public class DateTime.Indicator : Wingpanel.Indicator {
-	private Gtk.Label indicator_label;
+	private Widgets.PanelLabel panel_label;
 
 	private Gtk.Grid main_grid;
+
+	private Widgets.Calendar calendar;
 
 	public Indicator () {
 		Object (code_name: Wingpanel.Indicator.DATETIME,
@@ -27,18 +29,20 @@ public class DateTime.Indicator : Wingpanel.Indicator {
 	}
 
 	public override Gtk.Widget get_display_widget () {
-		if (indicator_label == null) {
-			indicator_label = new Gtk.Label ("hallo");
+		if (panel_label == null) {
+			panel_label = new Widgets.PanelLabel ();
 		}
 
-		return indicator_label;
+		return panel_label;
 	}
 
 	public override Gtk.Widget get_widget () {
 		if (main_grid == null) {
 			main_grid = new Gtk.Grid ();
 
-			// TODO
+			calendar = new Widgets.Calendar ();
+
+			main_grid.attach (calendar, 0, 0, 1, 1);
 		}
 
 		// I do have something to display!
