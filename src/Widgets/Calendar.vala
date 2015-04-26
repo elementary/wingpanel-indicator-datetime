@@ -29,7 +29,7 @@ public class DateTime.Widgets.Calendar : Gtk.Calendar {
 			return;
 		}
 
-		this.select_month (local_time.get_month (), local_time.get_year ());
+		this.select_month (local_time.get_month () - 1, local_time.get_year ());
 		this.select_day (local_time.get_day_of_month ());
 	}
 }
