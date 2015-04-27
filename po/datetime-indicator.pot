@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-04-27 00:03+0200\n"
+"POT-Creation-Date: 2015-04-27 17:07+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,12 +17,24 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../src//Indicator.vala:27
+#: ../src//Indicator.vala:33
 msgid "Date & Time"
 msgstr ""
 
-#: ../src//Indicator.vala:28
+#: ../src//Indicator.vala:34
 msgid "The date and time indicator"
+msgstr ""
+
+#: ../src//Indicator.vala:60
+msgid "Date- &amp; Timesettings"
+msgstr ""
+
+#: ../src//Indicator.vala:89
+msgid "Show today"
+msgstr ""
+
+#: ../src//Indicator.vala:92
+msgid "%A, %d. %B %Y"
 msgstr ""
 
 #: ../src//Widgets/PanelLabel.vala:35
