@@ -16,9 +16,15 @@
  */
 
 public class DateTime.Widgets.Calendar : Gtk.Calendar {
+	private const string CALENDAR_EXEC = "/usr/bin/maya-calendar";
+
 	public Calendar () {
 		this.margin_start = 10;
 		this.margin_end = 10;
+
+		this.day_selected_double_click.connect (() => {
+			show_date_in_maya ();
+		});
 	}
 
 	public void show_today () {
@@ -31,5 +37,19 @@ public class DateTime.Widgets.Calendar : Gtk.Calendar {
 
 		this.select_month (local_time.get_month () - 1, local_time.get_year ());
 		this.select_day (local_time.get_day_of_month ());
+	}
+
+	private void show_date_in_maya () {
+		uint selected_year, selected_month, selected_day;
+		this.get_date (out selected_year, out selected_month, out selected_day);
+
+		// Month-correction
+		selected_month += 1;
+
+		var parameter_string = @" --show-day $selected_day/$selected_month/$selected_year";
+		var command = CALENDAR_EXEC + parameter_string;
+
+		var cmd = new Granite.Services.SimpleCommand ("/usr/bin", command);
+		cmd.run ();
 	}
 }
