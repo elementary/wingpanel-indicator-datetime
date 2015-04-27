@@ -39,6 +39,7 @@ public class DateTime.Widgets.Calendar : Gtk.Calendar {
 		this.select_day (local_time.get_day_of_month ());
 	}
 
+	// TODO: As far as maya supports it use the Dbus Activation feature to run the calendar-app.
 	private void show_date_in_maya () {
 		uint selected_year, selected_month, selected_day;
 		this.get_date (out selected_year, out selected_month, out selected_day);

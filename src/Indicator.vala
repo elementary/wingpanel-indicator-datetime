@@ -16,6 +16,8 @@
  */
 
 public class DateTime.Indicator : Wingpanel.Indicator {
+	private const string SETTINGS_EXEC = "/usr/bin/switchboard datetime";
+
 	private Widgets.PanelLabel panel_label;
 
 	private Gtk.Grid main_grid;
@@ -56,6 +58,9 @@ public class DateTime.Indicator : Wingpanel.Indicator {
 			main_grid.attach (calendar, 0, 1, 1, 1);
 
 			settings_button = new Wingpanel.Widgets.IndicatorButton (_("Date- &amp; Timesettings"));
+			settings_button.clicked.connect (() => {
+				show_settings ();
+			});
 
 			main_grid.attach (new Wingpanel.Widgets.IndicatorSeparator (), 0, 2, 1, 1);
 
@@ -87,6 +92,11 @@ public class DateTime.Indicator : Wingpanel.Indicator {
 		var time_string = local_time.format (_("%A, %d. %B %Y"));
 
 		return time_string;
+	}
+
+	private void show_settings () {
+		var cmd = new Granite.Services.SimpleCommand ("/usr/bin", SETTINGS_EXEC);
+		cmd.run ();
 	}
 }
 
