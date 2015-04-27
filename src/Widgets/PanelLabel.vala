@@ -16,7 +16,8 @@
  */
 
 public class DateTime.Widgets.PanelLabel : Gtk.Label {
-	private const int UPDATE_TIME = 10 * 60;
+	// TODO: What value is the best?
+	private const int UPDATE_TIME = 1000;
 
 	public PanelLabel () {
 		update_time_display ();
