@@ -16,6 +16,7 @@ vala_precompile (VALA_C ${CMAKE_PROJECT_NAME}
   Indicator.vala
   Widgets/PanelLabel.vala
   Widgets/Calendar.vala
+  Services/TimeManager.vala
   ${CMAKE_CURRENT_BINARY_DIR}/config.vala
 PACKAGES
   gtk+-3.0

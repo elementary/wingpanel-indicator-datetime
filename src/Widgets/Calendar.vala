@@ -28,15 +28,13 @@ public class DateTime.Widgets.Calendar : Gtk.Calendar {
 	}
 
 	public void show_today () {
-		var local_time = new GLib.DateTime.now_local ();
+		var current_time = Services.TimeManager.get_default ().get_current_time ();
 
-		if (local_time == null) {
-			critical ("Can't get the local time.");
+		if (current_time == null)
 			return;
-		}
 
-		this.select_month (local_time.get_month () - 1, local_time.get_year ());
-		this.select_day (local_time.get_day_of_month ());
+		this.select_month (current_time.get_month () - 1, current_time.get_year ());
+		this.select_day (current_time.get_day_of_month ());
 	}
 
 	// TODO: As far as maya supports it use the Dbus Activation feature to run the calendar-app.

@@ -16,28 +16,14 @@
  */
 
 public class DateTime.Widgets.PanelLabel : Gtk.Label {
-	// TODO: What value is the best?
-	private const int UPDATE_TIME = 1000;
-
 	public PanelLabel () {
-		update_time_display ();
+		update_time_label ();
 
-		Timeout.add (UPDATE_TIME, update_time_display);
+		Services.TimeManager.get_default ().minute_changed.connect (update_time_label);
 	}
 
-	private bool update_time_display () {
-		var local_time = new GLib.DateTime.now_local ();
-
-		if (local_time == null) {
-			critical ("Can't get the local time.");
-			return false;
-		}
-
-		var time_string = local_time.format (_("%a, %d. %b  %I:%M %P"));
-
-		this.set_label (time_string);
-
-		return true;
+	private void update_time_label () {
+		this.set_label (Services.TimeManager.get_default ().format (_("%a, %d. %b  %I:%M %P")));
 	}
 }
 

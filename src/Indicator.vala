@@ -46,7 +46,7 @@ public class DateTime.Indicator : Wingpanel.Indicator {
 		if (main_grid == null) {
 			main_grid = new Gtk.Grid ();
 
-			today_button = new Wingpanel.Widgets.IndicatorButton (get_today_string ());
+			today_button = new Wingpanel.Widgets.IndicatorButton ("");
 			today_button.clicked.connect (() => {
 				calendar.show_today ();
 			});
@@ -74,24 +74,17 @@ public class DateTime.Indicator : Wingpanel.Indicator {
 	}
 
 	public override void opened () {
-		today_button.set_caption (get_today_string ());
+		update_today_button ();
+
+		Services.TimeManager.get_default ().minute_changed.connect (update_today_button);
 	}
 
 	public override void closed () {
-		
+		Services.TimeManager.get_default ().minute_changed.disconnect (update_today_button);
 	}
 
-	private string get_today_string () {
-		var local_time = new GLib.DateTime.now_local ();
-
-		if (local_time == null) {
-			critical ("Can't get the local time.");
-			return _("Show today");
-		}
-
-		var time_string = local_time.format (_("%A, %d. %B %Y"));
-
-		return time_string;
+	private void update_today_button () {
+		today_button.set_caption (Services.TimeManager.get_default ().format (_("%A, %d. %B %Y")));
 	}
 
 	private void show_settings () {
