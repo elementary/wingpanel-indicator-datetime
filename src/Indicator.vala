@@ -54,12 +54,16 @@ public class DateTime.Indicator : Wingpanel.Indicator {
 			main_grid.attach (today_button, 0, 0, 1, 1);
 
 			calendar = new Widgets.Calendar ();
+			calendar.date_doubleclicked.connect (() => {
+				this.close ();
+			});
 
 			main_grid.attach (calendar, 0, 1, 1, 1);
 
 			settings_button = new Wingpanel.Widgets.IndicatorButton (_("Date- &amp; Timesettings"));
 			settings_button.clicked.connect (() => {
 				show_settings ();
+				this.close ();
 			});
 
 			main_grid.attach (new Wingpanel.Widgets.IndicatorSeparator (), 0, 2, 1, 1);

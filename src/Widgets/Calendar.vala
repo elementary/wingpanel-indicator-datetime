@@ -18,12 +18,15 @@
 public class DateTime.Widgets.Calendar : Gtk.Calendar {
 	private const string CALENDAR_EXEC = "/usr/bin/maya-calendar";
 
+	public signal void date_doubleclicked ();
+
 	public Calendar () {
 		this.margin_start = 10;
 		this.margin_end = 10;
 
 		this.day_selected_double_click.connect (() => {
 			show_date_in_maya ();
+			date_doubleclicked ();
 		});
 	}
 
