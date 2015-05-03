@@ -19,7 +19,6 @@ vala_precompile (VALA_C ${CMAKE_PROJECT_NAME}
   Services/TimeManager.vala
   ${CMAKE_CURRENT_BINARY_DIR}/config.vala
 PACKAGES
-  gtk+-3.0
   wingpanel-2.0
   granite
 OPTIONS
