@@ -28,13 +28,11 @@ public class DateTime.Services.TimeManager : Gtk.Calendar {
 		if (current_time == null)
 			return;
 
-		var seconds_until_next_minute = 60 - (current_time.to_unix () % 60);
-
-		Timeout.add ((uint)seconds_until_next_minute * 1000, () => {
+		Timeout.add (calculate_time_until_next_minute (), () => {
 			update_current_time ();
 			minute_changed ();
 
-			Timeout.add (60 * 1000, () => {
+			Timeout.add (calculate_time_until_next_minute (), () => {
 				update_current_time ();
 				minute_changed ();
 
@@ -66,6 +64,15 @@ public class DateTime.Services.TimeManager : Gtk.Calendar {
 		}
 
 		current_time = local_time;
+	}
+
+	private uint calculate_time_until_next_minute () {
+		if (current_time == null)
+			return 60 * 1000;
+
+		var seconds_until_next_minute = 60 - (current_time.to_unix () % 60);
+
+		return (uint)seconds_until_next_minute * 1000;
 	}
 
 	public static TimeManager get_default () {
