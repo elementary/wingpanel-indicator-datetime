@@ -42,7 +42,7 @@ public class DateTime.Indicator : Wingpanel.Indicator {
 		return panel_label;
 	}
 
-	public override Gtk.Widget get_widget () {
+	public override Gtk.Widget? get_widget () {
 		if (main_grid == null) {
 			main_grid = new Gtk.Grid ();
 
