@@ -32,6 +32,23 @@ public class DateTime.Indicator : Wingpanel.Indicator {
 		Object (code_name: Wingpanel.Indicator.DATETIME,
 				display_name: _("Date & Time"),
 				description:_("The date and time indicator"));
+		var geolocation = Services.GeolocationManager.get_default ();
+		geolocation.location_changed.connect ((loc) => {
+			print ("Location: %s\n",loc.description);
+			print ("lat %s\n",loc.latitude.to_string ());
+			print ("long %s\n",loc.longitude.to_string ());
+			print ("accuracy %s\n",loc.accuracy.to_string ());
+			print ("do weather\n");
+
+			var weather = Services.WeatherManager.get_default ();
+			weather.get_temp (loc.latitude, loc.longitude);
+			// var wloc = GWeather.Location.get_world ();
+			// var newloc = wloc.find_nearest_city (loc.latitude, loc.longitude);
+			// print ("city_name %s\n",newloc.get_city_name ());
+			// var info = new GWeather.Info (newloc, GWeather.ForecastType.ZONE);
+			// print ("Temp %s\n",info.get_temp ());
+
+		});
 	}
 
 	public override Gtk.Widget get_display_widget () {
@@ -42,7 +59,7 @@ public class DateTime.Indicator : Wingpanel.Indicator {
 		return panel_label;
 	}
 
-	public override Gtk.Widget get_widget () {
+	public override Gtk.Widget? get_widget () {
 		if (main_grid == null) {
 			main_grid = new Gtk.Grid ();
 
