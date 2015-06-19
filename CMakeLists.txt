@@ -39,3 +39,12 @@ add_subdirectory (po)
 
 # Code
 add_subdirectory(src)
+
+# Uninstall target
+configure_file(
+    "${CMAKE_SOURCE_DIR}/cmake/Uninstall.cmake"
+    "${CMAKE_CURRENT_BINARY_DIR}/Uninstall.cmake"
+    IMMEDIATE @ONLY)
+
+add_custom_target(uninstall
+     COMMAND ${CMAKE_COMMAND} -P ${CMAKE_CURRENT_BINARY_DIR}/Uninstall.cmake)
