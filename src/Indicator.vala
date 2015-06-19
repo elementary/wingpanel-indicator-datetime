@@ -22,11 +22,11 @@ public class DateTime.Indicator : Wingpanel.Indicator {
 
 	private Gtk.Grid main_grid;
 
-	private Wingpanel.Widgets.IndicatorButton today_button;
+	private Wingpanel.Widgets.Button today_button;
 
 	private Widgets.Calendar calendar;
 
-	private Wingpanel.Widgets.IndicatorButton settings_button;
+	private Wingpanel.Widgets.Button settings_button;
 
 	public Indicator () {
 		Object (code_name: Wingpanel.Indicator.DATETIME,
@@ -46,7 +46,7 @@ public class DateTime.Indicator : Wingpanel.Indicator {
 		if (main_grid == null) {
 			main_grid = new Gtk.Grid ();
 
-			today_button = new Wingpanel.Widgets.IndicatorButton ("");
+			today_button = new Wingpanel.Widgets.Button ("");
 			today_button.clicked.connect (() => {
 				calendar.show_today ();
 			});
@@ -60,13 +60,13 @@ public class DateTime.Indicator : Wingpanel.Indicator {
 
 			main_grid.attach (calendar, 0, 1, 1, 1);
 
-			settings_button = new Wingpanel.Widgets.IndicatorButton (_("Date &amp; Time Settings…"));
+			settings_button = new Wingpanel.Widgets.Button (_("Date &amp; Time Settings…"));
 			settings_button.clicked.connect (() => {
 				show_settings ();
 				this.close ();
 			});
 
-			main_grid.attach (new Wingpanel.Widgets.IndicatorSeparator (), 0, 2, 1, 1);
+			main_grid.attach (new Wingpanel.Widgets.Separator (), 0, 2, 1, 1);
 
 			main_grid.attach (settings_button, 0, 3, 1, 1);
 		}
@@ -79,7 +79,6 @@ public class DateTime.Indicator : Wingpanel.Indicator {
 
 	public override void opened () {
 		update_today_button ();
-
 		Services.TimeManager.get_default ().minute_changed.connect (update_today_button);
 	}
 
