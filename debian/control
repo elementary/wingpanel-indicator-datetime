@@ -1,35 +1,35 @@
-Source: wingpanel-indicator-sound
+Source: wingpanel-indicator-power
 Section: x11
 Priority: optional
 Maintainer: Cody Garver <cody@elementary.io>
 Build-Depends: cmake,
                debhelper (>= 9),
                gobject-introspection,
-               libaccountsservice-dev,
+               
                libgranite-dev,
                libgtk-3-dev (>= 3.12),
-               libnotify-dev,
-               libpulse-dev,
+               
+               
                libwingpanel-dev,
                valac (>= 0.28),
                libvala-0.28-dev
 Standards-Version: 3.9.6
-Homepage: https://launchpad.net/wingpanel-indicator-sound
+Homepage: https://launchpad.net/wingpanel-indicator-power
 
-Package: wingpanel-indicator-sound
+Package: wingpanel-indicator-power
 Architecture: any
 Depends: ${misc:Depends}, ${shlibs:Depends}
 Enhances: wingpanel
-Description: WingPanel Sound Indicator
- WingPanel Sound Indicator
+Description: WingPanel Power Indicator
+ WingPanel Power Indicator
 
-Package: wingpanel-indicator-sound-dbg
+Package: wingpanel-indicator-power-dbg
 Architecture: any
 Section: debug
 Priority: extra
-Depends: wingpanel-indicator-sound (= ${binary:Version}), ${misc:Depends}
-Enhances: wingpanel-indicator-sound
-Description: WingPanel Sound Indicator (debugging symbols)
+Depends: wingpanel-indicator-power (= ${binary:Version}), ${misc:Depends}
+Enhances: wingpanel-indicator-power
+Description: WingPanel Power Indicator (debugging symbols)
  WingPanel Sound Indicator
  .
- This package contains debugging symbols for wingpanel-indicator-sound.
+ This package contains debugging symbols for wingpanel-indicator-power.
