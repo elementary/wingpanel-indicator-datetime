@@ -13,4 +13,4 @@
 	dh $@ 
 
 override_dh_strip:
-        dh_strip --dbg-package=wingpanel-indicator-power-dbg
+        dh_strip --dbg-package=wingpanel-indicator-datetime-dbg

@@ -1,4 +1,4 @@
-Source: wingpanel-indicator-power
+Source: wingpanel-indicator-datetime
 Section: x11
 Priority: optional
 Maintainer: Cody Garver <cody@elementary.io>
@@ -11,22 +11,22 @@ Build-Depends: cmake,
                libwingpanel-dev,
                valac (>= 0.28)
 Standards-Version: 3.9.6
-Homepage: https://launchpad.net/wingpanel-indicator-power
+Homepage: https://launchpad.net/wingpanel-indicator-datetime
 
-Package: wingpanel-indicator-power
+Package: wingpanel-indicator-datetime
 Architecture: any
 Depends: ${misc:Depends}, ${shlibs:Depends}
 Enhances: wingpanel
-Description: WingPanel Power Indicator
- WingPanel Power Indicator
+Description: WingPanel Date & Time Indicator
+ WingPanel Date & Time Indicator
 
-Package: wingpanel-indicator-power-dbg
+Package: wingpanel-indicator-datetime-dbg
 Architecture: any
 Section: debug
 Priority: extra
-Depends: wingpanel-indicator-power (= ${binary:Version}), ${misc:Depends}
-Enhances: wingpanel-indicator-power
-Description: WingPanel Power Indicator (debugging symbols)
- WingPanel Sound Indicator
+Depends: wingpanel-indicator-datetime (= ${binary:Version}), ${misc:Depends}
+Enhances: wingpanel-indicator-datetime
+Description: WingPanel Date & Time Indicator (debugging symbols)
+ WingPanel Date & Time Indicator
  .
- This package contains debugging symbols for wingpanel-indicator-power.
+ This package contains debugging symbols for wingpanel-indicator-datetime.
