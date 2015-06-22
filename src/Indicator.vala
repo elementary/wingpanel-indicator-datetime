@@ -60,7 +60,7 @@ public class DateTime.Indicator : Wingpanel.Indicator {
 
 			main_grid.attach (calendar, 0, 1, 1, 1);
 
-			settings_button = new Wingpanel.Widgets.Button (_("Date &amp; Time Settings…"));
+			settings_button = new Wingpanel.Widgets.Button (_("Date & Time Settings…"));
 			settings_button.clicked.connect (() => {
 				show_settings ();
 				this.close ();
