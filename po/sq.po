@@ -3,31 +3,31 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-06-02 17:13-0500\n"
-"PO-Revision-Date: 2015-04-26 23:47+0000\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"PO-Revision-Date: 2015-06-25 18:49+0000\n"
+"Last-Translator: Indrit Bashkimi <indrit.bashkimi@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2015-06-03 13:27+0000\n"
-"X-Generator: Launchpad (build 17532)\n"
+"X-Launchpad-Export-Date: 2015-06-26 05:06+0000\n"
+"X-Generator: Launchpad (build 17578)\n"
 
 #: ../src//Indicator.vala:33
 msgid "Date & Time"
-msgstr ""
+msgstr "Data dhe Ora"
 
 #: ../src//Indicator.vala:34
 msgid "The date and time indicator"
-msgstr ""
+msgstr "Treguesi i datës dhe orës"
 
 #: ../src//Indicator.vala:63
 msgid "Date &amp; Time Settings…"
-msgstr ""
+msgstr "Rregullimet Data dhe Ora..."
 
 #: ../src//Indicator.vala:91
 msgid "%A, %d. %B %Y"
-msgstr ""
+msgstr "%A, %d. %B %Y"
 
 #: ../src//Widgets/PanelLabel.vala:26
 msgid "%a, %d. %b  %I:%M %P"
-msgstr ""
+msgstr "%a, %d. %b  %I:%M %P"
