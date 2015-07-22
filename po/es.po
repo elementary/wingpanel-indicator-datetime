@@ -3,13 +3,13 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-07-20 15:17-0500\n"
-"PO-Revision-Date: 2015-07-15 13:55+0000\n"
-"Last-Translator: Philip Scott <felescoto95@hotmail.com>\n"
+"PO-Revision-Date: 2015-07-22 00:05+0000\n"
+"Last-Translator: Pablo Salas <pablo_3389@hotmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2015-07-21 05:39+0000\n"
+"X-Launchpad-Export-Date: 2015-07-22 05:55+0000\n"
 "X-Generator: Launchpad (build 17628)\n"
 
 #: ../src//Indicator.vala:33
@@ -22,7 +22,7 @@ msgstr "Indicador de Fecha y Hora"
 
 #: ../src//Indicator.vala:63
 msgid "Date & Time Settings…"
-msgstr ""
+msgstr "Configuración de fecha y hora…"
 
 #: ../src//Indicator.vala:90
 msgid "%A, %d. %B %Y"
