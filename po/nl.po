@@ -3,26 +3,26 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-07-20 15:17-0500\n"
-"PO-Revision-Date: 2015-04-26 23:47+0000\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"PO-Revision-Date: 2015-08-13 21:25+0000\n"
+"Last-Translator: Thomas Berends <Unknown>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2015-07-21 05:39+0000\n"
-"X-Generator: Launchpad (build 17628)\n"
+"X-Launchpad-Export-Date: 2015-08-14 06:12+0000\n"
+"X-Generator: Launchpad (build 17686)\n"
 
 #: ../src//Indicator.vala:33
 msgid "Date & Time"
-msgstr ""
+msgstr "Datum & Tijd"
 
 #: ../src//Indicator.vala:34
 msgid "The date and time indicator"
-msgstr ""
+msgstr "De datum en tijd indicator"
 
 #: ../src//Indicator.vala:63
 msgid "Date & Time Settings…"
-msgstr ""
+msgstr "Datum & Tijd instellingen..."
 
 #: ../src//Indicator.vala:90
 msgid "%A, %d. %B %Y"
@@ -34,4 +34,4 @@ msgstr ""
 
 #: ../src//Widgets/PanelLabel.vala:44
 msgid "%I:%M %P"
-msgstr ""
+msgstr "%k:%M"
