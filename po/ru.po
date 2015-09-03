@@ -3,14 +3,14 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-07-20 15:17-0500\n"
-"PO-Revision-Date: 2015-08-11 10:16+0000\n"
-"Last-Translator: Ognehod <ognehod@gmail.com>\n"
+"PO-Revision-Date: 2015-09-02 15:33+0000\n"
+"Last-Translator: Artem Anufrij <Unknown>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2015-08-12 06:37+0000\n"
-"X-Generator: Launchpad (build 17686)\n"
+"X-Launchpad-Export-Date: 2015-09-03 05:42+0000\n"
+"X-Generator: Launchpad (build 17706)\n"
 
 #: ../src//Indicator.vala:33
 msgid "Date & Time"
@@ -30,8 +30,8 @@ msgstr "%A, %d. %B %Y"
 
 #: ../src//Widgets/PanelLabel.vala:43
 msgid "%a, %d. %b"
-msgstr ""
+msgstr "%a, %d. %b"
 
 #: ../src//Widgets/PanelLabel.vala:44
 msgid "%I:%M %P"
-msgstr ""
+msgstr "%I:%M %P"
