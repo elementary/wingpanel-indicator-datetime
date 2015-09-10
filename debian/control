@@ -7,8 +7,7 @@ Build-Depends: cmake,
                gobject-introspection,
                libgranite-dev,
                libgtk-3-dev (>= 3.12),
-               libvala-0.28-dev,
-               libwingpanel-dev,
+               libwingpanel-2.0-dev,
                valac (>= 0.28)
 Standards-Version: 3.9.6
 Homepage: https://launchpad.net/wingpanel-indicator-datetime
