@@ -15,25 +15,23 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-public class DateTime.Widgets.PanelLabel : Gtk.Box {
+public class DateTime.Widgets.PanelLabel : Gtk.Grid {
 	private Gtk.Label date_label;
 	private Gtk.Label time_label;
 
 	public PanelLabel () {
-		Object (orientation: Gtk.Orientation.HORIZONTAL);
-
-		build_ui ();
-
 		update_labels ();
 
 		Services.TimeManager.get_default ().minute_changed.connect (update_labels);
 	}
 
-	private void build_ui () {
+	construct {
+		orientation = Gtk.Orientation.HORIZONTAL;
+		column_spacing = 12;
+		valign = Gtk.Align.CENTER;
+
 		date_label = new Gtk.Label (null);
 		time_label = new Gtk.Label (null);
-
-		date_label.margin_end = 12;
 
 		this.add (date_label);
 		this.add (time_label);
