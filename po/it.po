@@ -3,18 +3,18 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-07-20 15:17-0500\n"
-"PO-Revision-Date: 2015-08-09 16:33+0000\n"
-"Last-Translator: Enrico <enricobe@hotmail.com>\n"
+"PO-Revision-Date: 2015-11-20 20:00+0000\n"
+"Last-Translator: Fabio Zaramella <FFabio.96.X@Gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2015-08-10 06:42+0000\n"
-"X-Generator: Launchpad (build 17656)\n"
+"X-Launchpad-Export-Date: 2015-11-21 05:37+0000\n"
+"X-Generator: Launchpad (build 17850)\n"
 
 #: ../src//Indicator.vala:33
 msgid "Date & Time"
-msgstr "Data & Ora"
+msgstr "Data e Ora"
 
 #: ../src//Indicator.vala:34
 msgid "The date and time indicator"
@@ -22,7 +22,7 @@ msgstr "L'indicatore della data e dell'ora"
 
 #: ../src//Indicator.vala:63
 msgid "Date & Time Settings…"
-msgstr "Impostazioni data e ora..."
+msgstr "Impostazioni data e ora ..."
 
 #: ../src//Indicator.vala:90
 msgid "%A, %d. %B %Y"
