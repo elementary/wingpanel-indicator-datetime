@@ -25,7 +25,6 @@ vala_precompile (VALA_C ${CMAKE_PROJECT_NAME}
   Widgets/calendar/GridDay.vala
   Widgets/calendar/Header.vala
   Widgets/calendar/WeekLabels.vala
-  Services/EventManager.vala
   Services/GeolocationManager.vala
   Services/TimeManager.vala
   Services/WeatherManager.vala

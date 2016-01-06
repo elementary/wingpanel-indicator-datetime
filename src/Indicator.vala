@@ -166,7 +166,7 @@ public class DateTime.Indicator : Wingpanel.Indicator {
 
     private void update_today_button () {
         weekday_label.set_label (Services.TimeManager.get_default ().format ("%A"));
-        date_label.set_label (Services.TimeManager.get_default ().format (_("%B %d, %Y")));
+        date_label.set_label (Services.TimeManager.get_default ().format (_("%d %B, %Y")));
     }
 
     private void show_settings () {

@@ -145,9 +145,9 @@ public class DateTime.Widgets.CalendarView : Gtk.Grid {
 
         if (previous_first != null) {
             if (previous_first.compare (grid.grid_range.first) == -1) {
-                stack.transition_type = Gtk.StackTransitionType.SLIDE_UP;
+                stack.transition_type = Gtk.StackTransitionType.SLIDE_LEFT;
             } else {
-                stack.transition_type = Gtk.StackTransitionType.SLIDE_DOWN;
+                stack.transition_type = Gtk.StackTransitionType.SLIDE_RIGHT;
             }
         }
 

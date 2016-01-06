@@ -80,10 +80,10 @@ namespace DateTime.Widgets {
             Gtk.IconTheme icon_theme = Gtk.IconTheme.get_default ();
             try {
                 if (left) {
-                    Gdk.Pixbuf icon = icon_theme.load_icon ("go-previous-symbolic", 16, 0);
+                    Gdk.Pixbuf icon = icon_theme.load_icon ("pan-start-symbolic", 16, 0);
                     image = new Gtk.Image.from_pixbuf (icon);
                 } else {
-                    Gdk.Pixbuf icon = icon_theme.load_icon ("go-next-symbolic", 16, 0);
+                    Gdk.Pixbuf icon = icon_theme.load_icon ("pan-end-symbolic", 16, 0);
                     image = new Gtk.Image.from_pixbuf (icon);
                 }
             } catch (Error e) {
