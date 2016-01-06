@@ -132,15 +132,19 @@ public class DateTime.Indicator : Wingpanel.Indicator {
             w.destroy ();
         }
         foreach (var e in Widgets.CalendarModel.get_default ().get_events (calendar.selected_date)) {
-                var but = new Wingpanel.Widgets.Button (e.get_time_range () + e.summary);
+                var but = new Wingpanel.Widgets.Button (e.get_label ());
                 Gtk.IconTheme icon_theme = Gtk.IconTheme.get_default ();
                 try {
-                    Gdk.Pixbuf icon = icon_theme.load_icon ("appointment-symbolic", 16, 0);
+                    Gdk.Pixbuf icon = icon_theme.load_icon (e.get_icon (), 16, 0);
                     but.set_pixbuf (icon);
                 } catch (Error e) {
                     warning (e.message);
                 }
                 event_box.add (but);
+                but.clicked.connect (() => {
+                    calendar.show_date_in_maya (e.date);
+                    this.close ();
+                });
         }
 
         event_box.show_all ();
@@ -166,7 +170,7 @@ public class DateTime.Indicator : Wingpanel.Indicator {
 
     private void update_today_button () {
         weekday_label.set_label (Services.TimeManager.get_default ().format ("%A"));
-        date_label.set_label (Services.TimeManager.get_default ().format (_("%d %B, %Y")));
+        date_label.set_label (Services.TimeManager.get_default ().format (_("%B %d, %Y")));
     }
 
     private void show_settings () {

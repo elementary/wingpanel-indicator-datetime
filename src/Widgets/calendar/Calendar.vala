@@ -62,7 +62,7 @@ namespace DateTime.Widgets {
         }
 
         // TODO: As far as maya supports it use the Dbus Activation feature to run the calendar-app.
-        private void show_date_in_maya (GLib.DateTime date) {
+        public void show_date_in_maya (GLib.DateTime date) {
             int selected_year, selected_month, selected_day;
             selected_year = date.get_year ();
             selected_month = date.get_month ();
@@ -85,7 +85,7 @@ namespace DateTime.Widgets {
             int height = size.height - 25;
             cr.move_to (4.5, y + 0.5);
             cr.line_to (size.width - 4.5, y + 0.5);
-            cr.curve_to (size.width - 4.5, y, size.width - 0.5, y, size.width - 0.5, y + 4.5);
+            cr.curve_to (size.width - 4.5, y + 0.5, size.width - 0.5, y + 0.5, size.width - 0.5, y + 4.5);
             cr.line_to (size.width - 0.5, y + height - 4.5);
             cr.curve_to (size.width - 0.5, y + height - 4.5, size.width - 0.5, y + height - 0.5, size.width - 4.5, y + height - 0.5);
             cr.line_to (4.5, y + height - 0.5);

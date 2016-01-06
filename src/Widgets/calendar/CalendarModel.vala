@@ -53,18 +53,18 @@ namespace DateTime.Widgets {
             }
         }
 
-        public string get_time_range () {
+        public string get_label () {
             if (day_event) {
-                return "";
+                return summary;
             }
-            if (date.get_day_of_year () == start_time.get_day_of_year () && date.get_day_of_year () == end_time.get_day_of_year ()) {
-                return "%s - %s ".printf (start_time.format (Util.TimeFormat ()), end_time.format (Util.TimeFormat ()));
-            } else if (date.get_day_of_year () != start_time.get_day_of_year () && date.get_day_of_year () == end_time.get_day_of_year ()) {
-                return " - %s ".printf (end_time.format (Util.TimeFormat ()));
-            } else if (date.get_day_of_year () == start_time.get_day_of_year () && date.get_day_of_year () != end_time.get_day_of_year ()) {
-                return "%s - ".printf (start_time.format (Util.TimeFormat ()));
+            if (range.days > 0 && date.compare (range.first) != 0) {
+                return summary;
             }
-            return "";
+            return "%s - %s".printf (summary, start_time.format (Util.TimeFormat ()));
+        }
+
+        public string get_icon () {
+            return "office-calendar-symbolic";
         }
     }
 

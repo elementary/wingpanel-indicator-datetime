@@ -25,9 +25,9 @@ namespace DateTime.Widgets {
         public signal void center_clicked ();
         public ControlHeader () {
             Object (orientation : Gtk.Orientation.HORIZONTAL);
-            var left_button = new ArrowButton (true);
-            var right_button = new ArrowButton (false);
-            var center_button = new CenterButton ();
+            var left_button = new Gtk.Button.from_icon_name ("pan-start-symbolic");
+            var right_button = new Gtk.Button.from_icon_name ("pan-end-symbolic");
+            var center_button = new Gtk.Button.with_label (CalendarModel.get_default ().month_start.format ("%B %Y"));
             CalendarModel.get_default ().parameters_changed.connect (() => {
                 var date = CalendarModel.get_default ().month_start;
                 center_button.set_label (date.format ("%B %Y"));
@@ -41,84 +41,15 @@ namespace DateTime.Widgets {
             center_button.clicked.connect (() => {
                 center_clicked ();
             });
+            left_button.can_focus = false;
+            right_button.can_focus = false;
+            // center_button.can_focus = false;
             add (left_button);
             pack_end (right_button, false, false, 0);
             pack_end (center_button, true, true, 0);
             margin_bottom = 4;
-        }
-    }
-    class CenterButton : Gtk.Button {
-        public CenterButton () {
-            Object (focus_on_click: false, can_focus: false, relief: Gtk.ReliefStyle.NONE);
-            var date = CalendarModel.get_default ().month_start;
-            set_label (date.format ("%B %Y"));
+            get_style_context ().add_class ("linked");
             set_size_request (-1, 30);
-        }
-
-        public override bool draw (Cairo.Context cr) {
-            base.draw (cr);
-            Gtk.Allocation size;
-            get_allocation (out size);
-            cr.set_source_rgba (0.0, 0.0, 0.0, 0.25);
-            cr.set_line_width (1.0);
-            cr.move_to (0, 0.5);
-            cr.line_to (size.width, 0.5);
-            cr.move_to (0, size.height - 0.5);
-            cr.line_to (size.width, size.height - 0.5);
-            cr.stroke ();
-
-            return false;
-        }
-    }
-
-    class ArrowButton : Gtk.Button {
-        bool left;
-        public ArrowButton (bool left) {
-            Object (focus_on_click: false, can_focus: false, relief: Gtk.ReliefStyle.NONE);
-            this.left = left;
-            set_size_request (-1, 30);
-            Gtk.IconTheme icon_theme = Gtk.IconTheme.get_default ();
-            try {
-                if (left) {
-                    Gdk.Pixbuf icon = icon_theme.load_icon ("pan-start-symbolic", 16, 0);
-                    image = new Gtk.Image.from_pixbuf (icon);
-                } else {
-                    Gdk.Pixbuf icon = icon_theme.load_icon ("pan-end-symbolic", 16, 0);
-                    image = new Gtk.Image.from_pixbuf (icon);
-                }
-            } catch (Error e) {
-                warning (e.message);
-            }
-        }
-
-        public override bool draw (Cairo.Context cr) {
-            base.draw (cr);
-            Gtk.Allocation size;
-            get_allocation (out size);
-            cr.set_source_rgba (0.0, 0.0, 0.0, 0.25);
-            cr.set_line_width (1.0);
-
-            if (left) {
-                cr.move_to (4.5, 0.5);
-                cr.line_to (size.width, 0.5);
-                cr.line_to (size.width, size.height - 0.5);
-                cr.line_to (4.5, size.height - 0.5);
-                cr.curve_to (4.5, size.height - 0.5, 0.5, size.height - 0.5, 0.5, size.height - 4.5);
-                cr.line_to (0.5, 4.5);
-                cr.curve_to (0.5, 4.5, 0.5, 0.5, 4.5, 0.5);
-            } else {
-                cr.move_to (0, 0.5);
-                cr.line_to (size.width - 4.5, 0.5);
-                cr.curve_to (size.width - 4.5, 0.5, size.width - 0.5, 0.5, size.width - 0.5, 4.5);
-                cr.line_to (size.width - 0.5, size.height - 4.5);
-                cr.curve_to (size.width - 0.5, size.height - 4.5, size.width - 0.5, size.height - 0.5, size.width - 4.5, size.height - 0.5);
-                cr.line_to (0.5, size.height - 0.5);
-                cr.line_to (0.5, 0.5);
-            }
-
-            cr.stroke ();
-
-            return false;
         }
     }
 }
