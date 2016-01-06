@@ -52,7 +52,8 @@ public class DateTime.Services.GeolocationManager : Object {
     private Geo.Manager manager;
     private Geo.Client client;
 
-    public signal void location_changed (Geo.Location location);
+
+    public signal void location_changed (GWeather.Location location);
 
     public GeolocationManager () {
         init.begin ();
@@ -60,7 +61,7 @@ public class DateTime.Services.GeolocationManager : Object {
 
     ~GeolocationManager () {
         if (client != null) {
-            client.stop ();
+            client.stop.begin ();
         }
     }
 
@@ -123,8 +124,8 @@ public class DateTime.Services.GeolocationManager : Object {
             warning ("Failed to connect to GeoClue2 Location service: %s", e.message);
             return;
         }
-
-        location_changed (geo_location);
+        var location = GWeather.Location.get_world ().find_nearest_city (geo_location.latitude, geo_location.longitude);
+        location_changed (location);
     }
 
     public static GeolocationManager get_default () {

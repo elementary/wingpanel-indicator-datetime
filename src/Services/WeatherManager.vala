@@ -17,50 +17,15 @@
 
 public class DateTime.Services.WeatherManager : GLib.Object {
     private static WeatherManager? instance = null;
+    GWeather.Info actual_info;
 
-    public WeatherManager () {
+    public signal void updated (GWeather.Info info);
 
-    }
-
-    public string get_temp (double lat, double lon) {
-        var apiurl = "http://api.openweathermap.org/data/2.5/forecast/daily?lat=%s&lon=%s&mode=xml&units=metric&cnt=1&lang=de".printf (lat.to_string (), lon.to_string ());
-        // var session = new Soup.Session ();
-        // var message = new Soup.Message ("GET", apiurl);
-        // session.send_message (message);
-        // print ((string) message.response_body.flatten ().data);
-        GLib.File file = GLib.File.new_for_uri (apiurl);
-        try {
-           var stream = new DataInputStream (file.read ());
-            string line;
-            // Read lines until end of file (null) is reached
-            while ((line = stream.read_line (null)) != null) {
-                stdout.printf ("%s\n", line);
-            }
-        } catch  (Error e) {
-        }
-        // try {
-        //         var parser = new Json.Parser ();
-        //         parser.load_from_data ((string) message.response_body.flatten ().data, -1);
-
-        //         var root_object = parser.get_root ().get_object ();
-        //         var response = root_object.get_object_member ("response");
-        //         var results = response.get_array_member ("docs");
-        //         int64 count = results.get_length ();
-        //         int64 total = response.get_int_member ("numFound");
-        //         stdout.printf ("got %lld out of %lld results:\n\n", count, total);
-
-        //         foreach (var geonode in results.get_elements ()) {
-        //             var geoname = geonode.get_object ();
-        //             stdout.printf ("%s\n%s\n%f\n%f\n\n",
-        //                           geoname.get_string_member ("name"),
-        //                           geoname.get_string_member ("country_name"),
-        //                           geoname.get_double_member ("lng"),
-        //                           geoname.get_double_member ("lat"));
-        //         }
-        //     } catch (Error e) {
-        //         stderr.printf ("I guess something is not working...\n");
-        //     }
-        return "";
+    public void set_location (GWeather.Location location) {
+        actual_info = new GWeather.Info (location, GWeather.ForecastType.LIST);
+        actual_info.updated.connect (() => {
+            updated (actual_info);
+        });
     }
 
     public static WeatherManager get_default () {
