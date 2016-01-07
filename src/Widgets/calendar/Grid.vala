@@ -52,7 +52,7 @@ namespace DateTime.Widgets {
         }
 
         void on_day_focus_in (GridDay day) {
-            print ("focus in\n");
+            debug ("on_day_focus_in "+day.date.to_string ());
             if (selected_gridday != null) {
                 selected_gridday.set_selected (false);
             }
@@ -165,6 +165,7 @@ namespace DateTime.Widgets {
             // }
             if (new_date.get_day_of_year () == today.get_day_of_year () && new_date.get_year () == today.get_year ()) {
                 day.name = "today";
+                day.set_receives_default (true);
             }
             if (new_date.get_month () == month_start.get_month ()) {
                 day.sensitive_container (true);

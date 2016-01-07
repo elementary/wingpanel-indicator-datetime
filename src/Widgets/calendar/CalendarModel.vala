@@ -38,6 +38,7 @@ namespace DateTime.Widgets {
         Util.DateRange range;
         public string summary;
         public bool day_event = false;
+        public bool alarm = false;
         public GLib.DateTime start_time;
         public GLib.DateTime end_time;
 
@@ -47,7 +48,9 @@ namespace DateTime.Widgets {
             this.summary = comp.get_summary ();
 
             Util.get_local_datetimes_from_icalcomponent (comp, out start_time, out end_time);
-            if (Util.is_the_all_day (start_time, end_time)) {
+            if (end_time == null) {
+                alarm = true;
+            } else if (Util.is_the_all_day (start_time, end_time)) {
                 day_event = true;
                 return;
             }
@@ -56,14 +59,18 @@ namespace DateTime.Widgets {
         public string get_label () {
             if (day_event) {
                 return summary;
-            }
-            if (range.days > 0 && date.compare (range.first) != 0) {
+            } else if (alarm) {
+                return "%s - %s".printf (start_time.format (Util.TimeFormat ()), summary);
+            } else if (range.days > 0 && date.compare (range.first) != 0) {
                 return summary;
             }
             return "%s - %s".printf (summary, start_time.format (Util.TimeFormat ()));
         }
 
         public string get_icon () {
+            if (alarm) {
+                return "alarm-symbolic";
+            }
             return "office-calendar-symbolic";
         }
     }

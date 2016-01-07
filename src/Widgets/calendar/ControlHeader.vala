@@ -43,7 +43,7 @@ namespace DateTime.Widgets {
             });
             left_button.can_focus = false;
             right_button.can_focus = false;
-            // center_button.can_focus = false;
+            center_button.can_focus = false;
             add (left_button);
             pack_end (right_button, false, false, 0);
             pack_end (center_button, true, true, 0);

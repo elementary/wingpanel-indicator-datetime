@@ -32,6 +32,7 @@ public class DateTime.Widgets.GridDay : Gtk.EventBox {
     public GLib.DateTime date { get; private set; }
     Gtk.Label label;
     int id;
+    bool valid_grab = false;
 
     public GridDay (GLib.DateTime date, int id) {
         this.date = date;
@@ -101,6 +102,12 @@ public class DateTime.Widgets.GridDay : Gtk.EventBox {
             set_state_flags (Gtk.StateFlags.NORMAL, true);
         }
     }
+    public override void grab_focus () {
+        if (valid_grab) {
+            base.grab_focus ();
+            valid_grab = false;
+        }
+    }
 
     public void sensitive_container (bool sens) {
         label.sensitive = sens;
@@ -109,7 +116,7 @@ public class DateTime.Widgets.GridDay : Gtk.EventBox {
     private bool on_button_press (Gdk.EventButton event) {
         if (event.type == Gdk.EventType.2BUTTON_PRESS && event.button == Gdk.BUTTON_PRIMARY)
             on_event_add (date);
-
+        valid_grab = true;
         grab_focus ();
         return false;
     }
