@@ -22,6 +22,7 @@ public class DateTime.Services.SettingsManager : Granite.Services.Settings {
 
     public string[] imperial_regions { get; set; }
     public double[] location { get; set; }
+    public bool show_weeks{ get; set; }
 
     public SettingsManager () {
         base ("org.pantheon.desktop.wingpanel.indicators.datetime");

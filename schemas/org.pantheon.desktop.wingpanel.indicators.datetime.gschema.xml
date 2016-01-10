@@ -11,5 +11,10 @@
             <summary>Override geolocation with latitude and longitude.</summary>
             <description>You can override the geolocation with custom latitude and longitude coordinates.</description>
         </key>
+        <key type="b" name="show-weeks">
+            <default>false</default>
+            <summary>Show week numbers.</summary>
+            <description>If this is set to true, week numbers will be shown in the calendar.</description>
+        </key>
     </schema>
 </schemalist>

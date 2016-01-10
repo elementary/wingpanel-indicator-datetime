@@ -51,6 +51,7 @@ public class DateTime.Widgets.CalendarView : Gtk.Grid {
         var model = CalendarModel.get_default ();
         model.parameters_changed.connect (on_model_parameters_changed);
 
+        Services.SettingsManager.get_default ().changed["show-weeks"].connect (on_show_weeks_changed);
         events |= Gdk.EventMask.BUTTON_PRESS_MASK;
         events |= Gdk.EventMask.KEY_PRESS_MASK;
         events |= Gdk.EventMask.SCROLL_MASK;

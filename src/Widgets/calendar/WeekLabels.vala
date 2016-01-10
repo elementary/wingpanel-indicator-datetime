@@ -52,22 +52,25 @@ public class WeekLabels : Gtk.Revealer {
 
         update_nr_of_labels (nr_of_weeks);
 
-        // if (Settings.SavedState.get_default ().show_weeks) {
-            // transition_type = Gtk.RevealerTransitionType.SLIDE_RIGHT;
-            // set_reveal_child (true);
+        if (Services.SettingsManager.get_default ().show_weeks) {
+            no_show_all = false;
+            transition_type = Gtk.RevealerTransitionType.SLIDE_RIGHT;
+            set_reveal_child (true);
 
-            // var next = date;
-            // // Find the beginning of the week which is apparently always a monday
-            // int days_to_add = (8 - next.get_day_of_week()) % 7;
-            // next = next.add_days(days_to_add);
-            // foreach (var label in labels) {
-            //     label.label = next.get_week_of_year ().to_string();
-            //     next = next.add_weeks (1);
-            // }
-        // } else {
+            var next = date;
+            // Find the beginning of the week which is apparently always a monday
+            int days_to_add = (8 - next.get_day_of_week()) % 7;
+            next = next.add_days(days_to_add);
+            foreach (var label in labels) {
+                label.label = next.get_week_of_year ().to_string();
+                next = next.add_weeks (1);
+            }
+        } else {
             transition_type = Gtk.RevealerTransitionType.SLIDE_LEFT;
             set_reveal_child (false);
-        // }
+            no_show_all = true;
+            hide ();
+        }
     }
 
     public void set_nr_of_weeks (int new_number) {
@@ -92,6 +95,7 @@ public class WeekLabels : Gtk.Revealer {
             labels[c] = new Gtk.Label ("");
             labels[c].valign = Gtk.Align.START;
             labels[c].width_chars = 2;
+            labels[c].margin = 1;
             day_grid.attach (labels[c], 0, c, 1, 1);
             labels[c].show ();
         }
