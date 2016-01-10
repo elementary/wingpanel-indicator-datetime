@@ -112,13 +112,7 @@ public class DateTime.Indicator : Wingpanel.Indicator {
     private bool update_weather () {
         var conditions = Services.WeatherManager.get_default ().get_forecast (calendar.selected_date);
         if (conditions != null) {
-            Gtk.IconTheme icon_theme = Gtk.IconTheme.get_default ();
-            try {
-                Gdk.Pixbuf icon = icon_theme.load_icon (conditions.get_symbolic_icon (), 16, 0);
-                weather_button.set_pixbuf (icon);
-            } catch (Error e) {
-                warning (e.message);
-            }
+            weather_button.set_icon (conditions.get_symbolic_icon ());
             weather_button.set_caption ("%s, %s".printf (conditions.summary, conditions.get_temperature ()));
             weather_button.set_information_tooltip (conditions.get_tooltip_string ());
             weather_button.no_show_all = false;
@@ -140,14 +134,7 @@ public class DateTime.Indicator : Wingpanel.Indicator {
             w.destroy ();
         }
         foreach (var e in Widgets.CalendarModel.get_default ().get_events (calendar.selected_date)) {
-                var but = new Wingpanel.Widgets.Button (e.get_label ());
-                Gtk.IconTheme icon_theme = Gtk.IconTheme.get_default ();
-                try {
-                    Gdk.Pixbuf icon = icon_theme.load_icon (e.get_icon (), 16, 0);
-                    but.set_pixbuf (icon);
-                } catch (Error e) {
-                    warning (e.message);
-                }
+                var but = new Wingpanel.Widgets.Button (e.get_label (), e.get_icon ());
                 event_box.add (but);
                 but.clicked.connect (() => {
                     calendar.show_date_in_maya (e.date);

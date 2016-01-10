@@ -23,15 +23,15 @@ public class DateTime.Widgets.WeatherWidget : Gtk.Button {
     private Gtk.Image button_image;
     private Gtk.Image tooltip_image;
 
-    public WeatherWidget (string caption, Gdk.Pixbuf? pixbuf = null) {
+    public WeatherWidget (string caption) {
         var content_widget = new Gtk.Box (Gtk.Orientation.HORIZONTAL, 0);
         content_widget.hexpand = true;
 
         this.add (content_widget);
 
-        button_image = create_image_for_pixbuf (pixbuf);
+        button_image = create_image ();
         button_label = create_label_for_caption (caption);
-        tooltip_image = new Gtk.Image.from_icon_name ("dialog-information-symbolic", Gtk.IconSize.BUTTON);
+        tooltip_image = new Gtk.Image.from_icon_name ("view-more-symbolic", Gtk.IconSize.BUTTON);
         tooltip_image.margin_end = 6;
         tooltip_image.halign = Gtk.Align.END;
 
@@ -43,8 +43,6 @@ public class DateTime.Widgets.WeatherWidget : Gtk.Button {
         style_context.add_class (Gtk.STYLE_CLASS_MENUITEM);
         style_context.remove_class (Gtk.STYLE_CLASS_BUTTON);
         style_context.remove_class ("text-button");
-
-        connect_signals ();
     }
 
     public void set_caption (string caption) {
@@ -55,16 +53,17 @@ public class DateTime.Widgets.WeatherWidget : Gtk.Button {
         return button_label.get_label ();
     }
 
-    public void set_pixbuf (Gdk.Pixbuf? pixbuf) {
-        button_image.set_from_pixbuf (pixbuf);
+    public void set_icon (string? icon_name) {
+        if (icon_name == null) {
+            button_image.visible = false;
+        } else {
+            button_image.set_from_icon_name (icon_name, Gtk.IconSize.BUTTON);
+            button_image.visible = true;
+        }
     }
 
     public void set_information_tooltip (string text) {
         tooltip_image.set_tooltip_text (text);
-    }
-
-    public Gdk.Pixbuf? get_pixbuf () {
-        return button_image.get_pixbuf ();
     }
 
     public new Gtk.Label get_label () {
@@ -89,19 +88,12 @@ public class DateTime.Widgets.WeatherWidget : Gtk.Button {
         return label_widget;
     }
 
-    private Gtk.Image create_image_for_pixbuf (Gdk.Pixbuf? pixbuf) {
+    private Gtk.Image create_image () {
         var image = new Gtk.Image ();
-        image.pixbuf = pixbuf;
         image.margin_start = 6;
         image.no_show_all = true;
-        image.visible = pixbuf != null;
+        image.visible = false;
 
         return image;
-    }
-
-    private void connect_signals () {
-        button_image.notify["pixbuf"].connect (() => {
-            button_image.visible = button_image.get_pixbuf () != null;
-        });
     }
 }
