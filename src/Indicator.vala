@@ -24,7 +24,7 @@ public class DateTime.Indicator : Wingpanel.Indicator {
 
     private Gtk.Grid main_grid;
 
-    private Wingpanel.Widgets.Button weather_button;
+    private Widgets.WeatherWidget weather_button;
 
     private Gtk.Label weekday_label;
     private Gtk.Label date_label;
@@ -77,16 +77,15 @@ public class DateTime.Indicator : Wingpanel.Indicator {
 
             main_grid.attach (calendar, 0, position++, 1, 1);
 
-            weather_button = new Wingpanel.Widgets.Button ("");
+            weather_button = new Widgets.WeatherWidget ("");
             weather_button.no_show_all = true;
-            weather_button.set_tooltip_text (_("Data provided by OpenWeatherMap"));
 
             main_grid.attach (weather_button, 0, position++, 1, 1);
 
             event_box = new Gtk.Box (Gtk.Orientation.VERTICAL, 0);
             main_grid.attach (event_box, 0, position++, 1, 1);
 
-            settings_button = new Wingpanel.Widgets.Button (_("Date- &amp; Timesettings"));
+            settings_button = new Wingpanel.Widgets.Button (_("Date & Time Settings…"));
             settings_button.clicked.connect (() => {
                 show_settings ();
                 this.close ();
@@ -121,6 +120,7 @@ public class DateTime.Indicator : Wingpanel.Indicator {
                 warning (e.message);
             }
             weather_button.set_caption ("%s, %s".printf (conditions.summary, conditions.get_temperature ()));
+            weather_button.set_information_tooltip (conditions.get_tooltip_string ());
             weather_button.no_show_all = false;
             weather_button.show_all ();
         } else {

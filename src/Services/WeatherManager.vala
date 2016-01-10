@@ -91,9 +91,11 @@ namespace DateTime.Services {
 
         public void load_today_weather (double lat, double lon) {
             var apiurl = api.printf ("weather", lat.to_string (), lon.to_string (), units, APPID);
+            debug ("call weather api url %s", apiurl);
             var session = new Soup.Session ();
             var message = new Soup.Message ("GET", apiurl);
             session.send_message (message);
+            debug ("recieved answer: %s", (string)message.response_body.flatten ().data);
             today = new TodayConditions ((string)message.response_body.flatten ().data);
         }
 
@@ -132,6 +134,7 @@ namespace DateTime.Services {
         public string summary { get; protected set; }
         public int temp_min { get; protected set; }
         public int temp_max { get; protected set; }
+        public string provider = _("cc OpenWeatherMap");
         protected int id;
         protected string[] CONDITION = new string[1000];
 
@@ -279,6 +282,12 @@ namespace DateTime.Services {
             return "";
         }
 
+        public virtual string get_tooltip_string () {
+            string data = _("Min: %d°\nMax: %d°\n%s");
+
+            return data.printf (temp_min, temp_max, provider);
+        }
+
         public virtual string get_temperature () {
             return "0";
         }
@@ -315,6 +324,13 @@ namespace DateTime.Services {
             } catch (Error e) {
                 stderr.printf ("json parsing failed");
             }
+        }
+
+        public override string get_tooltip_string () {
+            string data = _("Min: %d°\nMax: %d°\nSunrise: %s\nSunset:%s\n%s");
+
+            return data.printf (temp_min, temp_max, sun_uptime.first.format (Util.TimeFormat ()),
+             sun_uptime.last.format (Util.TimeFormat ()), provider);
         }
 
         public override string get_temperature () {
