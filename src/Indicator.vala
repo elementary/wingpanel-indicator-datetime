@@ -39,13 +39,6 @@ public class DateTime.Indicator : Wingpanel.Indicator {
         Object (code_name: Wingpanel.Indicator.DATETIME,
                 display_name: _("Date & Time"),
                 description: _("The date and time indicator"));
-
-        /* geolocation and weather */
-        var geolocation = Services.GeolocationManager.get_default ();
-        var weather = Services.WeatherManager.get_default ();
-        geolocation.location_changed.connect ((location) => {
-            weather.set_location (location);
-        });
     }
 
     public override Gtk.Widget get_display_widget () {
@@ -64,7 +57,8 @@ public class DateTime.Indicator : Wingpanel.Indicator {
             weekday_label = new Gtk.Label ("");
             weekday_label.get_style_context ().add_class ("h2");
             weekday_label.halign = Gtk.Align.START;
-            weekday_label.margin_start = 20;;
+            weekday_label.margin_top = 10;
+            weekday_label.margin_start = 20;
             main_grid.attach (weekday_label, 0, position++, 1, 1);
 
             date_label = new Gtk.Label ("");
@@ -79,11 +73,13 @@ public class DateTime.Indicator : Wingpanel.Indicator {
             calendar.day_double_click.connect (() => {
                 this.close ();
             });
+            calendar.margin_bottom = 6;
+
             main_grid.attach (calendar, 0, position++, 1, 1);
 
             weather_button = new Wingpanel.Widgets.Button ("");
-            weather_button.margin_top = 15;
             weather_button.no_show_all = true;
+            weather_button.set_tooltip_text (_("Data provided by OpenWeatherMap"));
 
             main_grid.attach (weather_button, 0, position++, 1, 1);
 
@@ -102,25 +98,37 @@ public class DateTime.Indicator : Wingpanel.Indicator {
 
             calendar.selection_changed.connect ((date) => {
                 Idle.add (update_events);
+                Idle.add (update_weather);
             });
-
-            Services.WeatherManager.get_default ().updated.connect ((info) => {
-                Gtk.IconTheme icon_theme = Gtk.IconTheme.get_default ();
-                try {
-                    Gdk.Pixbuf icon = icon_theme.load_icon (info.get_symbolic_icon_name (), 16, 0);
-                    weather_button.set_pixbuf (icon);
-                } catch (Error e) {
-                    warning (e.message);
-                }
-                weather_button.set_caption ("%s, %s".printf (info.get_sky (), info.get_temp ().replace (",0 ", "")));
-                weather_button.no_show_all = false;
-                weather_button.show_all ();
+            Services.WeatherManager.get_default ().today_updated.connect ((conditions) => {
+                Idle.add (update_weather);
             });
         }
 
         this.visible = true;
 
         return main_grid;
+    }
+
+    private bool update_weather () {
+        var conditions = Services.WeatherManager.get_default ().get_forecast (calendar.selected_date);
+        if (conditions != null) {
+            Gtk.IconTheme icon_theme = Gtk.IconTheme.get_default ();
+            try {
+                Gdk.Pixbuf icon = icon_theme.load_icon (conditions.get_symbolic_icon (), 16, 0);
+                weather_button.set_pixbuf (icon);
+            } catch (Error e) {
+                warning (e.message);
+            }
+            weather_button.set_caption ("%s, %s".printf (conditions.summary, conditions.get_temperature ()));
+            weather_button.no_show_all = false;
+            weather_button.show_all ();
+        } else {
+            weather_button.no_show_all = true;
+            weather_button.hide ();
+        }
+        
+        return false;
     }
 
     private void update_events_model (E.Source source, Gee.Collection<E.CalComponent> events) {

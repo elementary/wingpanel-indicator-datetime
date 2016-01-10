@@ -2,7 +2,7 @@ find_package (PkgConfig)
 
 # Add all your dependencies to the list below
 pkg_check_modules (DEPS REQUIRED gthread-2.0 gtk+-3.0 wingpanel-2.0 granite
-  gweather-3.0 libecal-1.2 libical libsoup-2.4 libedataserver-1.2)
+  json-glib-1.0 libecal-1.2 libical libsoup-2.4 libedataserver-1.2)
 
 add_definitions (${DEPS_CFLAGS})
 link_directories (${DEPS_LIBRARY_DIRS})
@@ -27,24 +27,24 @@ vala_precompile (VALA_C ${CMAKE_PROJECT_NAME}
   Widgets/calendar/WeekLabels.vala
   Services/GeolocationManager.vala
   Services/TimeManager.vala
+  Services/SettingsManager.vala
   Services/WeatherManager.vala
   ${CMAKE_CURRENT_BINARY_DIR}/config.vala
 PACKAGES
   wingpanel-2.0
   glib-2.0>=2.32
   granite
-  gweather-3.0
   libecalendar-1.2
   libedataserver-1.2
   libical
   libsoup-2.4
+  json-glib-1.0
 OPTIONS
   --target-glib=2.32
   --vapidir=${CMAKE_SOURCE_DIR}/vapi
   --thread
 )
 
-add_definitions (-DGWEATHER_I_KNOW_THIS_IS_UNSTABLE)
 add_library (${CMAKE_PROJECT_NAME} MODULE ${VALA_C})
 target_link_libraries(${CMAKE_PROJECT_NAME} ${DEPS_LIBRARIES})
 
