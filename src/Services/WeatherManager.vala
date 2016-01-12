@@ -96,7 +96,7 @@ namespace DateTime.Services {
             var message = new Soup.Message ("GET", apiurl);
             session.send_message (message);
             debug ("recieved answer: %s", (string)message.response_body.flatten ().data);
-            today = new TodayConditions ((string)message.response_body.flatten ().data);
+            today = new TodayConditions ((string)message.response_body.flatten ().data, units == "metric");
         }
 
         public void load_forecast_weather (double lat, double lon) {
@@ -113,7 +113,7 @@ namespace DateTime.Services {
                 for (int i = 0; i < (int)forecast_list.get_length (); i++) {
                     var day = forecast_list.get_element (i).get_object ();
                     var date = new GLib.DateTime.from_unix_local (day.get_member ("dt").get_int ());
-                    var single_forecast = new ForecastConditions (date, day);
+                    var single_forecast = new ForecastConditions (date, day, units == "metric");
                     forecast.set (Util.strip_time (date).to_string (), single_forecast);
                 }
             } catch (Error e) {
@@ -137,6 +137,7 @@ namespace DateTime.Services {
         public string provider = _("cc OpenWeatherMap");
         protected int id;
         protected string[] CONDITION = new string[1000];
+        protected bool metric;
 
         public Conditions () {
             CONDITION[200] = _("Thunderstorm with light rain");
@@ -305,7 +306,8 @@ namespace DateTime.Services {
         public Util.DateRange sun_uptime { get; protected set; }
         public int temp { get; protected set; }
 
-        public TodayConditions (string json_data) {
+        public TodayConditions (string json_data, bool metric) {
+            this.metric = metric;
             try {
                 var parser = new Json.Parser ();
                 parser.load_from_data (json_data, -1);
@@ -334,7 +336,10 @@ namespace DateTime.Services {
         }
 
         public override string get_temperature () {
-            return "%d%s".printf (temp, "°");
+            if (metric) {
+                return "%d%s".printf (temp, "°C");
+            }
+            return "%d%s".printf (temp, "°F");
         }
 
         public override string get_icon () {
@@ -353,7 +358,8 @@ namespace DateTime.Services {
     public class ForecastConditions : Conditions {
         public GLib.DateTime date { get; private set; }
 
-        public ForecastConditions (GLib.DateTime date, Json.Object day) {
+        public ForecastConditions (GLib.DateTime date, Json.Object day, bool metric) {
+            this.metric = metric;
             this.date = date;
             var weather = day.get_member ("weather").get_array ().get_element (0).get_object ();
             var temp = day.get_member ("temp").get_object ();
@@ -364,7 +370,10 @@ namespace DateTime.Services {
         }
 
         public override string get_temperature () {
-            return "%d%s".printf (temp_max, "°");
+            if (metric) {
+                return "%d%s".printf (temp_max, "°C");
+            }
+            return "%d%s".printf (temp_max, "°F");
         }
 
         public override string get_icon () {
