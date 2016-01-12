@@ -57,19 +57,15 @@ namespace DateTime.Services {
                 });
             }
 
-            var lang = Environment.get_variable ("LANG");
+            string locale_measurement;
+            try {
+                GLib.Process.spawn_command_line_sync ("locale LC_MEASUREMENT", out locale_measurement, null, null);
+            } catch (SpawnError e) {
+                critical (e.message);
+            }
 
-            if (lang != null) {
-                /* check if imperial units should be used */
-                var regions = Services.SettingsManager.get_default ().imperial_regions;
-                var region_strip = lang.substring (3, 2);
-
-                foreach (var region in regions) {
-                    if (region == region_strip) {
-                        units = "imperial";
-                        break;
-                    }
-                }
+            if (locale_measurement != null && locale_measurement.contains ("2")) {
+                units = "imperial";
             }
         }
 

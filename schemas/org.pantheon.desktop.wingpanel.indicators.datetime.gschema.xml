@@ -1,11 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <schemalist>
     <schema path="/org/pantheon/desktop/wingpanel/indicators/datetime/" id="org.pantheon.desktop.wingpanel.indicators.datetime" gettext-domain="datetime-indicator">
-        <key type="as" name="imperial-regions">
-            <default>['US','CA','IE','IN','AU','NZ','MY']</default>
-            <summary>Use imerial units in these regions.</summary>
-            <description>This list contains the regions where imerial units will be used.</description>
-        </key>
         <key type="ad" name="location">
             <default>[]</default>
             <summary>Override geolocation with latitude and longitude.</summary>
