@@ -32,6 +32,16 @@ namespace DateTime.Services {
         public signal void forecasts_updated ();
 
         public WeatherManager () {
+            string locale_measurement;
+            try {
+                GLib.Process.spawn_command_line_sync ("locale LC_MEASUREMENT", out locale_measurement, null, null);
+            } catch (SpawnError e) {
+                critical (e.message);
+            }
+
+            if (locale_measurement != null && locale_measurement.contains ("2")) {
+                units = "imperial";
+            }
             forecast = new Gee.HashMap<string, ForecastConditions> ();
             var override_location = Services.SettingsManager.get_default ().location;
 
@@ -56,20 +66,9 @@ namespace DateTime.Services {
                     load_forecast_weather (latitude, longitude);
                 });
             }
-
-            string locale_measurement;
-            try {
-                GLib.Process.spawn_command_line_sync ("locale LC_MEASUREMENT", out locale_measurement, null, null);
-            } catch (SpawnError e) {
-                critical (e.message);
-            }
-
-            if (locale_measurement != null && locale_measurement.contains ("2")) {
-                units = "imperial";
-            }
         }
 
-        public Conditions? get_forecast (GLib.DateTime date) {
+        public Conditions? get_forecast (GLib.DateTime? date) {
             if (date == null) {
                 return null;
             }
@@ -166,6 +165,7 @@ namespace DateTime.Services {
             CONDITION[601] = _("Snow");
             CONDITION[602] = _("Heavy snow");
             CONDITION[611] = _("Sleet");
+            CONDITION[620] = _("Light shower snow");
             CONDITION[621] = _("Shower snow");
             CONDITION[701] = _("Mist");
             CONDITION[711] = _("Smoke");
