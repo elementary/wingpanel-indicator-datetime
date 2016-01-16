@@ -20,7 +20,6 @@
 public class DateTime.Services.SettingsManager : Granite.Services.Settings {
     private static SettingsManager? instance = null;
 
-    public string[] imperial_regions { get; set; }
     public double[] location { get; set; }
     public bool show_weeks{ get; set; }
 
