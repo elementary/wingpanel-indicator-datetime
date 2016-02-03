@@ -1,11 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <schemalist>
     <schema path="/org/pantheon/desktop/wingpanel/indicators/datetime/" id="org.pantheon.desktop.wingpanel.indicators.datetime" gettext-domain="datetime-indicator">
-        <key type="ad" name="location">
-            <default>[]</default>
-            <summary>Override geolocation with latitude and longitude.</summary>
-            <description>You can override the geolocation with custom latitude and longitude coordinates.</description>
-        </key>
         <key type="b" name="show-weeks">
             <default>false</default>
             <summary>Show week numbers.</summary>

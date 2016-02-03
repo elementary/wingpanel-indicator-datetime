@@ -24,8 +24,6 @@ public class DateTime.Indicator : Wingpanel.Indicator {
 
     private Gtk.Grid main_grid;
 
-    private Widgets.WeatherWidget weather_button;
-
     private Gtk.Label weekday_label;
     private Gtk.Label date_label;
 
@@ -77,11 +75,6 @@ public class DateTime.Indicator : Wingpanel.Indicator {
 
             main_grid.attach (calendar, 0, position++, 1, 1);
 
-            weather_button = new Widgets.WeatherWidget ("");
-            weather_button.no_show_all = true;
-
-            main_grid.attach (weather_button, 0, position++, 1, 1);
-
             event_box = new Gtk.Box (Gtk.Orientation.VERTICAL, 0);
             main_grid.attach (event_box, 0, position++, 1, 1);
 
@@ -97,32 +90,12 @@ public class DateTime.Indicator : Wingpanel.Indicator {
 
             calendar.selection_changed.connect ((date) => {
                 Idle.add (update_events);
-                Idle.add (update_weather);
-            });
-            Services.WeatherManager.get_default ().today_updated.connect ((conditions) => {
-                Idle.add (update_weather);
             });
         }
 
         this.visible = true;
 
         return main_grid;
-    }
-
-    private bool update_weather () {
-        var conditions = Services.WeatherManager.get_default ().get_forecast (calendar.selected_date);
-        if (conditions != null) {
-            weather_button.set_icon (conditions.get_symbolic_icon ());
-            weather_button.set_caption ("%s, %s".printf (conditions.summary, conditions.get_temperature ()));
-            weather_button.set_information_tooltip (conditions.get_tooltip_string ());
-            weather_button.no_show_all = false;
-            weather_button.show_all ();
-        } else {
-            weather_button.no_show_all = true;
-            weather_button.hide ();
-        }
-        
-        return false;
     }
 
     private void update_events_model (E.Source source, Gee.Collection<E.CalComponent> events) {
