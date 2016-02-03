@@ -159,10 +159,6 @@ namespace DateTime.Widgets {
          * Updates the given GridDay so that it shows the given date. Changes to its style etc.
          */
         GridDay update_day (GridDay day, GLib.DateTime new_date, GLib.DateTime today, GLib.DateTime month_start) {
-            // if there is a way to determine the weekend for all locale, set it here
-            // if (new_date.get_day_of_week () == 6 || new_date.get_day_of_week () == 7) {
-            //     day.name = "weekend";
-            // }
             if (new_date.get_day_of_year () == today.get_day_of_year () && new_date.get_year () == today.get_year ()) {
                 day.name = "today";
                 day.set_receives_default (true);
