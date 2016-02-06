@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011-2015 Wingpanel Developers (http://launchpad.net/wingpanel)
+ * Copyright (c) 2011-2016 Wingpanel Developers (http://launchpad.net/wingpanel)
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public
@@ -24,11 +24,14 @@ public class DateTime.Indicator : Wingpanel.Indicator {
 
     private Gtk.Grid main_grid;
 
-    private Wingpanel.Widgets.Button today_button;
+    private Gtk.Label weekday_label;
+    private Gtk.Label date_label;
 
     private Widgets.Calendar calendar;
 
     private Wingpanel.Widgets.Button settings_button;
+
+    private Gtk.Box event_box;
 
     public Indicator () {
         Object (code_name: Wingpanel.Indicator.DATETIME,
@@ -46,21 +49,34 @@ public class DateTime.Indicator : Wingpanel.Indicator {
 
     public override Gtk.Widget? get_widget () {
         if (main_grid == null) {
+            int position = 0;
             main_grid = new Gtk.Grid ();
 
-            today_button = new Wingpanel.Widgets.Button ("");
-            today_button.clicked.connect (() => {
-                calendar.show_today ();
-            });
+            weekday_label = new Gtk.Label ("");
+            weekday_label.get_style_context ().add_class ("h2");
+            weekday_label.halign = Gtk.Align.START;
+            weekday_label.margin_top = 10;
+            weekday_label.margin_start = 20;
+            main_grid.attach (weekday_label, 0, position++, 1, 1);
 
-            main_grid.attach (today_button, 0, 0, 1, 1);
+            date_label = new Gtk.Label ("");
+            date_label.get_style_context ().add_class ("h3");
+            date_label.halign = Gtk.Align.START;
+            date_label.margin_start = 20;
+            date_label.margin_top = 10;
+            date_label.margin_bottom = 15;
+            main_grid.attach (date_label, 0, position++, 1, 1);
 
             calendar = new Widgets.Calendar ();
-            calendar.date_doubleclicked.connect (() => {
+            calendar.day_double_click.connect (() => {
                 this.close ();
             });
+            calendar.margin_bottom = 6;
 
-            main_grid.attach (calendar, 0, 1, 1, 1);
+            main_grid.attach (calendar, 0, position++, 1, 1);
+
+            event_box = new Gtk.Box (Gtk.Orientation.VERTICAL, 0);
+            main_grid.attach (event_box, 0, position++, 1, 1);
 
             settings_button = new Wingpanel.Widgets.Button (_("Date & Time Settings…"));
             settings_button.clicked.connect (() => {
@@ -68,28 +84,61 @@ public class DateTime.Indicator : Wingpanel.Indicator {
                 this.close ();
             });
 
-            main_grid.attach (new Wingpanel.Widgets.Separator (), 0, 2, 1, 1);
+            main_grid.attach (new Wingpanel.Widgets.Separator (), 0, position++, 1, 1);
 
-            main_grid.attach (settings_button, 0, 3, 1, 1);
+            main_grid.attach (settings_button, 0, position++, 1, 1);
+
+            calendar.selection_changed.connect ((date) => {
+                Idle.add (update_events);
+            });
         }
 
-        /* I do have something to display! */
         this.visible = true;
 
         return main_grid;
     }
 
+    private void update_events_model (E.Source source, Gee.Collection<E.CalComponent> events) {
+        Idle.add (update_events);
+    }
+
+    private bool update_events () {
+        foreach (var w in event_box.get_children ()) {
+            w.destroy ();
+        }
+        foreach (var e in Widgets.CalendarModel.get_default ().get_events (calendar.selected_date)) {
+                var but = new Wingpanel.Widgets.Button (e.get_label (), e.get_icon ());
+                event_box.add (but);
+                but.clicked.connect (() => {
+                    calendar.show_date_in_maya (e.date);
+                    this.close ();
+                });
+        }
+
+        event_box.show_all ();
+        return false;
+    }
+
     public override void opened () {
         update_today_button ();
+        calendar.show_today ();
+
         Services.TimeManager.get_default ().minute_changed.connect (update_today_button);
+        Widgets.CalendarModel.get_default ().events_added.connect (update_events_model);
+        Widgets.CalendarModel.get_default ().events_updated.connect (update_events_model);
+        Widgets.CalendarModel.get_default ().events_removed.connect (update_events_model);
     }
 
     public override void closed () {
         Services.TimeManager.get_default ().minute_changed.disconnect (update_today_button);
+        Widgets.CalendarModel.get_default ().events_added.disconnect (update_events_model);
+        Widgets.CalendarModel.get_default ().events_updated.disconnect (update_events_model);
+        Widgets.CalendarModel.get_default ().events_removed.disconnect (update_events_model);
     }
 
     private void update_today_button () {
-        today_button.set_caption (Services.TimeManager.get_default ().format (_("%A, %d. %B %Y")));
+        weekday_label.set_label (Services.TimeManager.get_default ().format ("%A"));
+        date_label.set_label (Services.TimeManager.get_default ().format (_("%B %d, %Y")));
     }
 
     private void show_settings () {
@@ -98,13 +147,8 @@ public class DateTime.Indicator : Wingpanel.Indicator {
     }
 }
 
-public Wingpanel.Indicator? get_indicator (Module module, Wingpanel.IndicatorManager.ServerType server_type) {
+public Wingpanel.Indicator get_indicator (Module module) {
     debug ("Activating DateTime Indicator");
-
-    if (server_type != Wingpanel.IndicatorManager.ServerType.SESSION) {
-        return null;
-    }
-
     var indicator = new DateTime.Indicator ();
 
     return indicator;
