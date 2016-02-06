@@ -40,7 +40,7 @@ public class DateTime.Widgets.PanelLabel : Gtk.Grid {
     }
 
     private void update_labels () {
-        date_label.set_label (Services.TimeManager.get_default ().format (_("%a, %d. %b")));
-        time_label.set_label (Services.TimeManager.get_default ().format (_("%I:%M %P")));
+        date_label.set_label (Services.TimeManager.get_default ().format (_("%a, %b %e")));
+        time_label.set_label (Services.TimeManager.get_default ().format (_("%l:%M %p")));
     }
 }
