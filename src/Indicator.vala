@@ -138,7 +138,8 @@ public class DateTime.Indicator : Wingpanel.Indicator {
 
     private void update_today_button () {
         weekday_label.set_label (Services.TimeManager.get_default ().format ("%A"));
-        date_label.set_label (Services.TimeManager.get_default ().format (_("%B %d, %Y")));
+        /* TRANSLATORS: Date format in the popover excluding the weekday; following http://valadoc.org/#!api=glib-2.0/GLib.DateTime.format */
+        date_label.set_label (Services.TimeManager.get_default ().format (_("%B %e, %Y")));
     }
 
     private void show_settings () {
