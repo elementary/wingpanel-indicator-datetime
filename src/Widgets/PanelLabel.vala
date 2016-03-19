@@ -21,7 +21,18 @@ public class DateTime.Widgets.PanelLabel : Gtk.Grid {
     private Gtk.Label date_label;
     private Gtk.Label time_label;
 
+    private ClockSettings clockSettings;
+    private bool use24HSFormat = false;
+
     public PanelLabel () {
+        clockSettings = new ClockSettings ();
+        this.use24HSFormat = (clockSettings.clock_format == "24h");
+
+        clockSettings.notify["clock-format"].connect (() => {
+            this.use24HSFormat = (clockSettings.clock_format == "24h");
+            update_labels ();
+        });
+
         update_labels ();
 
         Services.TimeManager.get_default ().minute_changed.connect (update_labels);
@@ -42,7 +53,15 @@ public class DateTime.Widgets.PanelLabel : Gtk.Grid {
     private void update_labels () {
         /* TRANSLATORS: Date format in the panel following http://valadoc.org/#!api=glib-2.0/GLib.DateTime.format */
         date_label.set_label (Services.TimeManager.get_default ().format (_("%a, %b %e")));
-        /* TRANSLATORS: Time format in the panel following http://valadoc.org/#!api=glib-2.0/GLib.DateTime.format */
-        time_label.set_label (Services.TimeManager.get_default ().format (_("%l:%M %p")));
+
+        if (use24HSFormat) {
+            /* TRANSLATORS: Time format in the panel following http://valadoc.org/#!api=glib-2.0/GLib.DateTime.format */
+            time_label.set_label (Services.TimeManager.get_default ().format (_("%k:%M")));
+
+        } else {
+            /* TRANSLATORS: Time format in the panel following http://valadoc.org/#!api=glib-2.0/GLib.DateTime.format */
+            time_label.set_label (Services.TimeManager.get_default ().format (_("%l:%M %p")));
+        }
     }
+        
 }
