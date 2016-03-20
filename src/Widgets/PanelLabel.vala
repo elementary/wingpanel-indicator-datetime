@@ -29,7 +29,12 @@ public class DateTime.Widgets.PanelLabel : Gtk.Grid {
         this.use24HSFormat = (clockSettings.clock_format == "24h");
 
         clockSettings.notify["clock-format"].connect (() => {
-            this.use24HSFormat = (clockSettings.clock_format == "24h");
+            if (clockSettings.clock_format == "24h") {
+                this.use24HSFormat = true;
+            } else {
+                this.use24HSFormat = false;
+            }
+
             update_labels ();
         });
 
