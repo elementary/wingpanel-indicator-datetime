@@ -3,31 +3,31 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-05-02 05:12-0500\n"
-"PO-Revision-Date: 2015-04-26 23:47+0000\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"PO-Revision-Date: 2016-05-20 07:45+0000\n"
+"Last-Translator: Masai Christopher Martin <masaichris@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2016-05-03 05:46+0000\n"
-"X-Generator: Launchpad (build 17995)\n"
+"X-Launchpad-Export-Date: 2016-05-21 05:49+0000\n"
+"X-Generator: Launchpad (build 18025)\n"
 
 #: ../src/Indicator.vala:38
 msgid "Date & Time"
-msgstr ""
+msgstr "Tarehe na Saa"
 
 #: ../src/Indicator.vala:39
 msgid "The date and time indicator"
-msgstr ""
+msgstr "Kionyesho cha Tarehe na Saa"
 
 #: ../src/Indicator.vala:81
 msgid "Date & Time Settings…"
-msgstr ""
+msgstr "Mpangilio wa Tarehe na Saa"
 
 #. //valadoc.org/#!api=glib-2.0/GLib.DateTime.format
 #: ../src/Indicator.vala:142
 msgid "%B %e, %Y"
-msgstr ""
+msgstr "%B %e, %Y"
 
 #. / TRANSLATORS: Date format in the panel following http://valadoc.org/#!api=glib-2.0/GLib.DateTime.format */
 #: ../src/Widgets/PanelLabel.vala:60
@@ -37,4 +37,4 @@ msgstr ""
 #. / TRANSLATORS: Time format in the panel following http://valadoc.org/#!api=glib-2.0/GLib.DateTime.format */
 #: ../src/Widgets/PanelLabel.vala:66
 msgid "%l:%M %p"
-msgstr ""
+msgstr "%l:%M %p"
