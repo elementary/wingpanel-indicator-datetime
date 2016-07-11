@@ -72,7 +72,9 @@ public class DateTime.Indicator : Wingpanel.Indicator {
                 this.close ();
             });
             calendar.margin_bottom = 6;
-
+            calendar.selection_changed.connect ((date) => {
+                Idle.add (update_events);
+            });
             main_grid.attach (calendar, 0, position++, 1, 1);
 
             event_box = new Gtk.Box (Gtk.Orientation.VERTICAL, 0);
@@ -87,10 +89,6 @@ public class DateTime.Indicator : Wingpanel.Indicator {
             main_grid.attach (new Wingpanel.Widgets.Separator (), 0, position++, 1, 1);
 
             main_grid.attach (settings_button, 0, position++, 1, 1);
-
-            calendar.selection_changed.connect ((date) => {
-                Idle.add (update_events);
-            });
         }
 
         this.visible = true;

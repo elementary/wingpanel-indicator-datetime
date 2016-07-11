@@ -116,7 +116,6 @@ namespace DateTime.Widgets {
         HashTable<E.Source, Gee.TreeMap<string, E.CalComponent> > source_events;
 
         private static CalendarModel? calendar_model = null;
-
         public enum Weekday {
             SUNDAY,
             MONDAY,
@@ -128,16 +127,27 @@ namespace DateTime.Widgets {
         }
 
         public static CalendarModel get_default () {
-            if (calendar_model == null) {
-                calendar_model = new CalendarModel ();
-                calendar_model.load_all_sources ();
+            lock (calendar_model) {
+                if (calendar_model == null) {
+                    calendar_model = new CalendarModel ();
+                    calendar_model.load_all_sources ();
+                }
             }
 
             return calendar_model;
         }
 
         private CalendarModel () {
-            /* It's dirty, but there is no other way to get it for the moment. */
+            // threaded initalization
+            try {
+                new Thread<bool> .try ("loader", threaded_init);
+            } catch (Error e) {
+                stderr.printf ("Error: %s\n", e.message);
+            }
+        }
+
+        private bool threaded_init () {
+             /* It's dirty, but there is no other way to get it for the moment. */
             string output;
             int week_start = 2;
             try {
@@ -200,6 +210,8 @@ namespace DateTime.Widgets {
             } catch (GLib.Error error) {
                 critical (error.message);
             }
+            parameters_changed ();
+            return true;
         }
 
         /* --- Public Methods ---// */
@@ -454,7 +466,7 @@ namespace DateTime.Widgets {
                 updated_events.add (event);
                 debug_event (source, event);
             }
-           
+
             events_updated (source, updated_events.read_only_view);
         }
 

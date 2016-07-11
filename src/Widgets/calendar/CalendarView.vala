@@ -46,8 +46,6 @@ public class DateTime.Widgets.CalendarView : Gtk.Grid {
         stack.show_all ();
         stack.expand = true;
 
-        sync_with_model ();
-
         var model = CalendarModel.get_default ();
         model.parameters_changed.connect (on_model_parameters_changed);
 
