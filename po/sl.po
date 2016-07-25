@@ -3,14 +3,14 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-05-02 05:12-0500\n"
-"PO-Revision-Date: 2016-06-04 12:36+0000\n"
+"PO-Revision-Date: 2016-07-24 10:26+0000\n"
 "Last-Translator: Jernej Virag <Unknown>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2016-06-05 05:55+0000\n"
-"X-Generator: Launchpad (build 18086)\n"
+"X-Launchpad-Export-Date: 2016-07-25 05:37+0000\n"
+"X-Generator: Launchpad (build 18147)\n"
 
 #: ../src/Indicator.vala:38
 msgid "Date & Time"
@@ -22,7 +22,7 @@ msgstr "Indikator za datum in čas"
 
 #: ../src/Indicator.vala:81
 msgid "Date & Time Settings…"
-msgstr "Nastavitve časa in datuma ..."
+msgstr "Nastavitve datuma in časa ..."
 
 #. //valadoc.org/#!api=glib-2.0/GLib.DateTime.format
 #: ../src/Indicator.vala:142
