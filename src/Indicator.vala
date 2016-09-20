@@ -18,8 +18,6 @@
  */
 
 public class DateTime.Indicator : Wingpanel.Indicator {
-    private const string SETTINGS_EXEC = "/usr/bin/switchboard datetime";
-
     private Widgets.PanelLabel panel_label;
 
     private Gtk.Grid main_grid;
@@ -141,8 +139,17 @@ public class DateTime.Indicator : Wingpanel.Indicator {
     }
 
     private void show_settings () {
-        var cmd = new Granite.Services.SimpleCommand ("/usr/bin", SETTINGS_EXEC);
-        cmd.run ();
+        close ();
+
+        var list = new List<string> ();
+        list.append ("datetime");
+
+        try {
+            var appinfo = AppInfo.create_from_commandline ("switchboard", null, AppInfoCreateFlags.SUPPORTS_URIS);
+            appinfo.launch_uris (list, null);
+        } catch (Error e) {
+            warning ("%s\n", e.message);
+        }
     }
 }
 
