@@ -1,3 +1,9 @@
+wingpanel-indicator-datetime (2.0.1) xenial; urgency=medium
+
+  * New upstream release.
+
+ -- Cody Garver <cody@elementary.io>  Sun, 30 Oct 2016 23:09:58 +0100
+
 wingpanel-indicator-datetime (2.0) xenial; urgency=medium
 
   * New upstream release.
