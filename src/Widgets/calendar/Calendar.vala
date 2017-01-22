@@ -71,8 +71,7 @@ namespace DateTime.Widgets {
             var parameter_string = @" --show-day $selected_day/$selected_month/$selected_year";
             var command = CALENDAR_EXEC + parameter_string;
 
-            var cmd = new Granite.Services.SimpleCommand ("/usr/bin", command);
-            cmd.run ();
+            Granite.Services.System.execute_command (command);
         }
 
         public override bool draw (Cairo.Context cr) {
