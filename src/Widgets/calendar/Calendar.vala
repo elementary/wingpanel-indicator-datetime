@@ -63,12 +63,9 @@ namespace DateTime.Widgets {
 
         // TODO: As far as maya supports it use the Dbus Activation feature to run the calendar-app.
         public void show_date_in_maya (GLib.DateTime date) {
-            int selected_year, selected_month, selected_day;
-            selected_year = date.get_year ();
-            selected_month = date.get_month ();
-            selected_day= date.get_day_of_month ();
+            var iso_date_string = date.format ("%F");
 
-            var parameter_string = @" --show-day $selected_day/$selected_month/$selected_year";
+            var parameter_string = @" --show-day $iso_date_string";
             var command = CALENDAR_EXEC + parameter_string;
 
             var cmd = new Granite.Services.SimpleCommand ("/usr/bin", command);
