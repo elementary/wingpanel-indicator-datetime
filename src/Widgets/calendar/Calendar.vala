@@ -69,9 +69,13 @@ namespace DateTime.Widgets {
             selected_day= date.get_day_of_month ();
 
             var parameter_string = @" --show-day $selected_day/$selected_month/$selected_year";
-            var command = CALENDAR_EXEC + parameter_string;
-
-            Granite.Services.System.execute_command (command);
+            try {
+                var appinfo = AppInfo.create_from_commandline (CALENDAR_EXEC + parameter_string, null, AppInfoCreateFlags.NONE);
+                appinfo.launch_uris (null, null);
+            } catch (GLib.Error e) {
+                warning ("Unable to start calendar, error: %s", e.message);
+            }
+            
         }
 
         public override bool draw (Cairo.Context cr) {
