@@ -68,8 +68,12 @@ namespace DateTime.Widgets {
             var parameter_string = @" --show-day $iso_date_string";
             var command = CALENDAR_EXEC + parameter_string;
 
-            var cmd = new Granite.Services.SimpleCommand ("/usr/bin", command);
-            cmd.run ();
+            try {
+                var appinfo = AppInfo.create_from_commandline (command, null, AppInfoCreateFlags.NONE);
+                appinfo.launch_uris (null, null);
+            } catch (GLib.Error e) {
+                warning ("Unable to start calendar, error: %s", e.message);
+            }
         }
 
         public override bool draw (Cairo.Context cr) {
