@@ -64,9 +64,7 @@ namespace DateTime.Widgets {
         // TODO: As far as maya supports it use the Dbus Activation feature to run the calendar-app.
         public void show_date_in_maya (GLib.DateTime date) {
             var iso_date_string = date.format ("%F");
-
-            var parameter_string = @" --show-day $iso_date_string";
-            var command = CALENDAR_EXEC + parameter_string;
+            var command = CALENDAR_EXEC + @" --show-day $iso_date_string";
 
             try {
                 var appinfo = AppInfo.create_from_commandline (command, null, AppInfoCreateFlags.NONE);
