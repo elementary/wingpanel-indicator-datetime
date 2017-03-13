@@ -138,7 +138,15 @@ public class DateTime.Widgets.CalendarView : Gtk.Grid {
 
         // keep focus date on the same day of the month
         if (selected_date != null) {
-            var bumpdate = model.month_start.add_days (selected_date.get_day_of_month() - 1);
+            var month = (GLib.DateMonth)model.month_start.get_month ();
+            var year = (GLib.DateYear)model.month_start.get_year ();
+            int days_in_month = GLib.Date.get_days_in_month (month, year);
+            GLib.DateTime bumpdate;
+            if (selected_date.get_day_of_month () > days_in_month) {
+                bumpdate = model.month_start.add_days (days_in_month - 1);
+            } else {
+                bumpdate = model.month_start.add_days (selected_date.get_day_of_month() - 1);
+            }
             grid.focus_date (bumpdate);
         }
 
