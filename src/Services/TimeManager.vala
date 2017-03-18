@@ -17,12 +17,19 @@
  * Boston, MA 02111-1307, USA.
  */
 
+[DBus (name = "org.freedesktop.login1.Manager")]
+interface Manager : Object {
+	public signal void prepare_for_sleep (bool sleeping);
+}
+
 public class DateTime.Services.TimeManager : Gtk.Calendar {
     private static TimeManager? instance = null;
 
     public signal void minute_changed ();
 
     private GLib.DateTime? current_time = null;
+    private uint? timeout_id = null;
+    private Manager? manager = null;
 
     public TimeManager () {
         update_current_time ();
@@ -31,19 +38,35 @@ public class DateTime.Services.TimeManager : Gtk.Calendar {
             return;
         }
 
-        Timeout.add (calculate_time_until_next_minute (), () => {
+        add_timeout ();
+        try {
+            // Listen for the signal that is fired when waking up from sleep, then update time
+            manager = Bus.get_proxy_sync (BusType.SYSTEM, "org.freedesktop.login1", "/org/freedesktop/login1");
+            manager.prepare_for_sleep.connect ((sleeping) => {
+                if (!sleeping) {
+                    update_current_time ();
+                    minute_changed ();
+                    add_timeout ();
+                }
+            });
+        } catch (Error e) {
+            warning (e.message);
+        }
+    }
+
+    private void add_timeout () {
+        if (timeout_id != null) {
+            Source.remove (timeout_id);
+        }
+
+        timeout_id = Timeout.add (calculate_time_until_next_minute (), () => {
             update_current_time ();
             minute_changed ();
 
-            Timeout.add (calculate_time_until_next_minute (), () => {
-                update_current_time ();
-                minute_changed ();
-
-                return true;
-            });
+            add_timeout ();
 
             return false;
-        });
+        });    
     }
 
     public string format (string format) {
