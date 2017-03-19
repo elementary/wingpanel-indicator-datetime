@@ -77,10 +77,8 @@ public class DateTime.Services.TimeManager : Gtk.Calendar {
         }
 
         timeout_id = Timeout.add (timeout, () => {
-            warning ("Update");
             update_current_time ();
             minute_changed ();
-
             add_timeout (update_fast);
 
             return false;
