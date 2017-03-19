@@ -40,6 +40,8 @@ public class DateTime.Services.TimeManager : Gtk.Calendar {
 
         add_timeout ();
         try {
+            // Listen for the D-BUS server that controls time settings
+            Bus.watch_name (BusType.SYSTEM, "org.freedesktop.timedate1", BusNameWatcherFlags.NONE, on_watch, on_unwatch);
             // Listen for the signal that is fired when waking up from sleep, then update time
             manager = Bus.get_proxy_sync (BusType.SYSTEM, "org.freedesktop.login1", "/org/freedesktop/login1");
             manager.prepare_for_sleep.connect ((sleeping) => {
@@ -54,16 +56,32 @@ public class DateTime.Services.TimeManager : Gtk.Calendar {
         }
     }
 
-    private void add_timeout () {
+    private void on_watch (DBusConnection conn) {
+        // Start updating the time display quicker because someone is changing settings
+        add_timeout (true);         
+    }
+
+    private void on_unwatch (DBusConnection conn) {
+        // Stop updating the time display quicker
+        add_timeout (false);         
+    }
+
+    private void add_timeout (bool update_fast = false) {
         if (timeout_id != null) {
             Source.remove (timeout_id);
         }
+        
+        uint timeout = calculate_time_until_next_minute ();
+        if (update_fast) {
+            timeout = 500;
+        }
 
-        timeout_id = Timeout.add (calculate_time_until_next_minute (), () => {
+        timeout_id = Timeout.add (timeout, () => {
+            warning ("Update");
             update_current_time ();
             minute_changed ();
 
-            add_timeout ();
+            add_timeout (update_fast);
 
             return false;
         });    
