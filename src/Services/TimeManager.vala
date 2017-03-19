@@ -84,7 +84,7 @@ public class DateTime.Services.TimeManager : Gtk.Calendar {
             add_timeout (update_fast);
 
             return false;
-        });    
+        });
     }
 
     public string format (string format) {
