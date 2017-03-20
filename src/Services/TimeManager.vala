@@ -17,12 +17,19 @@
  * Boston, MA 02111-1307, USA.
  */
 
+[DBus (name = "org.freedesktop.login1.Manager")]
+interface Manager : Object {
+	public signal void prepare_for_sleep (bool sleeping);
+}
+
 public class DateTime.Services.TimeManager : Gtk.Calendar {
     private static TimeManager? instance = null;
 
     public signal void minute_changed ();
 
     private GLib.DateTime? current_time = null;
+    private uint? timeout_id = null;
+    private Manager? manager = null;
 
     public TimeManager () {
         update_current_time ();
@@ -31,16 +38,48 @@ public class DateTime.Services.TimeManager : Gtk.Calendar {
             return;
         }
 
-        Timeout.add (calculate_time_until_next_minute (), () => {
+        add_timeout ();
+        try {
+            // Listen for the D-BUS server that controls time settings
+            Bus.watch_name (BusType.SYSTEM, "org.freedesktop.timedate1", BusNameWatcherFlags.NONE, on_watch, on_unwatch);
+            // Listen for the signal that is fired when waking up from sleep, then update time
+            manager = Bus.get_proxy_sync (BusType.SYSTEM, "org.freedesktop.login1", "/org/freedesktop/login1");
+            manager.prepare_for_sleep.connect ((sleeping) => {
+                if (!sleeping) {
+                    update_current_time ();
+                    minute_changed ();
+                    add_timeout ();
+                }
+            });
+        } catch (Error e) {
+            warning (e.message);
+        }
+    }
+
+    private void on_watch (DBusConnection conn) {
+        // Start updating the time display quicker because someone is changing settings
+        add_timeout (true);         
+    }
+
+    private void on_unwatch (DBusConnection conn) {
+        // Stop updating the time display quicker
+        add_timeout (false);         
+    }
+
+    private void add_timeout (bool update_fast = false) {
+        if (timeout_id != null) {
+            Source.remove (timeout_id);
+        }
+        
+        uint timeout = calculate_time_until_next_minute ();
+        if (update_fast) {
+            timeout = 500;
+        }
+
+        timeout_id = Timeout.add (timeout, () => {
             update_current_time ();
             minute_changed ();
-
-            Timeout.add (calculate_time_until_next_minute (), () => {
-                update_current_time ();
-                minute_changed ();
-
-                return true;
-            });
+            add_timeout (update_fast);
 
             return false;
         });
