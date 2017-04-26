@@ -3,6 +3,17 @@
 
 ## Building and Installation
 
+You'll need the following dependencies:
+
+* cmake
+* gobject-introspection
+* libecal1.2-dev
+* libedataserver1.2-dev
+* libical-dev
+* libgranite-dev
+* libwingpanel-2.0-dev
+* valac
+
 It's recommended to create a clean build environment
 
     mkdir build
