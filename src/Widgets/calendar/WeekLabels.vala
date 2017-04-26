@@ -18,11 +18,8 @@
  * Authored by: Maxwell Barvian
  *              Corentin Noël <corentin@elementaryos.org>
  */
- namespace DateTime.Widgets {
-/**
- * Represent the week labels at the left side of the grid.
- */
-public class WeekLabels : Gtk.Revealer {
+
+public class DateTime.Widgets.WeekLabels : Gtk.Revealer {
 
     private Gtk.Grid day_grid;
     private Gtk.Label[] labels;
@@ -34,15 +31,10 @@ public class WeekLabels : Gtk.Revealer {
         day_grid = new Gtk.Grid ();
         set_nr_of_weeks (5);
         day_grid.insert_row (1);
-        day_grid.set_column_homogeneous (true);
-        day_grid.set_row_homogeneous (true);
-        day_grid.row_spacing = 0;
+        day_grid.attach (new Gtk.Separator (Gtk.Orientation.VERTICAL), 1, 0, 1, 6);
+        day_grid.column_spacing = 9;
         day_grid.show ();
 
-        var style_provider = Util.Css.get_css_provider ();
-
-        // EventBox properties
-        day_grid.get_style_context().add_provider (style_provider, 600);
         day_grid.get_style_context().add_class ("weeks");
 
         add (day_grid);
@@ -62,6 +54,8 @@ public class WeekLabels : Gtk.Revealer {
             int days_to_add = (8 - next.get_day_of_week()) % 7;
             next = next.add_days(days_to_add);
             foreach (var label in labels) {
+                label.get_style_context ().add_class ("h4");
+                label.height_request = 30;
                 label.label = next.get_week_of_year ().to_string();
                 next = next.add_weeks (1);
             }
@@ -100,24 +94,4 @@ public class WeekLabels : Gtk.Revealer {
             labels[c].show ();
         }
     }
-
-    public override bool draw (Cairo.Context cr) {
-        base.draw (cr);
-        if (!child_revealed)
-            return false;
-        Gtk.Allocation size;
-        get_allocation (out size);
-        cr.set_source_rgba (0.0, 0.0, 0.0, 0.25);
-        cr.set_line_width (1.0);
-        cr.set_antialias (Cairo.Antialias.NONE);
-        cr.move_to (size.width - 0.5, 0.5);
-        cr.line_to (size.width - 0.5, size.height);
-        for (int i = 1; i < size.height / 25; i++) {
-            cr.move_to (0, i * 25 + 0.5);
-            cr.line_to (size.width + 0.5, i * 25 + 0.5);
-        }
-        cr.stroke ();
-        return false;
-    }
-}
 }

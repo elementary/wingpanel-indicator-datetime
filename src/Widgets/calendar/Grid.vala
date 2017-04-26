@@ -39,12 +39,9 @@ namespace DateTime.Widgets {
         private GridDay selected_gridday;
 
         public Grid () {
-            /* Gtk.Grid properties */
             insert_column (7);
             set_column_homogeneous (true);
             set_row_homogeneous (true);
-            column_spacing = 0;
-            row_spacing = 0;
 
             data = new Gee.HashMap<uint, GridDay> ();
             events |= Gdk.EventMask.SCROLL_MASK;
