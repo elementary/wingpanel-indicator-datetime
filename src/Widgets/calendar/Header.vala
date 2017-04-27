@@ -45,10 +45,7 @@ public class Header : Gtk.EventBox {
         for (int c = 0; c < 7; c++) {
             labels[c] = new Gtk.Label ("");
             labels[c].hexpand = true;
-            labels[c].margin_top = 4;
-            labels[c].margin_bottom = 2;
             var label_grid = new Gtk.Grid ();
-            // label_grid.draw.connect (on_draw);
             label_grid.add (labels[c]);
             header_grid.attach (label_grid, c, 0, 1, 1);
         }
@@ -60,6 +57,7 @@ public class Header : Gtk.EventBox {
         var date = Util.strip_time(new GLib.DateTime.now_local ());
         date = date.add_days (week_starts_on - date.get_day_of_week ());
         foreach (var label in labels) {
+            label.get_style_context ().add_class ("h4");
             label.label = date.format ("%a");
             date = date.add_days (1);
         }

@@ -73,27 +73,5 @@ namespace DateTime.Widgets {
                 warning ("Unable to start calendar, error: %s", e.message);
             }
         }
-
-        public override bool draw (Cairo.Context cr) {
-            base.draw (cr);
-            Gtk.Allocation size;
-            cal.get_allocation (out size);
-            cr.set_source_rgba (0.0, 0.0, 0.0, 0.25);
-            cr.set_line_width (1.0);
-            int y = 59;
-            int height = size.height - 25;
-            cr.move_to (4.5, y + 0.5);
-            cr.line_to (size.width - 4.5, y + 0.5);
-            cr.curve_to (size.width - 4.5, y + 0.5, size.width - 0.5, y + 0.5, size.width - 0.5, y + 4.5);
-            cr.line_to (size.width - 0.5, y + height - 4.5);
-            cr.curve_to (size.width - 0.5, y + height - 4.5, size.width - 0.5, y + height - 0.5, size.width - 4.5, y + height - 0.5);
-            cr.line_to (4.5, y + height - 0.5);
-            cr.curve_to (4.5, y + height - 0.5, 0.5, y + height - 0.5, 0.5, y + height - 4.5);
-            cr.line_to (0.5, y + 4.5);
-            cr.curve_to (0.5, y + 4.5, 0.5, y + 0.5, 4.5, y + 0.5);
-            cr.stroke ();
-
-            return false;
-        }
     }
 }

@@ -24,6 +24,12 @@
  */
 public class DateTime.Widgets.GridDay : Gtk.EventBox {
 
+    const string DAY_CSS = """
+        .circular {
+            border-radius: 50%;
+        }
+    """;
+
     /*
      * Event emitted when the day is double clicked or the ENTER key is pressed.
      */
@@ -39,19 +45,24 @@ public class DateTime.Widgets.GridDay : Gtk.EventBox {
         this.id = id;
 
         label = new Gtk.Label ("");
-        set_size_request (32, 25);
+        set_size_request (32, 32);
+
+        var provider = new Gtk.CssProvider ();
+        try {
+            provider.load_from_data (DAY_CSS, DAY_CSS.length);
+            Gtk.StyleContext.add_provider_for_screen (Gdk.Screen.get_default (), provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
+        } catch (Error e) {
+            critical (e.message);
+        }
+
+        get_style_context ().add_class ("circular");
+
         // EventBox Properties
         can_focus = true;
         events |= Gdk.EventMask.BUTTON_PRESS_MASK;
         events |= Gdk.EventMask.KEY_PRESS_MASK;
         events |= Gdk.EventMask.SMOOTH_SCROLL_MASK;
-        var style_provider = Util.Css.get_css_provider ();
-        get_style_context ().add_provider (style_provider, 600);
-        get_style_context ().add_class ("cell");
 
-        label.halign = Gtk.Align.CENTER;
-        label.valign = Gtk.Align.CENTER;
-        label.get_style_context ().add_provider (style_provider, 600);
         label.name = "date";
 
         add (label);
@@ -61,33 +72,6 @@ public class DateTime.Widgets.GridDay : Gtk.EventBox {
         button_press_event.connect (on_button_press);
         key_press_event.connect (on_key_press);
         scroll_event.connect ((event) => {return Util.on_scroll_event (event);});
-    }
-
-    public override bool draw (Cairo.Context cr) {
-        base.draw (cr);
-        Gtk.Allocation size;
-        get_allocation (out size);
-
-        cr.set_source_rgba (0.0, 0.0, 0.0, 0.25);
-        cr.set_line_width (1.0);
-
-        // Draw left and top black strokes
-        if (id % 7 == 0) {
-            cr.move_to (0.5, 0.5);
-        } else {
-            cr.move_to (0.5, size.height); // start in bottom left. 0.5 accounts for cairo's default stroke offset of 1/2 pixels
-            cr.line_to (0.5, 0.5); // move to upper left corner
-        }
-        if (id > 6) {
-            cr.line_to (size.width + 0.5, 0.5); // move to upper right corner
-        }
-        cr.stroke ();
-
-        // Draw inner highlight stroke
-        cr.rectangle (1, 1, size.width - 1, size.height - 1);
-        cr.set_source_rgba (1.0, 1.0, 1.0, 0.2);
-        cr.stroke ();
-        return false;
     }
 
     public void update_date (GLib.DateTime date) {
