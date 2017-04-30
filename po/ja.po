@@ -3,9 +3,9 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-05-02 05:12-0500\n"
-"PO-Revision-Date: 2017-04-06 12:26+0000\n"
+"PO-Revision-Date: 2017-04-30 10:10+0000\n"
 "Last-Translator: Ryo Nakano <nscnskichiro0911@gmail.com>\n"
-"Language-Team: Japanese <http://weblate.elementary.io/projects/desktop"
+"Language-Team: Japanese <https://l10n.elementary.io/projects/wingpanel"
 "/wingpanel-indicator-datetime/ja/>\n"
 "Language: ja\n"
 "MIME-Version: 1.0\n"
@@ -25,7 +25,7 @@ msgstr "日付と時刻の表示"
 
 #: ../src/Indicator.vala:81
 msgid "Date & Time Settings…"
-msgstr "日付と時間の設定…"
+msgstr "日付と時刻の設定…"
 
 #. //valadoc.org/#!api=glib-2.0/GLib.DateTime.format
 #: ../src/Indicator.vala:142
