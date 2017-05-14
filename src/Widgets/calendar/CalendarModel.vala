@@ -191,7 +191,9 @@ namespace DateTime.Widgets {
             }
 
             month_start = Util.get_start_of_month ();
+            compute_ranges ();
 
+            notify["month-start"].connect (on_parameter_changed);
             try {
                 registry = new E.SourceRegistry.sync (null);
                 registry.source_removed.connect (remove_source);
@@ -210,9 +212,8 @@ namespace DateTime.Widgets {
                 critical (error.message);
             }
 
-            on_parameter_changed ();
-            notify["month-start"].connect (on_parameter_changed);
-
+            load_all_sources ();
+            parameters_changed ();
             return true;
         }
 
