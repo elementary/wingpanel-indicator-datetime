@@ -137,34 +137,9 @@ namespace DateTime.Widgets {
         }
 
         construct {
-            this.month_start = Util.get_start_of_month ();
-            compute_ranges ();
-
             source_client = new HashTable<string, E.CalClient> (str_hash, str_equal);
             source_events = new HashTable<E.Source, Gee.TreeMap<string, E.CalComponent> > (Util.source_hash_func, Util.source_equal_func);
             source_view = new HashTable<string, E.CalClientView> (str_hash, str_equal);
-
-            notify["month-start"].connect (on_parameter_changed);
-            try {
-                registry = new E.SourceRegistry.sync (null);
-                registry.source_removed.connect (remove_source);
-                registry.source_changed.connect (on_source_changed);
-                registry.source_added.connect (add_source);
-
-                /* Add sources */
-                foreach (var source in registry.list_sources (E.SOURCE_EXTENSION_CALENDAR)) {
-                    E.SourceCalendar cal = (E.SourceCalendar)source.get_extension (E.SOURCE_EXTENSION_CALENDAR);
-
-                    if (cal.selected == true && source.enabled == true) {
-                        add_source (source);
-                    }
-                }
-            } catch (GLib.Error error) {
-                critical (error.message);
-            }
-
-            load_all_sources ();
-            parameters_changed ();
         }
 
         private CalendarModel () {
@@ -215,6 +190,30 @@ namespace DateTime.Widgets {
                     break;
             }
 
+            month_start = Util.get_start_of_month ();
+            compute_ranges ();
+
+            notify["month-start"].connect (on_parameter_changed);
+            try {
+                registry = new E.SourceRegistry.sync (null);
+                registry.source_removed.connect (remove_source);
+                registry.source_changed.connect (on_source_changed);
+                registry.source_added.connect (add_source);
+
+                /* Add sources */
+                foreach (var source in registry.list_sources (E.SOURCE_EXTENSION_CALENDAR)) {
+                    E.SourceCalendar cal = (E.SourceCalendar)source.get_extension (E.SOURCE_EXTENSION_CALENDAR);
+
+                    if (cal.selected == true && source.enabled == true) {
+                        add_source (source);
+                    }
+                }
+            } catch (GLib.Error error) {
+                critical (error.message);
+            }
+
+            load_all_sources ();
+            parameters_changed ();
             return true;
         }
 
