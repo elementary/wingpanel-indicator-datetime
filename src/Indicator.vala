@@ -51,6 +51,7 @@ public class DateTime.Indicator : Wingpanel.Indicator {
             calendar.day_double_click.connect (() => {
                 this.close ();
             });
+            calendar.margin_top = 10;
             calendar.margin_bottom = 6;
             calendar.selection_changed.connect ((date) => {
                 Idle.add (update_events);
