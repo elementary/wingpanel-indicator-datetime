@@ -1,4 +1,5 @@
 # Wingpanel Date &amp; Time Indicator
+[![Packaging status](https://repology.org/badge/tiny-repos/wingpanel-indicator-datetime.svg)](https://repology.org/metapackage/wingpanel-indicator-datetime)
 [![l10n](https://l10n.elementary.io/widgets/wingpanel/wingpanel-indicator-datetime/svg-badge.svg)](https://l10n.elementary.io/projects/wingpanel/wingpanel-indicator-datetime)
 
 ![Screenshot](data/screenshot.png?raw=true)
