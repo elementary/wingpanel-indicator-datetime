@@ -22,9 +22,6 @@ public class DateTime.Indicator : Wingpanel.Indicator {
 
     private Gtk.Grid main_grid;
 
-    private Gtk.Label weekday_label;
-    private Gtk.Label date_label;
-
     private Widgets.Calendar calendar;
 
     private Wingpanel.Widgets.Button settings_button;
@@ -50,25 +47,11 @@ public class DateTime.Indicator : Wingpanel.Indicator {
             int position = 0;
             main_grid = new Gtk.Grid ();
 
-            weekday_label = new Gtk.Label ("");
-            weekday_label.get_style_context ().add_class ("h2");
-            weekday_label.halign = Gtk.Align.START;
-            weekday_label.margin_top = 10;
-            weekday_label.margin_start = 20;
-            main_grid.attach (weekday_label, 0, position++, 1, 1);
-
-            date_label = new Gtk.Label ("");
-            date_label.get_style_context ().add_class ("h3");
-            date_label.halign = Gtk.Align.START;
-            date_label.margin_start = 20;
-            date_label.margin_top = 10;
-            date_label.margin_bottom = 15;
-            main_grid.attach (date_label, 0, position++, 1, 1);
-
             calendar = new Widgets.Calendar ();
             calendar.day_double_click.connect (() => {
                 this.close ();
             });
+            calendar.margin_top = 6;
             calendar.margin_bottom = 6;
             calendar.selection_changed.connect ((date) => {
                 Idle.add (update_events);
@@ -116,26 +99,17 @@ public class DateTime.Indicator : Wingpanel.Indicator {
     }
 
     public override void opened () {
-        update_today_button ();
         calendar.show_today ();
 
-        Services.TimeManager.get_default ().minute_changed.connect (update_today_button);
         Widgets.CalendarModel.get_default ().events_added.connect (update_events_model);
         Widgets.CalendarModel.get_default ().events_updated.connect (update_events_model);
         Widgets.CalendarModel.get_default ().events_removed.connect (update_events_model);
     }
 
     public override void closed () {
-        Services.TimeManager.get_default ().minute_changed.disconnect (update_today_button);
         Widgets.CalendarModel.get_default ().events_added.disconnect (update_events_model);
         Widgets.CalendarModel.get_default ().events_updated.disconnect (update_events_model);
         Widgets.CalendarModel.get_default ().events_removed.disconnect (update_events_model);
-    }
-
-    private void update_today_button () {
-        weekday_label.set_label (Services.TimeManager.get_default ().format ("%A"));
-        /* TRANSLATORS: Date format in the popover excluding the weekday; following http://valadoc.org/#!api=glib-2.0/GLib.DateTime.format */
-        date_label.set_label (Services.TimeManager.get_default ().format (_("%B %e, %Y")));
     }
 
     private void show_settings () {
