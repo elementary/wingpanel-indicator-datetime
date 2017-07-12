@@ -86,9 +86,31 @@ public class DateTime.Indicator : Wingpanel.Indicator {
             w.destroy ();
         }
         foreach (var e in Widgets.CalendarModel.get_default ().get_events (calendar.selected_date)) {
-                var but = new Wingpanel.Widgets.Button (e.get_label (), e.get_icon ());
-                event_box.add (but);
-                but.clicked.connect (() => {
+                var menuitem_icon = new Gtk.Image.from_icon_name (e.get_icon (), Gtk.IconSize.MENU);
+                menuitem_icon.valign = Gtk.Align.START;
+
+                var menuitem_label = new Gtk.Label (e.get_label ());
+                menuitem_label.max_width_chars = 29;
+                menuitem_label.wrap = true;
+                menuitem_label.xalign = 0;
+
+                var menuitem_grid = new Gtk.Grid ();
+                menuitem_grid.column_spacing = 6;
+                menuitem_grid.margin_end = 6;
+                menuitem_grid.margin_start = 6;
+                menuitem_grid.add (menuitem_icon);
+                menuitem_grid.add (menuitem_label);
+
+                var menuitem = new Gtk.Button ();
+                menuitem.add (menuitem_grid);
+
+                var style_context = menuitem.get_style_context ();
+                style_context.add_class (Gtk.STYLE_CLASS_MENUITEM);
+                style_context.remove_class (Gtk.STYLE_CLASS_BUTTON);
+                style_context.remove_class ("text-button");
+
+                event_box.add (menuitem);
+                menuitem.clicked.connect (() => {
                     calendar.show_date_in_maya (e.date);
                     this.close ();
                 });
