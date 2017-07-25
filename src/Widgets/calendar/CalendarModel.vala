@@ -140,81 +140,40 @@ namespace DateTime.Widgets {
             source_client = new HashTable<string, E.CalClient> (str_hash, str_equal);
             source_events = new HashTable<E.Source, Gee.TreeMap<string, E.CalComponent> > (Util.source_hash_func, Util.source_equal_func);
             source_view = new HashTable<string, E.CalClientView> (str_hash, str_equal);
-        }
-
-        private CalendarModel () {
-            // threaded initalization
-            try {
-                new Thread<bool> .try ("loader", threaded_init);
-            } catch (Error e) {
-                stderr.printf ("Error: %s\n", e.message);
-            }
-        }
-
-        private bool threaded_init () {
-             /* It's dirty, but there is no other way to get it for the moment. */
-            string output;
-            int week_start = 2;
-            try {
-                GLib.Process.spawn_command_line_sync ("locale first_weekday", out output, null, null);
-                week_start = int.parse (output);
-            } catch (SpawnError e) {
-                critical (e.message);
-            }
-
-            switch (week_start) {
-                case 1 :
-                    week_starts_on = Weekday.SUNDAY;
-                    break;
-                case 2:
-                    week_starts_on = Weekday.MONDAY;
-                    break;
-                case 3:
-                    week_starts_on = Weekday.TUESDAY;
-                    break;
-                case 4:
-                    week_starts_on = Weekday.WEDNESDAY;
-                    break;
-                case 5:
-                    week_starts_on = Weekday.THURSDAY;
-                    break;
-                case 6:
-                    week_starts_on = Weekday.FRIDAY;
-                    break;
-                case 7:
-                    week_starts_on = Weekday.SATURDAY;
-                    break;
-                default:
-                    week_starts_on = Weekday.MONDAY;
-                    message ("Locale has a bad first_weekday value");
-                    break;
+            int week_start = Posix.nl_langinfo2 (Posix.NLTime.FIRST_WEEKDAY).data[0];
+            if (week_start >= 1 && week_start <= 7) {
+                week_starts_on = (Weekday)week_start-1;
             }
 
             month_start = Util.get_start_of_month ();
             compute_ranges ();
-
             notify["month-start"].connect (on_parameter_changed);
+        }
+
+        private CalendarModel () {
+            open.begin ();
+        }
+
+        public async void open () {
             try {
-                registry = new E.SourceRegistry.sync (null);
+                registry = yield new E.SourceRegistry (null);
                 registry.source_removed.connect (remove_source);
                 registry.source_changed.connect (on_source_changed);
-                registry.source_added.connect (add_source);
+                registry.source_added.connect ((source) => add_source_async.begin (source));
 
-                /* Add sources */
-                foreach (var source in registry.list_sources (E.SOURCE_EXTENSION_CALENDAR)) {
+                // Add sources
+                registry.list_sources (E.SOURCE_EXTENSION_CALENDAR).foreach ((source) => {
                     E.SourceCalendar cal = (E.SourceCalendar)source.get_extension (E.SOURCE_EXTENSION_CALENDAR);
-
                     if (cal.selected == true && source.enabled == true) {
-                        add_source (source);
+                        add_source_async.begin (source);
                     }
-                }
+                });
+
+                load_all_sources ();
+                parameters_changed ();
             } catch (GLib.Error error) {
                 critical (error.message);
             }
-
-            load_all_sources ();
-            parameters_changed ();
-            return true;
         }
 
         /* --- Public Methods ---// */
@@ -276,10 +235,6 @@ namespace DateTime.Widgets {
                     }
                 }
             }
-        }
-
-        public void add_source (E.Source source) {
-            add_source_async.begin (source);
         }
 
         public void remove_source (E.Source source) {

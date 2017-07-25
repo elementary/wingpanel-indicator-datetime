@@ -111,10 +111,7 @@ public class DateTime.Widgets.CalendarView : Gtk.Grid {
         if (grid.grid_range != null && model.data_range.equals (grid.grid_range))
             return; // nothing to do
 
-        Idle.add ( () => {
-            sync_with_model ();
-            return false;
-        });
+        sync_with_model ();
     }
 
     //--- Helper Methods ---//
