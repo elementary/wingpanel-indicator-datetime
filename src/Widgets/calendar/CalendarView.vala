@@ -156,9 +156,9 @@ public class DateTime.Widgets.CalendarView : Gtk.Grid {
         }
 
         stack.set_visible_child (big_grid);
-        Timeout.add (stack.transition_duration, () => {
+        /*Timeout.add (stack.transition_duration, () => {
             previous_big_grid.destroy ();
             return false;
-        });
+        });*/
     }
 }
