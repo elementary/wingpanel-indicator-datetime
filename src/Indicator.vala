@@ -90,7 +90,8 @@ public class DateTime.Indicator : Wingpanel.Indicator {
                 menuitem_icon.valign = Gtk.Align.START;
 
                 var menuitem_label = new Gtk.Label (e.get_label ());
-                menuitem_label.max_width_chars = 29;
+                menuitem_label.hexpand = true;
+                menuitem_label.max_width_chars = 1;
                 menuitem_label.wrap = true;
                 menuitem_label.xalign = 0;
 
