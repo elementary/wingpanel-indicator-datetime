@@ -29,6 +29,8 @@ vala_precompile (VALA_C ${CMAKE_PROJECT_NAME}
   Services/ClockSettings.vala
   Services/SettingsManager.vala
   ${CMAKE_CURRENT_BINARY_DIR}/config.vala
+CUSTOM_VAPIS
+  ${CMAKE_SOURCE_DIR}/vapi/posix-extension.vapi
 PACKAGES
   wingpanel-2.0
   glib-2.0>=2.32
