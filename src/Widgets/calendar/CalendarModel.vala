@@ -142,7 +142,7 @@ namespace DateTime.Widgets {
             source_view = new HashTable<string, E.CalClientView> (str_hash, str_equal);
             int week_start = Posix.nl_langinfo2 (Posix.NLTime.FIRST_WEEKDAY).data[0];
             if (week_start >= 1 && week_start <= 7) {
-                week_starts_on = (Weekday)week_start-1;
+                week_starts_on = (Weekday) (week_start - 1);
             }
 
             month_start = Util.get_start_of_month ();
