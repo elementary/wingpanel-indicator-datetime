@@ -49,6 +49,16 @@ public class DateTime.Widgets.CalendarView : Gtk.Grid {
         var model = CalendarModel.get_default ();
         model.parameters_changed.connect (on_model_parameters_changed);
 
+        stack.notify["transition-running"].connect (() => {
+            if (stack.transition_running == false) {
+                stack.get_children ().foreach ((child) => {
+                    if (child != stack.visible_child) {
+                        child.destroy ();
+                    }
+                });
+            }
+        });
+
         Services.SettingsManager.get_default ().changed["show-weeks"].connect (on_show_weeks_changed);
         events |= Gdk.EventMask.BUTTON_PRESS_MASK;
         events |= Gdk.EventMask.KEY_PRESS_MASK;
@@ -125,7 +135,7 @@ public class DateTime.Widgets.CalendarView : Gtk.Grid {
         GLib.DateTime previous_first = null;
         if (grid.grid_range != null)
             previous_first = grid.grid_range.first;
-        var previous_big_grid = big_grid;
+
         big_grid = create_big_grid ();
         stack.add (big_grid);
 
@@ -156,9 +166,5 @@ public class DateTime.Widgets.CalendarView : Gtk.Grid {
         }
 
         stack.set_visible_child (big_grid);
-        Timeout.add (stack.transition_duration, () => {
-            previous_big_grid.destroy ();
-            return false;
-        });
     }
 }

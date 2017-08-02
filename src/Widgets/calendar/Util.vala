@@ -41,7 +41,6 @@ namespace Util {
         }
 
         public DateRange (GLib.DateTime first, GLib.DateTime last) {
-            assert (first.compare (last) <= 0);
             this.first = first;
             this.last = last;
         }
