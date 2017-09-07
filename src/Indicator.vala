@@ -138,14 +138,10 @@ public class DateTime.Indicator : Wingpanel.Indicator {
     private void show_settings () {
         close ();
 
-        var list = new List<string> ();
-        list.append ("datetime");
-
         try {
-            var appinfo = AppInfo.create_from_commandline ("switchboard", null, AppInfoCreateFlags.SUPPORTS_URIS);
-            appinfo.launch_uris (list, null);
+            AppInfo.launch_default_for_uri ("settings://time", null);
         } catch (Error e) {
-            warning ("%s\n", e.message);
+            warning ("Failed to open time and date settings: %s", e.message);
         }
     }
 }
