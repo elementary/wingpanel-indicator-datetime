@@ -112,7 +112,7 @@ public class DateTime.Widgets.CalendarView : Gtk.Grid {
 
     void on_show_weeks_changed () {
         var model = CalendarModel.get_default ();
-        weeks.update (model.data_range.first, model.num_weeks);
+        weeks.update (model.data_range.first_dt, model.num_weeks);
     }
 
     /* Indicates the month has changed */
@@ -129,18 +129,18 @@ public class DateTime.Widgets.CalendarView : Gtk.Grid {
     /* Sets the calendar widgets to the date range of the model */
     void sync_with_model () {
         var model = CalendarModel.get_default ();
-        if (grid.grid_range != null && (model.data_range.equals (grid.grid_range) || grid.grid_range.first.compare (model.data_range.first) == 0))
+        if (grid.grid_range != null && (model.data_range.equals (grid.grid_range) || grid.grid_range.first_dt.compare (model.data_range.first_dt) == 0))
             return; // nothing to do
 
         GLib.DateTime previous_first = null;
         if (grid.grid_range != null)
-            previous_first = grid.grid_range.first;
+            previous_first = grid.grid_range.first_dt;
 
         big_grid = create_big_grid ();
         stack.add (big_grid);
 
         header.update_columns (model.week_starts_on);
-        weeks.update (model.data_range.first, model.num_weeks);
+        weeks.update (model.data_range.first_dt, model.num_weeks);
         grid.set_range (model.data_range, model.month_start);
 
         // keep focus date on the same day of the month
@@ -158,7 +158,7 @@ public class DateTime.Widgets.CalendarView : Gtk.Grid {
         }
 
         if (previous_first != null) {
-            if (previous_first.compare (grid.grid_range.first) == -1) {
+            if (previous_first.compare (grid.grid_range.first_dt) == -1) {
                 stack.transition_type = Gtk.StackTransitionType.SLIDE_LEFT;
             } else {
                 stack.transition_type = Gtk.StackTransitionType.SLIDE_RIGHT;
