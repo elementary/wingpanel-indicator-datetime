@@ -61,7 +61,7 @@ namespace DateTime.Widgets {
                 return summary;
             } else if (alarm) {
                 return "%s - %s".printf (start_time.format (Util.TimeFormat ()), summary);
-            } else if (range.days > 0 && date.compare (range.first) != 0) {
+            } else if (range.days > 0 && date.compare (range.first_dt) != 0) {
                 return summary;
             }
             return "%s - %s".printf (summary, start_time.format (Util.TimeFormat ()));
@@ -320,8 +320,8 @@ namespace DateTime.Widgets {
                 (Gee.EqualDataFunc<E.CalComponent>? )Util.calcomponent_equal_func);
             source_events.set (source, events);
             /* query client view */
-            var iso_first = E.Util.isodate_from_time_t ((time_t)data_range.first.to_unix ());
-            var iso_last = E.Util.isodate_from_time_t ((time_t)data_range.last.add_days (1).to_unix ());
+            var iso_first = E.Util.isodate_from_time_t ((time_t)data_range.first_dt.to_unix ());
+            var iso_last = E.Util.isodate_from_time_t ((time_t)data_range.last_dt.add_days (1).to_unix ());
             var query = @"(occur-in-time-range? (make-time \"$iso_first\") (make-time \"$iso_last\"))";
 
             E.CalClient client;

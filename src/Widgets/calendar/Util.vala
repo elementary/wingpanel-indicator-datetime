@@ -22,8 +22,8 @@
 namespace Util {
     /* Represents date range from 'first' to 'last' inclusive */
     public class DateRange : Object, Gee.Traversable<GLib.DateTime>, Gee.Iterable<GLib.DateTime> {
-        public GLib.DateTime first { get; private set; }
-        public GLib.DateTime last { get; private set; }
+        public GLib.DateTime first_dt { get; private set; }
+        public GLib.DateTime last_dt { get; private set; }
         public bool @foreach (Gee.ForallFunc<GLib.DateTime> f) {
             foreach (var date in this) {
                 if (f (date) == false) {
@@ -36,21 +36,21 @@ namespace Util {
 
         public int64 days {
             get {
-                return last.difference (first) / GLib.TimeSpan.DAY;
+                return last_dt.difference (first_dt) / GLib.TimeSpan.DAY;
             }
         }
 
         public DateRange (GLib.DateTime first, GLib.DateTime last) {
-            this.first = first;
-            this.last = last;
+            first_dt = first;
+            last_dt = last;
         }
 
         public DateRange.copy (DateRange date_range) {
-            this(date_range.first, date_range.last);
+            this(date_range.first_dt, date_range.last_dt);
         }
 
         public bool equals (DateRange other) {
-            return (first == other.first && last == other.last);
+            return (first_dt == other.first_dt && last_dt == other.last_dt);
         }
 
         public Type element_type {
@@ -64,7 +64,7 @@ namespace Util {
         }
 
         public bool contains (GLib.DateTime time) {
-            return (first.compare (time) < 1) && (last.compare (time) > -1);
+            return (first_dt.compare (time) < 1) && (last_dt.compare (time) > -1);
         }
 
         public Gee.SortedSet<GLib.DateTime> to_set () {
@@ -106,13 +106,13 @@ namespace Util {
 
         public DateIterator (DateRange range) {
             this.range = range;
-            this.current = range.first.add_days (-1);
+            this.current = range.first_dt.add_days (-1);
         }
 
         public bool @foreach (Gee.ForallFunc<GLib.DateTime> f) {
-            var element = range.first;
+            var element = range.first_dt;
 
-            while (element.compare (range.last) < 0) {
+            while (element.compare (range.last_dt) < 0) {
                 if (f (element) == false) {
                     return false;
                 }
@@ -134,11 +134,11 @@ namespace Util {
         }
 
         public bool has_next () {
-            return current.compare (range.last) < 0;
+            return current.compare (range.last_dt) < 0;
         }
 
         public bool first () {
-            current = range.first;
+            current = range.first_dt;
 
             return true;
         }
@@ -383,8 +383,8 @@ namespace Util {
             var exdate = property.get_exdate ();
             var date = ical_to_date_time (exdate);
             dateranges.@foreach ((daterange) => {
-                var first = daterange.first;
-                var last = daterange.last;
+                var first = daterange.first_dt;
+                var last = daterange.last_dt;
 
                 if (first.get_year () <= date.get_year () && last.get_year () >= date.get_year ()) {
                     if (first.get_day_of_year () <= date.get_day_of_year () && last.get_day_of_year () >= date.get_day_of_year ()) {
@@ -425,7 +425,7 @@ namespace Util {
             int i = 1;
             int n = i * rrule.interval;
 
-            while (view_range.last.compare (start.add_days (n)) > 0) {
+            while (view_range.last_dt.compare (start.add_days (n)) > 0) {
                 dateranges.add (new Util.DateRange (start.add_days (n), end.add_days (n)));
                 i++;
                 n = i * rrule.interval;
@@ -455,7 +455,7 @@ namespace Util {
             bool is_null_time = rrule.until.is_null_time () == 1;
             var temp_start = start.add_years (n);
 
-            while (view_range.last.compare (temp_start) > 0) {
+            while (view_range.last_dt.compare (temp_start) > 0) {
                 if (is_null_time == false) {
                     if (temp_start.get_year () > rrule.until.year) {
                         break;
@@ -493,7 +493,7 @@ namespace Util {
                     var start_ical_day = get_date_from_ical_day (start.add_months (n), rrule.by_day[k]);
                     int week_of_month = (int)GLib.Math.ceil ((double)start.get_day_of_month () / 7);
 
-                    while (view_range.last.compare (start_ical_day) > 0) {
+                    while (view_range.last_dt.compare (start_ical_day) > 0) {
                         if (is_null_time == false) {
                             if (start_ical_day.get_year () > rrule.until.year) {
                                 break;
@@ -540,7 +540,7 @@ namespace Util {
                 bool is_null_time = rrule.until.is_null_time () == 1;
                 var temp_start = start.add_months (n);
 
-                while (view_range.last.compare (temp_start) > 0) {
+                while (view_range.last_dt.compare (temp_start) > 0) {
                     if (is_null_time == false) {
                         if (temp_start.get_year () > rrule.until.year) {
                             break;
@@ -617,7 +617,7 @@ namespace Util {
                 bool is_null_time = rrule.until.is_null_time () == 1;
                 var temp_start = start.add_days (n);
 
-                while (view_range.last.compare (temp_start) > 0) {
+                while (view_range.last_dt.compare (temp_start) > 0) {
                     if (is_null_time == false) {
                         if (temp_start.get_year () > rrule.until.year) {
                             break;
