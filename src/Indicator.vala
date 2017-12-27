@@ -46,6 +46,8 @@ public class DateTime.Indicator : Wingpanel.Indicator {
         if (main_grid == null) {
             int position = 0;
             main_grid = new Gtk.Grid ();
+			main_grid.halign = Gtk.Align.CENTER;
+			main_grid.valign = Gtk.Align.START;
 
             calendar = new Widgets.Calendar ();
             calendar.day_double_click.connect (() => {
