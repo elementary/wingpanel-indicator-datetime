@@ -55,9 +55,9 @@ public class DateTime.Widgets.PanelLabel : Gtk.Grid {
     private void update_labels () {
         if (show_date) {
             /// TRANSLATORS: Date format in the panel following http://valadoc.org/#!api=glib-2.0/GLib.DateTime.format */
-            date_label.set_label (Services.TimeManager.get_default ().format (_("%a, %b %e")));
+            date_label.label = Services.TimeManager.get_default ().format (_("%a, %b %e"));
         } else {
-            date_label.set_label ("");
+            date_label.label = "";
         }
 
         string format = "";
@@ -74,7 +74,7 @@ public class DateTime.Widgets.PanelLabel : Gtk.Grid {
             format = "";
         }
 
-        time_label.set_label (Services.TimeManager.get_default ().format (format));
+        time_label.label = Services.TimeManager.get_default ().format (format);
     }
         
 }
