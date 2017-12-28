@@ -26,7 +26,6 @@ vala_precompile (VALA_C ${CMAKE_PROJECT_NAME}
   Widgets/calendar/Header.vala
   Widgets/calendar/WeekLabels.vala
   Services/TimeManager.vala
-  Services/ClockSettings.vala
   Services/SettingsManager.vala
   ${CMAKE_CURRENT_BINARY_DIR}/config.vala
 CUSTOM_VAPIS

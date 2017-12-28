@@ -21,26 +21,23 @@ public class DateTime.Widgets.PanelLabel : Gtk.Grid {
     private Gtk.Label date_label;
     private Gtk.Label time_label;
 
-    private ClockSettings clockSettings;
-    private bool use24HSFormat = false;
+    private GLib.Settings clockSettings;
+    public string date_format { get; set; }
+    public bool show_date { get; set; }
+    public bool show_seconds { get; set; }
 
     public PanelLabel () {
-        clockSettings = new ClockSettings ();
-        this.use24HSFormat = (clockSettings.clock_format == "24h");
+        clockSettings = new GLib.Settings ("org.gnome.desktop.interface");
+        clockSettings.bind("clock-format", this, "date-format", SettingsBindFlags.DEFAULT);
+        clockSettings.bind("clock-show-date", this, "show-date", SettingsBindFlags.DEFAULT);
+        clockSettings.bind("clock-show-seconds", this, "show-seconds", SettingsBindFlags.DEFAULT);
 
-        clockSettings.notify["clock-format"].connect (() => {
-            if (clockSettings.clock_format == "24h") {
-                this.use24HSFormat = true;
-            } else {
-                this.use24HSFormat = false;
-            }
-
+        // Update Labels on Settings Change
+        this.notify.connect ((sender, property) => {
             update_labels ();
         });
 
-        update_labels ();
-
-        Services.TimeManager.get_default ().minute_changed.connect (update_labels);
+        Services.TimeManager.get_default ().time_changed.connect (update_labels);
     }
 
     construct {
@@ -56,15 +53,28 @@ public class DateTime.Widgets.PanelLabel : Gtk.Grid {
     }
 
     private void update_labels () {
-        /// TRANSLATORS: Date format in the panel following http://valadoc.org/#!api=glib-2.0/GLib.DateTime.format */
-        date_label.set_label (Services.TimeManager.get_default ().format (_("%a, %b %e")));
-
-        if (use24HSFormat) {
-            time_label.set_label (Services.TimeManager.get_default ().format ("%H:%M"));
+        if (show_date) {
+            /// TRANSLATORS: Date format in the panel following http://valadoc.org/#!api=glib-2.0/GLib.DateTime.format */
+            date_label.set_label (Services.TimeManager.get_default ().format (_("%a, %b %e")));
         } else {
-            /// TRANSLATORS: Time format in the panel following http://valadoc.org/#!api=glib-2.0/GLib.DateTime.format */
-            time_label.set_label (Services.TimeManager.get_default ().format (_("%l:%M %p")));
+            date_label.set_label ("");
         }
+
+        string format = "";
+
+        if ((date_format == "24h") && show_seconds) {
+            format = "%H:%M:%S";
+        } else if ((date_format == "24h") && !show_seconds) {
+            format = "%H:%M";
+        } else if ((date_format != "24h") && show_seconds) {
+            format = "%l:%M:%S %p";
+        } else if ((date_format != "24h") && !show_seconds) {
+            format = "%l:%M %p";
+        } else {
+            format = "";
+        }
+
+        time_label.set_label (Services.TimeManager.get_default ().format (format));
     }
         
 }
