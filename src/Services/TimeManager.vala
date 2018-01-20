@@ -44,11 +44,11 @@ public class DateTime.Services.TimeManager : Gtk.Calendar {
         add_timeout ();
         try {
             clockSettings = new GLib.Settings ("org.gnome.desktop.interface");
-            clockSettings.bind("clock-show-seconds", this, "show-seconds", SettingsBindFlags.DEFAULT);
+            clockSettings.bind ("clock-show-seconds", this, "show-seconds", SettingsBindFlags.DEFAULT);
 
-            //Listen to Changes in the show-seconds property
+            // Listen to Changes in the show-seconds property
             this.notify["show-seconds"].connect ((sender, property) => {
-                add_timeout();
+                add_timeout ();
             });
 
             // Listen for the D-BUS server that controls time settings

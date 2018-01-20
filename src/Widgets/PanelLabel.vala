@@ -21,16 +21,16 @@ public class DateTime.Widgets.PanelLabel : Gtk.Grid {
     private Gtk.Label date_label;
     private Gtk.Label time_label;
 
-    private GLib.Settings clockSettings;
+    private GLib.Settings clock_settings;
     public string date_format { get; set; }
     public bool show_date { get; set; }
     public bool show_seconds { get; set; }
 
     public PanelLabel () {
-        clockSettings = new GLib.Settings ("org.gnome.desktop.interface");
-        clockSettings.bind("clock-format", this, "date-format", SettingsBindFlags.DEFAULT);
-        clockSettings.bind("clock-show-date", this, "show-date", SettingsBindFlags.DEFAULT);
-        clockSettings.bind("clock-show-seconds", this, "show-seconds", SettingsBindFlags.DEFAULT);
+        clock_settings = new GLib.Settings ("org.gnome.desktop.interface");
+        clock_settings.bind ("clock-format", this, "date-format", SettingsBindFlags.DEFAULT);
+        clock_settings.bind ("clock-show-date", this, "show-date", SettingsBindFlags.DEFAULT);
+        clock_settings.bind ("clock-show-seconds", this, "show-seconds", SettingsBindFlags.DEFAULT);
 
         // Update Labels on Settings Change
         this.notify.connect ((sender, property) => {
