@@ -46,6 +46,8 @@ public class DateTime.Indicator : Wingpanel.Indicator {
         if (main_grid == null) {
             int position = 0;
             main_grid = new Gtk.Grid ();
+            main_grid.halign = Gtk.Align.CENTER;
+            main_grid.valign = Gtk.Align.START;
 
             calendar = new Widgets.Calendar ();
             calendar.day_double_click.connect (() => {
@@ -91,8 +93,11 @@ public class DateTime.Indicator : Wingpanel.Indicator {
 
                 var menuitem_label = new Gtk.Label (e.get_label ());
                 menuitem_label.hexpand = true;
-                menuitem_label.max_width_chars = 1;
+                menuitem_label.lines = 3;
+                menuitem_label.ellipsize = Pango.EllipsizeMode.END;
+                menuitem_label.max_width_chars = 30;
                 menuitem_label.wrap = true;
+                menuitem_label.wrap_mode = Pango.WrapMode.WORD_CHAR;
                 menuitem_label.xalign = 0;
 
                 var menuitem_grid = new Gtk.Grid ();
