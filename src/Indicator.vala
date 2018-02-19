@@ -24,7 +24,7 @@ public class DateTime.Indicator : Wingpanel.Indicator {
 
     private Widgets.Calendar calendar;
 
-    private Wingpanel.Widgets.Button settings_button;
+    private Gtk.ModelButton settings_button;
 
     private Gtk.Box event_box;
 
@@ -63,7 +63,8 @@ public class DateTime.Indicator : Wingpanel.Indicator {
             event_box = new Gtk.Box (Gtk.Orientation.VERTICAL, 0);
             main_grid.attach (event_box, 0, position++, 1, 1);
 
-            settings_button = new Wingpanel.Widgets.Button (_("Date & Time Settings…"));
+            settings_button = new Gtk.ModelButton ();
+            settings_button.text = _("Date & Time Settings…");
             settings_button.clicked.connect (() => {
                 show_settings ();
                 this.close ();
