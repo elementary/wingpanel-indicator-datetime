@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-05-02 05:12-0500\n"
-"PO-Revision-Date: 2018-02-09 00:12+0000\n"
-"Last-Translator: scootergrisen <scootergrisen@gmail.com>\n"
+"PO-Revision-Date: 2018-03-24 22:58+0000\n"
+"Last-Translator: Kaj Printz Madsen <kajprintz@gmail.com>\n"
 "Language-Team: Danish <https://weblate.elementary.io/projects/wingpanel"
 "/wingpanel-indicator-datetime/da/>\n"
 "Language: da\n"
@@ -30,14 +30,14 @@ msgstr "Indstillinger for dato og klokkeslæt…"
 #. //valadoc.org/#!api=glib-2.0/GLib.DateTime.format
 #: ../src/Indicator.vala:142
 msgid "%B %e, %Y"
-msgstr ""
+msgstr "%B %e, %Y"
 
 #. / TRANSLATORS: Date format in the panel following http://valadoc.org/#!api=glib-2.0/GLib.DateTime.format */
 #: ../src/Widgets/PanelLabel.vala:60
 msgid "%a, %b %e"
-msgstr ""
+msgstr "%a, %b %e"
 
 #. / TRANSLATORS: Time format in the panel following http://valadoc.org/#!api=glib-2.0/GLib.DateTime.format */
 #: ../src/Widgets/PanelLabel.vala:66
 msgid "%l:%M %p"
-msgstr ""
+msgstr "%k:%M"
