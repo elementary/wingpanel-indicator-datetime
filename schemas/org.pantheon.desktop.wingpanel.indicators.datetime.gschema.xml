@@ -6,5 +6,10 @@
             <summary>Show week numbers.</summary>
             <description>If this is set to true, week numbers will be shown in the calendar.</description>
         </key>
+        <key type="s" name="date-format">
+            <default>""</default>
+            <summary>The date format string passed to strftime</summary>
+            <description>The date format used by wingpanel.indicator.datetime. If blank, the default date format is "%a, %b %e". This may be set to any valid strftime date format. Look at the man page on strftime for more information.</description>
+         </key>
     </schema>
 </schemalist>
