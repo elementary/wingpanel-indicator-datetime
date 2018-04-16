@@ -140,9 +140,12 @@ namespace DateTime.Widgets {
             source_client = new HashTable<string, E.CalClient> (str_hash, str_equal);
             source_events = new HashTable<E.Source, Gee.TreeMap<string, E.CalComponent> > (Util.source_hash_func, Util.source_equal_func);
             source_view = new HashTable<string, E.CalClientView> (str_hash, str_equal);
-            int week_start = Posix.nl_langinfo2 (Posix.NLTime.FIRST_WEEKDAY).data[0];
-            if (week_start >= 1 && week_start <= 7) {
-                week_starts_on = (Weekday) (week_start - 1);
+
+            string week_start = Posix.NLTime.FIRST_WEEKDAY.to_string ();
+            if (week_start == Posix.NLItem.DAY_1.to_string ()) {
+                week_starts_on = Weekday.MONDAY;
+            } else if (week_start == Posix.NLItem.DAY_7.to_string ()) {
+                week_starts_on = Weekday.SUNDAY;
             }
 
             month_start = Util.get_start_of_month ();
