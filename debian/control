@@ -1,9 +1,9 @@
 Source: wingpanel-indicator-datetime
 Section: x11
 Priority: optional
-Maintainer: Cody Garver <cody@elementary.io>
+Maintainer: elementary LLC <builds@elementary.io>
 Build-Depends: cmake,
-               debhelper (>= 9),
+               debhelper (>= 10.5.1),
                gobject-introspection,
                libecal1.2-dev,
                libedataserver1.2-dev,
@@ -11,9 +11,9 @@ Build-Depends: cmake,
                libgranite-dev,
                libgtk-3-dev (>= 3.12),
                libwingpanel-2.0-dev,
-               valac (>= 0.28)
-Standards-Version: 3.9.6
-Homepage: https://launchpad.net/wingpanel-indicator-datetime
+               valac (>= 0.40.3)
+Standards-Version: 4.1.1
+Homepage: https://github.com/elementary/wingpanel-indicator-datetime
 
 Package: wingpanel-indicator-datetime
 Architecture: any
@@ -21,14 +21,3 @@ Depends: ${misc:Depends}, ${shlibs:Depends}
 Enhances: wingpanel
 Description: WingPanel Date & Time Indicator
  WingPanel Date & Time Indicator
-
-Package: wingpanel-indicator-datetime-dbg
-Architecture: any
-Section: debug
-Priority: extra
-Depends: wingpanel-indicator-datetime (= ${binary:Version}), ${misc:Depends}
-Enhances: wingpanel-indicator-datetime
-Description: WingPanel Date & Time Indicator (debugging symbols)
- WingPanel Date & Time Indicator
- .
- This package contains debugging symbols for wingpanel-indicator-datetime.
