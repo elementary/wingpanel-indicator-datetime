@@ -9,7 +9,7 @@ link_directories (${DEPS_LIBRARY_DIRS})
 
 find_package (Vala REQUIRED)
 include (ValaVersion)
-ensure_vala_version ("0.22.0" MINIMUM)
+ensure_vala_version ("0.40.3" MINIMUM)
 
 include (ValaPrecompile)
 # Add all your vala files and requires packages to the List below to include them in the build
@@ -29,8 +29,6 @@ vala_precompile (VALA_C ${CMAKE_PROJECT_NAME}
   Services/ClockSettings.vala
   Services/SettingsManager.vala
   ${CMAKE_CURRENT_BINARY_DIR}/config.vala
-CUSTOM_VAPIS
-  ../vapi/posix-extension.vapi
 PACKAGES
   wingpanel-2.0
   glib-2.0>=2.32
