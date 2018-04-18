@@ -1,3 +1,9 @@
+wingpanel-indicator-datetime (2.0.3) UNRELEASED; urgency=medium
+
+  * Pre-release version bump.
+
+ -- Daniel Foré <daniel@elementary.io>  Tue, 17 Apr 2018 10:57:49 -0700
+
 wingpanel-indicator-datetime (2.0.2) xenial; urgency=medium
 
   * New upstream release.

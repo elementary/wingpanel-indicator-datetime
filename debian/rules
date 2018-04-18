@@ -13,4 +13,4 @@
 	dh $@ 
 
 override_dh_strip:
-	dh_strip --dbg-package=wingpanel-indicator-datetime-dbg
+	dh_strip -p wingpanel-indicator-datetime --dbgsym-migration='wingpanel-indicator-datetime-dbg (<< 2.0.2)'
