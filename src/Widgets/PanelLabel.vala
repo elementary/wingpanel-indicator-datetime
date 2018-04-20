@@ -43,7 +43,7 @@ public class DateTime.Widgets.PanelLabel : Gtk.Grid {
         
         dateSettings = new DateSettings ();
         dateSettings.notify["date-format"].connect (() => {
-            if (dateSettings.date_format != null) {
+            if (dateSettings.date_format.length != 0) {
                 this.dateFormat = dateSettings.date_format;
             } else {
                 this.dateFormat = "%a, %b %e";
