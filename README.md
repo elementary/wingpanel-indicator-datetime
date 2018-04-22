@@ -15,7 +15,7 @@ You'll need the following dependencies:
 * libical-dev
 * libgranite-dev
 * libwingpanel-2.0-dev
-* valac
+* valac >= 0.40.3
 
 It's recommended to create a clean build environment
 

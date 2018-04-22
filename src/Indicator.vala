@@ -32,6 +32,8 @@ public class DateTime.Indicator : Wingpanel.Indicator {
         Object (code_name: Wingpanel.Indicator.DATETIME,
                 display_name: _("Date & Time"),
                 description: _("The date and time indicator"));
+        
+        this.visible = true;
     }
 
     public override Gtk.Widget get_display_widget () {
@@ -74,8 +76,6 @@ public class DateTime.Indicator : Wingpanel.Indicator {
 
             main_grid.attach (settings_button, 0, position++, 1, 1);
         }
-
-        this.visible = true;
 
         return main_grid;
     }
