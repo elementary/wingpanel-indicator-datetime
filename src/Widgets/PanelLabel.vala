@@ -76,7 +76,7 @@ public class DateTime.Widgets.PanelLabel : Gtk.Grid {
             time_label.set_label (Services.TimeManager.get_default ().format ("%H:%M"));
         } else {
             /// TRANSLATORS: Time format in the panel following http://valadoc.org/#!api=glib-2.0/GLib.DateTime.format */
-            time_label.set_label (Services.TimeManager.get_default ().format ("%l:%M %p"));
+            time_label.set_label (Services.TimeManager.get_default ().format (_("%l:%M %p")));
         }
     }
         
