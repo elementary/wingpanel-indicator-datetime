@@ -23,6 +23,9 @@ public class DateTime.Widgets.PanelLabel : Gtk.Grid {
 
     private ClockSettings clockSettings;
     private bool use24HSFormat = false;
+    
+    private DateSettings dateSettings;
+    private string dateFormat = null;
 
     public PanelLabel () {
         clockSettings = new ClockSettings ();
@@ -35,6 +38,16 @@ public class DateTime.Widgets.PanelLabel : Gtk.Grid {
                 this.use24HSFormat = false;
             }
 
+            update_labels ();
+        });
+        
+        dateSettings = new DateSettings ();
+        dateSettings.notify["date-format"].connect (() => {
+            if (dateSettings.date_format.length != 0) {
+                this.dateFormat = dateSettings.date_format;
+            } else {
+                this.dateFormat = "%a, %b %e";
+            }
             update_labels ();
         });
 
@@ -57,7 +70,7 @@ public class DateTime.Widgets.PanelLabel : Gtk.Grid {
 
     private void update_labels () {
         /// TRANSLATORS: Date format in the panel following http://valadoc.org/#!api=glib-2.0/GLib.DateTime.format */
-        date_label.set_label (Services.TimeManager.get_default ().format (_("%a, %b %e")));
+        date_label.set_label (Services.TimeManager.get_default ().format (dateFormat));
 
         if (use24HSFormat) {
             time_label.set_label (Services.TimeManager.get_default ().format ("%H:%M"));
