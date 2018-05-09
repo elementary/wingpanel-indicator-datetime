@@ -56,13 +56,13 @@ public class DateTime.Widgets.PanelLabel : Gtk.Grid {
     }
 
     private void update_labels () {
-        /// TRANSLATORS: Date format in the panel following http://valadoc.org/#!api=glib-2.0/GLib.DateTime.format */
+        /// TRANSLATORS: Date format in the panel following https://valadoc.org/glib-2.0/GLib.DateTime.format.html */
         date_label.set_label (Services.TimeManager.get_default ().format (_("%a, %b %e")));
 
         if (use24HSFormat) {
             time_label.set_label (Services.TimeManager.get_default ().format ("%H:%M"));
         } else {
-            /// TRANSLATORS: Time format in the panel following http://valadoc.org/#!api=glib-2.0/GLib.DateTime.format */
+            /// TRANSLATORS: Time format in the panel following https://valadoc.org/glib-2.0/GLib.DateTime.format.html */
             time_label.set_label (Services.TimeManager.get_default ().format (_("%l:%M %p")));
         }
     }
