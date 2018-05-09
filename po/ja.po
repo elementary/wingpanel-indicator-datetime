@@ -3,16 +3,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-05-02 05:12-0500\n"
-"PO-Revision-Date: 2017-04-30 10:10+0000\n"
-"Last-Translator: Ryo Nakano <nscnskichiro0911@gmail.com>\n"
-"Language-Team: Japanese <https://l10n.elementary.io/projects/wingpanel"
+"PO-Revision-Date: 2018-05-06 00:12+0000\n"
+"Last-Translator: Ryo Nakano <ryonakaknock@gmail.com>\n"
+"Language-Team: Japanese <https://weblate.elementary.io/projects/wingpanel"
 "/wingpanel-indicator-datetime/ja/>\n"
 "Language: ja\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 2.13-dev\n"
+"X-Generator: Weblate 2.18\n"
 "X-Launchpad-Export-Date: 2017-02-19 05:57+0000\n"
 
 #: ../src/Indicator.vala:38
@@ -21,7 +21,7 @@ msgstr "日付と時刻"
 
 #: ../src/Indicator.vala:39
 msgid "The date and time indicator"
-msgstr "日付と時刻の表示"
+msgstr "日付と時刻のインジケーター"
 
 #: ../src/Indicator.vala:81
 msgid "Date & Time Settings…"

@@ -28,7 +28,6 @@ vala_precompile (VALA_C ${CMAKE_PROJECT_NAME}
   Services/TimeManager.vala
   Services/SettingsManager.vala
   Services/DesktopSettings.vala
-  ${CMAKE_CURRENT_BINARY_DIR}/config.vala
 PACKAGES
   wingpanel-2.0
   glib-2.0>=2.32
