@@ -22,15 +22,17 @@ public class DateTime.Widgets.PanelLabel : Gtk.Grid {
     private Gtk.Label time_label;
 
     private GLib.Settings clock_settings;
-    public string date_format { get; set; }
+    public string clock_format { get; set; }
     public bool show_date { get; set; }
     public bool show_seconds { get; set; }
+    public bool show_weekday { get; set; }
 
     public PanelLabel () {
         clock_settings = Services.DesktopSettings.get ();
-        clock_settings.bind ("clock-format", this, "date-format", SettingsBindFlags.DEFAULT);
+        clock_settings.bind ("clock-format", this, "clock-format", SettingsBindFlags.DEFAULT);
         clock_settings.bind ("clock-show-date", this, "show-date", SettingsBindFlags.DEFAULT);
         clock_settings.bind ("clock-show-seconds", this, "show-seconds", SettingsBindFlags.DEFAULT);
+        clock_settings.bind ("clock-show-weekday", this, "show-weekday", SettingsBindFlags.DEFAULT);
 
         // Update Labels on Settings Change
         notify.connect (() => {
@@ -54,27 +56,14 @@ public class DateTime.Widgets.PanelLabel : Gtk.Grid {
 
     private void update_labels () {
         if (show_date) {
-            /// TRANSLATORS: Date format in the panel following http://valadoc.org/#!api=glib-2.0/GLib.DateTime.format */
-            date_label.label = Services.TimeManager.get_default ().format (_("%a, %b %e"));
+			string date_format = Granite.DateTime.get_default_date_format (show_weekday, true, false);
+            date_label.label = Services.TimeManager.get_default ().format (date_format);
         } else {
             date_label.label = "";
         }
 
-        string format = "";
-
-        if ((date_format == "24h") && show_seconds) {
-            format = "%H:%M:%S";
-        } else if ((date_format == "24h") && !show_seconds) {
-            format = "%H:%M";
-        } else if ((date_format != "24h") && show_seconds) {
-            format = "%l:%M:%S %p";
-        } else if ((date_format != "24h") && !show_seconds) {
-            format = "%l:%M %p";
-        } else {
-            format = "";
-        }
-
-        time_label.label = Services.TimeManager.get_default ().format (format);
+		string time_format = Granite.DateTime.get_default_time_format (clock_format == "12h", show_seconds);
+        time_label.label = Services.TimeManager.get_default ().format (time_format);
     }
         
 }
