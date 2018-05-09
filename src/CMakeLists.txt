@@ -27,6 +27,7 @@ vala_precompile (VALA_C ${CMAKE_PROJECT_NAME}
   Widgets/calendar/WeekLabels.vala
   Services/TimeManager.vala
   Services/SettingsManager.vala
+  Services/DesktopSettings.vala
   ${CMAKE_CURRENT_BINARY_DIR}/config.vala
 PACKAGES
   wingpanel-2.0

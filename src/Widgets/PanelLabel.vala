@@ -27,13 +27,13 @@ public class DateTime.Widgets.PanelLabel : Gtk.Grid {
     public bool show_seconds { get; set; }
 
     public PanelLabel () {
-        clock_settings = new GLib.Settings ("org.gnome.desktop.interface");
+        clock_settings = Services.DesktopSettings.get ();
         clock_settings.bind ("clock-format", this, "date-format", SettingsBindFlags.DEFAULT);
         clock_settings.bind ("clock-show-date", this, "show-date", SettingsBindFlags.DEFAULT);
         clock_settings.bind ("clock-show-seconds", this, "show-seconds", SettingsBindFlags.DEFAULT);
 
         // Update Labels on Settings Change
-        this.notify.connect ((sender, property) => {
+        notify.connect (() => {
             update_labels ();
         });
 

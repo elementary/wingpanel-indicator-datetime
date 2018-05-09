@@ -30,7 +30,6 @@ public class DateTime.Services.TimeManager : Gtk.Calendar {
     private GLib.DateTime? current_time = null;
     private uint? timeout_id = null;
     private Manager? manager = null;
-    private GLib.Settings clockSettings;
 
     public bool show_seconds { get; set; }
 
@@ -43,11 +42,10 @@ public class DateTime.Services.TimeManager : Gtk.Calendar {
 
         add_timeout ();
         try {
-            clockSettings = new GLib.Settings ("org.gnome.desktop.interface");
-            clockSettings.bind ("clock-show-seconds", this, "show-seconds", SettingsBindFlags.DEFAULT);
+            DesktopSettings.get ().bind ("clock-show-seconds", this, "show-seconds", SettingsBindFlags.DEFAULT);
 
             // Listen to Changes in the show-seconds property
-            this.notify["show-seconds"].connect ((sender, property) => {
+            notify["show-seconds"].connect ((sender, property) => {
                 add_timeout ();
             });
 
