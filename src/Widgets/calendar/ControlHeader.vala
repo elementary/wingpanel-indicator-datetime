@@ -27,10 +27,10 @@ namespace DateTime.Widgets {
             Object (orientation : Gtk.Orientation.HORIZONTAL);
             var left_button = new Gtk.Button.from_icon_name ("pan-start-symbolic");
             var right_button = new Gtk.Button.from_icon_name ("pan-end-symbolic");
-            var center_button = new Gtk.Button.with_label (new GLib.DateTime.now_local ().format ("%B %Y"));
+            var center_button = new Gtk.Button.with_label (new GLib.DateTime.now_local ().format (_("%B %Y")));
             CalendarModel.get_default ().parameters_changed.connect (() => {
                 var date = CalendarModel.get_default ().month_start;
-                center_button.set_label (date.format ("%B %Y"));
+                center_button.set_label (date.format (_("%B %Y")));
             });
             left_button.clicked.connect (() => {
                 left_clicked ();
