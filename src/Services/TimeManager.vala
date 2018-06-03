@@ -19,7 +19,7 @@
 
 [DBus (name = "org.freedesktop.login1.Manager")]
 interface Manager : Object {
-	public signal void prepare_for_sleep (bool sleeping);
+    public signal void prepare_for_sleep (bool sleeping);
 }
 
 public class DateTime.Services.TimeManager : Gtk.Calendar {
@@ -28,7 +28,7 @@ public class DateTime.Services.TimeManager : Gtk.Calendar {
     public signal void minute_changed ();
 
     private GLib.DateTime? current_time = null;
-    private uint? timeout_id = null;
+    private uint timeout_id = 0;
     private Manager? manager = null;
 
     public TimeManager () {
@@ -58,25 +58,22 @@ public class DateTime.Services.TimeManager : Gtk.Calendar {
 
     private void on_watch (DBusConnection conn) {
         // Start updating the time display quicker because someone is changing settings
-        add_timeout (true);         
+        add_timeout (true);
     }
 
     private void on_unwatch (DBusConnection conn) {
         // Stop updating the time display quicker
-        add_timeout (false);         
+        add_timeout (false);
     }
 
     private void add_timeout (bool update_fast = false) {
-        if (timeout_id != null) {
+        var interval = update_fast ? 500 : calculate_time_until_next_minute ();
+
+        if (timeout_id > 0) {
             Source.remove (timeout_id);
         }
-        
-        uint timeout = calculate_time_until_next_minute ();
-        if (update_fast) {
-            timeout = 500;
-        }
 
-        timeout_id = Timeout.add (timeout, () => {
+        timeout_id = Timeout.add (interval, () => {
             update_current_time ();
             minute_changed ();
             add_timeout (update_fast);
