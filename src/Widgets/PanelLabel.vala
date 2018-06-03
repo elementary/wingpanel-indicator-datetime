@@ -21,26 +21,25 @@ public class DateTime.Widgets.PanelLabel : Gtk.Grid {
     private Gtk.Label date_label;
     private Gtk.Label time_label;
 
-    private ClockSettings clockSettings;
-    private bool use24HSFormat = false;
+    private GLib.Settings clock_settings;
+    public string clock_format { get; set; }
+    public bool show_date { get; set; }
+    public bool show_seconds { get; set; }
+    public bool show_weekday { get; set; }
 
     public PanelLabel () {
-        clockSettings = new ClockSettings ();
-        this.use24HSFormat = (clockSettings.clock_format == "24h");
+        clock_settings = Services.DesktopSettings.get ();
+        clock_settings.bind ("clock-format", this, "clock-format", SettingsBindFlags.DEFAULT);
+        clock_settings.bind ("clock-show-date", this, "show-date", SettingsBindFlags.DEFAULT);
+        clock_settings.bind ("clock-show-seconds", this, "show-seconds", SettingsBindFlags.DEFAULT);
+        clock_settings.bind ("clock-show-weekday", this, "show-weekday", SettingsBindFlags.DEFAULT);
 
-        clockSettings.notify["clock-format"].connect (() => {
-            if (clockSettings.clock_format == "24h") {
-                this.use24HSFormat = true;
-            } else {
-                this.use24HSFormat = false;
-            }
-
+        // Update Labels on Settings Change
+        notify.connect (() => {
             update_labels ();
         });
 
-        update_labels ();
-
-        Services.TimeManager.get_default ().minute_changed.connect (update_labels);
+        Services.TimeManager.get_default ().time_changed.connect (update_labels);
     }
 
     construct {
@@ -56,15 +55,15 @@ public class DateTime.Widgets.PanelLabel : Gtk.Grid {
     }
 
     private void update_labels () {
-        /// TRANSLATORS: Date format in the panel following https://valadoc.org/glib-2.0/GLib.DateTime.format.html */
-        date_label.set_label (Services.TimeManager.get_default ().format (_("%a, %b %e")));
-
-        if (use24HSFormat) {
-            time_label.set_label (Services.TimeManager.get_default ().format ("%H:%M"));
+        if (show_date) {
+            string date_format = Granite.DateTime.get_default_date_format (show_weekday, true, false);
+            date_label.label = Services.TimeManager.get_default ().format (date_format);
         } else {
-            /// TRANSLATORS: Time format in the panel following https://valadoc.org/glib-2.0/GLib.DateTime.format.html */
-            time_label.set_label (Services.TimeManager.get_default ().format (_("%l:%M %p")));
+            date_label.label = "";
         }
+
+        string time_format = Granite.DateTime.get_default_time_format (clock_format == "12h", show_seconds);
+        time_label.label = Services.TimeManager.get_default ().format (time_format);
     }
         
 }

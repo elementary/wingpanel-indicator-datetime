@@ -25,11 +25,13 @@ interface Manager : Object {
 public class DateTime.Services.TimeManager : Gtk.Calendar {
     private static TimeManager? instance = null;
 
-    public signal void minute_changed ();
+    public signal void time_changed ();
 
     private GLib.DateTime? current_time = null;
     private uint? timeout_id = null;
     private Manager? manager = null;
+
+    public bool show_seconds { get; set; }
 
     public TimeManager () {
         update_current_time ();
@@ -40,6 +42,13 @@ public class DateTime.Services.TimeManager : Gtk.Calendar {
 
         add_timeout ();
         try {
+            DesktopSettings.get ().bind ("clock-show-seconds", this, "show-seconds", SettingsBindFlags.DEFAULT);
+
+            // Listen to Changes in the show-seconds property
+            notify["show-seconds"].connect ((sender, property) => {
+                add_timeout ();
+            });
+
             // Listen for the D-BUS server that controls time settings
             Bus.watch_name (BusType.SYSTEM, "org.freedesktop.timedate1", BusNameWatcherFlags.NONE, on_watch, on_unwatch);
             // Listen for the signal that is fired when waking up from sleep, then update time
@@ -47,7 +56,7 @@ public class DateTime.Services.TimeManager : Gtk.Calendar {
             manager.prepare_for_sleep.connect ((sleeping) => {
                 if (!sleeping) {
                     update_current_time ();
-                    minute_changed ();
+                    time_changed ();
                     add_timeout ();
                 }
             });
@@ -72,13 +81,13 @@ public class DateTime.Services.TimeManager : Gtk.Calendar {
         }
         
         uint timeout = calculate_time_until_next_minute ();
-        if (update_fast) {
+        if (update_fast || show_seconds) {
             timeout = 500;
         }
 
         timeout_id = Timeout.add (timeout, () => {
             update_current_time ();
-            minute_changed ();
+            time_changed ();
             add_timeout (update_fast);
 
             return false;

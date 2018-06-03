@@ -26,8 +26,8 @@ vala_precompile (VALA_C ${CMAKE_PROJECT_NAME}
   Widgets/calendar/Header.vala
   Widgets/calendar/WeekLabels.vala
   Services/TimeManager.vala
-  Services/ClockSettings.vala
   Services/SettingsManager.vala
+  Services/DesktopSettings.vala
 PACKAGES
   wingpanel-2.0
   glib-2.0>=2.32
