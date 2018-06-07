@@ -1,2 +1,2 @@
 include(GSettings)
-add_schema("org.pantheon.desktop.wingpanel.indicators.datetime.gschema.xml")
+add_schema("io.elementary.desktop.wingpanel.datetime.gschema.xml")
