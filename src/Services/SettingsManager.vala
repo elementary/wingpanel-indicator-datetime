@@ -23,7 +23,7 @@ public class DateTime.Services.SettingsManager : Granite.Services.Settings {
     public bool show_weeks{ get; set; }
 
     public SettingsManager () {
-        base ("org.pantheon.desktop.wingpanel.indicators.datetime");
+        base ("io.elementary.desktop.wingpanel.datetime");
     }
 
     public static SettingsManager get_default () {
