@@ -19,7 +19,7 @@
 
 namespace DateTime.Widgets {
     public class Calendar : Gtk.Box {
-        private const string CALENDAR_EXEC = "/usr/bin/maya-calendar";
+        private const string CALENDAR_EXEC = "/usr/bin/io.elementary.calendar";
 
         ControlHeader heading;
         CalendarView cal;
