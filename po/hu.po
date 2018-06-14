@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-05-02 05:12-0500\n"
-"PO-Revision-Date: 2018-06-06 00:11+0000\n"
+"PO-Revision-Date: 2018-06-15 00:13+0000\n"
 "Last-Translator: Majer Tamás <mtamas@disroot.org>\n"
 "Language-Team: Hungarian <https://weblate.elementary.io/projects/wingpanel"
 "/wingpanel-indicator-datetime/hu/>\n"
@@ -35,9 +35,9 @@ msgstr "%Y. %B %e."
 #. / TRANSLATORS: Date format in the panel following http://valadoc.org/#!api=glib-2.0/GLib.DateTime.format */
 #: ../src/Widgets/PanelLabel.vala:60
 msgid "%a, %b %e"
-msgstr "%b %e. %a"
+msgstr "%b. %e. %a"
 
 #. / TRANSLATORS: Time format in the panel following http://valadoc.org/#!api=glib-2.0/GLib.DateTime.format */
 #: ../src/Widgets/PanelLabel.vala:66
 msgid "%l:%M %p"
-msgstr "%k:%M"
+msgstr "%l:%M %p"
