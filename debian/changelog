@@ -1,8 +1,8 @@
-wingpanel-indicator-datetime (2.0.3) UNRELEASED; urgency=medium
+wingpanel-indicator-datetime (2.1.0) bionic; urgency=medium
 
-  * Pre-release version bump.
+  * New upstream release..
 
- -- Daniel Foré <daniel@elementary.io>  Tue, 17 Apr 2018 10:57:49 -0700
+ -- Cody Garver <cody@elementary.io>  Mon, 18 Jun 2018 21:20:08 -0500
 
 wingpanel-indicator-datetime (2.0.2) xenial; urgency=medium
 
