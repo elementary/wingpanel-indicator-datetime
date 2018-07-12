@@ -2,11 +2,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-05-02 05:12-0500\n"
+"POT-Creation-Date: 2018-07-12 18:49+0200\n"
 "PO-Revision-Date: 2017-03-15 06:41+0000\n"
 "Last-Translator: Jung-Kyu Park <bagjunggyu@gmail.com>\n"
-"Language-Team: Korean <http://weblate.elementary.io/projects/desktop"
-"/wingpanel-indicator-datetime/ko/>\n"
+"Language-Team: Korean <http://weblate.elementary.io/projects/desktop/"
+"wingpanel-indicator-datetime/ko/>\n"
 "Language: ko\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -15,29 +15,30 @@ msgstr ""
 "X-Generator: Weblate 2.12\n"
 "X-Launchpad-Export-Date: 2017-02-19 05:57+0000\n"
 
-#: ../src/Indicator.vala:38
+#: ../src/Indicator.vala:33
 msgid "Date & Time"
 msgstr "날짜와 시간"
 
-#: ../src/Indicator.vala:39
+#: ../src/Indicator.vala:34
 msgid "The date and time indicator"
 msgstr "날짜와 시간 알림"
 
-#: ../src/Indicator.vala:81
+#: ../src/Indicator.vala:69
 msgid "Date & Time Settings…"
 msgstr "날짜와 시간 설정…"
 
-#. //valadoc.org/#!api=glib-2.0/GLib.DateTime.format
-#: ../src/Indicator.vala:142
-msgid "%B %e, %Y"
-msgstr "%Y년 %B %e일"
-
-#. / TRANSLATORS: Date format in the panel following http://valadoc.org/#!api=glib-2.0/GLib.DateTime.format */
+#. / TRANSLATORS: Date format in the panel following https://valadoc.org/glib-2.0/GLib.DateTime.format.html */
 #: ../src/Widgets/PanelLabel.vala:60
 msgid "%a, %b %e"
 msgstr "%b %e일 %a요일"
 
-#. / TRANSLATORS: Time format in the panel following http://valadoc.org/#!api=glib-2.0/GLib.DateTime.format */
+#. / TRANSLATORS: Time format in the panel following https://valadoc.org/glib-2.0/GLib.DateTime.format.html */
 #: ../src/Widgets/PanelLabel.vala:66
 msgid "%l:%M %p"
 msgstr "%p %l:%M"
+
+#: ../src/Widgets/calendar/ControlHeader.vala:30
+#: ../src/Widgets/calendar/ControlHeader.vala:33
+#, fuzzy
+msgid "%B %Y"
+msgstr "%Y년 %B %e일"

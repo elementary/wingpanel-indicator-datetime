@@ -6,40 +6,42 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: wingpanel-indicator-datetime\n"
-"Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2016-05-02 05:12-0500\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-07-12 18:49+0200\n"
 "PO-Revision-Date: 2016-06-24 05:34+0000\n"
 "Last-Translator: Bone Pyae Sone <bone.burma@gmail.com>\n"
 "Language-Team: Burmese <my@li.org>\n"
+"Language: my\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Launchpad-Export-Date: 2017-02-19 05:57+0000\n"
 "X-Generator: Launchpad (build 18326)\n"
 
-#: ../src/Indicator.vala:38
+#: ../src/Indicator.vala:33
 msgid "Date & Time"
 msgstr "ရက်စွဲနှင့်အချိန်"
 
-#: ../src/Indicator.vala:39
+#: ../src/Indicator.vala:34
 msgid "The date and time indicator"
 msgstr "ရက်စွဲနှင့်အချိန်ပြဘာတန်း"
 
-#: ../src/Indicator.vala:81
+#: ../src/Indicator.vala:69
 msgid "Date & Time Settings…"
 msgstr "ရက်စွဲနှင့်အချိန် ပြင်ဆင်ရန်"
 
-#. //valadoc.org/#!api=glib-2.0/GLib.DateTime.format
-#: ../src/Indicator.vala:142
-msgid "%B %e, %Y"
-msgstr "%B လ %e လပိုင်း %Y နှစ်"
-
-#. / TRANSLATORS: Date format in the panel following http://valadoc.org/#!api=glib-2.0/GLib.DateTime.format */
+#. / TRANSLATORS: Date format in the panel following https://valadoc.org/glib-2.0/GLib.DateTime.format.html */
 #: ../src/Widgets/PanelLabel.vala:60
 msgid "%a, %b %e"
 msgstr "%a ပတ်၊ %b လ၊ %e လပိုင်း"
 
-#. / TRANSLATORS: Time format in the panel following http://valadoc.org/#!api=glib-2.0/GLib.DateTime.format */
+#. / TRANSLATORS: Time format in the panel following https://valadoc.org/glib-2.0/GLib.DateTime.format.html */
 #: ../src/Widgets/PanelLabel.vala:66
 msgid "%l:%M %p"
 msgstr "%l နာရီ၊ %M မိနစ် %p"
+
+#: ../src/Widgets/calendar/ControlHeader.vala:30
+#: ../src/Widgets/calendar/ControlHeader.vala:33
+#, fuzzy
+msgid "%B %Y"
+msgstr "%B လ %e လပိုင်း %Y နှစ်"
