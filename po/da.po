@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-07-12 18:49+0200\n"
-"PO-Revision-Date: 2018-03-24 22:58+0000\n"
+"PO-Revision-Date: 2018-07-12 18:34+0000\n"
 "Last-Translator: Kaj Printz Madsen <kajprintz@gmail.com>\n"
 "Language-Team: Danish <https://weblate.elementary.io/projects/wingpanel/"
 "wingpanel-indicator-datetime/da/>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 2.18\n"
+"X-Generator: Weblate 3.0.1\n"
 "X-Launchpad-Export-Date: 2017-02-19 05:57+0000\n"
 
 #: ../src/Indicator.vala:33
@@ -39,6 +39,5 @@ msgstr "%k:%M"
 
 #: ../src/Widgets/calendar/ControlHeader.vala:30
 #: ../src/Widgets/calendar/ControlHeader.vala:33
-#, fuzzy
 msgid "%B %Y"
-msgstr "%B %e, %Y"
+msgstr "%B %Y"
