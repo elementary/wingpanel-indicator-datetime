@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wingpanel-indicator-datetime\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-07-12 18:49+0200\n"
+"POT-Creation-Date: 2018-07-26 18:01+0100\n"
 "PO-Revision-Date: 2016-06-24 05:34+0000\n"
 "Last-Translator: Bone Pyae Sone <bone.burma@gmail.com>\n"
 "Language-Team: Burmese <my@li.org>\n"
@@ -43,5 +43,5 @@ msgstr "%l နာရီ၊ %M မိနစ် %p"
 #: ../src/Widgets/calendar/ControlHeader.vala:30
 #: ../src/Widgets/calendar/ControlHeader.vala:33
 #, fuzzy
-msgid "%B %Y"
+msgid "%OB %Y"
 msgstr "%B လ %e လပိုင်း %Y နှစ်"

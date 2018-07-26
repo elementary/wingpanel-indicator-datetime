@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-07-12 18:49+0200\n"
+"POT-Creation-Date: 2018-07-26 18:01+0100\n"
 "PO-Revision-Date: 2015-06-20 17:44+0000\n"
 "Last-Translator: aleksandar-todorovic <aleksandar.todorovic@mail.ru>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -37,5 +37,5 @@ msgstr ""
 
 #: ../src/Widgets/calendar/ControlHeader.vala:30
 #: ../src/Widgets/calendar/ControlHeader.vala:33
-msgid "%B %Y"
+msgid "%OB %Y"
 msgstr ""

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-07-12 18:49+0200\n"
+"POT-Creation-Date: 2018-07-26 18:01+0100\n"
 "PO-Revision-Date: 2017-04-19 23:05+0000\n"
 "Last-Translator: Martin Myrvold <myrvold.martin@gmail.com>\n"
 "Language-Team: nn (generated) <https://l10n.elementary.io/projects/wingpanel/"
@@ -40,5 +40,5 @@ msgstr "%H:%M"
 #: ../src/Widgets/calendar/ControlHeader.vala:30
 #: ../src/Widgets/calendar/ControlHeader.vala:33
 #, fuzzy
-msgid "%B %Y"
+msgid "%OB %Y"
 msgstr "%e %B, %Y"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wingpanel-indicator-datetime\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-07-12 18:49+0200\n"
+"POT-Creation-Date: 2018-07-26 18:01+0100\n"
 "PO-Revision-Date: 2017-06-19 13:58+0000\n"
 "Last-Translator: Lawrence Aberba <karabutaworld@gmail.com>\n"
 "Language-Team: Akan <https://l10n.elementary.io/projects/wingpanel/wingpanel-"
@@ -45,5 +45,5 @@ msgstr "%l:%M %p"
 #: ../src/Widgets/calendar/ControlHeader.vala:30
 #: ../src/Widgets/calendar/ControlHeader.vala:33
 #, fuzzy
-msgid "%B %Y"
+msgid "%OB %Y"
 msgstr "%B %e, %Y"
