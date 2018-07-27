@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-07-26 18:01+0100\n"
-"PO-Revision-Date: 2018-07-12 19:43+0000\n"
+"PO-Revision-Date: 2018-07-27 11:29+0000\n"
 "Last-Translator: Moo <hazap@hotmail.com>\n"
 "Language-Team: Lithuanian <https://weblate.elementary.io/projects/wingpanel/"
 "wingpanel-indicator-datetime/lt/>\n"
@@ -41,6 +41,5 @@ msgstr "%l:%M %p"
 
 #: ../src/Widgets/calendar/ControlHeader.vala:30
 #: ../src/Widgets/calendar/ControlHeader.vala:33
-#, fuzzy
 msgid "%OB %Y"
-msgstr "%Y %B"
+msgstr "%Y %OB"
