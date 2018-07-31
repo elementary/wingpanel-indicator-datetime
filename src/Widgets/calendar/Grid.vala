@@ -158,7 +158,7 @@ namespace DateTime.Widgets {
         GridDay update_day (GridDay day, GLib.DateTime new_date, GLib.DateTime today, GLib.DateTime month_start) {
             if (new_date.get_day_of_year () == today.get_day_of_year () && new_date.get_year () == today.get_year ()) {
                 day.name = "today";
-                day.get_style_context ().add_class ("today");
+                day.get_style_context ().add_class ("accent");
                 day.set_receives_default (true);
             }
             if (new_date.get_month () == month_start.get_month ()) {
