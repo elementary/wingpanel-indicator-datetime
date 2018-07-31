@@ -69,17 +69,6 @@ namespace DateTime.Widgets {
             }
         }
 
-        public void focus_date (GLib.DateTime date) {
-            debug (@"Setting focus to @ $(date)");
-            var date_hash = day_hash (date);
-
-            if (data.has_key (date_hash) == true) {
-                var day_widget = data.get (date_hash);
-                day_widget.grab_focus ();
-                on_day_focus_in (day_widget);
-            }
-        }
-
         /**
          * Sets the given range to be displayed in the grid. Note that the number of days
          * must remain the same.
