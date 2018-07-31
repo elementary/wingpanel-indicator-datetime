@@ -1,6 +1,6 @@
 // -*- Mode: vala; indent-tabs-mode: nil; tab-width: 4 -*-
 /*-
- * Copyright (c) 2011-2015 elementary LLC. (https://elementary.io)
+ * Copyright (c) 2011–2018 elementary, Inc. (https://elementary.io)
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -105,7 +105,6 @@ public class DateTime.Widgets.CalendarView : Gtk.Grid {
         if (!start.equal (calmodel.month_start))
             calmodel.month_start = start;
         sync_with_model ();
-        grid.focus_date (today);
     }
 
     //--- Signal Handlers ---//
@@ -142,20 +141,6 @@ public class DateTime.Widgets.CalendarView : Gtk.Grid {
         header.update_columns (model.week_starts_on);
         weeks.update (model.data_range.first_dt, model.num_weeks);
         grid.set_range (model.data_range, model.month_start);
-
-        // keep focus date on the same day of the month
-        if (selected_date != null) {
-            var month = (GLib.DateMonth)model.month_start.get_month ();
-            var year = (GLib.DateYear)model.month_start.get_year ();
-            int days_in_month = GLib.Date.get_days_in_month (month, year);
-            GLib.DateTime bumpdate;
-            if (selected_date.get_day_of_month () > days_in_month) {
-                bumpdate = model.month_start.add_days (days_in_month - 1);
-            } else {
-                bumpdate = model.month_start.add_days (selected_date.get_day_of_month() - 1);
-            }
-            grid.focus_date (bumpdate);
-        }
 
         if (previous_first != null) {
             if (previous_first.compare (grid.grid_range.first_dt) == -1) {

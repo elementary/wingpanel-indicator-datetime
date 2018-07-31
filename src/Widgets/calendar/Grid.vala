@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011-2016 elementary LLC. (https://elementary.io)
+ * Copyright (c) 2011–2018 elementary, Inc. (https://elementary.io)
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public
@@ -66,17 +66,6 @@ namespace DateTime.Widgets {
             if (date_month != 0 || date_year != 0) {
                 calmodel.change_month (date_month);
                 calmodel.change_year (date_year);
-            }
-        }
-
-        public void focus_date (GLib.DateTime date) {
-            debug (@"Setting focus to @ $(date)");
-            var date_hash = day_hash (date);
-
-            if (data.has_key (date_hash) == true) {
-                var day_widget = data.get (date_hash);
-                day_widget.grab_focus ();
-                on_day_focus_in (day_widget);
             }
         }
 
@@ -158,6 +147,7 @@ namespace DateTime.Widgets {
         GridDay update_day (GridDay day, GLib.DateTime new_date, GLib.DateTime today, GLib.DateTime month_start) {
             if (new_date.get_day_of_year () == today.get_day_of_year () && new_date.get_year () == today.get_year ()) {
                 day.name = "today";
+                day.get_style_context ().add_class (Granite.STYLE_CLASS_ACCENT);
                 day.set_receives_default (true);
             }
             if (new_date.get_month () == month_start.get_month ()) {
