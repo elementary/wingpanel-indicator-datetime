@@ -27,11 +27,11 @@ public class DateTime.Widgets.PanelLabel : Gtk.Grid {
         var clock_settings = new GLib.Settings ("org.gnome.desktop.interface");
         clock_settings.bind ("clock-format", this, "clock-format", SettingsBindFlags.DEFAULT);
 
-        update_labels ();
-
         notify["clock-format"].connect (() => {
             update_labels ();
         });
+
+        update_labels ();
 
         Services.TimeManager.get_default ().minute_changed.connect (update_labels);
 
