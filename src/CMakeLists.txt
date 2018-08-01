@@ -31,7 +31,7 @@ PACKAGES
   wingpanel-2.0
   glib-2.0>=2.32
   granite
-  libecalendar-1.2
+  libecal-1.2
   libedataserver-1.2
   libical
   libsoup-2.4
