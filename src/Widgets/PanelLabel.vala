@@ -21,45 +21,34 @@ public class DateTime.Widgets.PanelLabel : Gtk.Grid {
     private Gtk.Label date_label;
     private Gtk.Label time_label;
 
-    private ClockSettings clockSettings;
-    private bool use24HSFormat = false;
+    public string clock_format { get; set; }
 
-    public PanelLabel () {
-        clockSettings = new ClockSettings ();
-        this.use24HSFormat = (clockSettings.clock_format == "24h");
-
-        clockSettings.notify["clock-format"].connect (() => {
-            if (clockSettings.clock_format == "24h") {
-                this.use24HSFormat = true;
-            } else {
-                this.use24HSFormat = false;
-            }
-
-            update_labels ();
-        });
+    construct {
+        var clock_settings = new GLib.Settings ("org.gnome.desktop.interface");
+        clock_settings.bind ("clock-format", this, "clock-format", SettingsBindFlags.DEFAULT);
 
         update_labels ();
 
-        Services.TimeManager.get_default ().minute_changed.connect (update_labels);
-    }
+        notify["clock-format"].connect (() => {
+            update_labels ();
+        });
 
-    construct {
-        orientation = Gtk.Orientation.HORIZONTAL;
-        column_spacing = 12;
-        valign = Gtk.Align.CENTER;
+        Services.TimeManager.get_default ().minute_changed.connect (update_labels);
 
         date_label = new Gtk.Label (null);
         time_label = new Gtk.Label (null);
 
-        this.add (date_label);
-        this.add (time_label);
+        column_spacing = 12;
+        valign = Gtk.Align.CENTER;
+        add (date_label);
+        add (time_label);
     }
 
     private void update_labels () {
         /// TRANSLATORS: Date format in the panel following https://valadoc.org/glib-2.0/GLib.DateTime.format.html */
         date_label.set_label (Services.TimeManager.get_default ().format (_("%a, %b %e")));
 
-        if (use24HSFormat) {
+        if (clock_format == "24h") {
             time_label.set_label (Services.TimeManager.get_default ().format ("%H:%M"));
         } else {
             /// TRANSLATORS: Time format in the panel following https://valadoc.org/glib-2.0/GLib.DateTime.format.html */
