@@ -25,8 +25,22 @@ public class DateTime.Widgets.PanelLabel : Gtk.Grid {
     public bool clock_show_weekday { get; set; }
 
     construct {
+        date_label = new Gtk.Label (null);
+        date_label.margin_end = 12;
+
+        var date_revealer = new Gtk.Revealer ();
+        date_revealer.transition_type = Gtk.RevealerTransitionType.SLIDE_LEFT;
+        date_revealer.add (date_label);
+
+        time_label = new Gtk.Label (null);
+
+        valign = Gtk.Align.CENTER;
+        add (date_revealer);
+        add (time_label);
+
         var clock_settings = new GLib.Settings ("org.gnome.desktop.interface");
         clock_settings.bind ("clock-format", this, "clock-format", SettingsBindFlags.DEFAULT);
+        clock_settings.bind ("clock-show-date", date_revealer, "reveal_child", SettingsBindFlags.DEFAULT);
         clock_settings.bind ("clock-show-weekday", this, "clock-show-weekday", SettingsBindFlags.DEFAULT);
 
         notify.connect (() => {
@@ -36,14 +50,6 @@ public class DateTime.Widgets.PanelLabel : Gtk.Grid {
         update_labels ();
 
         Services.TimeManager.get_default ().minute_changed.connect (update_labels);
-
-        date_label = new Gtk.Label (null);
-        time_label = new Gtk.Label (null);
-
-        column_spacing = 12;
-        valign = Gtk.Align.CENTER;
-        add (date_label);
-        add (time_label);
     }
 
     private void update_labels () {
