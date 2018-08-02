@@ -23,6 +23,7 @@ public class DateTime.Widgets.PanelLabel : Gtk.Grid {
 
     public string clock_format { get; set; }
     public bool clock_show_seconds { get; set; }
+    public bool clock_show_weekday { get; set; }
 
     construct {
         date_label = new Gtk.Label (null);
@@ -42,6 +43,7 @@ public class DateTime.Widgets.PanelLabel : Gtk.Grid {
         clock_settings.bind ("clock-format", this, "clock-format", SettingsBindFlags.DEFAULT);
         clock_settings.bind ("clock-show-seconds", this, "clock-show-seconds", SettingsBindFlags.DEFAULT);
         clock_settings.bind ("clock-show-date", date_revealer, "reveal_child", SettingsBindFlags.DEFAULT);
+        clock_settings.bind ("clock-show-weekday", this, "clock-show-weekday", SettingsBindFlags.DEFAULT);
 
         notify.connect (() => {
             update_labels ();
@@ -53,8 +55,8 @@ public class DateTime.Widgets.PanelLabel : Gtk.Grid {
     }
 
     private void update_labels () {
-        /// TRANSLATORS: Date format in the panel following https://valadoc.org/glib-2.0/GLib.DateTime.format.html */
-        date_label.set_label (Services.TimeManager.get_default ().format (_("%a, %b %e")));
+        string date_format = Granite.DateTime.get_default_date_format (clock_show_weekday, true, false);
+        date_label.label = Services.TimeManager.get_default ().format (date_format);
 
         string time_format = Granite.DateTime.get_default_time_format (clock_format == "12h", clock_show_seconds);
         time_label.label = Services.TimeManager.get_default ().format (time_format);
