@@ -22,12 +22,14 @@ public class DateTime.Widgets.PanelLabel : Gtk.Grid {
     private Gtk.Label time_label;
 
     public string clock_format { get; set; }
+    public bool clock_show_seconds { get; set; }
 
     construct {
         var clock_settings = new GLib.Settings ("org.gnome.desktop.interface");
         clock_settings.bind ("clock-format", this, "clock-format", SettingsBindFlags.DEFAULT);
+        clock_settings.bind ("clock-show-seconds", this, "clock-show-seconds", SettingsBindFlags.DEFAULT);
 
-        notify["clock-format"].connect (() => {
+        notify.connect (() => {
             update_labels ();
         });
 
@@ -48,12 +50,8 @@ public class DateTime.Widgets.PanelLabel : Gtk.Grid {
         /// TRANSLATORS: Date format in the panel following https://valadoc.org/glib-2.0/GLib.DateTime.format.html */
         date_label.set_label (Services.TimeManager.get_default ().format (_("%a, %b %e")));
 
-        if (clock_format == "24h") {
-            time_label.set_label (Services.TimeManager.get_default ().format ("%H:%M"));
-        } else {
-            /// TRANSLATORS: Time format in the panel following https://valadoc.org/glib-2.0/GLib.DateTime.format.html */
-            time_label.set_label (Services.TimeManager.get_default ().format (_("%l:%M %p")));
-        }
+        string time_format = Granite.DateTime.get_default_time_format (clock_format == "12h", clock_show_seconds);
+        time_label.label = Services.TimeManager.get_default ().format (time_format);
     }
         
 }
