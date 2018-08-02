@@ -31,6 +31,8 @@ public class DateTime.Services.TimeManager : Gtk.Calendar {
     private uint timeout_id = 0;
     private Manager? manager = null;
 
+    public bool clock_show_seconds { get; set; }
+
     public TimeManager () {
         update_current_time ();
 
@@ -40,6 +42,13 @@ public class DateTime.Services.TimeManager : Gtk.Calendar {
 
         add_timeout ();
         try {
+            var clock_settings = new GLib.Settings ("org.gnome.desktop.interface");
+            clock_settings.bind ("clock-show-seconds", this, "clock-show-seconds", SettingsBindFlags.DEFAULT);
+
+            notify["clock-show-seconds"].connect (() => {
+                add_timeout ();
+            });
+
             // Listen for the D-BUS server that controls time settings
             Bus.watch_name (BusType.SYSTEM, "org.freedesktop.timedate1", BusNameWatcherFlags.NONE, on_watch, on_unwatch);
             // Listen for the signal that is fired when waking up from sleep, then update time
@@ -67,7 +76,12 @@ public class DateTime.Services.TimeManager : Gtk.Calendar {
     }
 
     private void add_timeout (bool update_fast = false) {
-        var interval = update_fast ? 500 : calculate_time_until_next_minute ();
+        uint interval;
+        if (update_fast || clock_show_seconds) {
+            interval = 500;
+        } else {
+            interval = calculate_time_until_next_minute ();
+        }
 
         if (timeout_id > 0) {
             Source.remove (timeout_id);
