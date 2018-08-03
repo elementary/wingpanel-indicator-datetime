@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-07-26 18:01+0100\n"
+"POT-Creation-Date: 2018-08-03 08:24-0700\n"
 "PO-Revision-Date: 2017-07-06 14:52+0700\n"
 "Last-Translator: Kukuh Syafaat <syafaatkukuh@gmail.com>\n"
 "Language-Team: \n"
@@ -14,30 +14,26 @@ msgstr ""
 "X-Generator: Poedit 2.0.2\n"
 "X-Launchpad-Export-Date: 2017-02-19 05:57+0000\n"
 
-#: ../src/Indicator.vala:33
+#: src/Indicator.vala:33
 msgid "Date & Time"
 msgstr "Tanggal & Waktu"
 
-#: ../src/Indicator.vala:34
+#: src/Indicator.vala:34
 msgid "The date and time indicator"
 msgstr "Penunjuk tanggal dan waktu"
 
-#: ../src/Indicator.vala:69
+#: src/Indicator.vala:69
 msgid "Date & Time Settings…"
 msgstr "Pengaturan Tanggal & Waktu…"
 
-#. / TRANSLATORS: Date format in the panel following https://valadoc.org/glib-2.0/GLib.DateTime.format.html */
-#: ../src/Widgets/PanelLabel.vala:60
-msgid "%a, %b %e"
-msgstr "%a, %b %e"
-
-#. / TRANSLATORS: Time format in the panel following https://valadoc.org/glib-2.0/GLib.DateTime.format.html */
-#: ../src/Widgets/PanelLabel.vala:66
-msgid "%l:%M %p"
-msgstr "%l:%M %p"
-
-#: ../src/Widgets/calendar/ControlHeader.vala:30
-#: ../src/Widgets/calendar/ControlHeader.vala:33
+#: src/Widgets/calendar/ControlHeader.vala:30
+#: src/Widgets/calendar/ControlHeader.vala:33
 #, fuzzy
 msgid "%OB %Y"
 msgstr "%B %e, %Y"
+
+#~ msgid "%a, %b %e"
+#~ msgstr "%a, %b %e"
+
+#~ msgid "%l:%M %p"
+#~ msgstr "%l:%M %p"

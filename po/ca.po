@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-07-26 18:01+0100\n"
+"POT-Creation-Date: 2018-08-03 08:24-0700\n"
 "PO-Revision-Date: 2018-07-27 11:57+0000\n"
 "Last-Translator: David M <rbndavid@gmail.com>\n"
 "Language-Team: Catalan <https://weblate.elementary.io/projects/wingpanel/"
@@ -15,29 +15,25 @@ msgstr ""
 "X-Generator: Weblate 3.0.1\n"
 "X-Launchpad-Export-Date: 2017-02-19 05:57+0000\n"
 
-#: ../src/Indicator.vala:33
+#: src/Indicator.vala:33
 msgid "Date & Time"
 msgstr "Data i hora"
 
-#: ../src/Indicator.vala:34
+#: src/Indicator.vala:34
 msgid "The date and time indicator"
 msgstr "Indicador de la data i l'hora"
 
-#: ../src/Indicator.vala:69
+#: src/Indicator.vala:69
 msgid "Date & Time Settings…"
 msgstr "Paràmetres de la data i l'hora…"
 
-#. / TRANSLATORS: Date format in the panel following https://valadoc.org/glib-2.0/GLib.DateTime.format.html */
-#: ../src/Widgets/PanelLabel.vala:60
-msgid "%a, %b %e"
-msgstr "%a, %e, %b"
-
-#. / TRANSLATORS: Time format in the panel following https://valadoc.org/glib-2.0/GLib.DateTime.format.html */
-#: ../src/Widgets/PanelLabel.vala:66
-msgid "%l:%M %p"
-msgstr "%H.%M"
-
-#: ../src/Widgets/calendar/ControlHeader.vala:30
-#: ../src/Widgets/calendar/ControlHeader.vala:33
+#: src/Widgets/calendar/ControlHeader.vala:30
+#: src/Widgets/calendar/ControlHeader.vala:33
 msgid "%OB %Y"
 msgstr "%OB de %Y"
+
+#~ msgid "%a, %b %e"
+#~ msgstr "%a, %e, %b"
+
+#~ msgid "%l:%M %p"
+#~ msgstr "%H.%M"

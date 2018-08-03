@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-07-26 18:01+0100\n"
+"POT-Creation-Date: 2018-08-03 08:24-0700\n"
 "PO-Revision-Date: 2017-12-28 00:18+0000\n"
 "Last-Translator: Hải Hồ <hochihai1997@gmail.com>\n"
 "Language-Team: Vietnamese <https://weblate.elementary.io/projects/wingpanel/"
@@ -15,29 +15,19 @@ msgstr ""
 "X-Generator: Weblate 2.18\n"
 "X-Launchpad-Export-Date: 2017-02-19 05:58+0000\n"
 
-#: ../src/Indicator.vala:33
+#: src/Indicator.vala:33
 msgid "Date & Time"
 msgstr "Ngày & Giờ"
 
-#: ../src/Indicator.vala:34
+#: src/Indicator.vala:34
 msgid "The date and time indicator"
 msgstr "Chỉ thị ngày và giờ"
 
-#: ../src/Indicator.vala:69
+#: src/Indicator.vala:69
 msgid "Date & Time Settings…"
 msgstr "Cài đặt Ngày & Giờ…"
 
-#. / TRANSLATORS: Date format in the panel following https://valadoc.org/glib-2.0/GLib.DateTime.format.html */
-#: ../src/Widgets/PanelLabel.vala:60
-msgid "%a, %b %e"
-msgstr ""
-
-#. / TRANSLATORS: Time format in the panel following https://valadoc.org/glib-2.0/GLib.DateTime.format.html */
-#: ../src/Widgets/PanelLabel.vala:66
-msgid "%l:%M %p"
-msgstr ""
-
-#: ../src/Widgets/calendar/ControlHeader.vala:30
-#: ../src/Widgets/calendar/ControlHeader.vala:33
+#: src/Widgets/calendar/ControlHeader.vala:30
+#: src/Widgets/calendar/ControlHeader.vala:33
 msgid "%OB %Y"
 msgstr ""
