@@ -39,7 +39,7 @@ public class DateTime.Widgets.PanelLabel : Gtk.Grid {
         add (date_revealer);
         add (time_label);
 
-        var clock_settings = new GLib.Settings ("org.gnome.desktop.interface");
+        var clock_settings = new GLib.Settings ("io.elementary.desktop.wingpanel.datetime");
         clock_settings.bind ("clock-format", this, "clock-format", SettingsBindFlags.DEFAULT);
         clock_settings.bind ("clock-show-seconds", this, "clock-show-seconds", SettingsBindFlags.DEFAULT);
         clock_settings.bind ("clock-show-date", date_revealer, "reveal_child", SettingsBindFlags.DEFAULT);
