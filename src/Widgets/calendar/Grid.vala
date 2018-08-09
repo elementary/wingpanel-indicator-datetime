@@ -156,6 +156,13 @@ namespace DateTime.Widgets {
                 day.sensitive_container (false);
             }
 
+            if (
+                new_date.get_day_of_week () == GLib.DateWeekday.SATURDAY ||
+                new_date.get_day_of_week () == GLib.DateWeekday.SUNDAY)
+            {
+                day.get_style_context ().add_class ("weekend");
+            }
+
             day.update_date (new_date);
 
             return day;
@@ -167,3 +174,4 @@ namespace DateTime.Widgets {
 
     }
 }
+
