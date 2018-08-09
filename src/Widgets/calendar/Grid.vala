@@ -158,8 +158,8 @@ namespace DateTime.Widgets {
 
             if (
                 new_date.get_day_of_week () == GLib.DateWeekday.SATURDAY ||
-                new_date.get_day_of_week () == GLib.DateWeekday.SUNDAY)
-            {
+                new_date.get_day_of_week () == GLib.DateWeekday.SUNDAY
+            ) {
                 day.get_style_context ().add_class ("weekend");
             }
 
