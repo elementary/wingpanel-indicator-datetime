@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-08-03 08:24-0700\n"
-"PO-Revision-Date: 2018-08-29 16:00+0000\n"
+"PO-Revision-Date: 2018-09-22 00:11+0000\n"
 "Last-Translator: Rodrigo Oliveira <rod.oliveira@gmail.com>\n"
 "Language-Team: Portuguese (Brazil) <https://weblate.elementary.io/projects/"
 "wingpanel/wingpanel-indicator-datetime/pt_BR/>\n"
@@ -25,7 +25,7 @@ msgstr "O indicador de data e hora"
 
 #: src/Indicator.vala:69
 msgid "Date & Time Settings…"
-msgstr "Configurações de data e hora…"
+msgstr "Configurações de Data e Hora…"
 
 #: src/Widgets/calendar/ControlHeader.vala:30
 #: src/Widgets/calendar/ControlHeader.vala:33
