@@ -103,15 +103,14 @@ public class DateTime.Indicator : Wingpanel.Indicator {
                 menuitem_label.wrap_mode = Pango.WrapMode.WORD_CHAR;
                 menuitem_label.xalign = 0;
 
-                var menuitem_grid = new Gtk.Grid ();
-                menuitem_grid.column_spacing = 6;
-                menuitem_grid.margin_end = 6;
-                menuitem_grid.margin_start = 6;
-                menuitem_grid.add (menuitem_icon);
-                menuitem_grid.add (menuitem_label);
+                var menuitem_box = new Gtk.Box (Gtk.Orientation.HORIZONTAL, 6);
+                menuitem_box.margin_end = 6;
+                menuitem_box.margin_start = 6;
+                menuitem_box.add (menuitem_icon);
+                menuitem_box.add (menuitem_label);
 
                 var menuitem = new Gtk.Button ();
-                menuitem.add (menuitem_grid);
+                menuitem.add (menuitem_box);
 
                 var style_context = menuitem.get_style_context ();
                 style_context.add_class (Gtk.STYLE_CLASS_MENUITEM);
