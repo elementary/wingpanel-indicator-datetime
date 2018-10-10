@@ -25,15 +25,14 @@ interface Manager : Object {
 public class DateTime.Services.TimeManager : Gtk.Calendar {
     private static TimeManager? instance = null;
 
-    public signal void time_changed ();
+    public signal void date_time_changed ();
     public signal void day_changed ();
 
     private GLib.DateTime? current_time = null;
     private uint timeout_id = 0;
     private Manager? manager = null;
     private bool update_fast = false;
-    private int? previous_second = null;
-    private int? previous_minute = null;
+    private string? previous_date_time = null;
     private int? previous_day = null;
     
     public bool clock_show_seconds { get; set; }
@@ -80,11 +79,12 @@ public class DateTime.Services.TimeManager : Gtk.Calendar {
         if (current_time == null) {
             return;
         }
-
-        if ((clock_show_seconds && previous_second != current_time.get_second()) || previous_minute != current_time.get_minute()) {
-            previous_second = current_time.get_second();
-            previous_minute = current_time.get_minute();
-            time_changed();
+        var compare_format = "%Y %m %d %H %M";
+        var compare_format_sec = compare_format + " %S";
+        var new_date_time = format(clock_show_seconds ? compare_format_sec : compare_format);
+        if (new_date_time != previous_date_time) {
+            previous_date_time = new_date_time;
+            date_time_changed();
         }
         if (previous_day != current_time.get_day_of_month()) {
             previous_day = current_time.get_day_of_month();
