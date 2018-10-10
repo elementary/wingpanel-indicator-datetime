@@ -161,6 +161,30 @@ namespace DateTime.Widgets {
             return day;
         }
 
+        public void update_today () {
+            if (grid_range == null) return;
+            Gee.List<GLib.DateTime> dates = grid_range.to_list ();
+            var today = new GLib.DateTime.now_local ();
+            
+            int i = 0;
+            for (i = 0; i < dates.size; i++) {
+                var date = dates[i];
+                GridDay? day = data[day_hash (date)];
+                if (day == null) return;
+                if (date.get_day_of_year () == today.get_day_of_year () && date.get_year () == today.get_year ()) {
+                    day.name = "today";
+                    day.get_style_context ().add_class (Granite.STYLE_CLASS_ACCENT);
+                    day.set_receives_default (true);
+                    day.show_all ();
+                } else if (day.name == "today") {
+                    day.name = "";
+                    day.get_style_context ().remove_class (Granite.STYLE_CLASS_ACCENT);
+                    day.set_receives_default (false);
+                    day.show_all ();
+                }
+            }
+        }
+
         uint day_hash (GLib.DateTime date) {
             return date.get_year () * 10000 + date.get_month () * 100 + date.get_day_of_month ();
         }
