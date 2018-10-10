@@ -25,28 +25,27 @@ interface Manager : Object {
 public class DateTime.Services.TimeManager : Gtk.Calendar {
     private static TimeManager? instance = null;
 
-    public signal void minute_changed ();
+    public signal void date_time_changed ();
+    public signal void day_changed ();
 
     private GLib.DateTime? current_time = null;
     private uint timeout_id = 0;
     private Manager? manager = null;
-
+    private bool update_fast = false;
+    private string? previous_date_time = null;
+    private int? previous_day = null;
+    
     public bool clock_show_seconds { get; set; }
+    
 
     public TimeManager () {
-        update_current_time ();
-
-        if (current_time == null) {
-            return;
-        }
-
-        add_timeout ();
+        tick();
         try {
             var clock_settings = new GLib.Settings ("io.elementary.desktop.wingpanel.datetime");
             clock_settings.bind ("clock-show-seconds", this, "clock-show-seconds", SettingsBindFlags.DEFAULT);
 
             notify["clock-show-seconds"].connect (() => {
-                add_timeout ();
+                tick();
             });
 
             // Listen for the D-BUS server that controls time settings
@@ -55,9 +54,7 @@ public class DateTime.Services.TimeManager : Gtk.Calendar {
             manager = Bus.get_proxy_sync (BusType.SYSTEM, "org.freedesktop.login1", "/org/freedesktop/login1");
             manager.prepare_for_sleep.connect ((sleeping) => {
                 if (!sleeping) {
-                    update_current_time ();
-                    minute_changed ();
-                    add_timeout ();
+                    tick();
                 }
             });
         } catch (Error e) {
@@ -67,31 +64,46 @@ public class DateTime.Services.TimeManager : Gtk.Calendar {
 
     private void on_watch (DBusConnection conn) {
         // Start updating the time display quicker because someone is changing settings
-        add_timeout (true);
+        update_fast = true;
+        tick();
     }
-
+    
     private void on_unwatch (DBusConnection conn) {
         // Stop updating the time display quicker
-        add_timeout (false);
+        update_fast = false;
+        tick();
     }
 
-    private void add_timeout (bool update_fast = false) {
+    private void tick () {
+        update_current_time ();
+        if (current_time == null) {
+            return;
+        }
+        var compare_format = "%Y %m %d %H %M";
+        var compare_format_sec = compare_format + " %S";
+        var new_date_time = format(clock_show_seconds ? compare_format_sec : compare_format);
+        if (new_date_time != previous_date_time) {
+            previous_date_time = new_date_time;
+            date_time_changed();
+        }
+        if (previous_day != current_time.get_day_of_month()) {
+            previous_day = current_time.get_day_of_month();
+            day_changed();
+        }
+        
         uint interval;
         if (update_fast || clock_show_seconds) {
             interval = 500;
         } else {
             interval = calculate_time_until_next_minute ();
         }
-
+        
         if (timeout_id > 0) {
             Source.remove (timeout_id);
         }
 
         timeout_id = Timeout.add (interval, () => {
-            update_current_time ();
-            minute_changed ();
-            add_timeout (update_fast);
-
+            tick();
             return false;
         });
     }

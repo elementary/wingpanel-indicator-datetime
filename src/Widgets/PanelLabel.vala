@@ -51,7 +51,7 @@ public class DateTime.Widgets.PanelLabel : Gtk.Grid {
 
         update_labels ();
 
-        Services.TimeManager.get_default ().minute_changed.connect (update_labels);
+        Services.TimeManager.get_default ().date_time_changed.connect (update_labels);
     }
 
     private void update_labels () {
