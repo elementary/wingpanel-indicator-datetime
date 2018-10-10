@@ -96,15 +96,15 @@ public class DateTime.Services.TimeManager : Gtk.Calendar {
         });
     }
 
-    public string format (string format) {
+    public string? format (string format) {
         if (current_time == null) {
-            return "undef";
+            return null;
         }
 
         return current_time.format (format);
     }
 
-    public GLib.DateTime get_current_time () {
+    public GLib.DateTime? get_current_time () {
         return current_time;
     }
 

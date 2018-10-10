@@ -18,6 +18,7 @@
  */
 
 public class DateTime.Widgets.PanelLabel : Gtk.Grid {
+    private Gtk.Stack stack;
     private Gtk.Label date_label;
     private Gtk.Label time_label;
 
@@ -27,7 +28,6 @@ public class DateTime.Widgets.PanelLabel : Gtk.Grid {
 
     construct {
         date_label = new Gtk.Label (null);
-        date_label.margin_end = 12;
 
         var date_revealer = new Gtk.Revealer ();
         date_revealer.transition_type = Gtk.RevealerTransitionType.SLIDE_LEFT;
@@ -35,9 +35,18 @@ public class DateTime.Widgets.PanelLabel : Gtk.Grid {
 
         time_label = new Gtk.Label (null);
 
+        var date_time = new Gtk.Box (Gtk.Orientation.HORIZONTAL, 12);
+        date_time.add(date_revealer);
+        date_time.add(time_label);
+
+        var error_label = new Gtk.Label (_("Can't get the local time."));
+
+        stack = new Gtk.Stack();
+        stack.add_named (date_time, "date-time");
+        stack.add_named (error_label, "error");
+        add (stack);
+
         valign = Gtk.Align.CENTER;
-        add (date_revealer);
-        add (time_label);
 
         var clock_settings = new GLib.Settings ("io.elementary.desktop.wingpanel.datetime");
         clock_settings.bind ("clock-format", this, "clock-format", SettingsBindFlags.DEFAULT);
@@ -55,6 +64,13 @@ public class DateTime.Widgets.PanelLabel : Gtk.Grid {
     }
 
     private void update_labels () {
+        var time_manager = Services.TimeManager.get_default ();
+        if (time_manager.get_current_time () == null) {
+            stack.visible_child_name = "error";
+            return;
+        }
+        stack.visible_child_name = "date-time";
+
         string date_format;
         if (clock_format == "ISO8601") {
             date_format = "%F";
@@ -62,10 +78,10 @@ public class DateTime.Widgets.PanelLabel : Gtk.Grid {
             date_format = Granite.DateTime.get_default_date_format (clock_show_weekday, true, false);
         }
 
-        date_label.label = Services.TimeManager.get_default ().format (date_format);
+        date_label.label = time_manager.format (date_format);
 
         string time_format = Granite.DateTime.get_default_time_format (clock_format == "12h", clock_show_seconds);
-        time_label.label = Services.TimeManager.get_default ().format (time_format);
+        time_label.label = time_manager.format (time_format);
     }
         
 }
