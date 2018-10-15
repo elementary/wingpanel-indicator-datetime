@@ -128,8 +128,10 @@ public class DateTime.Widgets.CalendarView : Gtk.Grid {
     /* Sets the calendar widgets to the date range of the model */
     void sync_with_model () {
         var model = CalendarModel.get_default ();
-        if (grid.grid_range != null && (model.data_range.equals (grid.grid_range) || grid.grid_range.first_dt.compare (model.data_range.first_dt) == 0))
-            return; // nothing to do
+        if (grid.grid_range != null && (model.data_range.equals (grid.grid_range) || grid.grid_range.first_dt.compare (model.data_range.first_dt) == 0)) {
+            grid.update_today();
+            return; // nothing else to do
+        }
 
         GLib.DateTime previous_first = null;
         if (grid.grid_range != null)
