@@ -145,11 +145,7 @@ namespace DateTime.Widgets {
          * Updates the given GridDay so that it shows the given date. Changes to its style etc.
          */
         GridDay update_day (GridDay day, GLib.DateTime new_date, GLib.DateTime today, GLib.DateTime month_start) {
-            if (new_date.get_day_of_year () == today.get_day_of_year () && new_date.get_year () == today.get_year ()) {
-                day.name = "today";
-                day.get_style_context ().add_class (Granite.STYLE_CLASS_ACCENT);
-                day.set_receives_default (true);
-            }
+            update_today_style (day, new_date, today);
             if (new_date.get_month () == month_start.get_month ()) {
                 day.sensitive_container (true);
             } else {
@@ -159,6 +155,34 @@ namespace DateTime.Widgets {
             day.update_date (new_date);
 
             return day;
+        }
+
+        public void update_today () {
+            if (grid_range == null) return;
+            Gee.List<GLib.DateTime> dates = grid_range.to_list ();
+            var today = new GLib.DateTime.now_local ();
+            
+            int i = 0;
+            for (i = 0; i < dates.size; i++) {
+                var date = dates[i];
+                GridDay? day = data[day_hash (date)];
+                if (day == null) return;
+                update_today_style (day, date, today);
+            }
+        }
+        
+        public void update_today_style (GridDay day, GLib.DateTime date, GLib.DateTime today) {
+            if (date.get_day_of_year () == today.get_day_of_year () && date.get_year () == today.get_year ()) {
+                day.name = "today";
+                day.get_style_context ().add_class (Granite.STYLE_CLASS_ACCENT);
+                day.set_receives_default (true);
+                day.show_all ();
+            } else if (day.name == "today") {
+                day.name = "";
+                day.get_style_context ().remove_class (Granite.STYLE_CLASS_ACCENT);
+                day.set_receives_default (false);
+                day.show_all ();
+            }
         }
 
         uint day_hash (GLib.DateTime date) {
