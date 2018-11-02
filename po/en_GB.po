@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-08-03 08:24-0700\n"
-"PO-Revision-Date: 2017-12-15 00:17+0000\n"
-"Last-Translator: Joe Osborne <reachjoe.o@gmail.com>\n"
+"PO-Revision-Date: 2018-10-25 07:14+0000\n"
+"Last-Translator: Ciaran Ainsworth <ciaranainsworth@outlook.com>\n"
 "Language-Team: English (United Kingdom) <https://weblate.elementary.io/"
 "projects/wingpanel/wingpanel-indicator-datetime/en_GB/>\n"
 "Language: en_GB\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 2.17.1\n"
+"X-Generator: Weblate 3.0.1\n"
 "X-Launchpad-Export-Date: 2017-02-19 05:58+0000\n"
 
 #: src/Indicator.vala:33
@@ -29,9 +29,8 @@ msgstr "Date & Time Settings…"
 
 #: src/Widgets/calendar/ControlHeader.vala:30
 #: src/Widgets/calendar/ControlHeader.vala:33
-#, fuzzy
 msgid "%OB %Y"
-msgstr "%e %B, %Y"
+msgstr "%OB %Y"
 
 #~ msgid "%a, %b %e"
 #~ msgstr "%a, %e %b"
