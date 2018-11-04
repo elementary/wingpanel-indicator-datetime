@@ -214,7 +214,7 @@ namespace Util {
         }
 
         /* If AM/PM exists, assume it is the default time format and check for format override. */
-        var setting = new GLib.Settings ("org.gnome.desktop.interface");
+        var setting = new GLib.Settings ("io.elementary.granite");
         var clockformat = setting.get_user_value ("clock-format");
 
         if (clockformat == null) {
