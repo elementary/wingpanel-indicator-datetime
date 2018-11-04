@@ -22,6 +22,7 @@ public class DateTime.Indicator : Wingpanel.Indicator {
     private Gtk.Grid main_grid;
     private Widgets.Calendar calendar;
     private Gtk.Grid event_grid;
+    private uint update_events_idle_source = 0;
 
     public Indicator () {
         Object (
@@ -59,14 +60,12 @@ public class DateTime.Indicator : Wingpanel.Indicator {
             main_grid.attach (new Wingpanel.Widgets.Separator (), 0, 2);
             main_grid.attach (settings_button, 0, 3);
 
-            create_event_grid ();
-
             calendar.day_double_click.connect (() => {
                 close ();
             });
 
             calendar.selection_changed.connect ((date) => {
-                Idle.add (update_events);
+                idle_update_events ();
             });
 
             settings_button.clicked.connect (() => {
@@ -81,23 +80,27 @@ public class DateTime.Indicator : Wingpanel.Indicator {
         return main_grid;
     }
 
-    private void create_event_grid () {
-        event_grid = new Gtk.Grid ();
-        event_grid.orientation = Gtk.Orientation.VERTICAL;
-        main_grid.attach (event_grid, 0, 1);
+    private void update_events_model (E.Source source, Gee.Collection<E.CalComponent> events) {
+        idle_update_events ();
     }
 
-    private void update_events_model (E.Source source, Gee.Collection<E.CalComponent> events) {
-        Idle.add (update_events);
+    private void idle_update_events () {
+        if (update_events_idle_source > 0) {
+            Source.remove (update_events_idle_source);
+            update_events_idle_source = 0;
+        }
+        update_events_idle_source = Idle.add (update_events);
     }
 
     private bool update_events () {
-        event_grid.destroy();
+        if (event_grid != null) event_grid.destroy();
 
         var events = Widgets.CalendarModel.get_default ().get_events (calendar.selected_date);
         if (events.size == 0) return false;
 
-        create_event_grid ();
+        event_grid = new Gtk.Grid ();
+        event_grid.orientation = Gtk.Orientation.VERTICAL;
+        main_grid.attach (event_grid, 0, 1);
 
         foreach (var e in events) {
                 var menuitem_icon = new Gtk.Image.from_icon_name (e.get_icon (), Gtk.IconSize.MENU);
@@ -133,8 +136,8 @@ public class DateTime.Indicator : Wingpanel.Indicator {
                 });
         }
 
-
         event_grid.show_all ();
+        update_events_idle_source = 0;
         return false;
     }
 
