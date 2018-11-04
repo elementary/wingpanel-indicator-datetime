@@ -87,13 +87,15 @@ public class DateTime.Indicator : Wingpanel.Indicator {
     private void idle_update_events () {
         if (update_events_idle_source > 0) {
             Source.remove (update_events_idle_source);
-            update_events_idle_source = 0;
         }
+
         update_events_idle_source = Idle.add (update_events);
     }
 
     private bool update_events () {
-        if (event_grid != null) event_grid.destroy();
+        if (event_grid != null) {
+            event_grid.destroy();
+        }
 
         var events = Widgets.CalendarModel.get_default ().get_events (calendar.selected_date);
         if (events.size == 0) return false;
