@@ -96,7 +96,7 @@ public class DateTime.Indicator : Wingpanel.Indicator {
         if (event_grid != null) {
             event_grid.destroy ();
         }
-
+        if (calendar.selected_date == null) return false;
         var events = Widgets.CalendarModel.get_default ().get_events (calendar.selected_date);
         if (events.size == 0) return false;
 
