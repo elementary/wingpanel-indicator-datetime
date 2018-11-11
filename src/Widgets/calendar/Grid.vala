@@ -69,6 +69,24 @@ namespace DateTime.Widgets {
             }
         }
 
+        public void set_focus_to_today () {
+            debug ("set_focus_to_today");
+            if (grid_range == null) return;
+            debug ("  found grid_range");
+            Gee.List<GLib.DateTime> dates = grid_range.to_list ();
+            int i = 0;
+            for (i = 0; i < dates.size; i++) {
+                var date = dates[i];
+                GridDay? day = data[day_hash (date)];
+                if (day != null && day.name == "today") {
+                    debug ("  found today");
+                    debug ("  can_focus: %s", day.can_focus? "true" : "false");
+                    day.grab_focus_force ();
+                    return;
+                }
+            }
+        }
+
         /**
          * Sets the given range to be displayed in the grid. Note that the number of days
          * must remain the same.
