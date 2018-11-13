@@ -21,7 +21,8 @@ public class DateTime.Indicator : Wingpanel.Indicator {
     private Widgets.PanelLabel panel_label;
     private Gtk.Grid main_grid;
     private Widgets.Calendar calendar;
-    private Gtk.Box event_box;
+    private Gtk.Grid event_grid;
+    private uint update_events_idle_source = 0;
 
     public Indicator () {
         Object (
@@ -49,8 +50,6 @@ public class DateTime.Indicator : Wingpanel.Indicator {
             calendar.margin_top = 6;
             calendar.margin_bottom = 6;
 
-            event_box = new Gtk.Box (Gtk.Orientation.VERTICAL, 0);
-
             var settings_button = new Gtk.ModelButton ();
             settings_button.text = _("Date & Time Settings…");
 
@@ -58,7 +57,6 @@ public class DateTime.Indicator : Wingpanel.Indicator {
             main_grid.halign = Gtk.Align.CENTER;
             main_grid.valign = Gtk.Align.START;
             main_grid.attach (calendar, 0, 0);
-            main_grid.attach (event_box, 0, 1);
             main_grid.attach (new Wingpanel.Widgets.Separator (), 0, 2);
             main_grid.attach (settings_button, 0, 3);
 
@@ -67,7 +65,7 @@ public class DateTime.Indicator : Wingpanel.Indicator {
             });
 
             calendar.selection_changed.connect ((date) => {
-                Idle.add (update_events);
+                idle_update_events ();
             });
 
             settings_button.clicked.connect (() => {
@@ -83,14 +81,30 @@ public class DateTime.Indicator : Wingpanel.Indicator {
     }
 
     private void update_events_model (E.Source source, Gee.Collection<E.CalComponent> events) {
-        Idle.add (update_events);
+        idle_update_events ();
+    }
+
+    private void idle_update_events () {
+        if (update_events_idle_source > 0) {
+            Source.remove (update_events_idle_source);
+        }
+
+        update_events_idle_source = Idle.add (update_events);
     }
 
     private bool update_events () {
-        foreach (var w in event_box.get_children ()) {
-            w.destroy ();
+        if (event_grid != null) {
+            event_grid.destroy ();
         }
-        foreach (var e in Widgets.CalendarModel.get_default ().get_events (calendar.selected_date)) {
+
+        var events = Widgets.CalendarModel.get_default ().get_events (calendar.selected_date);
+        if (events.size == 0) return false;
+
+        event_grid = new Gtk.Grid ();
+        event_grid.orientation = Gtk.Orientation.VERTICAL;
+        main_grid.attach (event_grid, 0, 1);
+
+        foreach (var e in events) {
                 var menuitem_icon = new Gtk.Image.from_icon_name (e.get_icon (), Gtk.IconSize.MENU);
                 menuitem_icon.valign = Gtk.Align.START;
 
@@ -103,29 +117,29 @@ public class DateTime.Indicator : Wingpanel.Indicator {
                 menuitem_label.wrap_mode = Pango.WrapMode.WORD_CHAR;
                 menuitem_label.xalign = 0;
 
-                var menuitem_grid = new Gtk.Grid ();
-                menuitem_grid.column_spacing = 6;
-                menuitem_grid.margin_end = 6;
-                menuitem_grid.margin_start = 6;
-                menuitem_grid.add (menuitem_icon);
-                menuitem_grid.add (menuitem_label);
+                var menuitem_box = new Gtk.Box (Gtk.Orientation.HORIZONTAL, 6);
+                menuitem_box.margin_end = 6;
+                menuitem_box.margin_start = 6;
+                menuitem_box.add (menuitem_icon);
+                menuitem_box.add (menuitem_label);
 
                 var menuitem = new Gtk.Button ();
-                menuitem.add (menuitem_grid);
+                menuitem.add (menuitem_box);
 
                 var style_context = menuitem.get_style_context ();
                 style_context.add_class (Gtk.STYLE_CLASS_MENUITEM);
                 style_context.remove_class (Gtk.STYLE_CLASS_BUTTON);
                 style_context.remove_class ("text-button");
 
-                event_box.add (menuitem);
+                event_grid.add (menuitem);
                 menuitem.clicked.connect (() => {
                     calendar.show_date_in_maya (e.date);
                     this.close ();
                 });
         }
 
-        event_box.show_all ();
+        event_grid.show_all ();
+        update_events_idle_source = 0;
         return false;
     }
 

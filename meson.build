@@ -1,4 +1,8 @@
-project('datetime', 'vala', 'c')
+project(
+    'datetime',
+    'vala', 'c',
+    version: '2.1.2'
+)
 
 i18n = import('i18n')
 gettext_name = meson.project_name() + '-indicator'
