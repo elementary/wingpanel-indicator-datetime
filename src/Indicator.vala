@@ -96,10 +96,13 @@ public class DateTime.Indicator : Wingpanel.Indicator {
         if (event_grid != null) {
             event_grid.destroy ();
         }
-        if (calendar.selected_date == null) return false;
+        if (calendar.selected_date == null){
+            return false;
+        }
         var events = Widgets.CalendarModel.get_default ().get_events (calendar.selected_date);
-        if (events.size == 0) return false;
-
+        if (events.size == 0) {
+            return false;
+        }
         event_grid = new Gtk.Grid ();
         event_grid.orientation = Gtk.Orientation.VERTICAL;
         main_grid.attach (event_grid, 0, 1);
