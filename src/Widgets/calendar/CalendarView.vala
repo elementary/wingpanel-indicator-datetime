@@ -123,6 +123,9 @@ public class DateTime.Widgets.CalendarView : Gtk.Grid {
             return; // nothing to do
 
         sync_with_model ();
+        
+        selected_date = null;
+        selection_changed (selected_date);
     }
 
     //--- Helper Methods ---//
