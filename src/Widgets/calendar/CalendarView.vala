@@ -105,6 +105,8 @@ public class DateTime.Widgets.CalendarView : Gtk.Grid {
         if (!start.equal (calmodel.month_start))
             calmodel.month_start = start;
         sync_with_model ();
+
+        grid.set_focus_to_today ();
     }
 
     //--- Signal Handlers ---//
@@ -121,6 +123,9 @@ public class DateTime.Widgets.CalendarView : Gtk.Grid {
             return; // nothing to do
 
         sync_with_model ();
+        
+        selected_date = null;
+        selection_changed (selected_date);
     }
 
     //--- Helper Methods ---//

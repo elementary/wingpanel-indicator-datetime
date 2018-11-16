@@ -95,6 +95,10 @@ public class DateTime.Widgets.GridDay : Gtk.EventBox {
             set_state_flags (Gtk.StateFlags.NORMAL, true);
         }
     }
+    public void grab_focus_force () {
+        valid_grab = true;
+        grab_focus ();
+    }
     public override void grab_focus () {
         if (valid_grab) {
             base.grab_focus ();

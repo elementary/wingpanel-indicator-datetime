@@ -69,6 +69,21 @@ namespace DateTime.Widgets {
             }
         }
 
+        public void set_focus_to_today () {
+            if (grid_range == null) {
+                return;
+            }
+            Gee.List<GLib.DateTime> dates = grid_range.to_list ();
+            for (int i = 0; i < dates.size; i++) {
+                var date = dates[i];
+                GridDay? day = data[day_hash (date)];
+                if (day != null && day.name == "today") {
+                    day.grab_focus_force ();
+                    return;
+                }
+            }
+        }
+
         /**
          * Sets the given range to be displayed in the grid. Note that the number of days
          * must remain the same.
@@ -168,7 +183,7 @@ namespace DateTime.Widgets {
             if (grid_range == null) return;
             Gee.List<GLib.DateTime> dates = grid_range.to_list ();
             var today = new GLib.DateTime.now_local ();
-            
+
             int i = 0;
             for (i = 0; i < dates.size; i++) {
                 var date = dates[i];
@@ -177,7 +192,7 @@ namespace DateTime.Widgets {
                 update_today_style (day, date, today);
             }
         }
-        
+
         public void update_today_style (GridDay day, GLib.DateTime date, GLib.DateTime today) {
             if (date.get_day_of_year () == today.get_day_of_year () && date.get_year () == today.get_year ()) {
                 day.name = "today";
