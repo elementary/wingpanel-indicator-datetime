@@ -14,6 +14,8 @@ wingpanel_dep = dependency('wingpanel-2.0')
 
 shared_module(
     meson.project_name(),
+    'src/DateIterator.vala',
+    'src/DateRange.vala',
     'src/Indicator.vala',
     'src/Widgets/PanelLabel.vala',
     'src/Widgets/calendar/Calendar.vala',
