@@ -93,65 +93,6 @@ namespace Util {
         }
     }
 
-    public class DateIterator : Object, Gee.Traversable<GLib.DateTime>, Gee.Iterator<GLib.DateTime> {
-        GLib.DateTime current;
-        DateRange range;
-
-        public bool valid { get {
-                                return true;
-                            } }
-        public bool read_only { get {
-                                    return false;
-                                } }
-
-        public DateIterator (DateRange range) {
-            this.range = range;
-            this.current = range.first_dt.add_days (-1);
-        }
-
-        public bool @foreach (Gee.ForallFunc<GLib.DateTime> f) {
-            var element = range.first_dt;
-
-            while (element.compare (range.last_dt) < 0) {
-                if (f (element) == false) {
-                    return false;
-                }
-
-                element = element.add_days (1);
-            }
-
-            return true;
-        }
-
-        public bool next () {
-            if (!has_next ()) {
-                return false;
-            }
-
-            current = this.current.add_days (1);
-
-            return true;
-        }
-
-        public bool has_next () {
-            return current.compare (range.last_dt) < 0;
-        }
-
-        public bool first () {
-            current = range.first_dt;
-
-            return true;
-        }
-
-        public new GLib.DateTime get () {
-            return current;
-        }
-
-        public void remove () {
-            assert_not_reached ();
-        }
-    }
-
     public class Css {
         private static Gtk.CssProvider? _css_provider;
         /* Retrieve global css provider */
