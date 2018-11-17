@@ -19,7 +19,7 @@
  * Authored by: Corentin Noël <corentin@elementaryos.org>
  */
 
-public class DateIterator : Object, Gee.Traversable<GLib.DateTime>, Gee.Iterator<GLib.DateTime> {
+public class Util.DateIterator : Object, Gee.Traversable<GLib.DateTime>, Gee.Iterator<GLib.DateTime> {
     public GLib.DateTime current { get; construct set; }
     public Util.DateRange range { get; construct; }
 
