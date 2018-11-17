@@ -20,65 +20,6 @@
  */
 
 namespace Util {
-    public class DateIterator : Object, Gee.Traversable<GLib.DateTime>, Gee.Iterator<GLib.DateTime> {
-        GLib.DateTime current;
-        DateRange range;
-
-        public bool valid { get {
-                                return true;
-                            } }
-        public bool read_only { get {
-                                    return false;
-                                } }
-
-        public DateIterator (DateRange range) {
-            this.range = range;
-            this.current = range.first_dt.add_days (-1);
-        }
-
-        public bool @foreach (Gee.ForallFunc<GLib.DateTime> f) {
-            var element = range.first_dt;
-
-            while (element.compare (range.last_dt) < 0) {
-                if (f (element) == false) {
-                    return false;
-                }
-
-                element = element.add_days (1);
-            }
-
-            return true;
-        }
-
-        public bool next () {
-            if (!has_next ()) {
-                return false;
-            }
-
-            current = this.current.add_days (1);
-
-            return true;
-        }
-
-        public bool has_next () {
-            return current.compare (range.last_dt) < 0;
-        }
-
-        public bool first () {
-            current = range.first_dt;
-
-            return true;
-        }
-
-        public new GLib.DateTime get () {
-            return current;
-        }
-
-        public void remove () {
-            assert_not_reached ();
-        }
-    }
-
     public class Css {
         private static Gtk.CssProvider? _css_provider;
         /* Retrieve global css provider */
@@ -566,25 +507,6 @@ namespace Util {
         }
     }
 
-    public bool is_multiday_event (iCal.Component comp) {
-        var start = ical_to_date_time (comp.get_dtstart ());
-        var end = ical_to_date_time (comp.get_dtend ());
-        start = start.to_timezone (new TimeZone.utc ());
-        end = end.to_timezone (new TimeZone.utc ());
-
-        bool allday = is_the_all_day (start, end);
-
-        if (allday) {
-            end = end.add_days (-1);
-        }
-
-        if (start.get_year () != end.get_year () || start.get_day_of_year () != end.get_day_of_year ()) {
-            return true;
-        }
-
-        return false;
-    }
-
     /**
      * Say if an event lasts all day.
      */
@@ -662,58 +584,9 @@ namespace Util {
      * Gee Utility Functions
      */
 
-    /* Interleaves the values of two collections into a Map */
-    public void zip<F, G> (Gee.Iterable<F> iterable1, Gee.Iterable<G> iterable2, Gee.Map<F, G> map) {
-
-        var i1 = iterable1.iterator();
-        var i2 = iterable2.iterator();
-
-        while (i1.next() && i2.next())
-            map.set (i1, i2);
-    }
-
-    /* Constructs a new set with keys equal to the values of keymap */
-    public void remap<K, V> (Gee.Map<K, K> keymap, Gee.Map<K, V> valmap, ref Gee.Map<K, V> remap) {
-
-        foreach (K key in valmap) {
-
-            var k = keymap [key];
-            var v = valmap [key];
-
-            remap.set (k, v);
-        }
-    }
-
-    /* Computes hash value for string */
-    public uint string_hash_func (string key) {
-        return key.hash ();
-    }
-
-    /* Computes hash value for DateTime */
-    public uint datetime_hash_func (GLib.DateTime key) {
-        return key.hash ();
-    }
-
-    /* Computes hash value for E.CalComponent */
-    public uint calcomponent_hash_func (E.CalComponent key) {
-        unowned iCal.Component comp = key.get_icalcomponent ();
-        string uid = comp.get_uid ();
-        return uid.hash ();
-    }
-
     /* Computes hash value for E.Source */
     public uint source_hash_func (E.Source key) {
         return key.dup_uid (). hash ();
-    }
-
-    /* Returns true if 'a' and 'b' are the same string */
-    public bool string_equal_func (string a, string b) {
-        return a == b;
-    }
-
-    /* Returns true if 'a' and 'b' are the same GLib.DateTime */
-    public bool datetime_equal_func (GLib.DateTime a, GLib.DateTime b) {
-        return a.equal (b);
     }
 
     /* Returns true if 'a' and 'b' are the same E.CalComponent */
