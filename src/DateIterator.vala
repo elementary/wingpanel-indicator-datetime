@@ -23,13 +23,15 @@ public class Util.DateIterator : Object, Gee.Traversable<GLib.DateTime>, Gee.Ite
     public GLib.DateTime current { get; construct set; }
     public Util.DateRange range { get; construct; }
 
-    private bool valid {
+    // Required by Gee.Iterator
+    public bool valid {
         get {
             return true;
         }
     }
 
-    private bool read_only {
+    // Required by Gee.Iterator
+    public bool read_only {
         get {
             return false;
         }
