@@ -27,7 +27,7 @@ public class DateTime.Widgets.CalendarView : Gtk.Grid {
      * Event emitted when the day is double clicked or the ENTER key is pressed.
      */
     public signal void on_event_add (GLib.DateTime date);
-    public signal void selection_changed (GLib.DateTime new_date);
+    public signal void selection_changed (GLib.DateTime? new_date);
     public signal void event_updates ();
 
     public GLib.DateTime? selected_date { get; private set; }

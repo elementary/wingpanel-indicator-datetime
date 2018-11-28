@@ -23,7 +23,7 @@ namespace DateTime.Widgets {
 
         ControlHeader heading;
         CalendarView cal;
-        public signal void selection_changed (GLib.DateTime new_date);
+        public signal void selection_changed (GLib.DateTime? new_date);
         public signal void day_double_click (GLib.DateTime date);
 
         public GLib.DateTime? selected_date { get {

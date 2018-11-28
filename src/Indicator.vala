@@ -86,64 +86,69 @@ public class DateTime.Indicator : Wingpanel.Indicator {
 
     private void idle_update_events () {
         if (update_events_idle_source > 0) {
-            Source.remove (update_events_idle_source);
+            GLib.Source.remove (update_events_idle_source);
         }
 
-        update_events_idle_source = Idle.add (update_events);
+        update_events_idle_source = GLib.Idle.add (update_events);
     }
 
     private bool update_events () {
         if (event_grid != null) {
             event_grid.destroy ();
         }
+
         if (calendar.selected_date == null) {
-            return false;
+            update_events_idle_source = 0;
+            return GLib.Source.REMOVE;
         }
+
         var events = Widgets.CalendarModel.get_default ().get_events (calendar.selected_date);
         if (events.size == 0) {
-            return false;
+            update_events_idle_source = 0;
+            return GLib.Source.REMOVE;
         }
+
         event_grid = new Gtk.Grid ();
         event_grid.orientation = Gtk.Orientation.VERTICAL;
         main_grid.attach (event_grid, 0, 1);
 
         foreach (var e in events) {
-                var menuitem_icon = new Gtk.Image.from_icon_name (e.get_icon (), Gtk.IconSize.MENU);
-                menuitem_icon.valign = Gtk.Align.START;
+            var menuitem_icon = new Gtk.Image.from_icon_name (e.get_icon (), Gtk.IconSize.MENU);
+            menuitem_icon.valign = Gtk.Align.START;
 
-                var menuitem_label = new Gtk.Label (e.get_label ());
-                menuitem_label.hexpand = true;
-                menuitem_label.lines = 3;
-                menuitem_label.ellipsize = Pango.EllipsizeMode.END;
-                menuitem_label.max_width_chars = 30;
-                menuitem_label.wrap = true;
-                menuitem_label.wrap_mode = Pango.WrapMode.WORD_CHAR;
-                menuitem_label.xalign = 0;
+            var menuitem_label = new Gtk.Label (e.get_label ());
+            menuitem_label.hexpand = true;
+            menuitem_label.lines = 3;
+            menuitem_label.ellipsize = Pango.EllipsizeMode.END;
+            menuitem_label.max_width_chars = 30;
+            menuitem_label.wrap = true;
+            menuitem_label.wrap_mode = Pango.WrapMode.WORD_CHAR;
+            menuitem_label.xalign = 0;
 
-                var menuitem_box = new Gtk.Box (Gtk.Orientation.HORIZONTAL, 6);
-                menuitem_box.margin_end = 6;
-                menuitem_box.margin_start = 6;
-                menuitem_box.add (menuitem_icon);
-                menuitem_box.add (menuitem_label);
+            var menuitem_box = new Gtk.Box (Gtk.Orientation.HORIZONTAL, 6);
+            menuitem_box.margin_end = 6;
+            menuitem_box.margin_start = 6;
+            menuitem_box.add (menuitem_icon);
+            menuitem_box.add (menuitem_label);
 
-                var menuitem = new Gtk.Button ();
-                menuitem.add (menuitem_box);
+            var menuitem = new Gtk.Button ();
+            menuitem.add (menuitem_box);
 
-                var style_context = menuitem.get_style_context ();
-                style_context.add_class (Gtk.STYLE_CLASS_MENUITEM);
-                style_context.remove_class (Gtk.STYLE_CLASS_BUTTON);
-                style_context.remove_class ("text-button");
+            var style_context = menuitem.get_style_context ();
+            style_context.add_class (Gtk.STYLE_CLASS_MENUITEM);
+            style_context.remove_class (Gtk.STYLE_CLASS_BUTTON);
+            style_context.remove_class ("text-button");
 
-                event_grid.add (menuitem);
-                menuitem.clicked.connect (() => {
-                    calendar.show_date_in_maya (e.date);
-                    this.close ();
-                });
+            event_grid.add (menuitem);
+            menuitem.clicked.connect (() => {
+                calendar.show_date_in_maya (e.date);
+                this.close ();
+            });
         }
 
         event_grid.show_all ();
         update_events_idle_source = 0;
-        return false;
+        return GLib.Source.REMOVE;
     }
 
     public override void opened () {
