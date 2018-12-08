@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-08-03 08:24-0700\n"
-"PO-Revision-Date: 2018-11-26 05:38+0000\n"
+"PO-Revision-Date: 2018-11-30 06:06+0000\n"
 "Last-Translator: colindemian <colindemian@outlook.com>\n"
 "Language-Team: Chinese (Simplified) <https://weblate.elementary.io/projects/"
 "wingpanel/wingpanel-indicator-datetime/zh_Hans/>\n"
@@ -30,7 +30,7 @@ msgstr "日期和时间设置…"
 #: src/Widgets/calendar/ControlHeader.vala:30
 #: src/Widgets/calendar/ControlHeader.vala:33
 msgid "%OB %Y"
-msgstr "%Y年%b%e日"
+msgstr "%Y年 %b"
 
 #~ msgid "%a, %b %e"
 #~ msgstr "%b%e日 星期%a"
