@@ -3,8 +3,11 @@
   <enum id="io.elementary.desktop.wingpanel.datetime.clock-formats">
     <value nick="12h" value="0" />
     <value nick="24h" value="1" />
-    <value nick="ISO8601" value="2" />
-    <value nick="custom" value="3" />
+  </enum>
+  <enum id="io.elementary.desktop.wingpanel.datetime.date-formats">
+  	<value nick="locale" value="0"/>
+    <value nick="ISO8601" value="1"/>
+  	<value nick="custom" value="2"/>
   </enum>
     <schema path="/io/elementary/desktop/wingpanel/datetime/" id="io.elementary.desktop.wingpanel.datetime">
         <key type="b" name="show-weeks">
@@ -32,10 +35,15 @@
             <summary>If this is set to true, the day of the week will be shown in the clock</summary>
             <description>If this is set to true, the day of the week will be shown in the clock</description>
         </key>
-        <key type="s" name="clock-dateformat-custom">
+        <key name="date-format" enum="io.elementary.desktop.wingpanel.datetime.date-formats">
+        	<default>"locale"</default>
+            <summary>Whether the date is formatted locale-dependant, ISO8601 or custom</summary>
+            <description>WWhether the date is formatted locale-dependant, ISO8601 or custom</description>
+        </key>
+        <key type="s" name="date-format-custom">
             <default>"%A, %d.%m.%Y"</default>
             <summary>A custom date format string</summary>
-            <description>Use Glib.DateTime.format to customize the date. Must set the clock-format to 'custom'.</description>
+            <description>Use DateTime.Formats to customize the date. Must set the date-format to 'custom'.</description>
         </key>
     </schema>
 </schemalist>
