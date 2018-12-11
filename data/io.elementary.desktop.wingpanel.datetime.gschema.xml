@@ -38,7 +38,7 @@
         <key name="date-format" enum="io.elementary.desktop.wingpanel.datetime.date-formats">
         	<default>"locale"</default>
             <summary>Whether the date is formatted locale-dependant, ISO8601 or custom</summary>
-            <description>WWhether the date is formatted locale-dependant, ISO8601 or custom</description>
+            <description>Whether the date is formatted locale-dependant, ISO8601 or custom</description>
         </key>
         <key type="s" name="date-format-custom">
             <default>"%A, %d.%m.%Y"</default>
