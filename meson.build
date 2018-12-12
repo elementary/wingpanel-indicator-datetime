@@ -1,7 +1,7 @@
 project(
     'datetime',
     'vala', 'c',
-    version: '2.1.2'
+    version: '2.1.3'
 )
 
 i18n = import('i18n')
