@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-08-03 08:24-0700\n"
-"PO-Revision-Date: 2018-12-15 12:55+0000\n"
+"PO-Revision-Date: 2018-12-18 00:02+0000\n"
 "Last-Translator: Prachi Joshi <josprachi@yahoo.com>\n"
 "Language-Team: Marathi <https://weblate.elementary.io/projects/wingpanel/"
 "wingpanel-indicator-datetime/mr/>\n"
@@ -17,7 +17,7 @@ msgstr ""
 
 #: src/Indicator.vala:33
 msgid "Date & Time"
-msgstr "तारीख व वेळ"
+msgstr "तारीख आणि वेळ"
 
 #: src/Indicator.vala:34
 msgid "The date and time indicator"
