@@ -61,21 +61,25 @@ public class DateTime.Widgets.PanelLabel : Gtk.Grid {
 
     private void update_labels () {
         string date_formatString;
-        
-        if(date_format == "custom") {
-        	date_formatString = date_format_custom;
-        }
-        else if (date_format == "ISO8601") {
-        	date_formatString = "%F";
-        }
-        else {
-        	date_formatString = Granite.DateTime.get_default_date_format (clock_show_weekday, true, false);
-        } 
 
-        date_label.label = Services.TimeManager.get_default ().format (date_formatString);
+        if (date_format == "custom") {
+            date_formatString = date_format_custom;
+        } else if (date_format == "ISO8601") {
+            date_formatString = "%F";
+        } else {
+            date_formatString = Granite.DateTime.get_default_date_format (clock_show_weekday, true, false);
+        }
+
+        string date = Services.TimeManager.get_default ().format (date_formatString);
+        if (date == null) { // fallback to default_date_format
+            date = Services.TimeManager.get_default ().format (Granite.DateTime.get_default_date_format (clock_show_weekday, true, false));
+            warning ("Invalid date format: %s", date_formatString);
+        }
+
+        date_label.label = date;
 
         string time_format = Granite.DateTime.get_default_time_format (clock_format == "12h", clock_show_seconds);
         time_label.label = Services.TimeManager.get_default ().format (time_format);
     }
-        
+
 }

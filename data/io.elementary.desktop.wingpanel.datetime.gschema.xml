@@ -43,7 +43,7 @@
         <key type="s" name="date-format-custom">
             <default>"%A, %d.%m.%Y"</default>
             <summary>A custom date format string</summary>
-            <description>Use DateTime.Formats to customize the date. Must set the date-format to 'custom'.</description>
+            <description>Uses standard GDateTime formats to customize the date, e.g.'%d.%m.%Y' will result in 31.12.2000. The date-format must be set to 'custom'.</description>
         </key>
     </schema>
 </schemalist>
