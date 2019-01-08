@@ -8,15 +8,18 @@ msgstr ""
 "Project-Id-Version: wingpanel-indicator-datetime\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-08-03 08:24-0700\n"
-"PO-Revision-Date: 2016-05-24 22:50+0000\n"
-"Last-Translator: yavinfour <anjelo.passionist@gmail.com>\n"
-"Language-Team: Tagalog <tl@li.org>\n"
+"PO-Revision-Date: 2018-11-17 17:41+0000\n"
+"Last-Translator: Axel Philip Advento <badwolf.bloodseeker.rev@gmail.com>\n"
+"Language-Team: Tagalog <https://weblate.elementary.io/projects/wingpanel/"
+"wingpanel-indicator-datetime/tl/>\n"
 "Language: tl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1 && n != 2 && n != 3 && (n % 10 == 4 "
+"|| n % 10 == 6 || n % 10 == 9);\n"
+"X-Generator: Weblate 3.0.1\n"
 "X-Launchpad-Export-Date: 2017-02-19 05:57+0000\n"
-"X-Generator: Launchpad (build 18326)\n"
 
 #: src/Indicator.vala:33
 msgid "Date & Time"
@@ -28,13 +31,12 @@ msgstr "Ang indicator para sa petsa at oras"
 
 #: src/Indicator.vala:69
 msgid "Date & Time Settings…"
-msgstr "Mga Pagpipilian para sa Petsa & Oras"
+msgstr "Mga Settings ng Petsa & Oras…"
 
 #: src/Widgets/calendar/ControlHeader.vala:30
 #: src/Widgets/calendar/ControlHeader.vala:33
-#, fuzzy
 msgid "%OB %Y"
-msgstr "%B %e, %Y"
+msgstr "Ika-%d ng %B %Y"
 
 #~ msgid "%a, %b %e"
 #~ msgstr "%a, %b %e"
