@@ -42,7 +42,7 @@ public class DateTime.Services.TimeManager : Gtk.Calendar {
 
         add_timeout ();
         try {
-            var clock_settings = new GLib.Settings ("io.elementary.desktop.wingpanel.datetime");
+            var clock_settings = new GLib.Settings ("org.gnome.desktop.interface");
             clock_settings.bind ("clock-show-seconds", this, "clock-show-seconds", SettingsBindFlags.DEFAULT);
 
             notify["clock-show-seconds"].connect (() => {
@@ -130,7 +130,7 @@ public class DateTime.Services.TimeManager : Gtk.Calendar {
         return (uint)seconds_until_next_minute * 1000;
     }
 
-    public static TimeManager get_default () {
+    public static unowned TimeManager get_default () {
         if (instance == null) {
             instance = new TimeManager ();
         }

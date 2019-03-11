@@ -20,10 +20,13 @@
 public class DateTime.Widgets.PanelLabel : Gtk.Grid {
     private Gtk.Label date_label;
     private Gtk.Label time_label;
+    private GLib.Settings indicator_settings;
+    private GLib.Settings interface_settings;
+    private unowned Services.TimeManager time_manager;
 
-    public string clock_format { get; set; }
-    public bool clock_show_seconds { get; set; }
-    public bool clock_show_weekday { get; set; }
+    private bool is_12h;
+    private string date_format;
+    private string time_format;
 
     construct {
         date_label = new Gtk.Label (null);
@@ -39,33 +42,50 @@ public class DateTime.Widgets.PanelLabel : Gtk.Grid {
         add (date_revealer);
         add (time_label);
 
-        var clock_settings = new GLib.Settings ("io.elementary.desktop.wingpanel.datetime");
-        clock_settings.bind ("clock-format", this, "clock-format", SettingsBindFlags.DEFAULT);
-        clock_settings.bind ("clock-show-seconds", this, "clock-show-seconds", SettingsBindFlags.DEFAULT);
-        clock_settings.bind ("clock-show-date", date_revealer, "reveal_child", SettingsBindFlags.DEFAULT);
-        clock_settings.bind ("clock-show-weekday", this, "clock-show-weekday", SettingsBindFlags.DEFAULT);
+        time_manager = Services.TimeManager.get_default ();
+        time_manager.minute_changed.connect (update_labels);
 
-        notify.connect (() => {
-            update_labels ();
-        });
+        indicator_settings = new GLib.Settings ("io.elementary.desktop.wingpanel.datetime");
+        indicator_settings.changed.connect ((key) => generate_settings (key));
+
+        interface_settings = new GLib.Settings ("org.gnome.desktop.interface");
+        interface_settings.bind ("clock-show-date", date_revealer, "reveal_child", SettingsBindFlags.DEFAULT);
+        interface_settings.changed.connect ((key) => generate_settings (key));
+
+        generate_settings ();
+    }
+
+    private void generate_settings (string? key = null) {
+        if (key == null || key == "clock-format") {
+            is_12h = interface_settings.get_string ("clock-format").contains ("12h");
+        }
+
+        if (key == null || key == "custom-date-format" || key == "clock-show-weekday") {
+            bool clock_show_weekday = interface_settings.get_boolean ("clock-show-weekday");
+            date_format = indicator_settings.get_string ("custom-date-format");
+            if (date_format._strip () == "") {
+                date_format = Granite.DateTime.get_default_date_format (clock_show_weekday, true, false);
+            } else {
+                // Ensure that the custom format is usable
+                var result = (new GLib.DateTime.now_local ()).format (date_format);
+                if (result == null) {
+                    critical ("Unusable custom format, using standard one instead");
+                    date_format = Granite.DateTime.get_default_date_format (clock_show_weekday, true, false);
+                }
+            }
+        }
+
+        if (key == null || key == "clock-format" || key == "clock-show-seconds") {
+            bool clock_show_seconds = interface_settings.get_boolean ("clock-show-seconds");
+            time_format = Granite.DateTime.get_default_time_format (is_12h, clock_show_seconds);
+        }
 
         update_labels ();
-
-        Services.TimeManager.get_default ().minute_changed.connect (update_labels);
     }
 
     private void update_labels () {
-        string date_format;
-        if (clock_format == "ISO8601") {
-            date_format = "%F";
-        } else {
-            date_format = Granite.DateTime.get_default_date_format (clock_show_weekday, true, false);
-        }
-
-        date_label.label = Services.TimeManager.get_default ().format (date_format);
-
-        string time_format = Granite.DateTime.get_default_time_format (clock_format == "12h", clock_show_seconds);
-        time_label.label = Services.TimeManager.get_default ().format (time_format);
+        date_label.label = time_manager.format (date_format);
+        time_label.label = time_manager.format (time_format);
     }
         
 }
