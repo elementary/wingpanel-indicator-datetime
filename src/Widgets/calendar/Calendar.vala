@@ -19,8 +19,6 @@
 
 namespace DateTime.Widgets {
     public class Calendar : Gtk.Box {
-        private const string CALENDAR_EXEC = "/usr/bin/io.elementary.calendar";
-
         ControlHeader heading;
         CalendarView cal;
         public signal void selection_changed (GLib.DateTime? new_date);
@@ -63,14 +61,20 @@ namespace DateTime.Widgets {
 
         // TODO: As far as maya supports it use the Dbus Activation feature to run the calendar-app.
         public void show_date_in_maya (GLib.DateTime date) {
-            var iso_date_string = date.format ("%F");
-            var command = CALENDAR_EXEC + @" --show-day $iso_date_string";
+            var command = "io.elementary.calendar --show-day %s".printf (date.format ("%F"));
 
             try {
                 var appinfo = AppInfo.create_from_commandline (command, null, AppInfoCreateFlags.NONE);
                 appinfo.launch_uris (null, null);
             } catch (GLib.Error e) {
-                warning ("Unable to start calendar, error: %s", e.message);
+                var dialog = new Granite.MessageDialog.with_image_from_icon_name (
+                    _("Unable To Launch Calendar"),
+                    _("The program \"io.elementary.calendar\" may not be installed"),
+                    "dialog-error"
+                );
+                dialog.show_error_details (e.message);
+                dialog.run ();
+                dialog.destroy ();
             }
         }
     }
