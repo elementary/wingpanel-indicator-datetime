@@ -25,30 +25,61 @@ namespace DateTime.Widgets {
         public signal void center_clicked ();
         public ControlHeader () {
             Object (orientation : Gtk.Orientation.HORIZONTAL);
+
             var left_button = new Gtk.Button.from_icon_name ("pan-start-symbolic");
             var right_button = new Gtk.Button.from_icon_name ("pan-end-symbolic");
-            var center_button = new Gtk.Button.with_label (new GLib.DateTime.now_local ().format (_("%OB %Y")));
+            var center_label = new Gtk.Label (new GLib.DateTime.now_local ().format (_("%OB %Y")));
+            var center_button = new Gtk.Button ();
+
             CalendarModel.get_default ().parameters_changed.connect (() => {
                 var date = CalendarModel.get_default ().month_start;
                 center_button.set_label (date.format (_("%OB %Y")));
+                center_button.hide ();
             });
+
             left_button.clicked.connect (() => {
                 left_clicked ();
+                if (center_button.get_label () != center_label.get_label ()) {
+                    center_button.show ();
+                    center_label.hide ();
+                    get_style_context ().add_class ("linked");
+                } else {
+                    center_button.hide ();
+                    center_label.show ();
+                    get_style_context ().remove_class ("linked");
+                }
             });
+
             right_button.clicked.connect (() => {
                 right_clicked ();
+                if (center_button.get_label () != center_label.get_label ()) {
+                    center_button.show ();
+                    center_label.hide ();
+                    get_style_context ().add_class ("linked");
+                } else {
+                    center_button.hide ();
+                    center_label.show ();
+                    get_style_context ().remove_class ("linked");
+                }
             });
+
             center_button.clicked.connect (() => {
                 center_clicked ();
+                center_button.hide ();
+                center_label.show ();
+                get_style_context ().remove_class ("linked");
             });
+
             left_button.can_focus = false;
             right_button.can_focus = false;
             center_button.can_focus = false;
+
             add (left_button);
             pack_end (right_button, false, false, 0);
+            pack_end (center_label, true, true, 0);
             pack_end (center_button, true, true, 0);
+
             margin_bottom = 4;
-            get_style_context ().add_class ("linked");
             set_size_request (-1, 30);
         }
     }
