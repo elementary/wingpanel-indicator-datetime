@@ -31,53 +31,52 @@ namespace DateTime.Widgets {
             var center_label = new Gtk.Label (new GLib.DateTime.now_local ().format (_("%OB %Y")));
             var center_button = new Gtk.Button ();
 
+            var stack = new Gtk.Stack ();
+            stack.hexpand = true;
+            stack.add (center_button);
+            stack.add (center_label);
+
             CalendarModel.get_default ().parameters_changed.connect (() => {
                 var date = CalendarModel.get_default ().month_start;
                 center_button.set_label (date.format (_("%OB %Y")));
-                center_button.hide ();
+                stack.set_visible_child (center_label);
             });
+
+            var box_header = new Gtk.HBox (false, -1);
+            box_header.pack_end (right_button, false, false, 0);
+            box_header.pack_end (stack, true, true, 6);
+            box_header.pack_end (left_button, false, false, 0);
 
             left_button.clicked.connect (() => {
                 left_clicked ();
                 if (center_button.get_label () != center_label.get_label ()) {
-                    center_button.show ();
-                    center_label.hide ();
-                    get_style_context ().add_class ("linked");
+                    stack.set_visible_child (center_button);
                 } else {
-                    center_button.hide ();
-                    center_label.show ();
-                    get_style_context ().remove_class ("linked");
+                    stack.set_visible_child (center_label);
                 }
             });
 
             right_button.clicked.connect (() => {
                 right_clicked ();
                 if (center_button.get_label () != center_label.get_label ()) {
-                    center_button.show ();
-                    center_label.hide ();
-                    get_style_context ().add_class ("linked");
+                    stack.set_visible_child (center_button);
                 } else {
-                    center_button.hide ();
-                    center_label.show ();
-                    get_style_context ().remove_class ("linked");
+                    stack.set_visible_child (center_label);
                 }
             });
 
             center_button.clicked.connect (() => {
                 center_clicked ();
-                center_button.hide ();
-                center_label.show ();
-                get_style_context ().remove_class ("linked");
+                stack.set_visible_child (center_label);
             });
 
             left_button.can_focus = false;
             right_button.can_focus = false;
             center_button.can_focus = false;
+            center_label.can_focus = false;
+            stack.can_focus = false;
 
-            add (left_button);
-            pack_end (right_button, false, false, 0);
-            pack_end (center_label, true, true, 0);
-            pack_end (center_button, true, true, 0);
+            add (box_header);
 
             margin_bottom = 4;
             set_size_request (-1, 30);
