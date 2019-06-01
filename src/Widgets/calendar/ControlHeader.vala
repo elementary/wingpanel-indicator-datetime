@@ -38,7 +38,9 @@ namespace DateTime.Widgets {
 
             CalendarModel.get_default ().parameters_changed.connect (() => {
                 var date = CalendarModel.get_default ().month_start;
+                var curr_date = new GLib.DateTime.now_local ();
                 center_button.set_label (date.format (_("%OB %Y")));
+                center_label.set_label (curr_date.format (_("%OB %Y")));
                 stack.set_visible_child (center_label);
             });
 
