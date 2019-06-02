@@ -25,6 +25,8 @@ public class DateTime.Widgets.PanelLabel : Gtk.Grid {
     public bool clock_show_seconds { get; set; }
     public bool clock_show_weekday { get; set; }
 
+    private bool is_12h = false;
+
     construct {
         date_label = new Gtk.Label (null);
         date_label.margin_end = 12;
@@ -49,7 +51,7 @@ public class DateTime.Widgets.PanelLabel : Gtk.Grid {
             update_labels ();
         });
 
-        update_labels ();
+        setup_time_format.begin ();
 
         Services.TimeManager.get_default ().minute_changed.connect (update_labels);
     }
@@ -64,8 +66,40 @@ public class DateTime.Widgets.PanelLabel : Gtk.Grid {
 
         date_label.label = Services.TimeManager.get_default ().format (date_format);
 
-        string time_format = Granite.DateTime.get_default_time_format (clock_format == "12h", clock_show_seconds);
+        string time_format = Granite.DateTime.get_default_time_format (is_12h, clock_show_seconds);
         time_label.label = Services.TimeManager.get_default ().format (time_format);
     }
-        
+
+
+    private async void setup_time_format () {
+        try {
+            var accounts_service = yield GLib.Bus.get_proxy<FDO.Accounts> (GLib.BusType.SYSTEM,
+                                                                           "org.freedesktop.Accounts",
+                                                                           "/org/freedesktop/Accounts");
+            var user_path = accounts_service.find_user_by_name (GLib.Environment.get_user_name ());
+
+            var greeter_act = yield GLib.Bus.get_proxy<Greeter.AccountsService> (GLib.BusType.SYSTEM,
+                                                    "org.freedesktop.Accounts",
+                                                    user_path,
+                                                    GLib.DBusProxyFlags.GET_INVALIDATED_PROPERTIES);
+            is_12h = ("12h" in greeter_act.time_format);
+            ((GLib.DBusProxy) greeter_act).g_properties_changed.connect ((changed_properties, invalidated_properties) => {
+                if (changed_properties.lookup_value ("TimeFormat", GLib.VariantType.STRING) != null) {
+                    is_12h = ("12h" in greeter_act.time_format);
+                    update_labels ();
+                }
+            });
+        } catch (Error e) {
+            critical (e.message);
+            // Connect to the GSettings instead
+            var clock_settings = new GLib.Settings ("org.gnome.desktop.interface");
+            clock_settings.changed["clock-format"].connect (() => {
+                is_12h = ("12h" in clock_settings.get_string ("clock-format"));
+            });
+
+            is_12h = ("12h" in clock_settings.get_string ("clock-format"));
+        }
+
+        update_labels ();
+    }
 }
