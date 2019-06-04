@@ -13,8 +13,8 @@
         </key>
         <key name="clock-format" enum="io.elementary.desktop.wingpanel.datetime.clock-formats">
             <default>"12h"</default>
-            <summary>Whether the clock displays in 12h or 24h format</summary>
-            <description>Whether the clock displays in 12h or 24h format</description>
+            <summary>(DEPRECATED) Whether the clock displays in 12h, 24h, or ISO format</summary>
+            <description>This key is deprecated and is now ignored unless ISO format is selected.</description>
         </key>
         <key type="b" name="clock-show-seconds">
             <default>false</default>
