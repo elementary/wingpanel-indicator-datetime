@@ -30,6 +30,7 @@ namespace DateTime.Widgets {
             var right_button = new Gtk.Button.from_icon_name ("pan-end-symbolic");
             var center_label = new Gtk.Label (new GLib.DateTime.now_local ().format (_("%OB %Y")));
             var center_button = new Gtk.Button ();
+            center_button.set_tooltip_text (_("Go To Current Month…"));
 
             var stack = new Gtk.Stack ();
             stack.hexpand = true;
