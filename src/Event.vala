@@ -20,7 +20,6 @@
 public class DateTime.Event : GLib.Object {
     public GLib.DateTime date { get; construct; }
     public unowned ICal.Component component { get; construct; }
-    public Util.DateRange range { get; construct; }
 
     public GLib.DateTime start_time;
     public GLib.DateTime end_time;
@@ -28,18 +27,15 @@ public class DateTime.Event : GLib.Object {
 
     private bool alarm = false;
 
-    public Event (GLib.DateTime date, Util.DateRange range, ICal.Component component) {
+    public Event (GLib.DateTime date, ICal.Component component) {
         Object (
             component: component,
-            date: date,
-            range: range
+            date: date
         );
     }
 
     construct {
-        start_time = Util.ical_to_date_time (component.get_dtstart ());
-        end_time = Util.ical_to_date_time (component.get_dtend ());
-
+        Util.get_local_datetimes_from_icalcomponent (component, out start_time, out end_time);
         if (end_time == null) {
             alarm = true;
         } else if (Util.is_the_all_day (start_time, end_time)) {
@@ -58,7 +54,7 @@ public class DateTime.Event : GLib.Object {
         return "%s - %s".printf (start_time.format (get_time_format ()), end_time.format (get_time_format ()));
     }
 
-    public string get_icon () {
+    public unowned string get_icon () {
         if (alarm) {
             return "alarm-symbolic";
         }

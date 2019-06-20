@@ -8,7 +8,17 @@ i18n = import('i18n')
 gettext_name = meson.project_name() + '-indicator'
 
 add_global_arguments('-DGETTEXT_PACKAGE="@0@"'.format(gettext_name), language:'c')
-add_project_arguments(['--vapidir', join_paths(meson.current_source_dir(), 'vapi')], language: 'vala')
+
+libecal_dep = dependency('libecal-2.0', required: false)
+if libecal_dep.found()
+    libical_dep = dependency('libical-glib')
+    add_project_arguments('--define=E_CAL_2_0', language: 'vala')
+    add_project_arguments('-DLIBICAL_GLIB_UNSTABLE_API', language: 'c')
+else
+    add_project_arguments('--vapidir', join_paths(meson.current_source_dir(), 'vapi'), language: 'vala')
+    libecal_dep = dependency('libecal-1.2', version: '>=3.8.0')
+    libical_dep = dependency('libical', version: '>=3.0.0')
+endif
 
 wingpanel_dep = dependency('wingpanel-2.0')
 
@@ -43,9 +53,9 @@ shared_module(
         dependency('gobject-2.0'),
         dependency('granite'),
         dependency('gtk+-3.0'),
-        dependency('libecal-1.2'),
+        libecal_dep,
         dependency('libedataserver-1.2'),
-        dependency('libical'),
+        libical_dep,
         wingpanel_dep
     ],
     install: true,
