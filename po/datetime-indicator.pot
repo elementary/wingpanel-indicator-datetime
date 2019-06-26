@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: datetime-indicator\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-08-03 08:24-0700\n"
+"POT-Creation-Date: 2019-06-26 22:47+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,16 +17,24 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: src/Indicator.vala:33
+#: src/Indicator.vala:30
 msgid "Date & Time"
 msgstr ""
 
-#: src/Indicator.vala:34
+#: src/Indicator.vala:31
 msgid "The date and time indicator"
 msgstr ""
 
-#: src/Indicator.vala:69
+#: src/Indicator.vala:54
 msgid "Date & Time Settings…"
+msgstr ""
+
+#: src/Widgets/calendar/Calendar.vala:71
+msgid "Unable To Launch Calendar"
+msgstr ""
+
+#: src/Widgets/calendar/Calendar.vala:72
+msgid "The program \"io.elementary.calendar\" may not be installed"
 msgstr ""
 
 #: src/Widgets/calendar/ControlHeader.vala:30

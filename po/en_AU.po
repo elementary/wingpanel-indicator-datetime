@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-08-03 08:24-0700\n"
+"POT-Creation-Date: 2019-06-26 22:47+0200\n"
 "PO-Revision-Date: 2016-07-30 09:45+0000\n"
 "Last-Translator: Chris Smart <Unknown>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -13,17 +13,25 @@ msgstr ""
 "X-Launchpad-Export-Date: 2017-02-19 05:58+0000\n"
 "X-Generator: Launchpad (build 18326)\n"
 
-#: src/Indicator.vala:33
+#: src/Indicator.vala:30
 msgid "Date & Time"
 msgstr "Date & Time"
 
-#: src/Indicator.vala:34
+#: src/Indicator.vala:31
 msgid "The date and time indicator"
 msgstr "The date and time indicator"
 
-#: src/Indicator.vala:69
+#: src/Indicator.vala:54
 msgid "Date & Time Settings…"
 msgstr "Date & Time Settings…"
+
+#: src/Widgets/calendar/Calendar.vala:71
+msgid "Unable To Launch Calendar"
+msgstr ""
+
+#: src/Widgets/calendar/Calendar.vala:72
+msgid "The program \"io.elementary.calendar\" may not be installed"
+msgstr ""
 
 #: src/Widgets/calendar/ControlHeader.vala:30
 #: src/Widgets/calendar/ControlHeader.vala:33

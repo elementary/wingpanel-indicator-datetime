@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-08-03 08:24-0700\n"
+"POT-Creation-Date: 2019-06-26 22:47+0200\n"
 "PO-Revision-Date: 2018-09-18 09:42+0000\n"
 "Last-Translator: Nuno Alexandre MS ribeiro <nuno.anarresti@gmail.com>\n"
 "Language-Team: Portuguese <https://weblate.elementary.io/projects/wingpanel/"
@@ -15,17 +15,25 @@ msgstr ""
 "X-Generator: Weblate 3.0.1\n"
 "X-Launchpad-Export-Date: 2017-02-19 05:57+0000\n"
 
-#: src/Indicator.vala:33
+#: src/Indicator.vala:30
 msgid "Date & Time"
 msgstr "Data e Hora"
 
-#: src/Indicator.vala:34
+#: src/Indicator.vala:31
 msgid "The date and time indicator"
 msgstr "O indicador de data e hora"
 
-#: src/Indicator.vala:69
+#: src/Indicator.vala:54
 msgid "Date & Time Settings…"
 msgstr "Definições de Data e Hora…"
+
+#: src/Widgets/calendar/Calendar.vala:71
+msgid "Unable To Launch Calendar"
+msgstr ""
+
+#: src/Widgets/calendar/Calendar.vala:72
+msgid "The program \"io.elementary.calendar\" may not be installed"
+msgstr ""
 
 #: src/Widgets/calendar/ControlHeader.vala:30
 #: src/Widgets/calendar/ControlHeader.vala:33
