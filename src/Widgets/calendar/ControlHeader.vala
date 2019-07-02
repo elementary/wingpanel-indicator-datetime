@@ -26,61 +26,52 @@ namespace DateTime.Widgets {
         public ControlHeader () {
             Object (orientation : Gtk.Orientation.HORIZONTAL);
 
-            var left_button = new Gtk.Button.from_icon_name ("pan-start-symbolic");
-            var right_button = new Gtk.Button.from_icon_name ("pan-end-symbolic");
-            var center_label = new Gtk.Label (new GLib.DateTime.now_local ().format (_("%OB %Y")));
-            var center_button = new Gtk.Button ();
-            center_button.set_tooltip_text (_("Go To Current Month…"));
+            var label = new Gtk.Label (new GLib.DateTime.now_local ().format (_("%OB, %Y")));
+            label.get_style_context ().add_class (Granite.STYLE_CLASS_H2_LABEL);
+            label.halign = Gtk.Align.START;
+            label.set_size_request (180, 32);
+            label.xalign = 0;
 
-            var stack = new Gtk.Stack ();
-            stack.hexpand = true;
-            stack.add (center_button);
-            stack.add (center_label);
+            var left_button = new Gtk.Button.from_icon_name ("go-previous-symbolic");
+            left_button.get_style_context ().add_class (Gtk.STYLE_CLASS_FLAT);
+            var center_button = new Gtk.Button.from_icon_name ("office-calendar-symbolic");
+            center_button.set_tooltip_text (_("Go to today's date"));
+            center_button.get_style_context ().add_class (Gtk.STYLE_CLASS_FLAT);
+            var right_button = new Gtk.Button.from_icon_name ("go-next-symbolic");
+            right_button.get_style_context ().add_class (Gtk.STYLE_CLASS_FLAT);
+
+            var box_buttons = new Gtk.Box (Gtk.Orientation.HORIZONTAL, 0);
+            box_buttons.halign = Gtk.Align.START;
+            box_buttons.pack_end (right_button, false, false, 0);
+            box_buttons.pack_end (center_button, false, false, 0);
+            box_buttons.pack_end (left_button, false, false, 0);
 
             CalendarModel.get_default ().parameters_changed.connect (() => {
                 var date = CalendarModel.get_default ().month_start;
-                var curr_date = new GLib.DateTime.now_local ();
-                center_button.set_label (date.format (_("%OB %Y")));
-                center_label.set_label (curr_date.format (_("%OB %Y")));
-                stack.set_visible_child (center_label);
+                label.set_label (date.format (_("%OB, %Y")));
             });
 
-            var box_header = new Gtk.HBox (false, -1);
-            box_header.pack_end (right_button, false, false, 0);
-            box_header.pack_end (stack, true, true, 6);
-            box_header.pack_end (left_button, false, false, 0);
+            var grid = new Gtk.Grid ();
+            grid.orientation = Gtk.Orientation.VERTICAL;
+            grid.hexpand = false;
+            grid.margin_start = 6;
+            grid.column_spacing = 24;
+            grid.attach (label, 0, 0, 1, 1);
+            grid.attach (box_buttons, 1, 0, 1, 1);
 
             left_button.clicked.connect (() => {
                 left_clicked ();
-                if (center_button.get_label () != center_label.get_label ()) {
-                    stack.set_visible_child (center_button);
-                } else {
-                    stack.set_visible_child (center_label);
-                }
             });
 
             right_button.clicked.connect (() => {
                 right_clicked ();
-                if (center_button.get_label () != center_label.get_label ()) {
-                    stack.set_visible_child (center_button);
-                } else {
-                    stack.set_visible_child (center_label);
-                }
             });
 
             center_button.clicked.connect (() => {
                 center_clicked ();
-                stack.set_visible_child (center_label);
             });
 
-            left_button.can_focus = false;
-            right_button.can_focus = false;
-            center_button.can_focus = false;
-            center_label.can_focus = false;
-            stack.can_focus = false;
-
-            add (box_header);
-
+            add (grid);
             margin_bottom = 4;
             set_size_request (-1, 30);
         }

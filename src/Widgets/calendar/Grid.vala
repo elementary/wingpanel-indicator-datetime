@@ -40,8 +40,8 @@ namespace DateTime.Widgets {
 
         public Grid () {
             insert_column (7);
-            set_column_homogeneous (true);
             set_row_homogeneous (true);
+            set_column_homogeneous (true);
 
             data = new Gee.HashMap<uint, GridDay> ();
             events |= Gdk.EventMask.SCROLL_MASK;
