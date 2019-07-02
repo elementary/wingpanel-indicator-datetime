@@ -32,17 +32,17 @@ namespace DateTime.Widgets {
             label.set_size_request (185, 24);
             label.xalign = 0;
 
-            var left_button = new Gtk.Button.from_icon_name ("go-previous-symbolic");
+            var left_button = new Gtk.Button.from_icon_name ("pan-start-symbolic");
             var center_button = new Gtk.Button.from_icon_name ("office-calendar-symbolic");
             center_button.tooltip_text = _("Go to today's date");
-            var right_button = new Gtk.Button.from_icon_name ("go-next-symbolic");
+            var right_button = new Gtk.Button.from_icon_name ("pan-end-symbolic");
 
-            var box_buttons = new Gtk.Box (Gtk.Orientation.HORIZONTAL, 0);
+            var box_buttons = new Gtk.Grid ();
             box_buttons.halign = Gtk.Align.START;
             box_buttons.vexpand = false;
-            box_buttons.pack_end (right_button, false, false, 0);
-            box_buttons.pack_end (center_button, false, false, 0);
-            box_buttons.pack_end (left_button, false, false, 0);
+            box_buttons.add (right_button);
+            box_buttons.add (center_button);
+            box_buttons.add (left_button);
 
             CalendarModel.get_default ().parameters_changed.connect (() => {
                 var date = CalendarModel.get_default ().month_start;
@@ -52,7 +52,6 @@ namespace DateTime.Widgets {
             var grid = new Gtk.Grid ();
             grid.orientation = Gtk.Orientation.VERTICAL;
             grid.hexpand = false;
-            grid.margin_start = 12;
             grid.column_spacing = 12;
             grid.attach (label, 0, 0, 1, 1);
             grid.attach (box_buttons, 1, 0, 1, 1);
