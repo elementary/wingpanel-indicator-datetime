@@ -29,7 +29,7 @@ namespace DateTime.Widgets {
             var label = new Gtk.Label (new GLib.DateTime.now_local ().format (_("%OB, %Y")));
             label.get_style_context ().add_class (Granite.STYLE_CLASS_H2_LABEL);
             label.halign = Gtk.Align.START;
-            label.set_size_request (180, 32);
+            label.set_size_request (185, 32);
             label.xalign = 0;
 
             var left_button = new Gtk.Button.from_icon_name ("go-previous-symbolic");
