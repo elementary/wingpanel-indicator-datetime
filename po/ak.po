@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wingpanel-indicator-datetime\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-08-03 08:24-0700\n"
+"POT-Creation-Date: 2019-06-26 22:47+0200\n"
 "PO-Revision-Date: 2017-06-19 13:58+0000\n"
 "Last-Translator: Lawrence Aberba <karabutaworld@gmail.com>\n"
 "Language-Team: Akan <https://l10n.elementary.io/projects/wingpanel/wingpanel-"
@@ -20,17 +20,25 @@ msgstr ""
 "X-Generator: Weblate 2.14\n"
 "X-Launchpad-Export-Date: 2017-02-19 05:57+0000\n"
 
-#: src/Indicator.vala:33
+#: src/Indicator.vala:30
 msgid "Date & Time"
 msgstr "Ɛda ne Mmerɛ"
 
-#: src/Indicator.vala:34
+#: src/Indicator.vala:31
 msgid "The date and time indicator"
 msgstr "Ɛda ne mmerɛ ahyɛnsodeɛ"
 
-#: src/Indicator.vala:69
+#: src/Indicator.vala:54
 msgid "Date & Time Settings…"
 msgstr "Ɛda ne Mmerɛ Ho Nhyehyɛeɛ…"
+
+#: src/Widgets/calendar/Calendar.vala:71
+msgid "Unable To Launch Calendar"
+msgstr ""
+
+#: src/Widgets/calendar/Calendar.vala:72
+msgid "The program \"io.elementary.calendar\" may not be installed"
+msgstr ""
 
 #: src/Widgets/calendar/ControlHeader.vala:30
 #: src/Widgets/calendar/ControlHeader.vala:33
