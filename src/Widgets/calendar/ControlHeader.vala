@@ -40,9 +40,9 @@ namespace DateTime.Widgets {
             var box_buttons = new Gtk.Grid ();
             box_buttons.halign = Gtk.Align.START;
             box_buttons.vexpand = false;
-            box_buttons.add (right_button);
-            box_buttons.add (center_button);
             box_buttons.add (left_button);
+            box_buttons.add (center_button);
+            box_buttons.add (right_button);
 
             CalendarModel.get_default ().parameters_changed.connect (() => {
                 var date = CalendarModel.get_default ().month_start;
