@@ -55,7 +55,7 @@ public class DateTime.Indicator : Wingpanel.Indicator {
 
             main_grid = new Gtk.Grid ();
             main_grid.hexpand = false;
-            main_grid.attach (calendar, 0, 0, 1, 1);
+            main_grid.attach (calendar, 0, 0);
             main_grid.attach (new Wingpanel.Widgets.Separator (), 0, 2);
             main_grid.attach (settings_button, 0, 3);
 
