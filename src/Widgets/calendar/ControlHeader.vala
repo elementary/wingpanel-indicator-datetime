@@ -29,19 +29,17 @@ namespace DateTime.Widgets {
             var label = new Gtk.Label (new GLib.DateTime.now_local ().format (_("%OB, %Y")));
             label.get_style_context ().add_class (Granite.STYLE_CLASS_H2_LABEL);
             label.halign = Gtk.Align.START;
-            label.set_size_request (185, 32);
+            label.set_size_request (185, 24);
             label.xalign = 0;
 
             var left_button = new Gtk.Button.from_icon_name ("go-previous-symbolic");
-            left_button.get_style_context ().add_class (Gtk.STYLE_CLASS_FLAT);
             var center_button = new Gtk.Button.from_icon_name ("office-calendar-symbolic");
             center_button.set_tooltip_text (_("Go to today's date"));
-            center_button.get_style_context ().add_class (Gtk.STYLE_CLASS_FLAT);
             var right_button = new Gtk.Button.from_icon_name ("go-next-symbolic");
-            right_button.get_style_context ().add_class (Gtk.STYLE_CLASS_FLAT);
 
             var box_buttons = new Gtk.Box (Gtk.Orientation.HORIZONTAL, 0);
             box_buttons.halign = Gtk.Align.START;
+            box_buttons.vexpand = false;
             box_buttons.pack_end (right_button, false, false, 0);
             box_buttons.pack_end (center_button, false, false, 0);
             box_buttons.pack_end (left_button, false, false, 0);
@@ -54,8 +52,8 @@ namespace DateTime.Widgets {
             var grid = new Gtk.Grid ();
             grid.orientation = Gtk.Orientation.VERTICAL;
             grid.hexpand = false;
-            grid.margin_start = 6;
-            grid.column_spacing = 24;
+            grid.margin_start = 12;
+            grid.column_spacing = 12;
             grid.attach (label, 0, 0, 1, 1);
             grid.attach (box_buttons, 1, 0, 1, 1);
 
@@ -73,6 +71,7 @@ namespace DateTime.Widgets {
 
             add (grid);
             margin_bottom = 4;
+            get_style_context ().add_class ("linked");
             set_size_request (-1, 30);
         }
     }
