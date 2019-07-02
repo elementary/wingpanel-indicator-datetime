@@ -34,7 +34,7 @@ namespace DateTime.Widgets {
 
             var left_button = new Gtk.Button.from_icon_name ("go-previous-symbolic");
             var center_button = new Gtk.Button.from_icon_name ("office-calendar-symbolic");
-            center_button.set_tooltip_text (_("Go to today's date"));
+            center_button.tooltip_text = _("Go to today's date");
             var right_button = new Gtk.Button.from_icon_name ("go-next-symbolic");
 
             var box_buttons = new Gtk.Box (Gtk.Orientation.HORIZONTAL, 0);
