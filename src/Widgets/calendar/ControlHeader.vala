@@ -31,7 +31,7 @@ namespace DateTime.Widgets {
             var label = new Gtk.Label (new GLib.DateTime.now_local ().format (_("%OB, %Y")));
             label.get_style_context ().add_class (Granite.STYLE_CLASS_H2_LABEL);
             label.halign = Gtk.Align.START;
-            label.width_chars = 14;
+            label.width_chars = 15;
             label.xalign = 0;
 
             var left_button = new Gtk.Button.from_icon_name ("pan-start-symbolic");
@@ -53,7 +53,6 @@ namespace DateTime.Widgets {
 
             var grid = new Gtk.Grid ();
             grid.column_spacing = 24;
-            grid.margin = 6;
             grid.attach (label, 0, 0, 1, 1);
             grid.attach (box_buttons, 1, 0, 1, 1);
 
@@ -69,13 +68,21 @@ namespace DateTime.Widgets {
                 center_clicked ();
             });
 
+            if (Services.SettingsManager.get_default ().show_weeks) {
+                // Adjust starting margin with the week numbers.
+                grid.margin_start = 2;
+            } else {
+                // Otherwise, fallback to default.
+                grid.margin_start = 0;
+            }
+
             Services.SettingsManager.get_default ().changed.connect (() => {
                 if (Services.SettingsManager.get_default ().show_weeks) {
                     // Adjust starting margin with the week numbers.
-                    grid.margin_start = 4;
+                    grid.margin_start = 2;
                 } else {
                     // Otherwise, fallback to default.
-                    grid.margin_start = 6;
+                    grid.margin_start = 0;
                 }
             });
 
