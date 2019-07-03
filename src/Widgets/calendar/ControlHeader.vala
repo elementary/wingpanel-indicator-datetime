@@ -32,6 +32,13 @@ namespace DateTime.Widgets {
             label.width_chars = 14;
             label.xalign = 0;
 
+            if (Services.SettingsManager.get_default ().show_weeks) {
+                // Horizontal pixel count introduced by the week number column.
+                label.margin_start = 32;
+            } else {
+                label.margin_start = 0;
+            }
+
             var left_button = new Gtk.Button.from_icon_name ("pan-start-symbolic");
             var center_button = new Gtk.Button.from_icon_name ("office-calendar-symbolic");
             center_button.tooltip_text = _("Go to today's date");
@@ -47,10 +54,15 @@ namespace DateTime.Widgets {
             CalendarModel.get_default ().parameters_changed.connect (() => {
                 var date = CalendarModel.get_default ().month_start;
                 label.set_label (date.format (_("%OB, %Y")));
+                if (Services.SettingsManager.get_default ().show_weeks) {
+                    // Horizontal size of pixels introduced by the week number column
+                    label.margin_start = 32;
+                } else {
+                    label.margin_start = 0;
+                }
             });
 
             var grid = new Gtk.Grid ();
-            grid.orientation = Gtk.Orientation.VERTICAL;
             grid.column_spacing = 24;
             grid.margin = 6;
             grid.attach (label, 0, 0, 1, 1);

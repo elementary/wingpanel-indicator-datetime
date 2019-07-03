@@ -43,9 +43,9 @@ public class Header : Gtk.EventBox {
         labels = new Gtk.Label[7];
         for (int c = 0; c < 7; c++) {
             labels[c] = new Gtk.Label ("");
+            labels[c].hexpand = true;
             var label_grid = new Gtk.Grid ();
             label_grid.add (labels[c]);
-            labels[c].hexpand = true;
             header_grid.attach (label_grid, c, 0, 1, 1);
         }
 

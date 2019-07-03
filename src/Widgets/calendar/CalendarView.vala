@@ -64,6 +64,7 @@ public class DateTime.Widgets.CalendarView : Gtk.Grid {
         events |= Gdk.EventMask.KEY_PRESS_MASK;
         events |= Gdk.EventMask.SCROLL_MASK;
         events |= Gdk.EventMask.SMOOTH_SCROLL_MASK;
+
         add (stack);
     }
 
@@ -88,6 +89,7 @@ public class DateTime.Widgets.CalendarView : Gtk.Grid {
         new_big_grid.attach (weeks, 0, 1, 1, 1);
         new_big_grid.show_all ();
         new_big_grid.expand = true;
+
         return new_big_grid;
     }
 
