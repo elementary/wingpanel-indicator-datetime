@@ -25,19 +25,14 @@ namespace DateTime.Widgets {
         public signal void center_clicked ();
         public ControlHeader () {
             Object (orientation : Gtk.Orientation.HORIZONTAL);
+        }
 
+        construct {
             var label = new Gtk.Label (new GLib.DateTime.now_local ().format (_("%OB, %Y")));
             label.get_style_context ().add_class (Granite.STYLE_CLASS_H2_LABEL);
             label.halign = Gtk.Align.START;
             label.width_chars = 14;
             label.xalign = 0;
-
-            if (Services.SettingsManager.get_default ().show_weeks) {
-                // Horizontal pixel count introduced by the week number column.
-                label.margin_start = 32;
-            } else {
-                label.margin_start = 0;
-            }
 
             var left_button = new Gtk.Button.from_icon_name ("pan-start-symbolic");
             var center_button = new Gtk.Button.from_icon_name ("office-calendar-symbolic");
@@ -54,12 +49,6 @@ namespace DateTime.Widgets {
             CalendarModel.get_default ().parameters_changed.connect (() => {
                 var date = CalendarModel.get_default ().month_start;
                 label.set_label (date.format (_("%OB, %Y")));
-                if (Services.SettingsManager.get_default ().show_weeks) {
-                    // Horizontal size of pixels introduced by the week number column
-                    label.margin_start = 32;
-                } else {
-                    label.margin_start = 0;
-                }
             });
 
             var grid = new Gtk.Grid ();
@@ -78,6 +67,16 @@ namespace DateTime.Widgets {
 
             center_button.clicked.connect (() => {
                 center_clicked ();
+            });
+
+            Services.SettingsManager.get_default ().changed.connect (() => {
+                if (Services.SettingsManager.get_default ().show_weeks) {
+                    // Adjust starting margin with the week numbers.
+                    grid.margin_start = 4;
+                } else {
+                    // Otherwise, fallback to default.
+                    grid.margin_start = 6;
+                }
             });
 
             add (grid);
