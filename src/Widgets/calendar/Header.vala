@@ -37,16 +37,15 @@ public class Header : Gtk.EventBox {
         header_grid.insert_row (1);
         header_grid.set_row_homogeneous (true);
         header_grid.set_column_homogeneous (true);
-        header_grid.column_spacing = 0;
-        header_grid.row_spacing = 0;
         header_grid.margin_bottom = 4;
+        header_grid.hexpand = true;
 
         labels = new Gtk.Label[7];
         for (int c = 0; c < 7; c++) {
             labels[c] = new Gtk.Label ("");
-            labels[c].hexpand = true;
             var label_grid = new Gtk.Grid ();
             label_grid.add (labels[c]);
+            labels[c].hexpand = true;
             header_grid.attach (label_grid, c, 0, 1, 1);
         }
 

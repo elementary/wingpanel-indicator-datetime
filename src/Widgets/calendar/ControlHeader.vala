@@ -29,6 +29,8 @@ namespace DateTime.Widgets {
             var label = new Gtk.Label (new GLib.DateTime.now_local ().format (_("%OB, %Y")));
             label.get_style_context ().add_class (Granite.STYLE_CLASS_H2_LABEL);
             label.halign = Gtk.Align.START;
+            label.set_size_request (185, -1);
+            label.xalign = 0;
 
             var left_button = new Gtk.Button.from_icon_name ("pan-start-symbolic");
             var center_button = new Gtk.Button.from_icon_name ("office-calendar-symbolic");
@@ -52,7 +54,7 @@ namespace DateTime.Widgets {
             grid.column_spacing = 24;
             grid.margin = 6;
             grid.attach (label, 0, 0, 1, 1);
-            grid.attach (box_buttons, 2, 0, 1, 1);
+            grid.attach (box_buttons, 1, 0, 1, 1);
 
             left_button.clicked.connect (() => {
                 left_clicked ();
