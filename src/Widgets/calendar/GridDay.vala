@@ -26,7 +26,7 @@ public class DateTime.Widgets.GridDay : Gtk.EventBox {
 
     const string DAY_CSS = """
         .circular {
-            border-radius: 48px;
+            border-radius: 50%;
         }
 
         .accent {

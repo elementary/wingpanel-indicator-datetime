@@ -35,8 +35,8 @@ public class Header : Gtk.EventBox {
         header_grid = new Gtk.Grid();
         header_grid.insert_column (7);
         header_grid.insert_row (1);
-        header_grid.set_column_homogeneous (true);
         header_grid.set_row_homogeneous (true);
+        header_grid.set_column_homogeneous (true);
         header_grid.column_spacing = 0;
         header_grid.row_spacing = 0;
         header_grid.margin_bottom = 4;
