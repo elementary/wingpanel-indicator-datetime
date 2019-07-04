@@ -23,6 +23,7 @@ namespace DateTime.Widgets {
         public signal void left_clicked ();
         public signal void right_clicked ();
         public signal void center_clicked ();
+
         public ControlHeader () {
             Object (orientation : Gtk.Orientation.HORIZONTAL);
         }
