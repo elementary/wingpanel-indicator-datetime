@@ -71,19 +71,19 @@ namespace DateTime.Widgets {
 
             if (Services.SettingsManager.get_default ().show_weeks) {
                 // Adjust starting margin with the week numbers.
-                grid.margin_start = 6;
+                grid.margin_start = 2;
             } else {
                 // Otherwise, fallback to default.
-                grid.margin_start = 12;
+                grid.margin_start = 10;
             }
 
             Services.SettingsManager.get_default ().changed.connect (() => {
                 if (Services.SettingsManager.get_default ().show_weeks) {
                     // Adjust starting margin with the week numbers.
-                    grid.margin_start = 6;
+                    grid.margin_start = 2;
                 } else {
                     // Otherwise, fallback to default.
-                    grid.margin_start = 12;
+                    grid.margin_start = 10;
                 }
             });
 
