@@ -49,7 +49,8 @@ public class DateTime.Widgets.GridDay : Gtk.EventBox {
         this.id = id;
 
         label = new Gtk.Label ("");
-        set_size_request (32, 32);
+        label.margin_top = 9;
+        label.margin_bottom = 9;
 
         var provider = new Gtk.CssProvider ();
         try {

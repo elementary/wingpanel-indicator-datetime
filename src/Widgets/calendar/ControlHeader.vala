@@ -30,7 +30,6 @@ namespace DateTime.Widgets {
         construct {
             var label = new Gtk.Label (new GLib.DateTime.now_local ().format (_("%OB, %Y")));
             label.get_style_context ().add_class (Granite.STYLE_CLASS_H2_LABEL);
-            label.width_chars = 15;
             label.xalign = 0;
 
             var left_button = new Gtk.Button.from_icon_name ("pan-start-symbolic");
@@ -44,6 +43,7 @@ namespace DateTime.Widgets {
             box_label.add (label);
 
             var box_buttons = new Gtk.Grid ();
+            box_buttons.hexpand = true;
             box_buttons.halign = Gtk.Align.END;
             box_buttons.valign = Gtk.Align.CENTER;
             box_buttons.add (left_button);
@@ -56,9 +56,10 @@ namespace DateTime.Widgets {
             });
 
             var grid = new Gtk.Grid ();
-            grid.column_spacing = 24;
-            grid.margin_start = 20;
-            grid.margin_end = 21;
+            grid.column_spacing = 6;
+            // same as GridDay horizontal margins
+            grid.margin_start = Header.CELL_MARGIN;
+            grid.margin_end = Header.CELL_MARGIN;
             grid.attach (box_label, 0, 0);
             grid.attach (box_buttons, 1, 0);
 
