@@ -57,8 +57,8 @@ namespace DateTime.Widgets {
 
             var grid = new Gtk.Grid ();
             grid.column_spacing = 24;
-            grid.margin_end = 12;
-            grid.margin_top = 6;
+            grid.margin_start = 20;
+            grid.margin_end = 21;
             grid.attach (box_label, 0, 0);
             grid.attach (box_buttons, 1, 0);
 
@@ -72,24 +72,6 @@ namespace DateTime.Widgets {
 
             center_button.clicked.connect (() => {
                 center_clicked ();
-            });
-
-            if (Services.SettingsManager.get_default ().show_weeks) {
-                // Adjust starting margin with the week numbers.
-                grid.margin_start = 9;
-            } else {
-                // Otherwise, fallback to default.
-                grid.margin_start = 12;
-            }
-
-            Services.SettingsManager.get_default ().changed.connect (() => {
-                if (Services.SettingsManager.get_default ().show_weeks) {
-                    // Adjust starting margin with the week numbers.
-                    grid.margin_start = 9;
-                } else {
-                    // Otherwise, fallback to default.
-                    grid.margin_start = 12;
-                }
             });
 
             add (grid);
