@@ -51,10 +51,36 @@ public class DateTime.Indicator : Wingpanel.Indicator {
             var settings_button = new Gtk.ModelButton ();
             settings_button.text = _("Date & Time Settings…");
 
+            var header_label = new Gtk.Label (_("Events"));
+            header_label.get_style_context ().add_class (Granite.STYLE_CLASS_H2_LABEL);
+            header_label.halign = Gtk.Align.START;
+            header_label.valign = Gtk.Align.CENTER;
+            header_label.xalign = 0;
+
+            var cal_icon = new Gtk.Image.from_icon_name ("office-calendar", Gtk.IconSize.LARGE_TOOLBAR);
+            var cal_button = new Gtk.Button ();
+            cal_button.halign = Gtk.Align.END;
+            cal_button.valign = Gtk.Align.CENTER;
+            cal_button.set_image (cal_icon);
+            cal_button.get_style_context ().add_class (Gtk.STYLE_CLASS_FLAT);
+            cal_button.set_tooltip_text (_("Open Calendar"));
+
+            var header_grid = new Gtk.Grid ();
+            header_grid.hexpand = true;
+            header_grid.set_column_homogeneous (true);
+            header_grid.margin_start = 12;
+            header_grid.margin_end = 12;
+            header_grid.attach (header_label, 0, 0);
+            header_grid.attach (cal_button, 1, 0);
+
             main_grid = new Gtk.Grid ();
-            main_grid.attach (calendar, 0, 0);
-            main_grid.attach (new Wingpanel.Widgets.Separator (), 0, 2);
-            main_grid.attach (settings_button, 0, 3);
+            main_grid.margin_top = 6;
+            main_grid.attach (calendar.heading, 0, 0, 1, 1);
+            main_grid.attach (calendar, 0, 1, 1, 7);
+            main_grid.attach (new Wingpanel.Widgets.Separator (), 0, 8, 1, 1);
+            main_grid.attach (settings_button, 0, 9, 1, 1);
+            main_grid.attach (new Gtk.Separator (Gtk.Orientation.VERTICAL), 1, 0, 1, 10);
+            main_grid.attach (header_grid, 2, 0, 1, 1);
 
             calendar.day_double_click.connect (() => {
                 close ();
@@ -62,6 +88,11 @@ public class DateTime.Indicator : Wingpanel.Indicator {
 
             calendar.selection_changed.connect ((date) => {
                 idle_update_events ();
+            });
+
+            cal_button.clicked.connect (() => {
+                calendar.open_maya ();
+                this.close ();
             });
 
             settings_button.clicked.connect (() => {
@@ -106,11 +137,38 @@ public class DateTime.Indicator : Wingpanel.Indicator {
 
         event_grid = new Gtk.Grid ();
         event_grid.orientation = Gtk.Orientation.VERTICAL;
-        main_grid.attach (event_grid, 0, 1);
+        event_grid.margin_top = 6;
+        event_grid.margin_bottom = 6;
+        main_grid.attach (event_grid, 2, 1, 1, 7);
 
         foreach (var e in events) {
+            var color = Widgets.CalendarModel.get_default ().cal_color;
+
+            string CSS = """
+                .event-label {
+                    color: shade (%s, 0.65);
+                }
+                .event {
+                    background-color: alpha(%s, 0.15);
+                    padding: 10px;
+                    border-radius: 4px;
+                }
+                .event-icon {
+                    color: shade (%s, 0.65);
+                }
+            """.printf (color, color, color);
+
+            var provider = new Gtk.CssProvider ();
+            try {
+                provider.load_from_data (CSS, CSS.length);
+                Gtk.StyleContext.add_provider_for_screen (Gdk.Screen.get_default (), provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
+            } catch (Error e) {
+                critical (e.message);
+            }
+
             var menuitem_icon = new Gtk.Image.from_icon_name (e.get_icon (), Gtk.IconSize.MENU);
             menuitem_icon.valign = Gtk.Align.START;
+            menuitem_icon.get_style_context ().add_class ("event-icon");
 
             var menuitem_label = new Gtk.Label (e.get_label ());
             menuitem_label.hexpand = true;
@@ -120,10 +178,12 @@ public class DateTime.Indicator : Wingpanel.Indicator {
             menuitem_label.wrap = true;
             menuitem_label.wrap_mode = Pango.WrapMode.WORD_CHAR;
             menuitem_label.xalign = 0;
+            menuitem_label.get_style_context ().add_class ("event-label");
 
             var menuitem_box = new Gtk.Box (Gtk.Orientation.HORIZONTAL, 6);
             menuitem_box.margin_end = 6;
             menuitem_box.margin_start = 6;
+            menuitem_box.get_style_context ().add_class ("event");
             menuitem_box.add (menuitem_icon);
             menuitem_box.add (menuitem_label);
 

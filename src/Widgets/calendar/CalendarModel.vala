@@ -22,15 +22,15 @@
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation, either version 3 of the License, or
  *  (at your option) any later version.
- * 
+ *
  *  This program is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
- * 
+ *
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  */
 namespace DateTime.Widgets {
     public class Event : GLib.Object {
@@ -125,6 +125,9 @@ namespace DateTime.Widgets {
             FRIDAY,
             SATURDAY
         }
+
+        /* The calendar's color */
+        public string? cal_color = "#da3d41";
 
         public static CalendarModel get_default () {
             lock (calendar_model) {
@@ -369,6 +372,13 @@ namespace DateTime.Widgets {
             });
         }
 
+        public string get_color (E.Source source) {
+            E.SourceCalendar cal = (E.SourceCalendar)source.get_extension (E.SOURCE_EXTENSION_CALENDAR);
+            cal_color = cal.dup_color ();
+
+            return cal_color;
+        }
+
         private void debug_event (E.Source source, E.CalComponent event) {
             unowned iCal.Component comp = event.get_icalcomponent ();
             debug (@"Event ['$(comp.get_summary())', $(source.dup_display_name()), $(comp.get_uid()))]");
@@ -404,6 +414,7 @@ namespace DateTime.Widgets {
 
             foreach (unowned iCal.Component comp in objects) {
                 var event = new E.CalComponent ();
+                get_color (source);
                 event.set_icalcomponent (new iCal.Component.clone (comp));
                 string uid = comp.get_uid ();
                 debug_event (source, event);
