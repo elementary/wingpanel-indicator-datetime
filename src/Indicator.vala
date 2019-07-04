@@ -47,12 +47,12 @@ public class DateTime.Indicator : Wingpanel.Indicator {
     public override Gtk.Widget? get_widget () {
         if (main_grid == null) {
             calendar = new Widgets.Calendar ();
-            calendar.margin = 6;
 
             var settings_button = new Gtk.ModelButton ();
             settings_button.text = _("Date & Time Settings…");
 
             main_grid = new Gtk.Grid ();
+            main_grid.margin = 6;
             main_grid.attach (calendar, 0, 0);
             main_grid.attach (new Wingpanel.Widgets.Separator (), 0, 2);
             main_grid.attach (settings_button, 0, 3);

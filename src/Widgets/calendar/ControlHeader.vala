@@ -23,14 +23,31 @@ namespace DateTime.Widgets {
         public signal void left_clicked ();
         public signal void right_clicked ();
         public signal void center_clicked ();
+
+        const string HEADER_CSS = """
+            .header-label {
+              font-size: 1.66em;
+              font-family: "Raleway", sans;
+              font-weight: 300;
+            }
+        """;
+
         public ControlHeader () {
             Object (orientation : Gtk.Orientation.HORIZONTAL);
         }
 
         construct {
+            var provider = new Gtk.CssProvider ();
+            try {
+                provider.load_from_data (HEADER_CSS, HEADER_CSS.length);
+                Gtk.StyleContext.add_provider_for_screen (Gdk.Screen.get_default (), provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
+            } catch (Error e) {
+                critical (e.message);
+            }
+
             var label = new Gtk.Label (new GLib.DateTime.now_local ().format (_("%OB, %Y")));
-            label.get_style_context ().add_class (Granite.STYLE_CLASS_H2_LABEL);
-            label.width_chars = 15;
+            label.get_style_context ().add_class ("header-label");
+            label.width_chars = 13;
             label.xalign = 0;
 
             var left_button = new Gtk.Button.from_icon_name ("pan-start-symbolic");
@@ -57,8 +74,7 @@ namespace DateTime.Widgets {
 
             var grid = new Gtk.Grid ();
             grid.column_spacing = 24;
-            grid.margin_end = 12;
-            grid.margin_top = 6;
+            grid.margin_top = 12;
             grid.attach (box_label, 0, 0);
             grid.attach (box_buttons, 1, 0);
 
@@ -76,23 +92,25 @@ namespace DateTime.Widgets {
 
             if (Services.SettingsManager.get_default ().show_weeks) {
                 // Adjust starting margin with the week numbers.
-                grid.margin_start = 9;
+                grid.margin_start = 3;
             } else {
                 // Otherwise, fallback to default.
-                grid.margin_start = 12;
+                grid.margin_start = 9;
             }
 
             Services.SettingsManager.get_default ().changed.connect (() => {
                 if (Services.SettingsManager.get_default ().show_weeks) {
                     // Adjust starting margin with the week numbers.
-                    grid.margin_start = 9;
+                    grid.margin_start = 3;
                 } else {
                     // Otherwise, fallback to default.
-                    grid.margin_start = 12;
+                    grid.margin_start = 9;
                 }
             });
 
             add (grid);
+            margin_bottom = 4;
+            margin_end = 9;
             get_style_context ().add_class ("linked");
             set_size_request (-1, 30);
         }
