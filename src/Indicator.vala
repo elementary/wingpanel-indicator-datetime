@@ -47,8 +47,7 @@ public class DateTime.Indicator : Wingpanel.Indicator {
     public override Gtk.Widget? get_widget () {
         if (main_grid == null) {
             calendar = new Widgets.Calendar ();
-            calendar.margin_top = 6;
-            calendar.margin_bottom = 6;
+            calendar.margin = 6;
 
             var settings_button = new Gtk.ModelButton ();
             settings_button.text = _("Date & Time Settings…");
