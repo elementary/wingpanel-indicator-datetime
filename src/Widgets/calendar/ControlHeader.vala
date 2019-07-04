@@ -19,7 +19,7 @@
 
 
 namespace DateTime.Widgets {
-    public class ControlHeader : Gtk.Box {
+    public class ControlHeader : Gtk.Grid {
         public signal void left_clicked ();
         public signal void right_clicked ();
         public signal void center_clicked ();
@@ -31,7 +31,7 @@ namespace DateTime.Widgets {
             var label = new Gtk.Label (new GLib.DateTime.now_local ().format (_("%OB, %Y")));
             label.get_style_context ().add_class (Granite.STYLE_CLASS_H2_LABEL);
             label.halign = Gtk.Align.START;
-            label.width_chars = 15;
+            label.width_chars = 14;
             label.xalign = 0;
 
             var left_button = new Gtk.Button.from_icon_name ("pan-start-symbolic");
@@ -52,6 +52,7 @@ namespace DateTime.Widgets {
             });
 
             var grid = new Gtk.Grid ();
+            grid.margin_top = 6;
             grid.column_spacing = 24;
             grid.attach (label, 0, 0, 1, 1);
             grid.attach (box_buttons, 1, 0, 1, 1);
@@ -70,24 +71,25 @@ namespace DateTime.Widgets {
 
             if (Services.SettingsManager.get_default ().show_weeks) {
                 // Adjust starting margin with the week numbers.
-                grid.margin_start = 2;
+                grid.margin_start = 6;
             } else {
                 // Otherwise, fallback to default.
-                grid.margin_start = 0;
+                grid.margin_start = 12;
             }
 
             Services.SettingsManager.get_default ().changed.connect (() => {
                 if (Services.SettingsManager.get_default ().show_weeks) {
                     // Adjust starting margin with the week numbers.
-                    grid.margin_start = 2;
+                    grid.margin_start = 6;
                 } else {
                     // Otherwise, fallback to default.
-                    grid.margin_start = 0;
+                    grid.margin_start = 12;
                 }
             });
 
             add (grid);
             margin_bottom = 4;
+            set_row_homogeneous (true);
             get_style_context ().add_class ("linked");
             set_size_request (-1, 30);
         }
