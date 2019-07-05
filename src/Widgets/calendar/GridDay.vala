@@ -70,9 +70,11 @@ public class DateTime.Widgets.GridDay : Gtk.EventBox {
 
         label.name = "date";
 
-        halign = Gtk.Align.CENTER;
-        valign = Gtk.Align.CENTER;
-        set_size_request (36, -1);
+        size_allocate.connect ((alloc) => {
+            if (alloc.width > alloc.height) {
+                margin_start = margin_bottom = alloc.width - alloc.height;
+            }
+        });
 
         add (label);
         show_all ();
