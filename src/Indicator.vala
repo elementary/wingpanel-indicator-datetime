@@ -174,7 +174,7 @@ public class DateTime.Indicator : Wingpanel.Indicator {
             menuitem_label.hexpand = true;
             menuitem_label.lines = 3;
             menuitem_label.ellipsize = Pango.EllipsizeMode.END;
-            menuitem_label.max_width_chars = 30;
+            menuitem_label.width_chars = 20;
             menuitem_label.wrap = true;
             menuitem_label.wrap_mode = Pango.WrapMode.WORD_CHAR;
             menuitem_label.xalign = 0;
