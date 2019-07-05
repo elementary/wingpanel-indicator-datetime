@@ -57,13 +57,15 @@ public class DateTime.Indicator : Wingpanel.Indicator {
             header_label.halign = Gtk.Align.START;
             header_label.valign = Gtk.Align.CENTER;
             header_label.xalign = 0;
+            header_label.width_chars = 7;
 
             var cal_icon = new Gtk.Image.from_icon_name ("office-calendar", Gtk.IconSize.DND);
-            cal_icon.set_size_request (32, 32);
+            cal_icon.halign = Gtk.Align.END;
             var cal_button = new Gtk.Button ();
             cal_button.halign = Gtk.Align.END;
             cal_button.valign = Gtk.Align.CENTER;
             cal_button.set_image (cal_icon);
+            cal_button.margin = 0;
             cal_button.get_style_context ().add_class (Gtk.STYLE_CLASS_FLAT);
             cal_button.set_tooltip_text (_("Open Calendar"));
 
@@ -80,8 +82,9 @@ public class DateTime.Indicator : Wingpanel.Indicator {
             no_events_label = new Gtk.Label (_("No Events Scheduled"));
             no_events_label.get_style_context ().add_class (Granite.STYLE_CLASS_H3_LABEL);
             no_events_label.expand = true;
-            no_events_label.margin = 6;
+            no_events_label.margin = 12;
             no_events_label.sensitive = false;
+            no_events_label.width_chars = 20;
 
             main_grid = new Gtk.Grid ();
             main_grid.margin_top = 6;
@@ -153,20 +156,23 @@ public class DateTime.Indicator : Wingpanel.Indicator {
 
         event_grid = new Gtk.Grid ();
         event_grid.orientation = Gtk.Orientation.VERTICAL;
-        event_grid.margin_top = 6;
-        event_grid.margin_bottom = 6;
+        event_grid.margin = 6;
 
         foreach (var e in events) {
+            var menuitem_icon = new Gtk.Image.from_icon_name (e.get_icon (), Gtk.IconSize.MENU);
+            menuitem_icon.valign = Gtk.Align.CENTER;
+
             var menuitem_label = new Gtk.Label (e.get_label ());
             menuitem_label.hexpand = true;
             menuitem_label.lines = 3;
             menuitem_label.ellipsize = Pango.EllipsizeMode.END;
-            menuitem_label.width_chars = 18;
+            menuitem_label.width_chars = 20;
             menuitem_label.wrap = true;
             menuitem_label.wrap_mode = Pango.WrapMode.WORD_CHAR;
             menuitem_label.xalign = 0;
 
             var menuitem_box = new Gtk.Grid ();
+            menuitem_box.add (menuitem_icon);
             menuitem_box.add (menuitem_label);
 
             var menuitem = new Gtk.Button ();
@@ -180,6 +186,23 @@ public class DateTime.Indicator : Wingpanel.Indicator {
             cal.notify["color"].connect (() => {
                 Util.style_calendar_color (menuitem, cal.dup_color ());
             });
+
+            string style = """
+                /* Event Icon */
+                .event-icon {
+                    color: shade(%s, 0.65);
+                }
+               """.printf(cal.dup_color ());
+
+            var provider = new Gtk.CssProvider ();
+            try {
+                provider.load_from_data (style, style.length);
+                Gtk.StyleContext.add_provider_for_screen (Gdk.Screen.get_default (), provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
+            } catch (Error e) {
+                critical (e.message);
+            }
+
+            menuitem_icon.get_style_context ().add_class ("event-icon");
 
             var style_context = menuitem.get_style_context ();
             style_context.add_class (Gtk.STYLE_CLASS_MENUITEM);

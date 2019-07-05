@@ -157,7 +157,11 @@ namespace Util {
                             color: shade(%s, 0.65);
                             border-radius: 4px;
                         }
-                       """.printf(color, color);
+                        /* Event Icon */
+                        .event-icon {
+                            color: shade(%s, 0.65);
+                        }
+                       """.printf(color, color, color);
 
         var style_context = widget.get_style_context ();
         style_context.add_class ("event-color");
