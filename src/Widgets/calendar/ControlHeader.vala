@@ -44,7 +44,7 @@ namespace DateTime.Widgets {
             box_label.add (label);
 
             var box_buttons = new Gtk.Grid ();
-            box_buttons.hexpand = true;
+            box_buttons.expand = true;
             box_buttons.halign = Gtk.Align.END;
             box_buttons.valign = Gtk.Align.CENTER;
             box_buttons.add (left_button);

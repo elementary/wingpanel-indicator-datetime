@@ -150,6 +150,27 @@ namespace Util {
         return datetime.add_full (0, 0, 0, -datetime.get_hour (), -datetime.get_minute (), -datetime.get_second ());
     }
 
+    public void style_calendar_color (Gtk.Widget widget, string color) {
+        string style = """
+                        .event-color {
+                            background-color: alpha(%s, 0.15);
+                            color: shade(%s, 0.65);
+                            border-radius: 4px;
+                        }
+                       """.printf(color, color);
+
+        var style_context = widget.get_style_context ();
+        style_context.add_class ("event-color");
+        var style_provider = new Gtk.CssProvider ();
+
+        try {
+            style_provider.load_from_data (style, style.length);
+            style_context.add_provider (style_provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
+        } catch (Error e) {
+            warning ("Could not create CSS Provider: %s\nStylesheet:\n%s", e.message, style);
+        }
+    }
+
     /**
      * Converts the given TimeType to a DateTime.
      */

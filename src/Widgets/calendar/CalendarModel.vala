@@ -58,13 +58,13 @@ namespace DateTime.Widgets {
 
         public string get_label () {
             if (day_event) {
-                return summary;
+                return "%s\n%s".printf (summary, _("All Day"));
             } else if (alarm) {
-                return "%s - %s".printf (start_time.format (Util.TimeFormat ()), summary);
+                return "%s %s\n%s".printf (_("Alarm:"), start_time.format (Util.TimeFormat ()), summary);
             } else if (range.days > 0 && date.compare (range.first_dt) != 0) {
                 return summary;
             }
-            return "%s - %s".printf (summary, start_time.format (Util.TimeFormat ()));
+            return "%s\n%s - %s".printf (summary, start_time.format (Util.TimeFormat ()), end_time.format (Util.TimeFormat ()));
         }
 
         public string get_icon () {
@@ -89,6 +89,7 @@ namespace DateTime.Widgets {
         public Util.DateRange data_range { get; private set; }
         public Util.DateRange month_range { get; private set; }
         public E.SourceRegistry registry { get; private set; }
+        public E.Source source { get; private set; }
 
         /* The first day of the month */
         public GLib.DateTime month_start { get; set; }
@@ -111,7 +112,7 @@ namespace DateTime.Widgets {
         /* The month_start, num_weeks, or week_starts_on have been changed */
         public signal void parameters_changed ();
 
-        HashTable<string, E.CalClient> source_client;
+        public HashTable<string, E.CalClient> source_client;
         HashTable<string, E.CalClientView> source_view;
         HashTable<E.Source, Gee.TreeMap<string, E.CalComponent> > source_events;
 
@@ -125,9 +126,6 @@ namespace DateTime.Widgets {
             FRIDAY,
             SATURDAY
         }
-
-        /* The calendar's color */
-        public string? cal_color = "#da3d41";
 
         public static CalendarModel get_default () {
             lock (calendar_model) {
@@ -163,7 +161,9 @@ namespace DateTime.Widgets {
                 registry = yield new E.SourceRegistry (null);
                 registry.source_removed.connect (remove_source);
                 registry.source_changed.connect (on_source_changed);
-                registry.source_added.connect ((source) => add_source_async.begin (source));
+                registry.source_added.connect ((source) => {
+                    add_source_async.begin (source);
+                });
 
                 // Add sources
                 registry.list_sources (E.SOURCE_EXTENSION_CALENDAR).foreach ((source) => {
@@ -171,6 +171,7 @@ namespace DateTime.Widgets {
                     if (cal.selected == true && source.enabled == true) {
                         add_source_async.begin (source);
                     }
+                    this.source = source;
                 });
 
                 load_all_sources ();
@@ -372,13 +373,6 @@ namespace DateTime.Widgets {
             });
         }
 
-        public string get_color (E.Source source) {
-            E.SourceCalendar cal = (E.SourceCalendar)source.get_extension (E.SOURCE_EXTENSION_CALENDAR);
-            cal_color = cal.dup_color ();
-
-            return cal_color;
-        }
-
         private void debug_event (E.Source source, E.CalComponent event) {
             unowned iCal.Component comp = event.get_icalcomponent ();
             debug (@"Event ['$(comp.get_summary())', $(source.dup_display_name()), $(comp.get_uid()))]");
@@ -414,7 +408,6 @@ namespace DateTime.Widgets {
 
             foreach (unowned iCal.Component comp in objects) {
                 var event = new E.CalComponent ();
-                get_color (source);
                 event.set_icalcomponent (new iCal.Component.clone (comp));
                 string uid = comp.get_uid ();
                 debug_event (source, event);
