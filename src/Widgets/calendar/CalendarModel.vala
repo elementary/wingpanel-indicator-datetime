@@ -89,7 +89,6 @@ namespace DateTime.Widgets {
         public Util.DateRange data_range { get; private set; }
         public Util.DateRange month_range { get; private set; }
         public E.SourceRegistry registry { get; private set; }
-        public E.Source source { get; private set; }
 
         /* The first day of the month */
         public GLib.DateTime month_start { get; set; }
@@ -114,7 +113,7 @@ namespace DateTime.Widgets {
 
         public HashTable<string, E.CalClient> source_client;
         HashTable<string, E.CalClientView> source_view;
-        HashTable<E.Source, Gee.TreeMap<string, E.CalComponent> > source_events;
+        public HashTable<E.Source, Gee.TreeMap<string, E.CalComponent> > source_events;
 
         private static CalendarModel? calendar_model = null;
         public enum Weekday {
@@ -171,7 +170,6 @@ namespace DateTime.Widgets {
                     if (cal.selected == true && source.enabled == true) {
                         add_source_async.begin (source);
                     }
-                    this.source = source;
                 });
 
                 load_all_sources ();

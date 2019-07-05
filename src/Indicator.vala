@@ -21,8 +21,9 @@ public class DateTime.Indicator : Wingpanel.Indicator {
     private Widgets.PanelLabel panel_label;
     private Gtk.Grid main_grid;
     private Widgets.Calendar calendar;
-    private Gtk.Grid event_grid;
+    private Gtk.ListBox event_grid;
     private Gtk.Label no_events_label;
+    private Gtk.ListBoxRow menuitem;
     private uint update_events_idle_source = 0;
 
     public Indicator () {
@@ -131,13 +132,20 @@ public class DateTime.Indicator : Wingpanel.Indicator {
         }
 
         update_events_idle_source = GLib.Idle.add (() => {
-            var source = Widgets.CalendarModel.get_default ().source;
-            update_events (source);
+            Widgets.CalendarModel.get_default ().registry.list_sources (E.SOURCE_EXTENSION_CALENDAR).foreach ((source) => {
+                E.SourceCalendar cal = (E.SourceCalendar)source.get_extension (E.SOURCE_EXTENSION_CALENDAR);
+                if (cal.selected == true && source.enabled == true) {
+                    update_events (source, cal);
+                    cal.notify["color"].connect (() => {
+                        Util.style_calendar_color (menuitem, cal.dup_color ());
+                    });
+                }
+            });
             return false;
         });
     }
 
-    private bool update_events (E.Source source) {
+    private bool update_events (E.Source source, E.SourceCalendar cal) {
         if (event_grid != null) {
             event_grid.destroy ();
         }
@@ -154,8 +162,7 @@ public class DateTime.Indicator : Wingpanel.Indicator {
             return GLib.Source.REMOVE;
         }
 
-        event_grid = new Gtk.Grid ();
-        event_grid.orientation = Gtk.Orientation.VERTICAL;
+        event_grid = new Gtk.ListBox ();
         event_grid.margin = 6;
 
         foreach (var e in events) {
@@ -175,17 +182,12 @@ public class DateTime.Indicator : Wingpanel.Indicator {
             menuitem_box.add (menuitem_icon);
             menuitem_box.add (menuitem_label);
 
-            var menuitem = new Gtk.Button ();
+            menuitem = new Gtk.ListBoxRow ();
             menuitem.margin = 6;
             menuitem.add (menuitem_box);
 
             /* Color events per calendar*/
-            E.SourceCalendar cal = (E.SourceCalendar)source.get_extension (E.SOURCE_EXTENSION_CALENDAR);
             Util.style_calendar_color (menuitem, cal.dup_color ());
-
-            cal.notify["color"].connect (() => {
-                Util.style_calendar_color (menuitem, cal.dup_color ());
-            });
 
             string style = """
                 /* Event Icon */
@@ -210,10 +212,6 @@ public class DateTime.Indicator : Wingpanel.Indicator {
             style_context.remove_class ("text-button");
 
             event_grid.add (menuitem);
-            menuitem.clicked.connect (() => {
-                calendar.show_date_in_maya (e.date);
-                this.close ();
-            });
         }
 
         event_grid.show_all ();
