@@ -183,7 +183,31 @@ public class DateTime.Indicator : Wingpanel.Indicator {
             style_context.remove_class ("text-button");
 
             event_grid.add (menuitem);
-            update_event_color ();
+
+            /* Color events per calendar */
+            Widgets.CalendarModel.get_default ().registry.list_sources (E.SOURCE_EXTENSION_CALENDAR).foreach ((source) => {
+                E.SourceCalendar cal = (E.SourceCalendar)source.get_extension (E.SOURCE_EXTENSION_CALENDAR);
+                Util.style_calendar_color (menuitem, cal.dup_color ());
+
+                string style = """
+                    /* Event Icon */
+                    .event-icon {
+                        color: shade(%s, 0.65);
+                    }
+                   """.printf(cal.dup_color ());
+
+                var provider = new Gtk.CssProvider ();
+                try {
+                    provider.load_from_data (style, style.length);
+                    Gtk.StyleContext.add_provider_for_screen (Gdk.Screen.get_default (), provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
+                } catch (Error e) {
+                    critical (e.message);
+                }
+
+                cal.notify["color"].connect (() => {
+                    Util.style_calendar_color (menuitem, cal.dup_color ());
+                });
+            });
         }
 
         event_grid.show_all ();
@@ -191,36 +215,6 @@ public class DateTime.Indicator : Wingpanel.Indicator {
         no_events_label.visible = false;
         update_events_idle_source = 0;
         return GLib.Source.REMOVE;
-    }
-
-    // TODO: Find a way to get ALL colors, not just one calendar's.
-    public void update_event_color () {
-        foreach (var id in Widgets.CalendarModel.get_default ().source_client.get_keys ()) {
-            var source = Widgets.CalendarModel.get_default ().registry.ref_source (id);
-            var cal = (E.SourceCalendar)source.get_extension (E.SOURCE_EXTENSION_CALENDAR);
-
-            cal.notify["color"].connect (() => {
-                Util.style_calendar_color (menuitem, cal.dup_color ());
-            });
-
-            /* Color events per calendar */
-            Util.style_calendar_color (menuitem, cal.dup_color ());
-
-            string style = """
-                /* Event Icon */
-                .event-icon {
-                    color: shade(%s, 0.65);
-                }
-               """.printf(cal.dup_color ());
-
-            var provider = new Gtk.CssProvider ();
-            try {
-                provider.load_from_data (style, style.length);
-                Gtk.StyleContext.add_provider_for_screen (Gdk.Screen.get_default (), provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
-            } catch (Error e) {
-                critical (e.message);
-            }
-        }
     }
 
     public override void opened () {
