@@ -132,20 +132,12 @@ public class DateTime.Indicator : Wingpanel.Indicator {
         }
 
         update_events_idle_source = GLib.Idle.add (() => {
-            Widgets.CalendarModel.get_default ().registry.list_sources (E.SOURCE_EXTENSION_CALENDAR).foreach ((source) => {
-                E.SourceCalendar cal = (E.SourceCalendar)source.get_extension (E.SOURCE_EXTENSION_CALENDAR);
-                if (cal.selected == true && source.enabled == true) {
-                    update_events (source, cal);
-                    cal.notify["color"].connect (() => {
-                        Util.style_calendar_color (menuitem, cal.dup_color ());
-                    });
-                }
-            });
+            update_events ();
             return false;
         });
     }
 
-    private bool update_events (E.Source source, E.SourceCalendar cal) {
+    private bool update_events () {
         if (event_grid != null) {
             event_grid.destroy ();
         }
@@ -166,6 +158,9 @@ public class DateTime.Indicator : Wingpanel.Indicator {
         event_grid.margin = 6;
 
         foreach (var e in events) {
+            E.Source source = e.comp.get_data<E.Source> ("source");
+            var cal = (E.SourceCalendar) source.get_extension (E.SOURCE_EXTENSION_CALENDAR);
+
             var menuitem_icon = new Gtk.Image.from_icon_name (e.get_icon (), Gtk.IconSize.MENU);
             menuitem_icon.valign = Gtk.Align.CENTER;
 
@@ -188,6 +183,10 @@ public class DateTime.Indicator : Wingpanel.Indicator {
 
             /* Color events per calendar*/
             Util.style_calendar_color (menuitem, cal.dup_color ());
+
+            cal.notify["color"].connect (() => {
+                Util.style_calendar_color (menuitem, cal.dup_color ());
+            });
 
             string style = """
                 /* Event Icon */

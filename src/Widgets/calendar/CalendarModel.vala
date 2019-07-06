@@ -41,13 +41,16 @@ namespace DateTime.Widgets {
         public bool alarm = false;
         public GLib.DateTime start_time;
         public GLib.DateTime end_time;
+        public E.CalComponent comp { get; construct set; }
 
-        public Event (GLib.DateTime date, Util.DateRange range, iCal.Component comp) {
+        public Event (GLib.DateTime date, Util.DateRange range, iCal.Component ical, E.CalComponent comp) {
             this.date = date;
             this.range = range;
-            this.summary = comp.get_summary ();
+            this.comp = comp;
 
-            Util.get_local_datetimes_from_icalcomponent (comp, out start_time, out end_time);
+            summary = ical.get_summary ();
+
+            Util.get_local_datetimes_from_icalcomponent (ical, out start_time, out end_time);
             if (end_time == null) {
                 alarm = true;
             } else if (Util.is_the_all_day (start_time, end_time)) {
@@ -72,6 +75,11 @@ namespace DateTime.Widgets {
                 return "alarm-symbolic";
             }
             return "office-calendar-symbolic";
+        }
+
+        public E.Source get_source () {
+            E.Source src = comp.get_data ("source");
+            return src;
         }
     }
 
@@ -189,7 +197,7 @@ namespace DateTime.Widgets {
                     foreach (var dt_range in Util.event_date_ranges (ical, data_range)) {
                         if (dt_range.contains (date)) {
                             if (!events_on_day.has_key (ical.get_uid ())) {
-                                events_on_day.set (ical.get_uid (), new Event (date, dt_range, ical));
+                                events_on_day.set (ical.get_uid (), new Event (date, dt_range, ical, comp));
                             }
                         }
                     }
