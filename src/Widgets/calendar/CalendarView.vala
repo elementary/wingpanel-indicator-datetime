@@ -73,7 +73,7 @@ public class DateTime.Widgets.CalendarView : Gtk.Grid {
         weeks.notify["child-revealed"].connect (() => {
             header.queue_draw ();
         });
-        weeks.margin_start = Header.CELL_MARGIN;
+        weeks.margin_start = ControlHeader.HEADER_MARGIN;
 
         header = new Header ();
         grid = new Grid ();

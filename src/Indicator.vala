@@ -71,10 +71,9 @@ public class DateTime.Indicator : Wingpanel.Indicator {
             cal_button.set_tooltip_text (_("Open Calendar"));
 
             var header_grid = new Gtk.Grid ();
-            header_grid.hexpand = true;
             header_grid.set_column_homogeneous (true);
             header_grid.margin_start = 12;
-            header_grid.margin_end = 12;
+            header_grid.margin_end = 6;
             header_grid.attach (header_label, 0, 0);
             header_grid.attach (cal_button, 1, 0);
 
@@ -83,7 +82,6 @@ public class DateTime.Indicator : Wingpanel.Indicator {
             no_events_label = new Gtk.Label (_("No Events Scheduled"));
             no_events_label.get_style_context ().add_class (Granite.STYLE_CLASS_H3_LABEL);
             no_events_label.expand = true;
-            no_events_label.margin = 12;
             no_events_label.sensitive = false;
             no_events_label.width_chars = 20;
 

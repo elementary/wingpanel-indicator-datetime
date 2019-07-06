@@ -23,6 +23,7 @@ namespace DateTime.Widgets {
         public signal void left_clicked ();
         public signal void right_clicked ();
         public signal void center_clicked ();
+        public const int HEADER_MARGIN = 14;
 
         public ControlHeader () {
             Object (orientation : Gtk.Orientation.HORIZONTAL);
@@ -58,9 +59,8 @@ namespace DateTime.Widgets {
 
             var grid = new Gtk.Grid ();
             grid.column_spacing = 6;
-            // same as GridDay horizontal margins
-            grid.margin_start = Header.CELL_MARGIN;
-            grid.margin_end = Header.CELL_MARGIN;
+            grid.margin_start = HEADER_MARGIN;
+            grid.margin_end = HEADER_MARGIN;
             grid.attach (box_label, 0, 0);
             grid.attach (box_buttons, 1, 0);
 
