@@ -41,12 +41,10 @@ namespace DateTime.Widgets {
         public bool alarm = false;
         public GLib.DateTime start_time;
         public GLib.DateTime end_time;
-        public E.CalComponent comp { get; construct set; }
 
-        public Event (GLib.DateTime date, Util.DateRange range, iCal.Component ical, E.CalComponent comp) {
+        public Event (GLib.DateTime date, Util.DateRange range, iCal.Component ical) {
             this.date = date;
             this.range = range;
-            this.comp = comp;
 
             summary = ical.get_summary ();
 
@@ -75,11 +73,6 @@ namespace DateTime.Widgets {
                 return "alarm-symbolic";
             }
             return "office-calendar-symbolic";
-        }
-
-        public E.Source get_source () {
-            E.Source src = comp.get_data ("source");
-            return src;
         }
     }
 
@@ -197,7 +190,7 @@ namespace DateTime.Widgets {
                     foreach (var dt_range in Util.event_date_ranges (ical, data_range)) {
                         if (dt_range.contains (date)) {
                             if (!events_on_day.has_key (ical.get_uid ())) {
-                                events_on_day.set (ical.get_uid (), new Event (date, dt_range, ical, comp));
+                                events_on_day.set (ical.get_uid (), new Event (date, dt_range, ical));
                             }
                         }
                     }
@@ -327,8 +320,8 @@ namespace DateTime.Widgets {
         private void load_source (E.Source source) {
             /* create empty source-event map */
             var events = new Gee.TreeMap<string, E.CalComponent> (
-                (GLib.CompareDataFunc<E.CalComponent> ? )GLib.strcmp,
-                (Gee.EqualDataFunc<E.CalComponent>? )Util.calcomponent_equal_func);
+                (GLib.CompareDataFunc<E.CalComponent>?)GLib.strcmp,
+                (Gee.EqualDataFunc<E.CalComponent>?)Util.calcomponent_equal_func);
             source_events.set (source, events);
             /* query client view */
             var iso_first = E.Util.isodate_from_time_t ((time_t)data_range.first_dt.to_unix ());

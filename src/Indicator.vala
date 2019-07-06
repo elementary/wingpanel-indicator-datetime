@@ -158,10 +158,8 @@ public class DateTime.Indicator : Wingpanel.Indicator {
         event_grid.margin = 6;
 
         foreach (var e in events) {
-            E.Source source = e.comp.get_data<E.Source> ("source");
-            var cal = (E.SourceCalendar) source.get_extension (E.SOURCE_EXTENSION_CALENDAR);
-
             var menuitem_icon = new Gtk.Image.from_icon_name (e.get_icon (), Gtk.IconSize.MENU);
+            menuitem_icon.get_style_context ().add_class ("event-icon");
             menuitem_icon.valign = Gtk.Align.CENTER;
 
             var menuitem_label = new Gtk.Label (e.get_label ());
@@ -181,12 +179,34 @@ public class DateTime.Indicator : Wingpanel.Indicator {
             menuitem.margin = 6;
             menuitem.add (menuitem_box);
 
-            /* Color events per calendar*/
-            Util.style_calendar_color (menuitem, cal.dup_color ());
+            var style_context = menuitem.get_style_context ();
+            style_context.add_class (Gtk.STYLE_CLASS_MENUITEM);
+            style_context.remove_class (Gtk.STYLE_CLASS_BUTTON);
+            style_context.remove_class ("text-button");
+
+            event_grid.add (menuitem);
+            update_event_color ();
+        }
+
+        event_grid.show_all ();
+        main_grid.attach (event_grid, 2, 1);
+        no_events_label.visible = false;
+        update_events_idle_source = 0;
+        return GLib.Source.REMOVE;
+    }
+
+    // TODO: Find a way to get ALL colors, not just one calendar's.
+    public void update_event_color () {
+        foreach (var id in Widgets.CalendarModel.get_default ().source_client.get_keys ()) {
+            var source = Widgets.CalendarModel.get_default ().registry.ref_source (id);
+            var cal = (E.SourceCalendar)source.get_extension (E.SOURCE_EXTENSION_CALENDAR);
 
             cal.notify["color"].connect (() => {
                 Util.style_calendar_color (menuitem, cal.dup_color ());
             });
+
+            /* Color events per calendar */
+            Util.style_calendar_color (menuitem, cal.dup_color ());
 
             string style = """
                 /* Event Icon */
@@ -202,22 +222,7 @@ public class DateTime.Indicator : Wingpanel.Indicator {
             } catch (Error e) {
                 critical (e.message);
             }
-
-            menuitem_icon.get_style_context ().add_class ("event-icon");
-
-            var style_context = menuitem.get_style_context ();
-            style_context.add_class (Gtk.STYLE_CLASS_MENUITEM);
-            style_context.remove_class (Gtk.STYLE_CLASS_BUTTON);
-            style_context.remove_class ("text-button");
-
-            event_grid.add (menuitem);
         }
-
-        event_grid.show_all ();
-        main_grid.attach (event_grid, 2, 1);
-        no_events_label.visible = false;
-        update_events_idle_source = 0;
-        return GLib.Source.REMOVE;
     }
 
     public override void opened () {
