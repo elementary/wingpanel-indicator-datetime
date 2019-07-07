@@ -185,7 +185,6 @@ public class DateTime.Indicator : Wingpanel.Indicator {
         foreach (var e in events) {
             count += 1;
             var menuitem_icon = new Gtk.Image.from_icon_name (e.get_icon (), Gtk.IconSize.MENU);
-            menuitem_icon.get_style_context ().add_class ("event-icon-%i".printf(count));
             menuitem_icon.valign = Gtk.Align.CENTER;
 
             var menuitem_label = new Gtk.Label (e.get_label ());
@@ -213,10 +212,12 @@ public class DateTime.Indicator : Wingpanel.Indicator {
             event_grid.add (menuitem);
 
             /* Color events per calendar */
-            Util.style_calendar_color (menuitem, menuitem_icon, e.cal.dup_color (), count);
+            var css_class = Util.get_style_calendar_color (e.cal);
+            menuitem.get_style_context ().add_class (css_class);
+            menuitem_icon.get_style_context ().add_class (css_class);
 
             e.cal.notify["color"].connect (() => {
-                Util.style_calendar_color (menuitem, menuitem_icon, e.cal.dup_color (), count);
+                Util.get_style_calendar_color (e.cal); /* Redefines same class */
             });
         }
 
