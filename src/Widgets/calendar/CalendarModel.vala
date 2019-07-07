@@ -41,7 +41,6 @@ namespace DateTime.Widgets {
         public bool alarm = false;
         public GLib.DateTime start_time;
         public GLib.DateTime end_time;
-        public E.SourceCalendar cal;
         public GLib.List<E.Source> sources;
         public GLib.List<string> colors;
 

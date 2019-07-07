@@ -166,11 +166,13 @@ namespace Util {
                             background-color: alpha(%s, 0.15);
                             color: shade(%s, 0.65);
                             border-radius: 4px;
+                            box-shadow: 0 1px 2px alpha (#000, 0.2),
+                                        0 1px 3px alpha (%s, 0.15);
                         }
                         .event-color-%i image {
                             color: shade(%s, 0.65);
                         }
-                       """.printf(count, color, color, count, color);
+                       """.printf(count, color, color, color, count, color);
 
         var style_context = widget.get_style_context ();
         var style_context2 = widget2.get_style_context ();

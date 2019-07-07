@@ -200,8 +200,9 @@ public class DateTime.Indicator : Wingpanel.Indicator {
             menuitem_box.add (menuitem_icon);
             menuitem_box.add (menuitem_label);
 
-            var menuitem = new Gtk.ListBoxRow ();
+            var menuitem = new Gtk.Button ();
             menuitem.margin = 6;
+            menuitem.margin_start = 2;
             menuitem.add (menuitem_box);
 
             var style_context = menuitem.get_style_context ();
@@ -215,6 +216,11 @@ public class DateTime.Indicator : Wingpanel.Indicator {
             foreach (string color in e.colors) {
                 Util.style_calendar_color (menuitem, menuitem_icon, color, count);
             }
+
+            menuitem.clicked.connect (() => {
+                calendar.show_date_in_maya (e.date);
+                this.close ();
+            });
         }
 
         event_grid.show_all ();
