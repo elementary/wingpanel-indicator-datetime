@@ -71,6 +71,8 @@ public class DateTime.Widgets.GridDay : Gtk.EventBox {
 
         label.name = "date";
 
+        margin = 8;
+
         add (label);
         show_all ();
 

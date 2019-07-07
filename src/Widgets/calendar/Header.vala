@@ -20,48 +20,47 @@
  */
 
 namespace DateTime.Widgets {
-
 /**
  * Represents the header at the top of the calendar grid.
  */
-public class Header : Gtk.EventBox {
-    private Gtk.Grid header_grid;
-    private Gtk.Label[] labels;
+    public class Header : Gtk.EventBox {
+        private Gtk.Grid header_grid;
+        private Gtk.Label[] labels;
 
-    public const int CELL_MARGIN = 6;
-    public bool draw_left_border = true;
-    public Header () {
-        events |= Gdk.EventMask.BUTTON_PRESS_MASK;
+        public const int CELL_MARGIN = 6;
 
-        header_grid = new Gtk.Grid();
-        header_grid.insert_column (7);
-        header_grid.insert_row (1);
-        header_grid.set_row_homogeneous (true);
-        header_grid.set_column_homogeneous (true);
+        public bool draw_left_border = true;
+        public Header () {
+            events |= Gdk.EventMask.BUTTON_PRESS_MASK;
 
-        labels = new Gtk.Label[7];
-        for (int c = 0; c < 7; c++) {
-            labels[c] = new Gtk.Label ("");
-            labels[c].width_chars = 3;
-            labels[c].margin = CELL_MARGIN;
-            var label_grid = new Gtk.Grid ();
-            label_grid.add (labels[c]);
-            label_grid.halign = Gtk.Align.CENTER;
-            header_grid.attach (label_grid, c, 0, 1, 1);
+            header_grid = new Gtk.Grid();
+            header_grid.insert_column (7);
+            header_grid.insert_row (1);
+            header_grid.set_row_homogeneous (true);
+            header_grid.set_column_homogeneous (true);
+
+            labels = new Gtk.Label[7];
+            for (int c = 0; c < 7; c++) {
+                labels[c] = new Gtk.Label ("");
+                labels[c].width_chars = 3;
+                labels[c].margin = CELL_MARGIN;
+                var label_grid = new Gtk.Grid ();
+                label_grid.add (labels[c]);
+                label_grid.halign = Gtk.Align.CENTER;
+                header_grid.attach (label_grid, c, 0, 1, 1);
+            }
+
+            add (header_grid);
         }
 
-        add (header_grid);
-    }
-
-    public void update_columns (int week_starts_on) {
-        var date = Util.strip_time(new GLib.DateTime.now_local ());
-        date = date.add_days (week_starts_on - date.get_day_of_week ());
-        foreach (var label in labels) {
-            label.get_style_context ().add_class ("h4");
-            label.label = date.format ("%a");
-            date = date.add_days (1);
+        public void update_columns (int week_starts_on) {
+            var date = Util.strip_time(new GLib.DateTime.now_local ());
+            date = date.add_days (week_starts_on - date.get_day_of_week ());
+            foreach (var label in labels) {
+                label.get_style_context ().add_class ("h4");
+                label.label = date.format ("%a");
+                date = date.add_days (1);
+            }
         }
     }
-}
-
 }
