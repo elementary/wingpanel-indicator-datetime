@@ -53,32 +53,57 @@ public class DateTime.Indicator : Wingpanel.Indicator {
             var settings_button = new Gtk.ModelButton ();
             settings_button.text = _("Date & Time Settings…");
 
+            string style = """
+                .header-label {
+                    font-family: "Raleway", sans;
+                    font-weight: 300;
+                    font-size: 1.66em;
+                }
+            """;
+
+            var provider = new Gtk.CssProvider ();
+            try {
+                provider.load_from_data (style, style.length);
+                Gtk.StyleContext.add_provider_for_screen (Gdk.Screen.get_default (), provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
+            } catch (Error e) {
+                critical (e.message);
+            }
+
             var header_label = new Gtk.Label (_("Events"));
-            header_label.get_style_context ().add_class (Granite.STYLE_CLASS_H2_LABEL);
+            header_label.get_style_context ().add_class ("header-label");
             header_label.halign = Gtk.Align.START;
-            header_label.valign = Gtk.Align.CENTER;
+            header_label.width_chars = 13;
             header_label.xalign = 0;
 
-            header_label.width_chars = 7;
-
-            var cal_icon = new Gtk.Image.from_icon_name ("office-calendar", Gtk.IconSize.DND);
+            var cal_icon = new Gtk.Image.from_icon_name ("office-calendar", Gtk.IconSize.LARGE_TOOLBAR);
             cal_icon.halign = Gtk.Align.END;
-
             var cal_button = new Gtk.Button ();
-            cal_button.halign = Gtk.Align.END;
-            cal_button.valign = Gtk.Align.CENTER;
             cal_button.set_image (cal_icon);
-            cal_button.margin = 0;
             cal_button.get_style_context ().add_class (Gtk.STYLE_CLASS_FLAT);
+            cal_button.get_style_context ().remove_class (Gtk.STYLE_CLASS_BUTTON);
+            cal_button.get_style_context ().remove_class ("text-button");
             cal_button.set_tooltip_text (_("Open Calendar"));
 
-            var header_grid = new Gtk.Grid ();
+            // XXX: Remove when GTK 4 Constraints lands on elementary
+            var dummy_spacer = new Gtk.Grid ();
+            dummy_spacer.hexpand = true;
 
-            header_grid.set_column_homogeneous (true);
-            header_grid.margin_start = 12;
-            header_grid.margin_end = 6;
-            header_grid.attach (header_label, 0, 0);
-            header_grid.attach (cal_button, 1, 0);
+            var box_label = new Gtk.Grid ();
+            box_label.halign = Gtk.Align.START;
+            box_label.valign = Gtk.Align.CENTER;
+            box_label.add (header_label);
+
+            var header_grid = new Gtk.Grid ();
+            header_grid.hexpand = true;
+            header_grid.column_spacing = 6;
+            header_grid.valign = Gtk.Align.CENTER;
+            header_grid.margin_start = 6;
+            header_grid.margin_end = 3;
+            header_grid.margin_top = 6;
+            header_grid.margin_bottom = 6;
+            header_grid.attach (box_label, 0, 0);
+            header_grid.attach (dummy_spacer, 1, 0);
+            header_grid.attach (cal_button, 2, 0);
 
             var sep = new Gtk.Separator (Gtk.Orientation.VERTICAL);
 
@@ -89,7 +114,6 @@ public class DateTime.Indicator : Wingpanel.Indicator {
             no_events_label.width_chars = 20;
 
             main_grid = new Gtk.Grid ();
-            main_grid.margin_top = 6;
             main_grid.attach (calendar.heading, 0, 0);
             main_grid.attach (calendar, 0, 1);
             main_grid.attach (new Wingpanel.Widgets.Separator (), 0, 2);
@@ -159,30 +183,6 @@ public class DateTime.Indicator : Wingpanel.Indicator {
         event_grid.margin = 6;
 
         foreach (var e in events) {
-            var color = Widgets.CalendarModel.get_default ().cal_color;
-
-            string CSS = """
-                .event-label {
-                    color: shade (%s, 0.65);
-                }
-                .event {
-                    background-color: alpha(%s, 0.15);
-                    padding: 10px;
-                    border-radius: 4px;
-                }
-                .event-icon {
-                    color: shade (%s, 0.65);
-                }
-            """.printf (color, color, color);
-
-            var provider = new Gtk.CssProvider ();
-            try {
-                provider.load_from_data (CSS, CSS.length);
-                Gtk.StyleContext.add_provider_for_screen (Gdk.Screen.get_default (), provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
-            } catch (Error e) {
-                critical (e.message);
-            }
-
             var menuitem_icon = new Gtk.Image.from_icon_name (e.get_icon (), Gtk.IconSize.MENU);
             menuitem_icon.get_style_context ().add_class ("event-icon");
             menuitem_icon.valign = Gtk.Align.CENTER;
@@ -195,7 +195,6 @@ public class DateTime.Indicator : Wingpanel.Indicator {
             menuitem_label.wrap = true;
             menuitem_label.wrap_mode = Pango.WrapMode.WORD_CHAR;
             menuitem_label.xalign = 0;
-            menuitem_label.get_style_context ().add_class ("event-label");
 
             var menuitem_box = new Gtk.Grid ();
             menuitem_box.add (menuitem_icon);

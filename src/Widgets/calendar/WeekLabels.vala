@@ -29,6 +29,7 @@ public class DateTime.Widgets.WeekLabels : Gtk.Revealer {
         vexpand = true;
 
         day_grid = new Gtk.Grid ();
+        day_grid.margin_end = 6;
         day_grid.row_homogeneous = true;
         set_nr_of_weeks (5);
         day_grid.insert_row (1);

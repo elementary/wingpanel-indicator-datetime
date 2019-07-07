@@ -23,7 +23,6 @@ namespace DateTime.Widgets {
         public signal void left_clicked ();
         public signal void right_clicked ();
         public signal void center_clicked ();
-        public const int HEADER_MARGIN = 14;
 
         public ControlHeader () {
             Object (orientation : Gtk.Orientation.HORIZONTAL);
@@ -58,13 +57,10 @@ namespace DateTime.Widgets {
 
             var box_label = new Gtk.Grid ();
             box_label.halign = Gtk.Align.START;
-            box_label.valign = Gtk.Align.CENTER;
             box_label.add (label);
 
             var box_buttons = new Gtk.Grid ();
-
             box_buttons.halign = Gtk.Align.END;
-            box_buttons.valign = Gtk.Align.CENTER;
             box_buttons.add (left_button);
             box_buttons.add (center_button);
             box_buttons.add (right_button);
@@ -82,11 +78,11 @@ namespace DateTime.Widgets {
             grid.column_spacing = 6;
             grid.margin_start = 9;
             grid.margin_end = 9;
-            grid.margin_top = 6;
+            grid.margin_top = 10;
+            grid.valign = Gtk.Align.CENTER;
             grid.attach (box_label, 0, 0, 1, 1);
             grid.attach (dummy_spacer, 1, 0, 1, 1);
             grid.attach (box_buttons, 2, 0, 1, 1);
-
 
             left_button.clicked.connect (() => {
                 left_clicked ();
@@ -102,7 +98,7 @@ namespace DateTime.Widgets {
 
             add (grid);
             get_style_context ().add_class ("linked");
-            set_size_request (-1, 30);
+            set_size_request (-1, 24);
         }
     }
 }

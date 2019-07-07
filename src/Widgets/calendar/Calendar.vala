@@ -32,6 +32,7 @@ namespace DateTime.Widgets {
         public Calendar () {
             Object (orientation: Gtk.Orientation.VERTICAL, halign: Gtk.Align.CENTER, valign: Gtk.Align.CENTER, can_focus: false);
             margin = 6;
+            margin_top = 0;
             expand = true;
             heading = new ControlHeader ();
             cal = new CalendarView ();

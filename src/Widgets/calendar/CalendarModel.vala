@@ -123,9 +123,6 @@ namespace DateTime.Widgets {
 
         private static CalendarModel? calendar_model = null;
 
-        /* The calendar's color */
-        public string? cal_color = "#da3d41";
-
         public static CalendarModel get_default () {
             if (calendar_model == null)
                 calendar_model = new CalendarModel ();
@@ -423,13 +420,6 @@ namespace DateTime.Widgets {
             });
         }
 
-        public string get_color (E.Source source) {
-            E.SourceCalendar cal = (E.SourceCalendar)source.get_extension (E.SOURCE_EXTENSION_CALENDAR);
-            cal_color = cal.dup_color ();
-
-            return cal_color;
-        }
-
         private void debug_event (E.Source source, E.CalComponent event) {
             unowned iCal.Component comp = event.get_icalcomponent ();
             debug (@"Event ['$(comp.get_summary())', $(source.dup_display_name()), $(comp.get_uid()))]");
@@ -452,7 +442,6 @@ namespace DateTime.Widgets {
             var added_events = new Gee.ArrayList<E.CalComponent> ((Gee.EqualDataFunc<E.CalComponent>?) Util.calcomponent_equal_func);
             objects.foreach ((comp) => {
                 var event = new E.CalComponent ();
-                get_color (source);
                 event.set_icalcomponent (new iCal.Component.clone (comp));
                 string uid = comp.get_uid ();
                 debug_event (source, event);
