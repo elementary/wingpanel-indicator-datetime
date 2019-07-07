@@ -43,7 +43,7 @@ namespace DateTime.Widgets {
         public GLib.DateTime end_time;
         public E.SourceCalendar cal;
 
-        public Event (GLib.DateTime date, Util.DateRange range, iCal.Component ical, E.Source src) {
+        public Event (GLib.DateTime date, Util.DateRange range, iCal.Component ical, E.Source source) {
             this.date = date;
             this.range = range;
 
@@ -57,7 +57,9 @@ namespace DateTime.Widgets {
                 return;
             }
 
-            cal = (E.SourceCalendar)src.get_extension (E.SOURCE_EXTENSION_CALENDAR);
+            if (source.enabled == true) {
+                cal = (E.SourceCalendar)source.get_extension (E.SOURCE_EXTENSION_CALENDAR);
+            }
         }
 
         public string get_label () {

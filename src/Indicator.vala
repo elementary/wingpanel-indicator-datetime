@@ -185,7 +185,6 @@ public class DateTime.Indicator : Wingpanel.Indicator {
         foreach (var e in events) {
             count += 1;
             var menuitem_icon = new Gtk.Image.from_icon_name (e.get_icon (), Gtk.IconSize.MENU);
-            menuitem_icon.get_style_context ().add_class ("event-icon-%i".printf(count));
             menuitem_icon.valign = Gtk.Align.CENTER;
 
             var menuitem_label = new Gtk.Label (e.get_label ());
