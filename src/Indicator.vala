@@ -212,11 +212,9 @@ public class DateTime.Indicator : Wingpanel.Indicator {
             event_grid.add (menuitem);
 
             /* Color events per calendar */
-            Util.style_calendar_color (menuitem, menuitem_icon, e.cal.dup_color (), count);
-
-            e.cal.notify["color"].connect (() => {
-                Util.style_calendar_color (menuitem, menuitem_icon, e.cal.dup_color (), count);
-            });
+            foreach (string color in e.colors) {
+                Util.style_calendar_color (menuitem, menuitem_icon, color, count);
+            }
         }
 
         event_grid.show_all ();
