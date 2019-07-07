@@ -297,13 +297,14 @@ namespace DateTime.Widgets {
         public Gee.ArrayList<Event> get_events (GLib.DateTime date) {
             var events = new Gee.TreeMap<string,Event> ();
             registry.list_sources (E.SOURCE_EXTENSION_CALENDAR).foreach ((source) => {
+                E.SourceCalendar cal = (E.SourceCalendar)source.get_extension (E.SOURCE_EXTENSION_CALENDAR);
                 foreach (var entry in source_events.get_values ()) {
                     foreach (var comp in entry.values) {
                         unowned iCal.Component ical = comp.get_icalcomponent ();
                         foreach (var dt_range in Util.event_date_ranges (ical, data_range)) {
                             if (dt_range.contains (date)) {
                                 if (!events.has_key (ical.get_uid ())) {
-                                    if (source.enabled == true) {
+                                    if (cal.selected == true && source.enabled == true) {
                                         events.set (ical.get_uid (), new Event (date, dt_range, ical, source));
                                     }
                                 }

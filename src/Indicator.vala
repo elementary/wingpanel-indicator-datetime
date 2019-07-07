@@ -23,7 +23,6 @@ public class DateTime.Indicator : Wingpanel.Indicator {
     private Widgets.Calendar calendar;
     private Gtk.ListBox event_grid;
     private Gtk.Label no_events_label;
-    private Gtk.ListBoxRow menuitem;
     private uint update_events_idle_source = 0;
     private int count = 0;
 
@@ -202,7 +201,7 @@ public class DateTime.Indicator : Wingpanel.Indicator {
             menuitem_box.add (menuitem_icon);
             menuitem_box.add (menuitem_label);
 
-            menuitem = new Gtk.ListBoxRow ();
+            var menuitem = new Gtk.ListBoxRow ();
             menuitem.margin = 6;
             menuitem.add (menuitem_box);
 
@@ -214,26 +213,11 @@ public class DateTime.Indicator : Wingpanel.Indicator {
             event_grid.add (menuitem);
 
             /* Color events per calendar */
-                Util.style_calendar_color (menuitem, e.cal.dup_color (), count);
+            Util.style_calendar_color (menuitem, menuitem_icon, e.cal.dup_color (), count);
 
-                string style = """
-                    /* Event Icon */
-                    .event-icon-%i {
-                        color: shade(%s, 0.6);
-                    }
-                   """.printf(count, e.cal.dup_color ());
-
-                var provider = new Gtk.CssProvider ();
-                try {
-                    provider.load_from_data (style, style.length);
-                    Gtk.StyleContext.add_provider_for_screen (Gdk.Screen.get_default (), provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
-                } catch (Error e) {
-                    critical (e.message);
-                }
-
-                e.cal.notify["color"].connect (() => {
-                    Util.style_calendar_color (menuitem, e.cal.dup_color (), count);
-                });
+            e.cal.notify["color"].connect (() => {
+                Util.style_calendar_color (menuitem, menuitem_icon, e.cal.dup_color (), count);
+            });
         }
 
         event_grid.show_all ();
