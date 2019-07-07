@@ -25,6 +25,7 @@ public class DateTime.Indicator : Wingpanel.Indicator {
     private Gtk.Label no_events_label;
     private Gtk.ListBoxRow menuitem;
     private uint update_events_idle_source = 0;
+    private int count = 0;
 
     public Indicator () {
         Object (
@@ -183,8 +184,9 @@ public class DateTime.Indicator : Wingpanel.Indicator {
         event_grid.margin = 6;
 
         foreach (var e in events) {
+            count += 1;
             var menuitem_icon = new Gtk.Image.from_icon_name (e.get_icon (), Gtk.IconSize.MENU);
-            menuitem_icon.get_style_context ().add_class ("event-icon");
+            menuitem_icon.get_style_context ().add_class ("event-icon-%i".printf(count));
             menuitem_icon.valign = Gtk.Align.CENTER;
 
             var menuitem_label = new Gtk.Label (e.get_label ());
@@ -212,16 +214,14 @@ public class DateTime.Indicator : Wingpanel.Indicator {
             event_grid.add (menuitem);
 
             /* Color events per calendar */
-            Widgets.CalendarModel.get_default ().registry.list_sources (E.SOURCE_EXTENSION_CALENDAR).foreach ((source) => {
-                E.SourceCalendar cal = (E.SourceCalendar)source.get_extension (E.SOURCE_EXTENSION_CALENDAR);
-                Util.style_calendar_color (menuitem, cal.dup_color ());
+                Util.style_calendar_color (menuitem, e.cal.dup_color (), count);
 
                 string style = """
                     /* Event Icon */
-                    .event-icon {
-                        color: shade(%s, 0.65);
+                    .event-icon-%i {
+                        color: shade(%s, 0.6);
                     }
-                   """.printf(cal.dup_color ());
+                   """.printf(count, e.cal.dup_color ());
 
                 var provider = new Gtk.CssProvider ();
                 try {
@@ -231,10 +231,9 @@ public class DateTime.Indicator : Wingpanel.Indicator {
                     critical (e.message);
                 }
 
-                cal.notify["color"].connect (() => {
-                    Util.style_calendar_color (menuitem, cal.dup_color ());
+                e.cal.notify["color"].connect (() => {
+                    Util.style_calendar_color (menuitem, e.cal.dup_color (), count);
                 });
-            });
         }
 
         event_grid.show_all ();

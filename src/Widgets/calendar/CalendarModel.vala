@@ -41,8 +41,9 @@ namespace DateTime.Widgets {
         public bool alarm = false;
         public GLib.DateTime start_time;
         public GLib.DateTime end_time;
+        public E.SourceCalendar cal;
 
-        public Event (GLib.DateTime date, Util.DateRange range, iCal.Component ical) {
+        public Event (GLib.DateTime date, Util.DateRange range, iCal.Component ical, E.Source src) {
             this.date = date;
             this.range = range;
 
@@ -55,6 +56,8 @@ namespace DateTime.Widgets {
                 day_event = true;
                 return;
             }
+
+            cal = (E.SourceCalendar)src.get_extension (E.SOURCE_EXTENSION_CALENDAR);
         }
 
         public string get_label () {
@@ -301,7 +304,7 @@ namespace DateTime.Widgets {
                             if (dt_range.contains (date)) {
                                 if (!events.has_key (ical.get_uid ())) {
                                     if (source.enabled == true) {
-                                        events.set (ical.get_uid (), new Event (date, dt_range, ical));
+                                        events.set (ical.get_uid (), new Event (date, dt_range, ical, source));
                                     }
                                 }
                             }
