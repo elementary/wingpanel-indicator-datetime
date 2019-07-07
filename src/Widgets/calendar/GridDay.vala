@@ -23,7 +23,6 @@
  * Represents a single day on the grid.
  */
 public class DateTime.Widgets.GridDay : Gtk.EventBox {
-    const int DAY_SIZE = 35;
     const string DAY_CSS = """
         .circular {
             border-radius: 50%;
@@ -49,9 +48,11 @@ public class DateTime.Widgets.GridDay : Gtk.EventBox {
         this.id = id;
 
         label = new Gtk.Label ("");
-        label.margin_top = 9;
-        label.margin_bottom = 9;
-        label.set_size_request (DAY_SIZE, DAY_SIZE/2);
+        label.width_chars = 2;
+        label.halign = Gtk.Align.CENTER;
+        label.valign = Gtk.Align.CENTER;
+        label.margin_top = Header.CELL_MARGIN + 4;
+        label.margin_bottom = Header.CELL_MARGIN + 4;
 
         var provider = new Gtk.CssProvider ();
         try {
@@ -70,8 +71,6 @@ public class DateTime.Widgets.GridDay : Gtk.EventBox {
         events |= Gdk.EventMask.SMOOTH_SCROLL_MASK;
 
         label.name = "date";
-
-        margin = 8;
 
         add (label);
         show_all ();

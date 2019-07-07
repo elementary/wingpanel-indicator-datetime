@@ -29,9 +29,26 @@ namespace DateTime.Widgets {
         }
 
         construct {
+            string style = """
+                .header-label {
+                    font-family: "Raleway", sans;
+                    font-weight: 300;
+                    font-size: 1.66em;
+                }
+            """;
+
+            var provider = new Gtk.CssProvider ();
+            try {
+                provider.load_from_data (style, style.length);
+                Gtk.StyleContext.add_provider_for_screen (Gdk.Screen.get_default (), provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
+            } catch (Error e) {
+                critical (e.message);
+            }
+
             var label = new Gtk.Label (new GLib.DateTime.now_local ().format (_("%OB, %Y")));
-            label.get_style_context ().add_class (Granite.STYLE_CLASS_H2_LABEL);
+            label.get_style_context ().add_class ("header-label");
             label.xalign = 0;
+            label.width_chars = 13;
 
             var left_button = new Gtk.Button.from_icon_name ("pan-start-symbolic");
             var center_button = new Gtk.Button.from_icon_name ("office-calendar-symbolic");
@@ -44,12 +61,15 @@ namespace DateTime.Widgets {
             box_label.add (label);
 
             var box_buttons = new Gtk.Grid ();
-            box_buttons.hexpand = true;
             box_buttons.halign = Gtk.Align.END;
             box_buttons.valign = Gtk.Align.CENTER;
             box_buttons.add (left_button);
             box_buttons.add (center_button);
             box_buttons.add (right_button);
+
+            // XXX: Remove when GTK 4 Constraints lands on elementary
+            var dummy_spacer = new Gtk.Grid ();
+            dummy_spacer.hexpand = true;
 
             CalendarModel.get_default ().parameters_changed.connect (() => {
                 var date = CalendarModel.get_default ().month_start;
@@ -58,11 +78,12 @@ namespace DateTime.Widgets {
 
             var grid = new Gtk.Grid ();
             grid.column_spacing = 6;
-            // same as GridDay horizontal margins
-            grid.margin_start = Header.CELL_MARGIN;
-            grid.margin_end = Header.CELL_MARGIN;
-            grid.attach (box_label, 0, 0);
-            grid.attach (box_buttons, 1, 0);
+            grid.margin_start = 9;
+            grid.margin_end = 9;
+            grid.margin_top = 6;
+            grid.attach (box_label, 0, 0, 1, 1);
+            grid.attach (dummy_spacer, 1, 0, 1, 1);
+            grid.attach (box_buttons, 2, 0, 1, 1);
 
             left_button.clicked.connect (() => {
                 left_clicked ();

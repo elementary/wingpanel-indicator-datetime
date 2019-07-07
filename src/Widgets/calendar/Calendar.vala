@@ -31,10 +31,8 @@ namespace DateTime.Widgets {
 
         public Calendar () {
             Object (orientation: Gtk.Orientation.VERTICAL, halign: Gtk.Align.CENTER, valign: Gtk.Align.CENTER, can_focus: false);
-            margin_top = 6;
-            margin_bottom = 6;
-            margin_start = 12;
-            margin_end = 12;
+            margin = 6;
+            expand = true;
             heading = new ControlHeader ();
             cal = new CalendarView ();
             cal.selection_changed.connect ((date) => {
