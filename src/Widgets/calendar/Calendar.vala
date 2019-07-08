@@ -23,7 +23,6 @@ namespace DateTime.Widgets {
         public signal void day_double_click (GLib.DateTime date);
 
         private CalendarView cal;
-        private ControlHeader heading;
 
         public GLib.DateTime? selected_date {
             get {
@@ -32,7 +31,7 @@ namespace DateTime.Widgets {
         }
 
         construct {
-            heading = new ControlHeader ();
+            var heading = new ControlHeader ();
             heading.margin = 6;
 
             cal = new CalendarView ();
