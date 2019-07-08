@@ -29,7 +29,6 @@ public class DateTime.Widgets.WeekLabels : Gtk.Revealer {
         vexpand = true;
 
         day_grid = new Gtk.Grid ();
-        day_grid.row_homogeneous = true;
         set_nr_of_weeks (5);
         day_grid.insert_row (1);
         day_grid.attach (new Gtk.Separator (Gtk.Orientation.VERTICAL), 1, 0, 1, 6);
@@ -56,6 +55,7 @@ public class DateTime.Widgets.WeekLabels : Gtk.Revealer {
             next = next.add_days(days_to_add);
             foreach (var label in labels) {
                 label.get_style_context ().add_class ("h4");
+                label.height_request = 30;
                 label.label = next.get_week_of_year ().to_string();
                 next = next.add_weeks (1);
             }
@@ -87,7 +87,9 @@ public class DateTime.Widgets.WeekLabels : Gtk.Revealer {
         labels = new Gtk.Label[nr_of_weeks];
         for (int c = 0; c < nr_of_weeks; c++) {
             labels[c] = new Gtk.Label ("");
+            labels[c].valign = Gtk.Align.START;
             labels[c].width_chars = 2;
+            labels[c].margin = 1;
             day_grid.attach (labels[c], 0, c, 1, 1);
             labels[c].show ();
         }

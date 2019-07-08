@@ -28,7 +28,6 @@ public class Header : Gtk.EventBox {
     private Gtk.Grid header_grid;
     private Gtk.Label[] labels;
 
-    public const int CELL_MARGIN = 6;
     public bool draw_left_border = true;
     public Header () {
         events |= Gdk.EventMask.BUTTON_PRESS_MASK;
@@ -36,17 +35,18 @@ public class Header : Gtk.EventBox {
         header_grid = new Gtk.Grid();
         header_grid.insert_column (7);
         header_grid.insert_row (1);
-        header_grid.set_row_homogeneous (true);
         header_grid.set_column_homogeneous (true);
+        header_grid.set_row_homogeneous (true);
+        header_grid.column_spacing = 0;
+        header_grid.row_spacing = 0;
+        header_grid.margin_bottom = 4;
 
         labels = new Gtk.Label[7];
         for (int c = 0; c < 7; c++) {
             labels[c] = new Gtk.Label ("");
-            labels[c].width_chars = 3;
-            labels[c].margin = CELL_MARGIN;
+            labels[c].hexpand = true;
             var label_grid = new Gtk.Grid ();
             label_grid.add (labels[c]);
-            label_grid.halign = Gtk.Align.CENTER;
             header_grid.attach (label_grid, c, 0, 1, 1);
         }
 

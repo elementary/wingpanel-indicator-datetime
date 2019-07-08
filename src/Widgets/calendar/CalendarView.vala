@@ -64,7 +64,6 @@ public class DateTime.Widgets.CalendarView : Gtk.Grid {
         events |= Gdk.EventMask.KEY_PRESS_MASK;
         events |= Gdk.EventMask.SCROLL_MASK;
         events |= Gdk.EventMask.SMOOTH_SCROLL_MASK;
-
         add (stack);
     }
 
@@ -73,7 +72,6 @@ public class DateTime.Widgets.CalendarView : Gtk.Grid {
         weeks.notify["child-revealed"].connect (() => {
             header.queue_draw ();
         });
-        weeks.margin_start = Header.CELL_MARGIN;
 
         header = new Header ();
         grid = new Grid ();
@@ -85,12 +83,11 @@ public class DateTime.Widgets.CalendarView : Gtk.Grid {
 
         // Grid properties
         var new_big_grid = new Gtk.Grid ();
-        new_big_grid.attach (header, 1, 0);
-        new_big_grid.attach (grid, 1, 1);
-        new_big_grid.attach (weeks, 0, 1);
+        new_big_grid.attach (header, 1, 0, 1, 1);
+        new_big_grid.attach (grid, 1, 1, 1, 1);
+        new_big_grid.attach (weeks, 0, 1, 1, 1);
         new_big_grid.show_all ();
         new_big_grid.expand = true;
-
         return new_big_grid;
     }
 
