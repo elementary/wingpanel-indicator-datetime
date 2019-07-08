@@ -15,7 +15,7 @@ wingpanel_dep = dependency('wingpanel-2.0')
 gnome = import('gnome')
 gresource = gnome.compile_resources(
     'gresource',
-    join_paths('data', 'io.elementary.desktop.wingpanel.datetime.gresource.xml'),
+    join_paths('data', 'datetime.gresource.xml'),
     source_dir: 'data'
 )
 
