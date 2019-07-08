@@ -93,7 +93,6 @@ public class DateTime.Indicator : Wingpanel.Indicator {
             box_label.add (header_label);
 
             var header_grid = new Gtk.Grid ();
-            header_grid.hexpand = true;
             header_grid.column_spacing = 6;
             header_grid.valign = Gtk.Align.CENTER;
             header_grid.margin_start = 6;
@@ -106,7 +105,8 @@ public class DateTime.Indicator : Wingpanel.Indicator {
 
             var sep = new Gtk.Separator (Gtk.Orientation.VERTICAL);
 
-            no_events_label = new Gtk.Label (_("No Events Scheduled"));
+            //TRANSLATORS: Don't remove the "\n\t" part.
+            no_events_label = new Gtk.Label (_("No Events Scheduled\n\tin This Day"));
             no_events_label.get_style_context ().add_class (Granite.STYLE_CLASS_H3_LABEL);
             no_events_label.expand = true;
             no_events_label.sensitive = false;

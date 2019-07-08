@@ -52,6 +52,8 @@ namespace DateTime.Widgets {
             column_spacing = 6;
             margin = 6;
             margin_bottom = 0;
+            margin_top = 0;
+            valign = Gtk.Align.CENTER;
             add (label);
             add (box_buttons);
 
