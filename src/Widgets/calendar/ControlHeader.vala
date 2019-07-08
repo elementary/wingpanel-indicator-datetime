@@ -33,6 +33,7 @@ namespace DateTime.Widgets {
 
             var label = new Gtk.Label (new GLib.DateTime.now_local ().format (_("%OB, %Y")));
             label.get_style_context ().add_class ("header-label");
+            label.hexpand = true;
             label.xalign = 0;
             label.width_chars = 13;
 
