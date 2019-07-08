@@ -29,17 +29,17 @@ namespace DateTime.Widgets {
         }
 
         construct {
-            var provider = new Gtk.CssProvider ();
-
             var label = new Gtk.Label (new GLib.DateTime.now_local ().format (_("%OB, %Y")));
-            label.get_style_context ().add_class ("header-label");
             label.hexpand = true;
             label.xalign = 0;
             label.width_chars = 13;
 
             try {
+                var provider = new Gtk.CssProvider ();
                 provider.load_from_resource ("/io/elementary/desktop/wingpanel/datetime/main.css");
-                label.get_style_context ().add_provider (provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
+                var label_style_context = label.get_style_context ();
+                label_style_context.add_class ("header-label");
+                label_style_context.add_provider (provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
             } catch (Error e) {
                 critical (e.message);
             }
