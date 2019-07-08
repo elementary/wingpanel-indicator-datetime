@@ -304,19 +304,23 @@ namespace DateTime.Widgets {
             var events = new Gee.TreeMap<string,Event> ();
             registry.list_sources (E.SOURCE_EXTENSION_CALENDAR).foreach ((source) => {
                 E.SourceCalendar cal = (E.SourceCalendar)source.get_extension (E.SOURCE_EXTENSION_CALENDAR);
-                foreach (var comp in source_events.get (source).values.read_only_view) {
-                    unowned iCal.Component ical = comp.get_icalcomponent ();
-                    foreach (var dt_range in Util.event_date_ranges (ical, data_range)) {
-                        if (dt_range.contains (date)) {
-                            if (!events.has_key (ical.get_uid ())) {
-                                if (cal.selected == true && source.enabled == true) {
-                                    events.set (ical.get_uid (), new Event (date, dt_range, ical, source));
+                var map = source_events.get (source);
+                if (map != null) {
+                    foreach (var comp in source_events.get (source).values.read_only_view) {
+                        unowned iCal.Component ical = comp.get_icalcomponent ();
+                        foreach (var dt_range in Util.event_date_ranges (ical, data_range)) {
+                            if (dt_range.contains (date)) {
+                                if (!events.has_key (ical.get_uid ())) {
+                                    if (cal.selected == true && source.enabled == true) {
+                                        events.set (ical.get_uid (), new Event (date, dt_range, ical, source));
+                                    }
                                 }
                             }
                         }
                     }
                 }
             });
+
             var list = new Gee.ArrayList<Event>.wrap (events.values.to_array ());
             list.sort (sort_events);
             return list;
