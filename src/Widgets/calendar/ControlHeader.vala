@@ -20,8 +20,6 @@
 
 namespace DateTime.Widgets {
     public class ControlHeader : Gtk.Box {
-        public signal void left_clicked ();
-        public signal void right_clicked ();
         public signal void center_clicked ();
         public ControlHeader () {
             Object (orientation : Gtk.Orientation.HORIZONTAL);
@@ -33,10 +31,10 @@ namespace DateTime.Widgets {
                 center_button.set_label (date.format (_("%OB %Y")));
             });
             left_button.clicked.connect (() => {
-                left_clicked ();
+                CalendarModel.get_default ().change_month (-1);
             });
             right_button.clicked.connect (() => {
-                right_clicked ();
+                CalendarModel.get_default ().change_month (1);
             });
             center_button.clicked.connect (() => {
                 center_clicked ();
