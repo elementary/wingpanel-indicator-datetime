@@ -34,30 +34,36 @@
  */
 namespace DateTime.Widgets {
     public class Event : GLib.Object {
-        public GLib.DateTime date;
-        Util.DateRange range;
-        public string summary;
+        public GLib.DateTime date {get; construct;}
+        public Util.DateRange range {get; construct;}
+        public E.Source source {get; construct;}
+
+        public string summary {get; construct;}
         public bool day_event = false;
         public bool alarm = false;
         public GLib.DateTime start_time;
         public GLib.DateTime end_time;
-        public E.SourceCalendar cal;
+        public unowned iCal.Component ical {get; construct;}
+        public E.SourceCalendar? cal {get; construct;}
 
-        public Event (GLib.DateTime date, Util.DateRange range, iCal.Component ical, E.Source src) {
-            this.date = date;
-            this.range = range;
-
-            summary = ical.get_summary ();
-
+        construct {
             Util.get_local_datetimes_from_icalcomponent (ical, out start_time, out end_time);
             if (end_time == null) {
                 alarm = true;
             } else if (Util.is_the_all_day (start_time, end_time)) {
                 day_event = true;
-                return;
             }
 
-            cal = (E.SourceCalendar)src.get_extension (E.SOURCE_EXTENSION_CALENDAR);
+            cal = (E.SourceCalendar?)source.get_extension (E.SOURCE_EXTENSION_CALENDAR);
+        }
+
+        public Event (GLib.DateTime date, Util.DateRange range, iCal.Component ical, E.Source source) {
+            Object (date: date,
+                    range: range,
+                    source: source,
+                    ical: ical,
+                    summary: ical.get_summary ()
+            );
         }
 
         public string get_label () {

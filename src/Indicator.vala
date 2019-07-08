@@ -24,7 +24,6 @@ public class DateTime.Indicator : Wingpanel.Indicator {
     private Gtk.ListBox event_grid;
     private Gtk.Label no_events_label;
     private uint update_events_idle_source = 0;
-    private int count = 0;
 
     public Indicator () {
         Object (
@@ -183,7 +182,6 @@ public class DateTime.Indicator : Wingpanel.Indicator {
         event_grid.margin = 6;
 
         foreach (var e in events) {
-            count += 1;
             var menuitem_icon = new Gtk.Image.from_icon_name (e.get_icon (), Gtk.IconSize.MENU);
             menuitem_icon.valign = Gtk.Align.CENTER;
 
@@ -200,8 +198,9 @@ public class DateTime.Indicator : Wingpanel.Indicator {
             menuitem_box.add (menuitem_icon);
             menuitem_box.add (menuitem_label);
 
-            var menuitem = new Gtk.ListBoxRow ();
+            var menuitem = new Gtk.Button ();
             menuitem.margin = 6;
+            menuitem.margin_start = 2;
             menuitem.add (menuitem_box);
 
             var style_context = menuitem.get_style_context ();
@@ -211,13 +210,20 @@ public class DateTime.Indicator : Wingpanel.Indicator {
 
             event_grid.add (menuitem);
 
-            /* Color events per calendar */
+            /* Color menuitem per calendar source of event */
+            /* PROBLEM - all events in model are associated with the same calendar at the moment,
+             * therefore same color. Need to investigate why model is incorrect */
             var css_class = Util.get_style_calendar_color (e.cal);
             menuitem.get_style_context ().add_class (css_class);
             menuitem_icon.get_style_context ().add_class (css_class);
 
             e.cal.notify["color"].connect (() => {
                 Util.get_style_calendar_color (e.cal); /* Redefines same class */
+            });
+
+            menuitem.clicked.connect (() => {
+                calendar.show_date_in_maya (e.date);
+                this.close ();
             });
         }
 

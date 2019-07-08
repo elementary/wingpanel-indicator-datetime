@@ -170,13 +170,16 @@ namespace Util {
                             background-color: alpha(%s, 0.15);
                             color: shade(%s, 0.65);
                             border-radius: 4px;
+                            box-shadow: 0 1px 2px alpha (#000, 0.2),
+                                        0 1px 3px alpha (%s, 0.15);
                         }
                         .%s image {
                             color: shade(%s, 0.65);
                         }
-                       """.printf(css_class, color, color, css_class, color);
+                       """.printf(css_class, color, color, color, css_class, color);
 
         var style_provider = new Gtk.CssProvider ();
+
         try {
             style_provider.load_from_data (style, style.length);
             Gtk.StyleContext.add_provider_for_screen (Gdk.Screen.get_default (), style_provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
