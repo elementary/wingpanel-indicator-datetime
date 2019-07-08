@@ -42,7 +42,6 @@ namespace DateTime.Widgets {
         public GLib.DateTime start_time;
         public GLib.DateTime end_time;
         public GLib.List<E.Source> sources;
-        public GLib.List<string> colors;
 
         public Event (GLib.DateTime date, Util.DateRange range, iCal.Component ical, E.Source source) {
             this.date = date;
@@ -62,14 +61,10 @@ namespace DateTime.Widgets {
             var calmodel = CalendarModel.get_default ();
             var registry = calmodel.registry;
             foreach (var src in registry.list_sources (E.SOURCE_EXTENSION_CALENDAR)) {
-                if (src.writable == true && src.enabled == true && calmodel.calclient_is_readonly (src) == false) {
+                E.SourceCalendar cal = (E.SourceCalendar)src.get_extension (E.SOURCE_EXTENSION_CALENDAR);
+                if (cal.selected == true && src.enabled == true) {
                     sources.append (src);
                 }
-            }
-
-            foreach (var src in sources) {
-                E.SourceCalendar cal = (E.SourceCalendar)src.get_extension (E.SOURCE_EXTENSION_CALENDAR);
-                colors.append (cal.dup_color ());
             }
         }
 

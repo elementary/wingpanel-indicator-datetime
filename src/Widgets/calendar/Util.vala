@@ -160,25 +160,25 @@ namespace Util {
         return datetime.add_full (0, 0, 0, -datetime.get_hour (), -datetime.get_minute (), -datetime.get_second ());
     }
 
-    public void style_calendar_color (Gtk.Widget widget, Gtk.Widget widget2, string color, int count) {
+    public void style_calendar_color (Gtk.Widget widget, Gtk.Widget widget2, string color) {
         string style = """
-                        .event-color-%i {
+                        .event-color {
                             background-color: alpha(%s, 0.15);
                             color: shade(%s, 0.65);
                             border-radius: 4px;
                             box-shadow: 0 1px 2px alpha (#000, 0.2),
                                         0 1px 3px alpha (%s, 0.15);
                         }
-                        .event-color-%i image {
+                        .event-color image {
                             color: shade(%s, 0.65);
                         }
-                       """.printf(count, color, color, color, count, color);
+                       """.printf(color, color, color, color);
 
         var style_context = widget.get_style_context ();
         var style_context2 = widget2.get_style_context ();
         var style_provider = new Gtk.CssProvider ();
 
-        style_context.add_class ("event-color-%i".printf(count));
+        style_context.add_class ("event-color");
 
         try {
             style_provider.load_from_data (style, style.length);

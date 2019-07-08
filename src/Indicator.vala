@@ -24,7 +24,6 @@ public class DateTime.Indicator : Wingpanel.Indicator {
     private Gtk.ListBox event_grid;
     private Gtk.Label no_events_label;
     private uint update_events_idle_source = 0;
-    private int count = 0;
 
     public Indicator () {
         Object (
@@ -183,7 +182,6 @@ public class DateTime.Indicator : Wingpanel.Indicator {
         event_grid.margin = 6;
 
         foreach (var e in events) {
-            count += 1;
             var menuitem_icon = new Gtk.Image.from_icon_name (e.get_icon (), Gtk.IconSize.MENU);
             menuitem_icon.valign = Gtk.Align.CENTER;
 
@@ -212,9 +210,17 @@ public class DateTime.Indicator : Wingpanel.Indicator {
 
             event_grid.add (menuitem);
 
-            /* Color events per calendar */
-            foreach (string color in e.colors) {
-                Util.style_calendar_color (menuitem, menuitem_icon, color, count);
+            /* Color events per calendar
+             * XXX: Day counter of trying this without help: 5 (Remove this when successful)
+             */
+            foreach (E.Source source in e.sources) {
+                var cal = (E.SourceCalendar)source.get_extension (E.SOURCE_EXTENSION_CALENDAR);
+
+                Util.style_calendar_color (menuitem, menuitem_icon, cal.dup_color ());
+
+                cal.notify["color"].connect (() => {
+                    Util.style_calendar_color (menuitem, menuitem_icon, cal.dup_color ());
+                });
             }
 
             menuitem.clicked.connect (() => {
