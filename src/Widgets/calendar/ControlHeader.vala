@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011-2016 elementary LLC. (https://elementary.io)
+ * Copyright (c) 2011-2019 elementary, Inc. (https://elementary.io)
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public
@@ -19,35 +19,55 @@
 
 
 namespace DateTime.Widgets {
-    public class ControlHeader : Gtk.Box {
+    public class ControlHeader : Gtk.Grid {
         public signal void center_clicked ();
-        public ControlHeader () {
-            Object (orientation : Gtk.Orientation.HORIZONTAL);
+
+        construct {
+            var label = new Gtk.Label (new GLib.DateTime.now_local ().format (_("%OB, %Y")));
+            label.hexpand = true;
+            label.xalign = 0;
+            label.width_chars = 13;
+
+            var provider = new Gtk.CssProvider ();
+            provider.load_from_resource ("/io/elementary/desktop/wingpanel/datetime/main.css");
+            var label_style_context = label.get_style_context ();
+            label_style_context.add_class ("header-label");
+            label_style_context.add_provider (provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
+
             var left_button = new Gtk.Button.from_icon_name ("pan-start-symbolic");
+            var center_button = new Gtk.Button.from_icon_name ("office-calendar-symbolic");
+            center_button.tooltip_text = _("Go to today's date");
             var right_button = new Gtk.Button.from_icon_name ("pan-end-symbolic");
-            var center_button = new Gtk.Button.with_label (new GLib.DateTime.now_local ().format (_("%OB %Y")));
+
+            var box_buttons = new Gtk.Grid ();
+            box_buttons.valign = Gtk.Align.CENTER;
+            box_buttons.get_style_context ().add_class (Gtk.STYLE_CLASS_LINKED);
+            box_buttons.add (left_button);
+            box_buttons.add (center_button);
+            box_buttons.add (right_button);
+
+            column_spacing = 6;
+            margin = 6;
+            margin_bottom = 0;
+            add (label);
+            add (box_buttons);
+
             CalendarModel.get_default ().parameters_changed.connect (() => {
                 var date = CalendarModel.get_default ().month_start;
-                center_button.set_label (date.format (_("%OB %Y")));
+                label.set_label (date.format (_("%OB, %Y")));
             });
+
             left_button.clicked.connect (() => {
                 CalendarModel.get_default ().change_month (-1);
             });
+
             right_button.clicked.connect (() => {
                 CalendarModel.get_default ().change_month (1);
             });
+
             center_button.clicked.connect (() => {
                 center_clicked ();
             });
-            left_button.can_focus = false;
-            right_button.can_focus = false;
-            center_button.can_focus = false;
-            add (left_button);
-            pack_end (right_button, false, false, 0);
-            pack_end (center_button, true, true, 0);
-            margin_bottom = 4;
-            get_style_context ().add_class ("linked");
-            set_size_request (-1, 30);
         }
     }
 }
