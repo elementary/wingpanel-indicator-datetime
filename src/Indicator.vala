@@ -210,18 +210,13 @@ public class DateTime.Indicator : Wingpanel.Indicator {
 
             event_grid.add (menuitem);
 
-            /* Color events per calendar
-             * XXX: Day counter of trying this without help: 5 (Remove this when successful)
-             */
-            foreach (E.Source source in e.sources) {
-                var cal = (E.SourceCalendar)source.get_extension (E.SOURCE_EXTENSION_CALENDAR);
+            /* Color menuitem per calendar source of event */
+            var css_class = Util.get_style_calendar_color (e.cal);
+            menuitem.get_style_context ().add_class (css_class);
 
-                Util.style_calendar_color (menuitem, menuitem_icon, cal.dup_color ());
-
-                cal.notify["color"].connect (() => {
-                    Util.style_calendar_color (menuitem, menuitem_icon, cal.dup_color ());
-                });
-            }
+            e.cal.notify["color"].connect (() => {
+                Util.get_style_calendar_color (e.cal); /* Redefines same class */
+            });
 
             menuitem.clicked.connect (() => {
                 calendar.show_date_in_maya (e.date);

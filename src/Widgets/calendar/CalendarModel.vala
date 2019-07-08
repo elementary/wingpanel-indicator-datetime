@@ -34,38 +34,36 @@
  */
 namespace DateTime.Widgets {
     public class Event : GLib.Object {
-        public GLib.DateTime date;
-        Util.DateRange range;
-        public string summary;
+        public GLib.DateTime date {get; construct;}
+        public Util.DateRange range {get; construct;}
+        public E.Source source {get; construct;}
+
+        public string summary {get; construct;}
         public bool day_event = false;
         public bool alarm = false;
         public GLib.DateTime start_time;
         public GLib.DateTime end_time;
-        public GLib.List<E.Source> sources;
+        public unowned iCal.Component ical {get; construct;}
+        public E.SourceCalendar? cal {get; construct;}
 
-        public Event (GLib.DateTime date, Util.DateRange range, iCal.Component ical, E.Source source) {
-            this.date = date;
-            this.range = range;
-
-            summary = ical.get_summary ();
-
+        construct {
             Util.get_local_datetimes_from_icalcomponent (ical, out start_time, out end_time);
             if (end_time == null) {
                 alarm = true;
             } else if (Util.is_the_all_day (start_time, end_time)) {
                 day_event = true;
-                return;
             }
 
-            sources = new GLib.List<E.Source> ();
-            var calmodel = CalendarModel.get_default ();
-            var registry = calmodel.registry;
-            foreach (var src in registry.list_sources (E.SOURCE_EXTENSION_CALENDAR)) {
-                E.SourceCalendar cal = (E.SourceCalendar)src.get_extension (E.SOURCE_EXTENSION_CALENDAR);
-                if (cal.selected == true && src.enabled == true) {
-                    sources.append (src);
-                }
-            }
+            cal = (E.SourceCalendar?)source.get_extension (E.SOURCE_EXTENSION_CALENDAR);
+        }
+
+        public Event (GLib.DateTime date, Util.DateRange range, iCal.Component ical, E.Source source) {
+            Object (date: date,
+                    range: range,
+                    source: source,
+                    ical: ical,
+                    summary: ical.get_summary ()
+            );
         }
 
         public string get_label () {
@@ -306,15 +304,13 @@ namespace DateTime.Widgets {
             var events = new Gee.TreeMap<string,Event> ();
             registry.list_sources (E.SOURCE_EXTENSION_CALENDAR).foreach ((source) => {
                 E.SourceCalendar cal = (E.SourceCalendar)source.get_extension (E.SOURCE_EXTENSION_CALENDAR);
-                foreach (var entry in source_events.get_values ()) {
-                    foreach (var comp in entry.values) {
-                        unowned iCal.Component ical = comp.get_icalcomponent ();
-                        foreach (var dt_range in Util.event_date_ranges (ical, data_range)) {
-                            if (dt_range.contains (date)) {
-                                if (!events.has_key (ical.get_uid ())) {
-                                    if (cal.selected == true && source.enabled == true) {
-                                        events.set (ical.get_uid (), new Event (date, dt_range, ical, source));
-                                    }
+                foreach (var comp in source_events.get (source).values.read_only_view) {
+                    unowned iCal.Component ical = comp.get_icalcomponent ();
+                    foreach (var dt_range in Util.event_date_ranges (ical, data_range)) {
+                        if (dt_range.contains (date)) {
+                            if (!events.has_key (ical.get_uid ())) {
+                                if (cal.selected == true && source.enabled == true) {
+                                    events.set (ical.get_uid (), new Event (date, dt_range, ical, source));
                                 }
                             }
                         }
