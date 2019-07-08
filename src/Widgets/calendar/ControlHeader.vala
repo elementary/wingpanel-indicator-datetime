@@ -24,10 +24,6 @@ namespace DateTime.Widgets {
         public signal void right_clicked ();
         public signal void center_clicked ();
 
-        public ControlHeader () {
-            Object (orientation : Gtk.Orientation.HORIZONTAL);
-        }
-
         construct {
             var label = new Gtk.Label (new GLib.DateTime.now_local ().format (_("%OB, %Y")));
             label.hexpand = true;
