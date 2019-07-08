@@ -34,15 +34,11 @@ namespace DateTime.Widgets {
             label.xalign = 0;
             label.width_chars = 13;
 
-            try {
-                var provider = new Gtk.CssProvider ();
-                provider.load_from_resource ("/io/elementary/desktop/wingpanel/datetime/main.css");
-                var label_style_context = label.get_style_context ();
-                label_style_context.add_class ("header-label");
-                label_style_context.add_provider (provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
-            } catch (Error e) {
-                critical (e.message);
-            }
+            var provider = new Gtk.CssProvider ();
+            provider.load_from_resource ("/io/elementary/desktop/wingpanel/datetime/main.css");
+            var label_style_context = label.get_style_context ();
+            label_style_context.add_class ("header-label");
+            label_style_context.add_provider (provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
 
             var left_button = new Gtk.Button.from_icon_name ("pan-start-symbolic");
             var center_button = new Gtk.Button.from_icon_name ("office-calendar-symbolic");
