@@ -20,14 +20,17 @@
 namespace DateTime.Widgets {
     public class Calendar : Gtk.Box {
         public ControlHeader heading;
-        CalendarView cal;
+        public CalendarView cal;
         public signal void selection_changed (GLib.DateTime? new_date);
         public signal void day_double_click (GLib.DateTime date);
 
-        public GLib.DateTime? selected_date { get {
+        public GLib.DateTime? selected_date {
+            get {
                 return cal.selected_date;
-            } set {
-            }}
+            }
+            set {
+            }
+        }
 
         public Calendar () {
             Object (orientation: Gtk.Orientation.VERTICAL, halign: Gtk.Align.CENTER, valign: Gtk.Align.CENTER, can_focus: false);

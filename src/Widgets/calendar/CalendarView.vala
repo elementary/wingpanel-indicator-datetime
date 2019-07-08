@@ -34,7 +34,7 @@ public class DateTime.Widgets.CalendarView : Gtk.Grid {
 
     private WeekLabels weeks { get; private set; }
     private Header header { get; private set; }
-    private Grid grid { get; private set; }
+    public Grid grid { get; private set; }
     private Gtk.Stack stack { get; private set; }
     private Gtk.Grid big_grid { get; private set; }
 

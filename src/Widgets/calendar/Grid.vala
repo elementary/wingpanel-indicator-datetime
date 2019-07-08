@@ -25,7 +25,7 @@ namespace DateTime.Widgets {
  * Represents the entire date grid as a table.
  */
     public class Grid : Gtk.Grid {
-        Gee.HashMap<uint, GridDay> data;
+        public Gee.HashMap<uint, GridDay> data;
 
         public Util.DateRange grid_range { get; private set; }
 
@@ -200,7 +200,7 @@ namespace DateTime.Widgets {
             }
         }
 
-        uint day_hash (GLib.DateTime date) {
+        public uint day_hash (GLib.DateTime date) {
             return date.get_year () * 10000 + date.get_month () * 100 + date.get_day_of_month ();
         }
 

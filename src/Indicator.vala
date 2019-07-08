@@ -222,6 +222,11 @@ public class DateTime.Indicator : Wingpanel.Indicator {
                 calendar.show_date_in_maya (e.date);
                 this.close ();
             });
+
+            Widgets.GridDay? day = calendar.cal.grid.data[calendar.cal.grid.day_hash (e.date)];
+            if (events.size != 0) {
+                day.get_style_context ().add_class ("event-accent");
+            }
         }
 
         event_grid.show_all ();
