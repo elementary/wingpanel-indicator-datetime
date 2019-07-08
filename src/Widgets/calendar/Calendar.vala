@@ -45,20 +45,16 @@ namespace DateTime.Widgets {
             cal.selection_changed.connect ((date) => {
                 selection_changed (date);
             });
-
             cal.on_event_add.connect ((date) => {
                 show_date_in_maya (date);
                 day_double_click (date);
             });
-
             heading.left_clicked.connect (() => {
                 CalendarModel.get_default ().change_month (-1);
             });
-
             heading.right_clicked.connect (() => {
                 CalendarModel.get_default ().change_month (1);
             });
-
             heading.center_clicked.connect (() => {
                 cal.today ();
             });
