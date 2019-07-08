@@ -213,7 +213,6 @@ public class DateTime.Indicator : Wingpanel.Indicator {
             /* Color menuitem per calendar source of event */
             var css_class = Util.get_style_calendar_color (e.cal);
             menuitem.get_style_context ().add_class (css_class);
-            menuitem_icon.get_style_context ().add_class (css_class);
 
             e.cal.notify["color"].connect (() => {
                 Util.get_style_calendar_color (e.cal); /* Redefines same class */
