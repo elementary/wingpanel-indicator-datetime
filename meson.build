@@ -12,8 +12,16 @@ add_project_arguments(['--vapidir', join_paths(meson.current_source_dir(), 'vapi
 
 wingpanel_dep = dependency('wingpanel-2.0')
 
+gnome = import('gnome')
+gresource = gnome.compile_resources(
+    'gresource',
+    'data/io.elementary.desktop.wingpanel.datetime.gresource.xml',
+    source_dir: 'data'
+)
+
 shared_module(
     meson.project_name(),
+    gresource,
     'src/DateIterator.vala',
     'src/DateRange.vala',
     'src/Indicator.vala',

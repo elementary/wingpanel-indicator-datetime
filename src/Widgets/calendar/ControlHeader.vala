@@ -29,27 +29,19 @@ namespace DateTime.Widgets {
         }
 
         construct {
-            string style = """
-                .header-label {
-                    font-family: "Raleway", sans;
-                    font-weight: 300;
-                    font-size: 1.66em;
-                }
-            """;
-
             var provider = new Gtk.CssProvider ();
+
+            var label = new Gtk.Label (new GLib.DateTime.now_local ().format (_("%OB, %Y")));
+            label.get_style_context ().add_class ("header-label");
+            label.xalign = 0;
+            label.width_chars = 13;
+
             try {
-                provider.load_from_data (style, style.length);
-                Gtk.StyleContext.add_provider_for_screen (Gdk.Screen.get_default (), provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
+                provider.load_from_resource ("/io/elementary/desktop/wingpanel/datetime/main.css");
+                label.get_style_context ().add_provider (provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
             } catch (Error e) {
                 critical (e.message);
             }
-
-            var label = new Gtk.Label (new GLib.DateTime.now_local ().format (_("%OB, %Y")));
-            label.hexpand = true;
-            label.width_chars = 13;
-            label.xalign = 0;
-            label.get_style_context ().add_class ("header-label");
 
             var left_button = new Gtk.Button.from_icon_name ("pan-start-symbolic");
             var center_button = new Gtk.Button.from_icon_name ("office-calendar-symbolic");
