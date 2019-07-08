@@ -211,8 +211,6 @@ public class DateTime.Indicator : Wingpanel.Indicator {
             event_grid.add (menuitem);
 
             /* Color menuitem per calendar source of event */
-            /* PROBLEM - all events in model are associated with the same calendar at the moment,
-             * therefore same color. Need to investigate why model is incorrect */
             var css_class = Util.get_style_calendar_color (e.cal);
             menuitem.get_style_context ().add_class (css_class);
             menuitem_icon.get_style_context ().add_class (css_class);
