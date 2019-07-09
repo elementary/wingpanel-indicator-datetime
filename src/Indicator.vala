@@ -21,7 +21,7 @@ public class DateTime.Indicator : Wingpanel.Indicator {
     private Widgets.PanelLabel panel_label;
     private Gtk.Grid main_grid;
     private Widgets.Calendar calendar;
-    private Gtk.ListBox event_grid;
+    private Gtk.Grid event_grid;
     private Gtk.Label no_events_label;
     private uint update_events_idle_source = 0;
 
@@ -49,27 +49,15 @@ public class DateTime.Indicator : Wingpanel.Indicator {
         if (main_grid == null) {
             calendar = new Widgets.Calendar ();
 
+            var provider = new Gtk.CssProvider ();
+            provider.load_from_resource ("/io/elementary/desktop/wingpanel/datetime/main.css");
+
             var settings_button = new Gtk.ModelButton ();
             settings_button.text = _("Date & Time Settings…");
 
-            string style = """
-                .header-label {
-                    font-family: "Raleway", sans;
-                    font-weight: 300;
-                    font-size: 1.66em;
-                }
-            """;
-
-            var provider = new Gtk.CssProvider ();
-            try {
-                provider.load_from_data (style, style.length);
-                Gtk.StyleContext.add_provider_for_screen (Gdk.Screen.get_default (), provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
-            } catch (Error e) {
-                critical (e.message);
-            }
-
             var header_label = new Gtk.Label (_("Events"));
             header_label.get_style_context ().add_class ("header-label");
+            header_label.get_style_context ().add_provider (provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
             header_label.halign = Gtk.Align.START;
             header_label.width_chars = 13;
             header_label.xalign = 0;
@@ -83,30 +71,17 @@ public class DateTime.Indicator : Wingpanel.Indicator {
             cal_button.get_style_context ().remove_class ("text-button");
             cal_button.set_tooltip_text (_("Open Calendar"));
 
-            // XXX: Remove when GTK 4 Constraints lands on elementary
-            var dummy_spacer = new Gtk.Grid ();
-            dummy_spacer.hexpand = true;
-
-            var box_label = new Gtk.Grid ();
-            box_label.halign = Gtk.Align.START;
-            box_label.valign = Gtk.Align.CENTER;
-            box_label.add (header_label);
-
             var header_grid = new Gtk.Grid ();
             header_grid.column_spacing = 6;
             header_grid.valign = Gtk.Align.CENTER;
-            header_grid.margin_start = 6;
-            header_grid.margin_end = 3;
-            header_grid.margin_top = 6;
-            header_grid.margin_bottom = 6;
-            header_grid.attach (box_label, 0, 0);
-            header_grid.attach (dummy_spacer, 1, 0);
-            header_grid.attach (cal_button, 2, 0);
+            header_grid.margin = 6;
+            header_grid.attach (header_label, 0, 0);
+            header_grid.attach (cal_button, 1, 0);
 
             var sep = new Gtk.Separator (Gtk.Orientation.VERTICAL);
 
             //TRANSLATORS: Don't remove the "\n\t" part.
-            no_events_label = new Gtk.Label (_("No Events Scheduled\n\tin This Day"));
+            no_events_label = new Gtk.Label (_("No Events Scheduled\n\tIn This Day"));
             no_events_label.get_style_context ().add_class (Granite.STYLE_CLASS_H3_LABEL);
             no_events_label.expand = true;
             no_events_label.sensitive = false;
@@ -178,9 +153,7 @@ public class DateTime.Indicator : Wingpanel.Indicator {
             return GLib.Source.REMOVE;
         }
 
-        event_grid = new Gtk.ListBox ();
-        event_grid.margin = 6;
-
+        event_grid = new Gtk.Grid ();
         foreach (var e in events) {
             var menuitem_icon = new Gtk.Image.from_icon_name (e.get_icon (), Gtk.IconSize.MENU);
             menuitem_icon.valign = Gtk.Align.CENTER;
@@ -199,8 +172,8 @@ public class DateTime.Indicator : Wingpanel.Indicator {
             menuitem_box.add (menuitem_label);
 
             var menuitem = new Gtk.Button ();
-            menuitem.margin = 6;
-            menuitem.margin_start = 2;
+            menuitem.margin_top = 6;
+            menuitem.margin = 9;
             menuitem.add (menuitem_box);
 
             var style_context = menuitem.get_style_context ();
@@ -222,11 +195,6 @@ public class DateTime.Indicator : Wingpanel.Indicator {
                 calendar.show_date_in_maya (e.date);
                 this.close ();
             });
-
-            Widgets.GridDay? day = calendar.cal.grid.data[calendar.cal.grid.day_hash (e.date)];
-            if (events.size != 0) {
-                day.get_style_context ().add_class ("event-accent");
-            }
         }
 
         event_grid.show_all ();

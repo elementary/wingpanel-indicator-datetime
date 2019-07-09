@@ -50,7 +50,7 @@ public class DateTime.Widgets.GridDay : Gtk.EventBox {
         this.id = id;
 
         label = new Gtk.Label ("");
-        set_size_request (35, 32);
+        set_size_request (32, 32);
         halign = Gtk.Align.CENTER;
 
         var provider = new Gtk.CssProvider ();
@@ -83,6 +83,22 @@ public class DateTime.Widgets.GridDay : Gtk.EventBox {
     public void update_date (GLib.DateTime date) {
         this.date = date;
         label.label = date.get_day_of_month ().to_string ();
+
+        Widgets.CalendarModel.get_default ().events_added.connect (update_event_days);
+        Widgets.CalendarModel.get_default ().events_updated.connect (update_event_days);
+        Widgets.CalendarModel.get_default ().events_removed.connect (update_event_days);
+    }
+
+    public void update_event_days () {
+        GLib.Idle.add (() => {
+            var events = Widgets.CalendarModel.get_default ().get_events (date);
+            if (events.size == 0) {
+                get_style_context ().remove_class ("event-accent");
+            } else {
+                get_style_context ().add_class ("event-accent");
+            }
+            return false;
+        });
     }
 
     public void set_selected (bool selected) {
