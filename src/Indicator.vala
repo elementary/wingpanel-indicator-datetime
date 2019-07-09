@@ -21,7 +21,7 @@ public class DateTime.Indicator : Wingpanel.Indicator {
     private Widgets.PanelLabel panel_label;
     private Gtk.Grid main_grid;
     private Widgets.Calendar calendar;
-    private Gtk.Grid event_grid;
+    private Gtk.ListBox event_grid;
     private Gtk.Label no_events_label;
     private uint update_events_idle_source = 0;
 
@@ -153,7 +153,7 @@ public class DateTime.Indicator : Wingpanel.Indicator {
             return GLib.Source.REMOVE;
         }
 
-        event_grid = new Gtk.Grid ();
+        event_grid = new Gtk.ListBox ();
         foreach (var e in events) {
             var menuitem_icon = new Gtk.Image.from_icon_name (e.get_icon (), Gtk.IconSize.MENU);
             menuitem_icon.valign = Gtk.Align.CENTER;
