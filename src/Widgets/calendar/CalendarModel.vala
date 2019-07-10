@@ -33,48 +33,6 @@
  * 
  */
 namespace DateTime.Widgets {
-    public class Event : GLib.Object {
-        public GLib.DateTime date;
-        Util.DateRange range;
-        public string summary;
-        public bool day_event = false;
-        public bool alarm = false;
-        public GLib.DateTime start_time;
-        public GLib.DateTime end_time;
-
-        public Event (GLib.DateTime date, Util.DateRange range, iCal.Component comp) {
-            this.date = date;
-            this.range = range;
-            this.summary = comp.get_summary ();
-
-            Util.get_local_datetimes_from_icalcomponent (comp, out start_time, out end_time);
-            if (end_time == null) {
-                alarm = true;
-            } else if (Util.is_the_all_day (start_time, end_time)) {
-                day_event = true;
-                return;
-            }
-        }
-
-        public string get_label () {
-            if (day_event) {
-                return summary;
-            } else if (alarm) {
-                return "%s - %s".printf (start_time.format (Util.TimeFormat ()), summary);
-            } else if (range.days > 0 && date.compare (range.first_dt) != 0) {
-                return summary;
-            }
-            return "%s - %s".printf (summary, start_time.format (Util.TimeFormat ()));
-        }
-
-        public string get_icon () {
-            if (alarm) {
-                return "alarm-symbolic";
-            }
-            return "office-calendar-symbolic";
-        }
-    }
-
     public class CalendarModel : Object {
         /* The data_range is the range of dates for which this model is storing
          * data. The month_range is a subset of this range corresponding to the
