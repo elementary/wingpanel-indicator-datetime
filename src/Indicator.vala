@@ -21,7 +21,7 @@ public class DateTime.Indicator : Wingpanel.Indicator {
     private Widgets.PanelLabel panel_label;
     private Gtk.Grid main_grid;
     private Widgets.Calendar calendar;
-    private Gtk.Grid event_grid;
+    private Gtk.ListBox event_grid;
     private Gtk.Label no_events_label;
     private uint update_events_idle_source = 0;
 
@@ -80,12 +80,15 @@ public class DateTime.Indicator : Wingpanel.Indicator {
 
             var sep = new Gtk.Separator (Gtk.Orientation.VERTICAL);
 
-            //TRANSLATORS: Don't remove the "\n\t" part.
-            no_events_label = new Gtk.Label (_("No Events Scheduled\n\tIn This Day"));
+            no_events_label = new Gtk.Label (_("No Events Scheduled In This Day"));
             no_events_label.get_style_context ().add_class (Granite.STYLE_CLASS_H3_LABEL);
-            no_events_label.expand = true;
             no_events_label.sensitive = false;
             no_events_label.width_chars = 20;
+            no_events_label.max_width_chars = 20;
+            no_events_label.set_line_wrap (true);
+            no_events_label.set_line_wrap_mode (Pango.WrapMode.WORD_CHAR);
+            no_events_label.set_justify (Gtk.Justification.CENTER);
+            no_events_label.halign = Gtk.Align.CENTER;
 
             main_grid = new Gtk.Grid ();
             main_grid.attach (calendar.heading, 0, 0);
