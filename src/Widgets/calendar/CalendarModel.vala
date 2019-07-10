@@ -34,19 +34,24 @@
  */
 namespace DateTime.Widgets {
     public class Event : GLib.Object {
-        public GLib.DateTime date {get; construct;}
-        public Util.DateRange range {get; construct;}
-        public E.Source source {get; construct;}
+        public GLib.DateTime date;
+        public Util.DateRange range;
+        public E.Source source;
 
-        public string summary {get; construct;}
+        public string summary;
         public bool day_event = false;
         public bool alarm = false;
         public GLib.DateTime start_time;
         public GLib.DateTime end_time;
-        public unowned iCal.Component ical {get; construct;}
-        public E.SourceCalendar? cal {get; construct;}
+        public unowned iCal.Component ical;
+        public E.SourceCalendar? cal;
 
-        construct {
+        public Event (GLib.DateTime date, Util.DateRange range, iCal.Component ical, E.Source source) {
+            this.date = date;
+            this.range = range;
+            this.source = source;
+            this.summary = ical.get_summary ();
+
             Util.get_local_datetimes_from_icalcomponent (ical, out start_time, out end_time);
             if (end_time == null) {
                 alarm = true;
@@ -54,16 +59,7 @@ namespace DateTime.Widgets {
                 day_event = true;
             }
 
-            cal = (E.SourceCalendar?)source.get_extension (E.SOURCE_EXTENSION_CALENDAR);
-        }
-
-        public Event (GLib.DateTime date, Util.DateRange range, iCal.Component ical, E.Source source) {
-            Object (date: date,
-                    range: range,
-                    source: source,
-                    ical: ical,
-                    summary: ical.get_summary ()
-            );
+            this.cal = (E.SourceCalendar?)source.get_extension (E.SOURCE_EXTENSION_CALENDAR);
         }
 
         public string get_label () {
@@ -347,10 +343,11 @@ namespace DateTime.Widgets {
             int wso = (int) week_starts_on;
             int offset = 0;
 
-            if (wso < dow)
+            if (wso < dow) {
                 offset = dow - wso;
-            else if (wso > dow)
+            } else if (wso > dow) {
                 offset = 7 + dow - wso;
+            }
 
             var data_range_first = month_start.add_days (-offset);
 
@@ -358,15 +355,17 @@ namespace DateTime.Widgets {
             wso = (int) (week_starts_on + 6);
 
             // WSO must be between 1 and 7
-            if (wso > 7)
+            if (wso > 7) {
                 wso = wso - 7;
+            }
 
             offset = 0;
 
-            if (wso < dow)
+            if (wso < dow) {
                 offset = 7 + wso - dow;
-            else if (wso > dow)
+            } else if (wso > dow) {
                 offset = wso - dow;
+            }
 
             var data_range_last = month_end.add_days(offset);
 
