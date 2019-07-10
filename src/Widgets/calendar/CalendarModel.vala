@@ -33,6 +33,16 @@
  *
  */
 namespace DateTime.Widgets {
+    public enum Weekday {
+        SUNDAY = 0,
+        MONDAY,
+        TUESDAY,
+        WEDNESDAY,
+        THURSDAY,
+        FRIDAY,
+        SATURDAY
+    }
+
     public class Event : GLib.Object {
         public GLib.DateTime date;
         public Util.DateRange range;
@@ -103,7 +113,7 @@ namespace DateTime.Widgets {
         public int num_weeks { get; private set; default = 6; }
 
         /* The start of week, ie. Monday=1 or Sunday=7 */
-        public Util.Weekday week_starts_on { get; set; default = Util.Weekday.MONDAY; }
+        public Weekday week_starts_on { get; set; default = Weekday.MONDAY; }
 
         /* The event that is currently dragged */
         public E.CalComponent drag_component {get; set;}
@@ -137,7 +147,7 @@ namespace DateTime.Widgets {
         private CalendarModel () {
             int week_start = Posix.NLTime.FIRST_WEEKDAY.to_string ().data[0];
             if (week_start >= 1 && week_start <= 7) {
-                week_starts_on = (Util.Weekday)week_start-1;
+                week_starts_on = (Weekday)week_start-1;
             }
 
             month_start = Util.get_start_of_month ();

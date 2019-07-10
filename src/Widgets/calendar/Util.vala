@@ -20,16 +20,6 @@
  */
 
 namespace Util {
-    public enum Weekday {
-        SUNDAY = 0,
-        MONDAY,
-        TUESDAY,
-        WEDNESDAY,
-        THURSDAY,
-        FRIDAY,
-        SATURDAY
-    }
-
     public class Css {
         private static Gtk.CssProvider? _css_provider;
         /* Retrieve global css provider */
