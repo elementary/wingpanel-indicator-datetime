@@ -27,6 +27,9 @@ public class DateTime.Widgets.GridDay : Gtk.EventBox {
         .circular {
             border-radius: 50%;
         }
+        .circular:selected > * {
+            color: white;
+        }
         .accent {
             font-weight: bold;
         }
@@ -40,6 +43,8 @@ public class DateTime.Widgets.GridDay : Gtk.EventBox {
      */
     public signal void on_event_add (GLib.DateTime date);
 
+    public Gtk.Grid main_grid;
+
     public GLib.DateTime date { get; private set; }
     Gtk.Label label;
     int id;
@@ -51,7 +56,6 @@ public class DateTime.Widgets.GridDay : Gtk.EventBox {
 
         label = new Gtk.Label ("");
         set_size_request (32, 32);
-        halign = Gtk.Align.CENTER;
 
         var provider = new Gtk.CssProvider ();
         try {
@@ -71,7 +75,15 @@ public class DateTime.Widgets.GridDay : Gtk.EventBox {
 
         label.name = "date";
 
-        add (label);
+        main_grid = new Gtk.Grid ();
+        main_grid.hexpand = true;
+        main_grid.halign = Gtk.Align.CENTER;
+        main_grid.valign = Gtk.Align.CENTER;
+        main_grid.orientation = Gtk.Orientation.VERTICAL;
+        main_grid.attach (label, 0, 0);
+
+        add (main_grid);
+        halign = Gtk.Align.CENTER;
         show_all ();
 
         // Signals and handlers
@@ -92,10 +104,25 @@ public class DateTime.Widgets.GridDay : Gtk.EventBox {
     public void update_event_days () {
         GLib.Idle.add (() => {
             var events = Widgets.CalendarModel.get_default ().get_events (date);
-            if (events.size == 0) {
-                get_style_context ().remove_class ("event-accent");
-            } else {
-                get_style_context ().add_class ("event-accent");
+            var event_dot_grid = new Gtk.Grid ();
+            event_dot_grid.column_homogeneous = true;
+            if (event_dot_grid != null) {
+                event_dot_grid.destroy ();
+            }
+            if (events.size != 0) {
+                foreach (var e in events) {
+                    if (e != null) {
+                        var event_dot = new Gtk.Image.from_icon_name ("pager-checked-symbolic", Gtk.IconSize.MENU);
+                        event_dot.visible = true;
+                        event_dot.pixel_size = 6;
+                        event_dot.halign = Gtk.Align.CENTER;
+                        var dot_class = Util.get_event_dot_calendar_color (e.cal);
+                        event_dot.get_style_context ().add_class (dot_class);
+                        event_dot_grid.add (event_dot);
+                        event_dot_grid.show_all ();
+                    }
+                }
+                main_grid.attach (event_dot_grid, 0, 1);
             }
             return false;
         });
