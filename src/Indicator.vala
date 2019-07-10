@@ -82,7 +82,7 @@ public class DateTime.Indicator : Wingpanel.Indicator {
 
             no_events_label = new Gtk.Label (_("No Events Scheduled In This Day"));
             no_events_label.get_style_context ().add_class (Granite.STYLE_CLASS_H3_LABEL);
-            no_events_label.sensitive = false;
+            no_events_label.get_style_context ().add_class (Gtk.STYLE_CLASS_DIM_LABEL);
             no_events_label.width_chars = 20;
             no_events_label.max_width_chars = 20;
             no_events_label.set_line_wrap (true);
