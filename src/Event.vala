@@ -42,7 +42,6 @@ public class DateTime.Event : GLib.Object {
             alarm = true;
         } else if (Util.is_the_all_day (start_time, end_time)) {
             day_event = true;
-            return;
         }
     }
 
