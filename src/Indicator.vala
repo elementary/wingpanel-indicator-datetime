@@ -153,7 +153,7 @@ public class DateTime.Indicator : Wingpanel.Indicator {
             return GLib.Source.REMOVE;
         }
 
-        event_grid = new Gtk.Grid ();
+        event_grid = new Gtk.ListBox ();
         foreach (var e in events) {
             var menuitem_icon = new Gtk.Image.from_icon_name (e.get_icon (), Gtk.IconSize.MENU);
             menuitem_icon.valign = Gtk.Align.CENTER;
