@@ -108,7 +108,7 @@ public class DateTime.Indicator : Wingpanel.Indicator {
             });
 
             cal_button.clicked.connect (() => {
-                calendar.open_maya ();
+                open_maya ();
                 this.close ();
             });
 
@@ -133,10 +133,7 @@ public class DateTime.Indicator : Wingpanel.Indicator {
             GLib.Source.remove (update_events_idle_source);
         }
 
-        update_events_idle_source = GLib.Idle.add (() => {
-            update_events ();
-            return false;
-        });
+        update_events_idle_source = GLib.Idle.add (update_events);
     }
 
     private bool update_events () {
@@ -205,6 +202,24 @@ public class DateTime.Indicator : Wingpanel.Indicator {
         no_events_label.visible = false;
         update_events_idle_source = 0;
         return GLib.Source.REMOVE;
+    }
+
+    public void open_maya () {
+        var command = "io.elementary.calendar";
+
+        try {
+            var appinfo = AppInfo.create_from_commandline (command, null, AppInfoCreateFlags.NONE);
+            appinfo.launch_uris (null, null);
+        } catch (GLib.Error e) {
+            var dialog = new Granite.MessageDialog.with_image_from_icon_name (
+                _("Unable To Launch Calendar"),
+                _("The program \"io.elementary.calendar\" may not be installed"),
+                "dialog-error"
+            );
+            dialog.show_error_details (e.message);
+            dialog.run ();
+            dialog.destroy ();
+        }
     }
 
     public override void opened () {

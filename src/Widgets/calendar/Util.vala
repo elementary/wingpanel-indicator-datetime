@@ -166,17 +166,18 @@ namespace Util {
         string css_class = "event-color-%s".printf (uid);
 
         string style = """
+                        @define-color calendar-color %s;
                         .%s {
-                            background-color: alpha(%s, 0.15);
-                            color: shade(%s, 0.65);
+                            background-color: alpha(@calendar-color, 0.15);
+                            color: shade(@calendar-color, 0.65);
                             border-radius: 4px;
                             box-shadow: 0 1px 2px alpha (#000, 0.2),
-                                        0 1px 3px alpha (%s, 0.15);
+                                        0 1px 3px alpha (@calendar-color, 0.15);
                         }
                         .%s image {
-                            color: shade(%s, 0.65);
+                            color: shade(@calendar-color, 0.65);
                         }
-                       """.printf(css_class, color, color, color, css_class, color);
+                       """.printf(color, css_class, css_class);
 
         var style_provider = new Gtk.CssProvider ();
 
