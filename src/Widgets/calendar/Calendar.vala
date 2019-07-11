@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011-2016 elementary LLC. (https://elementary.io)
+ * Copyright (c) 2011-2019 elementary, Inc. (https://elementary.io)
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public
@@ -18,23 +18,29 @@
  */
 
 namespace DateTime.Widgets {
-    public class Calendar : Gtk.Box {
-        ControlHeader heading;
-        CalendarView cal;
+    public class Calendar : Gtk.Grid {
         public signal void selection_changed (GLib.DateTime? new_date);
         public signal void day_double_click (GLib.DateTime date);
 
-        public GLib.DateTime? selected_date { get {
-                return cal.selected_date;
-            } set {
-            }}
+        private CalendarView cal;
 
-        public Calendar () {
-            Object (orientation: Gtk.Orientation.VERTICAL, halign: Gtk.Align.CENTER, valign: Gtk.Align.CENTER, can_focus: false);
-            this.margin_start = 10;
-            this.margin_end = 10;
-            heading = new ControlHeader ();
+        public GLib.DateTime? selected_date {
+            get {
+                return cal.selected_date;
+            }
+        }
+
+        construct {
+            var heading = new ControlHeader ();
+            heading.margin = 6;
+
             cal = new CalendarView ();
+
+            margin_start = margin_end = 10;
+            orientation = Gtk.Orientation.VERTICAL;
+            add (heading);
+            add (cal);
+
             cal.selection_changed.connect ((date) => {
                 selection_changed (date);
             });
@@ -45,8 +51,6 @@ namespace DateTime.Widgets {
             heading.center_clicked.connect (() => {
                 cal.today ();
             });
-            add (heading);
-            add (cal);
         }
 
         public void show_today () {
