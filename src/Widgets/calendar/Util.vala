@@ -75,6 +75,33 @@ namespace Util {
         }
     }
 
+    public string get_event_dot_calendar_color (E.SourceCalendar cal) {
+        var uid = cal.source.uid;
+        var color = cal.dup_color ();
+        string css_class = "dot-color-%s".printf (uid);
+
+        string style = """
+                        .%s {
+                            padding: 0;
+                            color: shade(%s, 1.0);
+                        }
+                        grid.vertical > .%s {
+                            color: shade(%s, 1.0);
+                        }
+                       """.printf(css_class, color, css_class, color);
+
+        var style_provider = new Gtk.CssProvider ();
+
+        try {
+            style_provider.load_from_data (style, style.length);
+            Gtk.StyleContext.add_provider_for_screen (Gdk.Screen.get_default (), style_provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
+        } catch (Error e) {
+            warning ("Could not create CSS Provider: %s\nStylesheet:\n%s", e.message, style);
+        }
+
+        return css_class;
+    }
+
     public string TimeFormat () {
         /* If AM/PM doesn't exist, use 24h. */
         if (Posix.nl_langinfo (Posix.NLItem.AM_STR) == null || Posix.nl_langinfo (Posix.NLItem.AM_STR) == "") {

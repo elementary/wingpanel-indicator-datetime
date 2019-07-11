@@ -22,49 +22,55 @@
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation, either version 3 of the License, or
  *  (at your option) any later version.
- * 
+ *
  *  This program is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
- * 
+ *
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  */
 namespace DateTime.Widgets {
     public class Event : GLib.Object {
         public GLib.DateTime date;
-        Util.DateRange range;
+        public Util.DateRange range;
+        public E.Source source;
+
         public string summary;
         public bool day_event = false;
         public bool alarm = false;
         public GLib.DateTime start_time;
         public GLib.DateTime end_time;
+        public unowned iCal.Component ical;
+        public E.SourceCalendar? cal;
 
-        public Event (GLib.DateTime date, Util.DateRange range, iCal.Component comp) {
+        public Event (GLib.DateTime date, Util.DateRange range, iCal.Component ical, E.Source source) {
             this.date = date;
             this.range = range;
-            this.summary = comp.get_summary ();
+            this.source = source;
+            this.summary = ical.get_summary ();
 
-            Util.get_local_datetimes_from_icalcomponent (comp, out start_time, out end_time);
+            Util.get_local_datetimes_from_icalcomponent (ical, out start_time, out end_time);
             if (end_time == null) {
                 alarm = true;
             } else if (Util.is_the_all_day (start_time, end_time)) {
                 day_event = true;
-                return;
             }
+
+            this.cal = (E.SourceCalendar?)source.get_extension (E.SOURCE_EXTENSION_CALENDAR);
         }
 
         public string get_label () {
             if (day_event) {
-                return summary;
+                return "%s\n%s".printf (summary, _("All Day"));
             } else if (alarm) {
-                return "%s - %s".printf (start_time.format (Util.TimeFormat ()), summary);
+                return "%s %s\n%s".printf (_("Alarm:"), start_time.format (Util.TimeFormat ()), summary);
             } else if (range.days > 0 && date.compare (range.first_dt) != 0) {
                 return summary;
             }
-            return "%s - %s".printf (summary, start_time.format (Util.TimeFormat ()));
+            return "%s\n%s - %s".printf (summary, start_time.format (Util.TimeFormat ()), end_time.format (Util.TimeFormat ()));
         }
 
         public string get_icon () {
@@ -180,20 +186,27 @@ namespace DateTime.Widgets {
         /* --- Public Methods ---// */
 
         public Gee.ArrayList<Event> get_events (GLib.DateTime date) {
-            var events_on_day = new Gee.TreeMap<string,Event> ();
-            foreach (var entry in source_events.get_values ()) {
-                foreach (var comp in entry.values) {
-                    unowned iCal.Component ical = comp.get_icalcomponent ();
-                    foreach (var dt_range in Util.event_date_ranges (ical, data_range)) {
-                        if (dt_range.contains (date)) {
-                            if (!events_on_day.has_key (ical.get_uid ())) {
-                                events_on_day.set (ical.get_uid (), new Event (date, dt_range, ical));
+            var events = new Gee.TreeMap<string,Event> ();
+            registry.list_sources (E.SOURCE_EXTENSION_CALENDAR).foreach ((source) => {
+                E.SourceCalendar cal = (E.SourceCalendar)source.get_extension (E.SOURCE_EXTENSION_CALENDAR);
+                var map = source_events.get (source);
+                if (map != null) {
+                    foreach (var comp in source_events.get (source).values.read_only_view) {
+                        unowned iCal.Component ical = comp.get_icalcomponent ();
+                        foreach (var dt_range in Util.event_date_ranges (ical, data_range)) {
+                            if (dt_range.contains (date)) {
+                                if (!events.has_key (ical.get_uid ())) {
+                                    if (cal.selected == true && source.enabled == true) {
+                                        events.set (ical.get_uid (), new Event (date, dt_range, ical, source));
+                                    }
+                                }
                             }
                         }
                     }
                 }
-            }
-            var list = new Gee.ArrayList<Event>.wrap (events_on_day.values.to_array ());
+            });
+
+            var list = new Gee.ArrayList<Event>.wrap (events.values.to_array ());
             list.sort (sort_events);
             return list;
         }
