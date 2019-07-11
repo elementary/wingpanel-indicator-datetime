@@ -1,96 +1,21 @@
 /*
- * Copyright (c) 2011-2016 elementary LLC. (https://elementary.io)
+ * Copyright (c) 2011-2019 elementary, Inc. (https://elementary.io)
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public
  * License as published by the Free Software Foundation; either
- * version 2 of the License, or (at your option) any later version.
+ * version 3 of the License, or (at your option) any later version.
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  * General Public License for more details.
  *
- * You should have received a copy of the GNU General Public
- * License along with this program; if not, write to the
- * Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
- * Boston, MA 02110-1301 USA.
- */
-
-/*
- *  This program is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation, either version 3 of the License, or
- *  (at your option) any later version.
- *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
- *
  */
+
 namespace DateTime.Widgets {
-    public enum Weekday {
-        SUNDAY = 0,
-        MONDAY,
-        TUESDAY,
-        WEDNESDAY,
-        THURSDAY,
-        FRIDAY,
-        SATURDAY
-    }
-
-    public class Event : GLib.Object {
-        public GLib.DateTime date;
-        public Util.DateRange range;
-        public E.Source source;
-
-        public string summary;
-        public bool day_event = false;
-        public bool alarm = false;
-        public GLib.DateTime start_time;
-        public GLib.DateTime end_time;
-        public unowned iCal.Component ical;
-        public E.SourceCalendar? cal;
-
-        public Event (GLib.DateTime date, Util.DateRange range, iCal.Component ical, E.Source source) {
-            this.date = date;
-            this.range = range;
-            this.source = source;
-            this.summary = ical.get_summary ();
-
-            Util.get_local_datetimes_from_icalcomponent (ical, out start_time, out end_time);
-            if (end_time == null) {
-                alarm = true;
-            } else if (Util.is_the_all_day (start_time, end_time)) {
-                day_event = true;
-            }
-
-            this.cal = (E.SourceCalendar?)source.get_extension (E.SOURCE_EXTENSION_CALENDAR);
-        }
-
-        public string get_label () {
-            if (day_event) {
-                return "%s\n%s".printf (summary, _("All Day"));
-            } else if (alarm) {
-                return "%s %s\n%s".printf (_("Alarm:"), start_time.format (Util.TimeFormat ()), summary);
-            } else if (range.days > 0 && date.compare (range.first_dt) != 0) {
-                return summary;
-            }
-            return "%s\n%s - %s".printf (summary, start_time.format (Util.TimeFormat ()), end_time.format (Util.TimeFormat ()));
-        }
-
-        public string get_icon () {
-            if (alarm) {
-                return "alarm-symbolic";
-            }
-            return "office-calendar-symbolic";
-        }
-    }
-
     public class CalendarModel : Object {
         /* The data_range is the range of dates for which this model is storing
          * data. The month_range is a subset of this range corresponding to the
