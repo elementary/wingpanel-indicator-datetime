@@ -223,7 +223,7 @@ public class DateTime.Indicator : Wingpanel.Indicator {
     }
 
     public override void opened () {
-        calendar.show_today ();
+        calendar.show_today (); 
 
         Widgets.CalendarModel.get_default ().events_added.connect (update_events_model);
         Widgets.CalendarModel.get_default ().events_updated.connect (update_events_model);
