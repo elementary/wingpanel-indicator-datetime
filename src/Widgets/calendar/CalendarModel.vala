@@ -16,16 +16,6 @@
  */
 
 namespace DateTime.Widgets {
-    public enum Weekday {
-        SUNDAY = 0,
-        MONDAY,
-        TUESDAY,
-        WEDNESDAY,
-        THURSDAY,
-        FRIDAY,
-        SATURDAY
-    }
-
     public class CalendarModel : Object {
         /* The data_range is the range of dates for which this model is storing
          * data. The month_range is a subset of this range corresponding to the
