@@ -152,9 +152,8 @@ public class DateTime.Indicator : Wingpanel.Indicator {
     }
 
     public override void opened () {
-        // Let's shuffle months to make the model refresh
-        Widgets.CalendarModel.get_default ().change_month (-1);
-        Widgets.CalendarModel.get_default ().change_month (1);
+        Widgets.CalendarModel.get_default ().month_start = Util.get_start_of_month ();
+        Widgets.CalendarModel.get_default ().compute_ranges ();
 
         calendar.show_today ();
 

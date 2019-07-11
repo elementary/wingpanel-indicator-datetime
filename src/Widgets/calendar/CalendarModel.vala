@@ -274,7 +274,7 @@ namespace DateTime.Widgets {
 
         /* --- Helper Methods ---// */
 
-        private void compute_ranges () {
+        public void compute_ranges () {
             var month_end = month_start.add_full (0, 1, -1);
             month_range = new Util.DateRange (month_start, month_end);
 
