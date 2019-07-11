@@ -20,7 +20,7 @@ namespace DateTime.Widgets {
         /* The data_range is the range of dates for which this model is storing
          * data. The month_range is a subset of this range corresponding to the
          * calendar month that is being focused on. In summary:
-         *
+         * 
          * data_range.first <= month_range.first < month_range.last <= data_range.last
          *
          * There is no way to set the ranges publicly. They can only be modified by
