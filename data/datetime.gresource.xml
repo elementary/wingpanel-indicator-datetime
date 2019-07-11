@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <gresources>
   <gresource prefix="/io/elementary/desktop/wingpanel/datetime/">
+    <file alias="ControlHeader.css" compressed="true">ControlHeader.css</file>
     <file alias="GridDay.css" compressed="true">GridDay.css</file>
-    <file alias="main.css" compressed="true">main.css</file>
   </gresource>
 </gresources>

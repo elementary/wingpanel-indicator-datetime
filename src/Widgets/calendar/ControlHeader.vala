@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011-2016 elementary LLC. (https://elementary.io)
+ * Copyright (c) 2011-2019 elementary, Inc. (https://elementary.io)
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public
@@ -20,8 +20,6 @@
 
 namespace DateTime.Widgets {
     public class ControlHeader : Gtk.Grid {
-        public signal void left_clicked ();
-        public signal void right_clicked ();
         public signal void center_clicked ();
 
         construct {
@@ -31,7 +29,8 @@ namespace DateTime.Widgets {
             label.width_chars = 13;
 
             var provider = new Gtk.CssProvider ();
-            provider.load_from_resource ("/io/elementary/desktop/wingpanel/datetime/main.css");
+            provider.load_from_resource ("/io/elementary/desktop/wingpanel/datetime/ControlHeader.css");
+
             var label_style_context = label.get_style_context ();
             label_style_context.add_class ("header-label");
             label_style_context.add_provider (provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
@@ -58,11 +57,11 @@ namespace DateTime.Widgets {
             });
 
             left_button.clicked.connect (() => {
-                left_clicked ();
+                CalendarModel.get_default ().change_month (-1);
             });
 
             right_button.clicked.connect (() => {
-                right_clicked ();
+                CalendarModel.get_default ().change_month (1);
             });
 
             center_button.clicked.connect (() => {
