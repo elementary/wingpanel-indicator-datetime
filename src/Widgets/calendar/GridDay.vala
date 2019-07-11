@@ -27,13 +27,7 @@ public class DateTime.Widgets.GridDay : Gtk.EventBox {
         .circular {
             border-radius: 50%;
         }
-        .circular:selected > * {
-            color: white;
-        }
         .accent {
-            font-weight: bold;
-        }
-        .event-accent {
             font-weight: bold;
         }
     """;
