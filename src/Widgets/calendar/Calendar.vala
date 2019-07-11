@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011-2016 elementary LLC. (https://elementary.io)
+ * Copyright (c) 2011-2019 elementary, Inc. (https://elementary.io)
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public
@@ -18,27 +18,29 @@
  */
 
 namespace DateTime.Widgets {
-    public class Calendar : Gtk.Box {
-        public ControlHeader heading;
-        CalendarView cal;
+    public class Calendar : Gtk.Grid {
         public signal void selection_changed (GLib.DateTime? new_date);
         public signal void day_double_click (GLib.DateTime date);
+
+        private CalendarView cal;
 
         public GLib.DateTime? selected_date {
             get {
                 return cal.selected_date;
             }
-            set {
-            }
         }
 
-        public Calendar () {
-            Object (orientation: Gtk.Orientation.VERTICAL, halign: Gtk.Align.CENTER, valign: Gtk.Align.CENTER, can_focus: false);
-            margin = 6;
-            margin_top = 0;
-            expand = true;
-            heading = new ControlHeader ();
+        construct {
+            var heading = new ControlHeader ();
+            heading.margin = 6;
+
             cal = new CalendarView ();
+
+            margin_start = margin_end = 10;
+            orientation = Gtk.Orientation.VERTICAL;
+            add (heading);
+            add (cal);
+
             cal.selection_changed.connect ((date) => {
                 selection_changed (date);
             });
@@ -46,16 +48,9 @@ namespace DateTime.Widgets {
                 show_date_in_maya (date);
                 day_double_click (date);
             });
-            heading.left_clicked.connect (() => {
-                CalendarModel.get_default ().change_month (-1);
-            });
-            heading.right_clicked.connect (() => {
-                CalendarModel.get_default ().change_month (1);
-            });
             heading.center_clicked.connect (() => {
                 cal.today ();
             });
-            add (cal);
         }
 
         public void show_today () {
