@@ -50,8 +50,6 @@ namespace DateTime.Widgets {
             box_buttons.add (right_button);
 
             column_spacing = 6;
-            margin = 6;
-            margin_bottom = 0;
             add (label);
             add (box_buttons);
 
