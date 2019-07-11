@@ -82,13 +82,9 @@ namespace Util {
 
         string style = """
                         .%s {
-                            padding: 0;
                             color: shade(%s, 1.0);
                         }
-                        grid.vertical > .%s {
-                            color: shade(%s, 1.0);
-                        }
-                       """.printf(css_class, color, css_class, color);
+                       """.printf(css_class, color);
 
         var style_provider = new Gtk.CssProvider ();
 
