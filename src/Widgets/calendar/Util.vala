@@ -75,27 +75,23 @@ namespace Util {
         }
     }
 
-    public string get_event_dot_calendar_color (E.SourceCalendar cal) {
-        var uid = cal.source.uid;
+    public void set_event_calendar_color (E.SourceCalendar cal, Gtk.Widget widget) {
         var color = cal.dup_color ();
-        string css_class = "dot-color-%s".printf (uid);
 
         string style = """
-                        .%s {
-                            color: shade(%s, 1.0);
-                        }
-                       """.printf(css_class, color);
-
-        var style_provider = new Gtk.CssProvider ();
+            @define-color colorAccent %s;
+        """.printf (color);
 
         try {
+            var style_provider = new Gtk.CssProvider ();
             style_provider.load_from_data (style, style.length);
-            Gtk.StyleContext.add_provider_for_screen (Gdk.Screen.get_default (), style_provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
+
+            var style_context = widget.get_style_context ();
+            style_context.add_class ("accent");
+            style_context.add_provider (style_provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
         } catch (Error e) {
             warning ("Could not create CSS Provider: %s\nStylesheet:\n%s", e.message, style);
         }
-
-        return css_class;
     }
 
     public string TimeFormat () {
