@@ -28,7 +28,7 @@ public class DateTime.Event : GLib.Object {
 
     private bool alarm = false;
 
-    public Event (GLib.DateTime date, Util.DateRange range, iCal.Component ical, E.Source source) {
+    public Event (GLib.DateTime date, Util.DateRange range, iCal.Component component, E.Source source) {
         Object (
             component: component,
             date: date,
