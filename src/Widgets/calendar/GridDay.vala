@@ -104,17 +104,26 @@ public class DateTime.Widgets.GridDay : Gtk.EventBox {
                 event_dot_grid.destroy ();
             }
             if (events.size != 0) {
-                foreach (var e in events) {
-                    if (e != null) {
-                        var event_dot = new Gtk.Image.from_icon_name ("pager-checked-symbolic", Gtk.IconSize.MENU);
-                        event_dot.visible = true;
-                        event_dot.pixel_size = 6;
-                        event_dot.halign = Gtk.Align.CENTER;
+                if (events.size <= 4) {
+                    foreach (var e in events) {
+                        if (e != null) {
+                            var event_dot = new Gtk.Image.from_icon_name ("pager-checked-symbolic", Gtk.IconSize.MENU);
+                            event_dot.visible = true;
+                            event_dot.pixel_size = 6;
+                            event_dot.halign = Gtk.Align.CENTER;
 
-                        Util.set_event_calendar_color (e.cal, event_dot);
+                            Util.set_event_calendar_color (e.cal, event_dot);
 
-                        event_dot_grid.add (event_dot);
+                            event_dot_grid.add (event_dot);
+                        }
                     }
+                } else if (events.size > 4) {
+                    var event_bar = new Gtk.Image.from_icon_name ("list-remove-symbolic", Gtk.IconSize.MENU);
+                    event_bar.visible = true;
+                    event_bar.pixel_size = 6;
+                    event_bar.halign = Gtk.Align.CENTER;
+                    event_dot_grid.hexpand = true;
+                    event_dot_grid.add (event_bar);
                 }
                 event_dot_grid.show_all ();
                 main_grid.margin_top = 5;
