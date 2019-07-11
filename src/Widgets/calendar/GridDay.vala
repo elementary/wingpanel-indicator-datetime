@@ -110,8 +110,9 @@ public class DateTime.Widgets.GridDay : Gtk.EventBox {
                         event_dot.visible = true;
                         event_dot.pixel_size = 6;
                         event_dot.halign = Gtk.Align.CENTER;
-                        var dot_class = Util.get_event_dot_calendar_color (e.cal);
-                        event_dot.get_style_context ().add_class (dot_class);
+
+                        Util.set_event_calendar_color (e.cal, event_dot);
+
                         event_dot_grid.add (event_dot);
                     }
                 }
