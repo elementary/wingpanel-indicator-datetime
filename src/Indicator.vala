@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011-2016 elementary LLC. (https://elementary.io)
+ * Copyright (c) 2011-2019 elementary, Inc. (https://elementary.io)
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public
@@ -21,6 +21,7 @@ public class DateTime.Indicator : Wingpanel.Indicator {
     private Widgets.PanelLabel panel_label;
     private Gtk.Grid main_grid;
     private Widgets.Calendar calendar;
+    private Widgets.CalendarModel default_calendar_model;
     private Gtk.Grid event_grid;
     private uint update_events_idle_source = 0;
 
@@ -33,50 +34,47 @@ public class DateTime.Indicator : Wingpanel.Indicator {
     }
 
     construct {
+        default_calendar_model = Widgets.CalendarModel.get_default ();
+
+        panel_label = new Widgets.PanelLabel ();
+
+        calendar = new Widgets.Calendar ();
+        calendar.margin_top = 6;
+        calendar.margin_bottom = 6;
+
+        var settings_button = new Gtk.ModelButton ();
+        settings_button.text = _("Date & Time Settings…");
+
+        main_grid = new Gtk.Grid ();
+        main_grid.attach (calendar, 0, 0);
+        // event_grid gets attached here when created
+        main_grid.attach (new Wingpanel.Widgets.Separator (), 0, 2);
+        main_grid.attach (settings_button, 0, 3);
+
         visible = true;
+
+        calendar.day_double_click.connect (() => {
+            close ();
+        });
+
+        calendar.selection_changed.connect ((date) => {
+            idle_update_events ();
+        });
+
+        settings_button.clicked.connect (() => {
+            try {
+                AppInfo.launch_default_for_uri ("settings://time", null);
+            } catch (Error e) {
+                warning ("Failed to open time and date settings: %s", e.message);
+            }
+        });
     }
 
     public override Gtk.Widget get_display_widget () {
-        if (panel_label == null) {
-            panel_label = new Widgets.PanelLabel ();
-        }
-
         return panel_label;
     }
 
     public override Gtk.Widget? get_widget () {
-        if (main_grid == null) {
-            calendar = new Widgets.Calendar ();
-            calendar.margin_top = 6;
-            calendar.margin_bottom = 6;
-
-            var settings_button = new Gtk.ModelButton ();
-            settings_button.text = _("Date & Time Settings…");
-
-            main_grid = new Gtk.Grid ();
-            main_grid.halign = Gtk.Align.CENTER;
-            main_grid.valign = Gtk.Align.START;
-            main_grid.attach (calendar, 0, 0);
-            main_grid.attach (new Wingpanel.Widgets.Separator (), 0, 2);
-            main_grid.attach (settings_button, 0, 3);
-
-            calendar.day_double_click.connect (() => {
-                close ();
-            });
-
-            calendar.selection_changed.connect ((date) => {
-                idle_update_events ();
-            });
-
-            settings_button.clicked.connect (() => {
-                try {
-                    AppInfo.launch_default_for_uri ("settings://time", null);
-                } catch (Error e) {
-                    warning ("Failed to open time and date settings: %s", e.message);
-                }
-            });
-        }
-
         return main_grid;
     }
 
@@ -102,7 +100,7 @@ public class DateTime.Indicator : Wingpanel.Indicator {
             return GLib.Source.REMOVE;
         }
 
-        var events = Widgets.CalendarModel.get_default ().get_events (calendar.selected_date);
+        var events = default_calendar_model.get_events (calendar.selected_date);
         if (events.size == 0) {
             update_events_idle_source = 0;
             return GLib.Source.REMOVE;
@@ -154,15 +152,15 @@ public class DateTime.Indicator : Wingpanel.Indicator {
     public override void opened () {
         calendar.show_today ();
 
-        Widgets.CalendarModel.get_default ().events_added.connect (update_events_model);
-        Widgets.CalendarModel.get_default ().events_updated.connect (update_events_model);
-        Widgets.CalendarModel.get_default ().events_removed.connect (update_events_model);
+        default_calendar_model.events_added.connect (update_events_model);
+        default_calendar_model.events_updated.connect (update_events_model);
+        default_calendar_model.events_removed.connect (update_events_model);
     }
 
     public override void closed () {
-        Widgets.CalendarModel.get_default ().events_added.disconnect (update_events_model);
-        Widgets.CalendarModel.get_default ().events_updated.disconnect (update_events_model);
-        Widgets.CalendarModel.get_default ().events_removed.disconnect (update_events_model);
+        default_calendar_model.events_added.disconnect (update_events_model);
+        default_calendar_model.events_updated.disconnect (update_events_model);
+        default_calendar_model.events_removed.disconnect (update_events_model);
     }
 }
 
