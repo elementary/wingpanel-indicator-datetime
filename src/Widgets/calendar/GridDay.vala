@@ -44,7 +44,7 @@ public class DateTime.Widgets.GridDay : Gtk.EventBox {
         var provider = new Gtk.CssProvider ();
         provider.load_from_resource ("/io/elementary/desktop/wingpanel/datetime/GridDay.css");
 
-        var style_context = get_style_context ();
+        unowned Gtk.StyleContext style_context = get_style_context ();
         style_context.add_provider (provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
         style_context.add_class ("circular");
 
