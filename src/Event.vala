@@ -21,16 +21,18 @@ public class DateTime.Event : GLib.Object {
     public GLib.DateTime date { get; construct; }
     public unowned iCal.Component component { get; construct; }
     public Util.DateRange range { get; construct; }
-
     public GLib.DateTime start_time;
     public bool day_event = false;
+    public E.Source source {get; construct;}
+    public E.SourceCalendar? cal {get; construct;}
 
     private bool alarm = false;
 
-    public Event (GLib.DateTime date, Util.DateRange range, iCal.Component component) {
+    public Event (GLib.DateTime date, Util.DateRange range, iCal.Component ical, E.Source source) {
         Object (
             component: component,
             date: date,
+            source: source,
             range: range
         );
     }
@@ -43,6 +45,8 @@ public class DateTime.Event : GLib.Object {
         } else if (Util.is_the_all_day (start_time, end_time)) {
             day_event = true;
         }
+
+        cal = (E.SourceCalendar?)source.get_extension (E.SOURCE_EXTENSION_CALENDAR);
     }
 
     public string get_label () {
