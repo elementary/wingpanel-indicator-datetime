@@ -20,61 +20,6 @@
  */
 
 namespace Util {
-    public class Css {
-        private static Gtk.CssProvider? _css_provider;
-        /* Retrieve global css provider */
-        public static Gtk.CssProvider get_css_provider () {
-            if (_css_provider == null) {
-                _css_provider = new Gtk.CssProvider ();
-                try {
-                    _css_provider.load_from_data ("""
-@define-color cell_color mix(@bg_color, rgb(255, 255, 255), 0.8);
-@define-color cell_color_weekend mix(@bg_color, rgb(255, 255, 255), 0.2);
-@define-color text_color #333;
-
-/* Cell Styles */
-
-.cell {
-    background-color: @cell_color;
-    border-radius: 0;
-}
-
-.cell:insensitive {
-    background-color: shade(@cell_color, 0.97);
-}
-
-.cell:selected {
-    background-color: shade(@cell_color, 0.9);
-    color: @text_color;
-}
-
-#weekend {
-    background-color: @cell_color_weekend;
-}
-#weekend:selected {
-    background-color: shade(@cell_color, 0.9);
-}
-
-#today {
-    background-color: mix(@cell_color, @selected_bg_color, 0.15); /* today date has nice shade of blue */
-}
-
-#today:selected {
-    background-color: mix(@cell_color, @selected_bg_color, 0.35); /* today date has nice shade of blue */
-}
-
-    .cell > #date {
-        font-size: 10px;
-    }""", -1);
-                } catch (Error e) {
-                    warning ("Could not add css provider. Some widgets will not look as intended. %s", e.message);
-                }
-            }
-
-            return _css_provider;
-        }
-    }
-
     public string TimeFormat () {
         /* If AM/PM doesn't exist, use 24h. */
         if (Posix.nl_langinfo (Posix.NLItem.AM_STR) == null || Posix.nl_langinfo (Posix.NLItem.AM_STR) == "") {
