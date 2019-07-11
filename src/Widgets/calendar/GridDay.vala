@@ -84,15 +84,15 @@ public class DateTime.Widgets.GridDay : Gtk.EventBox {
         button_press_event.connect (on_button_press);
         key_press_event.connect (on_key_press);
         scroll_event.connect ((event) => {return Util.on_scroll_event (event);});
+
+        Widgets.CalendarModel.get_default ().events_added.connect (update_event_days);
+        Widgets.CalendarModel.get_default ().events_updated.connect (update_event_days);
+        Widgets.CalendarModel.get_default ().events_removed.connect (update_event_days);
     }
 
     public void update_date (GLib.DateTime date) {
         this.date = date;
         label.label = date.get_day_of_month ().to_string ();
-
-        Widgets.CalendarModel.get_default ().events_added.connect (update_event_days);
-        Widgets.CalendarModel.get_default ().events_updated.connect (update_event_days);
-        Widgets.CalendarModel.get_default ().events_removed.connect (update_event_days);
     }
 
     public async void update_event_days () {
@@ -117,6 +117,7 @@ public class DateTime.Widgets.GridDay : Gtk.EventBox {
                     }
                 }
                 event_dot_grid.show_all ();
+                main_grid.margin_top = 5;
                 main_grid.attach (event_dot_grid, 0, 1);
             }
             return false;
