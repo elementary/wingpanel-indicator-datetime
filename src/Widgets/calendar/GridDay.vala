@@ -70,9 +70,7 @@ public class DateTime.Widgets.GridDay : Gtk.EventBox {
         label.name = "date";
 
         main_grid = new Gtk.Grid ();
-        main_grid.hexpand = true;
         main_grid.halign = Gtk.Align.CENTER;
-        main_grid.valign = Gtk.Align.CENTER;
         main_grid.orientation = Gtk.Orientation.VERTICAL;
         main_grid.attach (label, 0, 0);
 
@@ -101,12 +99,10 @@ public class DateTime.Widgets.GridDay : Gtk.EventBox {
             var events = Widgets.CalendarModel.get_default ().get_events (date);
 
             var event_dot_grid = new Gtk.Grid ();
-            event_dot_grid.column_homogeneous = true;
+            event_dot_grid.halign = Gtk.Align.CENTER;
 
             var event_dot = new Gtk.Image ();
-            event_dot.visible = true;
             event_dot.pixel_size = 6;
-            event_dot.halign = Gtk.Align.CENTER;
 
             if (event_dot_grid != null) {
                 event_dot_grid.destroy ();
