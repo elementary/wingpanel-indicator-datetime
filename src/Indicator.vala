@@ -34,6 +34,9 @@ public class DateTime.Indicator : Wingpanel.Indicator {
 
     construct {
         visible = true;
+
+        weak Gtk.IconTheme default_theme = Gtk.IconTheme.get_default ();
+        default_theme.add_resource_path ("/io/elementary/desktop/wingpanel/datetime");
     }
 
     public override Gtk.Widget get_display_widget () {

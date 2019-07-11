@@ -85,9 +85,10 @@ public class DateTime.Widgets.GridDay : Gtk.EventBox {
         key_press_event.connect (on_key_press);
         scroll_event.connect ((event) => {return Util.on_scroll_event (event);});
 
-        Widgets.CalendarModel.get_default ().events_added.connect (update_event_days);
-        Widgets.CalendarModel.get_default ().events_updated.connect (update_event_days);
-        Widgets.CalendarModel.get_default ().events_removed.connect (update_event_days);
+        var model = Widgets.CalendarModel.get_default ();
+        model.events_added.connect (update_event_days);
+        model.events_updated.connect (update_event_days);
+        model.events_removed.connect (update_event_days);
     }
 
     public void update_date (GLib.DateTime date) {
@@ -98,8 +99,15 @@ public class DateTime.Widgets.GridDay : Gtk.EventBox {
     public async void update_event_days () {
         GLib.Idle.add (() => {
             var events = Widgets.CalendarModel.get_default ().get_events (date);
+
             var event_dot_grid = new Gtk.Grid ();
             event_dot_grid.column_homogeneous = true;
+
+            var event_dot = new Gtk.Image ();
+            event_dot.visible = true;
+            event_dot.pixel_size = 6;
+            event_dot.halign = Gtk.Align.CENTER;
+
             if (event_dot_grid != null) {
                 event_dot_grid.destroy ();
             }
@@ -107,23 +115,14 @@ public class DateTime.Widgets.GridDay : Gtk.EventBox {
                 if (events.size <= 4) {
                     foreach (var e in events) {
                         if (e != null) {
-                            var event_dot = new Gtk.Image.from_icon_name ("pager-checked-symbolic", Gtk.IconSize.MENU);
-                            event_dot.visible = true;
-                            event_dot.pixel_size = 6;
-                            event_dot.halign = Gtk.Align.CENTER;
-
+                            event_dot.gicon = new ThemedIcon ("pager-checked-symbolic");
                             Util.set_event_calendar_color (e.cal, event_dot);
-
                             event_dot_grid.add (event_dot);
                         }
                     }
                 } else if (events.size > 4) {
-                    var event_bar = new Gtk.Image.from_icon_name ("list-remove-symbolic", Gtk.IconSize.MENU);
-                    event_bar.visible = true;
-                    event_bar.pixel_size = 6;
-                    event_bar.halign = Gtk.Align.CENTER;
-                    event_dot_grid.hexpand = true;
-                    event_dot_grid.add (event_bar);
+                    event_dot.gicon = new ThemedIcon ("events-bar-symbolic");
+                    event_dot_grid.add (event_dot);
                 }
                 event_dot_grid.show_all ();
                 main_grid.margin_top = 5;
