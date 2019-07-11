@@ -64,13 +64,13 @@ namespace DateTime.Widgets {
 
         public string get_label () {
             if (day_event) {
-                return "%s\n%s".printf (summary, _("All Day"));
+                return summary;
             } else if (alarm) {
-                return "%s %s\n%s".printf (_("Alarm:"), start_time.format (Util.TimeFormat ()), summary);
+                return "%s - %s".printf (start_time.format (Util.TimeFormat ()), summary);
             } else if (range.days > 0 && date.compare (range.first_dt) != 0) {
                 return summary;
             }
-            return "%s\n%s - %s".printf (summary, start_time.format (Util.TimeFormat ()), end_time.format (Util.TimeFormat ()));
+            return "%s - %s".printf (summary, start_time.format (Util.TimeFormat ()));
         }
 
         public string get_icon () {

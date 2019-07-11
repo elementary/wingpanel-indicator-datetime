@@ -37,7 +37,7 @@ public class DateTime.Widgets.GridDay : Gtk.EventBox {
      */
     public signal void on_event_add (GLib.DateTime date);
 
-    public Gtk.Grid main_grid;
+    private Gtk.Grid main_grid;
 
     public GLib.DateTime date { get; private set; }
     Gtk.Label label;
