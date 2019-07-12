@@ -67,7 +67,12 @@ public class DateTime.Indicator : Wingpanel.Indicator {
 
             event_listbox = new Gtk.ListBox ();
             event_listbox.selection_mode = Gtk.SelectionMode.NONE;
+            event_listbox.set_header_func (header_update_func);
             event_listbox.set_placeholder (placeholder_label);
+
+            var scrolled_window = new Gtk.ScrolledWindow (null, null);
+            scrolled_window.hscrollbar_policy = Gtk.PolicyType.NEVER;
+            scrolled_window.add (event_listbox);
 
             var settings_button = new Gtk.ModelButton ();
             settings_button.text = _("Date & Time Settings…");
@@ -76,7 +81,7 @@ public class DateTime.Indicator : Wingpanel.Indicator {
             main_grid.margin_top = 12;
             main_grid.attach (calendar, 0, 0);
             main_grid.attach (new Gtk.Separator (Gtk.Orientation.VERTICAL), 1, 0);
-            main_grid.attach (event_listbox, 2, 0);
+            main_grid.attach (scrolled_window, 2, 0);
             main_grid.attach (new Wingpanel.Widgets.Separator (), 0, 2, 3);
             main_grid.attach (settings_button, 0, 3, 3);
 
@@ -107,6 +112,33 @@ public class DateTime.Indicator : Wingpanel.Indicator {
         }
 
         return main_grid;
+    }
+
+    private void header_update_func (Gtk.ListBoxRow lbrow, Gtk.ListBoxRow? lbbefore) {
+        var row = (DateTime.EventRow) lbrow;
+        if (lbbefore != null) {
+            var before = (DateTime.EventRow) lbbefore;
+            if (row.cal_event.is_allday == before.cal_event.is_allday) {
+                row.set_header (null);
+                return;
+            }
+
+            if (row.cal_event.is_allday != before.cal_event.is_allday) {
+                var header_label = new Granite.HeaderLabel (_("During the Day"));
+                header_label.margin_start = header_label.margin_end = 6;
+
+                row.set_header (header_label);
+                return;
+            }
+        } else {
+            if (row.cal_event.is_allday) {
+                var allday_header = new Granite.HeaderLabel (_("All Day"));
+                allday_header.margin_start = allday_header.margin_end = 6;
+
+                row.set_header (allday_header);
+            }
+            return;
+        }
     }
 
     private void update_events_model (E.Source source, Gee.Collection<E.CalComponent> events) {
