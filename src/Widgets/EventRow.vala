@@ -37,7 +37,6 @@ public class DateTime.EventRow : Gtk.ListBoxRow {
 
         var event_image_context = event_image.get_style_context ();
         event_image_context.add_provider (css_provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
-        event_image_context.add_class ("icon");
 
         var name_label = new Gtk.Label (cal_event.get_event_label ());
         name_label.hexpand = true;
@@ -72,31 +71,14 @@ public class DateTime.EventRow : Gtk.ListBoxRow {
         grid_context.add_provider (css_provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
 
         /* Color menuitem per calendar source of event */
-        get_style_calendar_color (cal_event.cal, grid);
-        get_style_calendar_color (cal_event.cal, event_image);
+        Util.get_style_calendar_color (cal_event.cal, grid);
+        Util.get_style_calendar_color (cal_event.cal, event_image);
 
         cal_event.cal.notify["color"].connect (() => {
-            get_style_calendar_color (cal_event.cal, grid);
-            get_style_calendar_color (cal_event.cal, event_image);
+            Util.get_style_calendar_color (cal_event.cal, grid);
+            Util.get_style_calendar_color (cal_event.cal, event_image);
         });
 
         add (grid);
-    }
-
-    public void get_style_calendar_color (E.SourceCalendar cal, Gtk.Widget widget) {
-        var color = cal.dup_color ();
-
-        string style = """
-                        @define-color eventcolorAccent %s;
-                       """.printf(color);
-
-        var style_provider = new Gtk.CssProvider ();
-
-        try {
-            style_provider.load_from_data (style, style.length);
-            widget.get_style_context ().add_provider (style_provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
-        } catch (Error e) {
-            warning ("Could not create CSS Provider: %s\nStylesheet:\n%s", e.message, style);
-        }
     }
 }

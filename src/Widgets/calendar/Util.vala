@@ -20,6 +20,23 @@
  */
 
 namespace Util {
+    public void get_style_calendar_color (E.SourceCalendar cal, Gtk.Widget widget) {
+        var color = cal.dup_color ();
+
+        string style = """
+                        @define-color colorAccent %s;
+                       """.printf(color);
+
+        var style_provider = new Gtk.CssProvider ();
+
+        try {
+            style_provider.load_from_data (style, style.length);
+            widget.get_style_context ().add_provider (style_provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
+        } catch (Error e) {
+            warning ("Could not create CSS Provider: %s\nStylesheet:\n%s", e.message, style);
+        }
+    }
+
     static bool has_scrolled = false;
     const uint interval = 500;
 
