@@ -23,6 +23,7 @@ public class DateTime.Indicator : Wingpanel.Indicator {
     private Widgets.Calendar calendar;
     private Widgets.ControlHeader heading;
     private Gtk.ListBox event_grid;
+    private Gtk.ScrolledWindow scrolled_box;
     private Gtk.Label no_events_label;
     private uint update_events_idle_source = 0;
 
@@ -147,6 +148,7 @@ public class DateTime.Indicator : Wingpanel.Indicator {
     private bool update_events () {
         if (event_grid != null) {
             event_grid.destroy ();
+            scrolled_box.destroy ();
         }
 
         if (calendar.selected_date == null) {
@@ -164,10 +166,10 @@ public class DateTime.Indicator : Wingpanel.Indicator {
 
         event_grid = new Gtk.ListBox ();
 
-        var scrolled_box = new Gtk.ScrolledWindow (null, null);
+        scrolled_box = new Gtk.ScrolledWindow (null, null);
         scrolled_box.hexpand = true;
         scrolled_box.hscrollbar_policy = Gtk.PolicyType.NEVER;
-        scrolled_box.max_content_height = 200;
+        scrolled_box.max_content_height = 220;
         scrolled_box.propagate_natural_height = true;
 
         foreach (var e in events) {
