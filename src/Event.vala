@@ -22,13 +22,14 @@ public class DateTime.Event : GLib.Object {
     public unowned iCal.Component component { get; construct; }
     public Util.DateRange range { get; construct; }
     public GLib.DateTime start_time;
+    public GLib.DateTime end_time;
     public bool day_event = false;
     public E.Source source {get; construct;}
     public E.SourceCalendar? cal {get; construct;}
 
     private bool alarm = false;
 
-    public Event (GLib.DateTime date, Util.DateRange range, iCal.Component ical, E.Source source) {
+    public Event (GLib.DateTime date, Util.DateRange range, iCal.Component component, E.Source source) {
         Object (
             component: component,
             date: date,
@@ -38,7 +39,6 @@ public class DateTime.Event : GLib.Object {
     }
 
     construct {
-        GLib.DateTime end_time;
         Util.get_local_datetimes_from_icalcomponent (component, out start_time, out end_time);
         if (end_time == null) {
             alarm = true;
@@ -52,13 +52,13 @@ public class DateTime.Event : GLib.Object {
     public string get_label () {
         var summary = component.get_summary ();
         if (day_event) {
-            return summary;
+            return "%s\n%s".printf (summary, _("All Day"));
         } else if (alarm) {
-            return "%s - %s".printf (start_time.format (Util.TimeFormat ()), summary);
+            return "%s %s\n%s".printf (_("Alarm:"), start_time.format (Util.TimeFormat ()), summary);
         } else if (range.days > 0 && date.compare (range.first_dt) != 0) {
             return summary;
         }
-        return "%s - %s".printf (summary, start_time.format (Util.TimeFormat ()));
+        return "%s\n%s - %s".printf (summary, start_time.format (Util.TimeFormat ()), end_time.format (Util.TimeFormat ()));
     }
 
     public string get_icon () {

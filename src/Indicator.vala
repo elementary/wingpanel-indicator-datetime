@@ -21,6 +21,7 @@ public class DateTime.Indicator : Wingpanel.Indicator {
     private Widgets.PanelLabel panel_label;
     private Gtk.Grid main_grid;
     private Widgets.Calendar calendar;
+    private Widgets.ControlHeader heading;
     private Gtk.ListBox event_grid;
     private Gtk.Label no_events_label;
     private uint update_events_idle_source = 0;
@@ -50,7 +51,7 @@ public class DateTime.Indicator : Wingpanel.Indicator {
             calendar = new Widgets.Calendar ();
 
             var provider = new Gtk.CssProvider ();
-            provider.load_from_resource ("/io/elementary/desktop/wingpanel/datetime/main.css");
+            provider.load_from_resource ("/io/elementary/desktop/wingpanel/datetime/ControlHeader.css");
 
             var settings_button = new Gtk.ModelButton ();
             settings_button.text = _("Date & Time Settings…");
@@ -90,8 +91,11 @@ public class DateTime.Indicator : Wingpanel.Indicator {
             no_events_label.set_justify (Gtk.Justification.CENTER);
             no_events_label.halign = Gtk.Align.CENTER;
 
+            heading = new Widgets.ControlHeader ();
+            heading.margin = 9;
+
             main_grid = new Gtk.Grid ();
-            main_grid.attach (calendar.heading, 0, 0);
+            main_grid.attach (heading, 0, 0);
             main_grid.attach (calendar, 0, 1);
             main_grid.attach (new Wingpanel.Widgets.Separator (), 0, 2);
             main_grid.attach (settings_button, 0, 3);
@@ -105,6 +109,10 @@ public class DateTime.Indicator : Wingpanel.Indicator {
 
             calendar.selection_changed.connect ((date) => {
                 idle_update_events ();
+            });
+
+            heading.center_clicked.connect (() => {
+                calendar.show_today ();
             });
 
             cal_button.clicked.connect (() => {

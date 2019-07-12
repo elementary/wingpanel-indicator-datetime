@@ -23,7 +23,6 @@ namespace DateTime.Widgets {
         public signal void day_double_click (GLib.DateTime date);
 
         private CalendarView cal;
-        public ControlHeader heading;
 
         public GLib.DateTime? selected_date {
             get {
@@ -32,14 +31,10 @@ namespace DateTime.Widgets {
         }
 
         construct {
-            heading = new ControlHeader ();
-            heading.margin = 6;
-
             cal = new CalendarView ();
 
             margin_start = margin_end = 10;
             orientation = Gtk.Orientation.VERTICAL;
-            add (heading);
             add (cal);
 
             cal.selection_changed.connect ((date) => {
@@ -48,9 +43,6 @@ namespace DateTime.Widgets {
             cal.on_event_add.connect ((date) => {
                 show_date_in_maya (date);
                 day_double_click (date);
-            });
-            heading.center_clicked.connect (() => {
-                cal.today ();
             });
         }
 
