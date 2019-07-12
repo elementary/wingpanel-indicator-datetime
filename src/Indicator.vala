@@ -199,8 +199,8 @@ public class DateTime.Indicator : Wingpanel.Indicator {
         calendar.show_today ();
 
         Widgets.CalendarModel.get_default ().events_added.connect (update_events_model);
-        model.events_updated.connect (update_events_model);
-        model.events_removed.connect (update_events_model);
+        Widgets.CalendarModel.get_default ().events_updated.connect (update_events_model);
+        Widgets.CalendarModel.get_default ().events_removed.connect (update_events_model);
     }
 
     public override void closed () {
