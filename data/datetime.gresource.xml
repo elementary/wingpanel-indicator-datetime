@@ -2,6 +2,7 @@
 <gresources>
   <gresource prefix="/io/elementary/desktop/wingpanel/datetime/">
     <file alias="ControlHeader.css" compressed="true">ControlHeader.css</file>
+    <file alias="GridDay.css" compressed="true">GridDay.css</file>
     <file alias="events-bar-symbolic.svg" compressed="true">events-bar-symbolic.svg</file>
   </gresource>
 </gresources>
