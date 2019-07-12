@@ -48,13 +48,13 @@ public class DateTime.Event : GLib.Object {
     public string get_label () {
         var summary = component.get_summary ();
         if (day_event) {
-            return summary;
+            return "%s\n%s".printf (summary, _("All Day"));
         } else if (alarm) {
-            return "%s - %s".printf (start_time.format (Util.TimeFormat ()), summary);
+            return "%s %s\n%s".printf (_("Alarm:"), start_time.format (Util.TimeFormat ()), summary);
         } else if (range.days > 0 && date.compare (range.first_dt) != 0) {
             return summary;
         }
-        return "%s - %s".printf (summary, start_time.format (Util.TimeFormat ()));
+        return "%s\n%s - %s".printf (summary, start_time.format (Util.TimeFormat ()), end_time.format (Util.TimeFormat ()));
     }
 
     public string get_icon () {
