@@ -25,7 +25,7 @@ namespace DateTime.Widgets {
  * Represents the entire date grid as a table.
  */
     public class Grid : Gtk.Grid {
-        public Gee.HashMap<uint, GridDay> data;
+        Gee.HashMap<uint, GridDay> data;
 
         public Util.DateRange grid_range { get; private set; }
 
@@ -40,8 +40,8 @@ namespace DateTime.Widgets {
 
         public Grid () {
             insert_column (7);
-            set_row_homogeneous (true);
             set_column_homogeneous (true);
+            set_row_homogeneous (true);
 
             data = new Gee.HashMap<uint, GridDay> ();
             events |= Gdk.EventMask.SCROLL_MASK;
@@ -123,9 +123,7 @@ namespace DateTime.Widgets {
                 } else {
                     /* Still update_day to get the color of etc. right */
                     day = update_day (new GridDay (new_date, i), new_date, today, month_start);
-                    day.on_event_add.connect ((date) => {
-                        on_event_add (date);
-                    });
+                    day.on_event_add.connect ((date) => on_event_add (date));
                     day.scroll_event.connect ((event) => { scroll_event (event); return false; });
                     day.focus_in_event.connect ((event) => {
                         on_day_focus_in (day);
@@ -202,7 +200,7 @@ namespace DateTime.Widgets {
             }
         }
 
-        public uint day_hash (GLib.DateTime date) {
+        uint day_hash (GLib.DateTime date) {
             return date.get_year () * 10000 + date.get_month () * 100 + date.get_day_of_month ();
         }
 
