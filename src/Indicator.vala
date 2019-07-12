@@ -121,7 +121,6 @@ public class DateTime.Indicator : Wingpanel.Indicator {
                 idle_update_events ();
             });
 
-
             event_listbox.row_activated.connect ((row) => {
                 calendar.show_date_in_maya (((DateTime.EventRow) row).cal_event.date);
                 close ();
