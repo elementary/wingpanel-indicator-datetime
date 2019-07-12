@@ -63,6 +63,7 @@ public class DateTime.Indicator : Wingpanel.Indicator {
             placeholder_style_context.add_class (Granite.STYLE_CLASS_H3_LABEL);
 
             event_listbox = new Gtk.ListBox ();
+            event_listbox.selection_mode = Gtk.SelectionMode.NONE;
             event_listbox.set_placeholder (placeholder_label);
 
             var settings_button = new Gtk.ModelButton ();
@@ -86,6 +87,11 @@ public class DateTime.Indicator : Wingpanel.Indicator {
 
             calendar.selection_changed.connect ((date) => {
                 idle_update_events ();
+            });
+
+            event_listbox.row_activated.connect ((row) => {
+                calendar.show_date_in_maya (((DateTime.EventRow) row).cal_event.date);
+                close ();
             });
 
             settings_button.clicked.connect (() => {
@@ -128,47 +134,10 @@ public class DateTime.Indicator : Wingpanel.Indicator {
             return GLib.Source.REMOVE;
         }
 
-        foreach (var e in events) {
-            var menuitem_icon = new Gtk.Image.from_icon_name (e.get_icon (), Gtk.IconSize.MENU);
-            menuitem_icon.valign = Gtk.Align.START;
-
-            var menuitem_label = new Gtk.Label ("");
-            menuitem_label.set_markup ("<b>%s</b>".printf (e.get_event_label ()));
-            menuitem_label.hexpand = true;
-            menuitem_label.lines = 3;
-            menuitem_label.ellipsize = Pango.EllipsizeMode.END;
-            menuitem_label.max_width_chars = 30;
-            menuitem_label.wrap = true;
-            menuitem_label.wrap_mode = Pango.WrapMode.WORD_CHAR;
-            menuitem_label.xalign = 0;
-
-            var menuitem_times = new Gtk.Label ("");
-            menuitem_times.set_markup ("<small>%s</small>".printf (e.get_event_times ()));
-            menuitem_times.xalign = 0;
-            menuitem_times.get_style_context ().add_class (Gtk.STYLE_CLASS_DIM_LABEL);
-
-            var menuitem_box = new Gtk.Grid ();
-            menuitem_box.margin_end = 6;
-            menuitem_box.margin_start = 6;
-            menuitem_box.attach (menuitem_icon, 0, 0);
-            menuitem_box.attach (menuitem_label, 1, 0);
-            if (!e.day_event) {
-                menuitem_box.attach (menuitem_times, 1, 1);
-            }
-
-            var menuitem = new Gtk.Button ();
-            menuitem.add (menuitem_box);
-
-            var style_context = menuitem.get_style_context ();
-            style_context.add_class (Gtk.STYLE_CLASS_MENUITEM);
-            style_context.remove_class (Gtk.STYLE_CLASS_BUTTON);
-            style_context.remove_class ("text-button");
+        foreach (var event in events) {
+            var menuitem = new DateTime.EventRow (event);
 
             event_listbox.add (menuitem);
-            menuitem.clicked.connect (() => {
-                calendar.show_date_in_maya (e.date);
-                this.close ();
-            });
         }
 
         event_listbox.show_all ();
