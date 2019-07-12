@@ -36,8 +36,12 @@ public class DateTime.Event : GLib.Object {
     }
 
     construct {
-        GLib.DateTime end_time;
-        Util.get_local_datetimes_from_icalcomponent (component, out start_time, out end_time);
+        iCal.TimeType dt_start = component.get_dtstart ();
+        iCal.TimeType dt_end = component.get_dtend ();
+
+        start_time = Util.ical_to_date_time (dt_start);
+
+        var end_time = Util.ical_to_date_time (dt_end);
         if (end_time == null) {
             alarm = true;
         } else if (Util.is_the_all_day (start_time, end_time)) {

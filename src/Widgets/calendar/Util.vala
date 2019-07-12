@@ -114,14 +114,6 @@ namespace Util {
                                   date.day, date.hour, date.minute, date.second);
     }
 
-    public void get_local_datetimes_from_icalcomponent (iCal.Component comp, out GLib.DateTime start_date, out GLib.DateTime end_date) {
-        iCal.TimeType dt_start = comp.get_dtstart ();
-        iCal.TimeType dt_end = comp.get_dtend ();
-
-        start_date = Util.ical_to_date_time (dt_start);
-        end_date = Util.ical_to_date_time (dt_end);
-    }
-
     public Gee.Collection<DateRange> event_date_ranges (iCal.Component comp, Util.DateRange view_range) {
         var dateranges = new Gee.LinkedList<DateRange> ();
 
