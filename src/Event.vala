@@ -26,6 +26,11 @@ public class DateTime.Event : GLib.Object {
     public GLib.DateTime end_time;
     public bool day_event = false;
 
+    // For ListBox use.
+    public string event_times;
+    public string all_day_str;
+    public string alarm_str;
+
     private bool alarm = false;
 
     public Event (GLib.DateTime date, Util.DateRange range, iCal.Component component) {
@@ -44,18 +49,15 @@ public class DateTime.Event : GLib.Object {
         } else if (Util.is_the_all_day (start_time, end_time)) {
             day_event = true;
         }
+
+        event_times = "%s - %s".printf(start_time.format (Util.TimeFormat ()), end_time.format (Util.TimeFormat ()));
+        all_day_str = "%s".printf (_("All Day:"));
+        alarm_str = "%s".printf (_("Alarm:"));
     }
 
     public string get_label () {
         var summary = component.get_summary ();
-        if (day_event) {
-            return "%s\n%s".printf (summary, _("All Day"));
-        } else if (alarm) {
-            return "%s %s\n%s".printf (_("Alarm:"), start_time.format (Util.TimeFormat ()), summary);
-        } else if (range.days > 0 && date.compare (range.first_dt) != 0) {
-            return summary;
-        }
-        return "%s\n%s - %s".printf (summary, start_time.format (Util.TimeFormat ()), end_time.format (Util.TimeFormat ()));
+        return summary;
     }
 
     public string get_icon () {
