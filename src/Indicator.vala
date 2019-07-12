@@ -162,6 +162,13 @@ public class DateTime.Indicator : Wingpanel.Indicator {
         }
 
         event_grid = new Gtk.ListBox ();
+
+        var scrolled_box = new Gtk.ScrolledWindow (null, null);
+        scrolled_box.hexpand = true;
+        scrolled_box.hscrollbar_policy = Gtk.PolicyType.NEVER;
+        scrolled_box.max_content_height = 200;
+        scrolled_box.propagate_natural_height = true;
+
         foreach (var e in events) {
             var menuitem_icon = new Gtk.Image.from_icon_name (e.get_icon (), Gtk.IconSize.MENU);
             menuitem_icon.valign = Gtk.Align.CENTER;
@@ -206,7 +213,10 @@ public class DateTime.Indicator : Wingpanel.Indicator {
         }
 
         event_grid.show_all ();
-        main_grid.attach (event_grid, 2, 1);
+        scrolled_box.add (event_grid);
+        scrolled_box.show_all ();
+
+        main_grid.attach (scrolled_box, 2, 1);
         no_events_label.visible = false;
         update_events_idle_source = 0;
         return GLib.Source.REMOVE;
