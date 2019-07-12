@@ -20,27 +20,6 @@
  */
 
 namespace Util {
-    public string TimeFormat () {
-        /* If AM/PM doesn't exist, use 24h. */
-        if (Posix.nl_langinfo (Posix.NLItem.AM_STR) == null || Posix.nl_langinfo (Posix.NLItem.AM_STR) == "") {
-            return Granite.DateTime.get_default_time_format (false);
-        }
-
-        /* If AM/PM exists, assume it is the default time format and check for format override. */
-        var setting = new GLib.Settings ("org.gnome.desktop.interface");
-        var clockformat = setting.get_user_value ("clock-format");
-
-        if (clockformat == null) {
-            return Granite.DateTime.get_default_time_format (true);
-        }
-
-        if (clockformat.get_string ().contains ("12h")) {
-            return Granite.DateTime.get_default_time_format (true);
-        } else {
-            return Granite.DateTime.get_default_time_format (false);
-        }
-    }
-
     static bool has_scrolled = false;
     const uint interval = 500;
 
@@ -165,14 +144,6 @@ namespace Util {
     public GLib.DateTime ical_to_date_time (iCal.TimeType date) {
         return new GLib.DateTime (timezone_from_ical (date), date.year, date.month,
                                   date.day, date.hour, date.minute, date.second);
-    }
-
-    public void get_local_datetimes_from_icalcomponent (iCal.Component comp, out GLib.DateTime start_date, out GLib.DateTime end_date) {
-        iCal.TimeType dt_start = comp.get_dtstart ();
-        iCal.TimeType dt_end = comp.get_dtend ();
-
-        start_date = Util.ical_to_date_time (dt_start);
-        end_date = Util.ical_to_date_time (dt_end);
     }
 
     public Gee.Collection<DateRange> event_date_ranges (iCal.Component comp, Util.DateRange view_range) {
