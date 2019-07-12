@@ -147,7 +147,7 @@ public class DateTime.Indicator : Wingpanel.Indicator {
 
     public override void opened () {
         // Refreshes the model for events
-        var model = Widgets.CalendarModel.get_default ()
+        var model = Widgets.CalendarModel.get_default ();
         model.month_start = Util.get_start_of_month ();
         model.compute_ranges ();
 
