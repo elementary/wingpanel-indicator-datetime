@@ -62,7 +62,7 @@ public class DateTime.EventRow : Gtk.ListBoxRow {
         grid.margin_start = grid.margin_end = 6;
         grid.attach (event_image, 0, 0);
         grid.attach (name_label, 1, 0);
-        if (!cal_event.day_event) {
+        if (!cal_event.is_allday) {
             grid.attach (time_label, 1, 1);
         }
 
