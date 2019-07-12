@@ -28,20 +28,29 @@ public class DateTime.EventRow : Gtk.Button {
         var event_image = new Gtk.Image.from_icon_name (cal_event.get_icon (), Gtk.IconSize.MENU);
         event_image.valign = Gtk.Align.START;
 
-        var name_label = new Gtk.Label (cal_event.get_label ());
+        var name_label = new Gtk.Label ("<b>%s</b>".printf (cal_event.get_event_label ()));
         name_label.hexpand = true;
         name_label.ellipsize = Pango.EllipsizeMode.END;
         name_label.lines = 3;
         name_label.max_width_chars = 30;
+        name_label.use_markup = true;
         name_label.wrap = true;
         name_label.wrap_mode = Pango.WrapMode.WORD_CHAR;
         name_label.xalign = 0;
+
+        var time_label = new Gtk.Label ("<small>%s</small>".printf (cal_event.get_event_times ()));
+        time_label.use_markup = true;
+        time_label.xalign = 0;
+        time_label.get_style_context ().add_class (Gtk.STYLE_CLASS_DIM_LABEL);
 
         var grid = new Gtk.Grid ();
         grid.column_spacing = 6;
         grid.margin_start = grid.margin_end = 6;
         grid.attach (event_image, 0, 0);
         grid.attach (name_label, 1, 0);
+        if (!cal_event.day_event) {
+            grid.attach (time_label, 1, 1);
+        }
 
         add (grid);
 
