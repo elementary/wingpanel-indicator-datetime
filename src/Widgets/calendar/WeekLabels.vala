@@ -31,7 +31,7 @@ public class DateTime.Widgets.WeekLabels : Gtk.Revealer {
         day_grid = new Gtk.Grid ();
         set_nr_of_weeks (5);
         day_grid.insert_row (1);
-        day_grid.attach (new Gtk.Separator (Gtk.Orientation.VERTICAL), 1, 0, 1, nr_of_weeks);
+        day_grid.attach (new Gtk.Separator (Gtk.Orientation.VERTICAL), 1, 0, 1, 6);
         day_grid.column_spacing = 9;
         day_grid.show ();
 
