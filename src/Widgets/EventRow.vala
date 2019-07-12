@@ -20,23 +20,36 @@
 public class DateTime.EventRow : Gtk.ListBoxRow {
     public DateTime.Event cal_event { get; construct; }
 
+    private static Gtk.CssProvider css_provider;
+
     public EventRow (DateTime.Event cal_event) {
         Object (cal_event: cal_event);
+    }
+
+    static construct {
+        css_provider = new Gtk.CssProvider ();
+        css_provider.load_from_resource ("/io/elementary/desktop/wingpanel/datetime/EventRow.css");
     }
 
     construct {
         var event_image = new Gtk.Image.from_icon_name (cal_event.get_icon (), Gtk.IconSize.MENU);
         event_image.valign = Gtk.Align.START;
 
-        var name_label = new Gtk.Label ("<b>%s</b>".printf (cal_event.get_event_label ()));
+        var event_image_context = event_image.get_style_context ();
+        event_image_context.add_provider (css_provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
+
+        var name_label = new Gtk.Label (cal_event.get_event_label ());
         name_label.hexpand = true;
         name_label.ellipsize = Pango.EllipsizeMode.END;
         name_label.lines = 3;
         name_label.max_width_chars = 30;
-        name_label.use_markup = true;
         name_label.wrap = true;
         name_label.wrap_mode = Pango.WrapMode.WORD_CHAR;
         name_label.xalign = 0;
+
+        var name_label_context = name_label.get_style_context ();
+        name_label_context.add_class ("title");
+        name_label_context.add_provider (css_provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
 
         var time_label = new Gtk.Label ("<small>%s</small>".printf (cal_event.get_event_times ()));
         time_label.use_markup = true;
@@ -45,6 +58,7 @@ public class DateTime.EventRow : Gtk.ListBoxRow {
 
         var grid = new Gtk.Grid ();
         grid.column_spacing = 6;
+        grid.margin = 3;
         grid.margin_start = grid.margin_end = 6;
         grid.attach (event_image, 0, 0);
         grid.attach (name_label, 1, 0);
@@ -52,9 +66,10 @@ public class DateTime.EventRow : Gtk.ListBoxRow {
             grid.attach (time_label, 1, 1);
         }
 
-        add (grid);
+        var grid_context = grid.get_style_context ();
+        grid_context.add_class ("event");
+        grid_context.add_provider (css_provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
 
-        var style_context = get_style_context ();
-        style_context.add_class (Gtk.STYLE_CLASS_MENUITEM);
+        add (grid);
     }
 }
