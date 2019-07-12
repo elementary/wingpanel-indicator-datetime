@@ -44,9 +44,6 @@ public class DateTime.Event : GLib.Object {
     }
 
     public string get_icon () {
-        if (alarm) {
-            return "alarm-symbolic";
-        }
         return "office-calendar-symbolic";
     }
 }
