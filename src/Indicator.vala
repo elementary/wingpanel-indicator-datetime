@@ -102,7 +102,7 @@ public class DateTime.Indicator : Wingpanel.Indicator {
             main_grid.attach (settings_button, 0, 3);
             main_grid.attach (sep, 1, 0, 1, 9);
             main_grid.attach (header_grid, 2, 0);
-            main_grid.attach (no_events_label, 2, 1);
+            main_grid.attach (no_events_label, 2, 1, 1, 8);
 
             calendar.day_double_click.connect (() => {
                 close ();
@@ -219,7 +219,7 @@ public class DateTime.Indicator : Wingpanel.Indicator {
         scrolled_box.add (event_grid);
         scrolled_box.show_all ();
 
-        main_grid.attach (scrolled_box, 2, 1);
+        main_grid.attach (scrolled_box, 2, 1, 1, 7);
         no_events_label.visible = false;
         update_events_idle_source = 0;
         return GLib.Source.REMOVE;
