@@ -23,17 +23,6 @@
  * Represents a single day on the grid.
  */
 public class DateTime.Widgets.GridDay : Gtk.EventBox {
-
-    const string DAY_CSS = """
-        .circular {
-            border-radius: 50%;
-        }
-
-        .accent {
-            font-weight: bold;
-        }
-    """;
-
     /*
      * Event emitted when the day is double clicked or the ENTER key is pressed.
      */
@@ -53,14 +42,11 @@ public class DateTime.Widgets.GridDay : Gtk.EventBox {
         halign = Gtk.Align.CENTER;
 
         var provider = new Gtk.CssProvider ();
-        try {
-            provider.load_from_data (DAY_CSS, DAY_CSS.length);
-            Gtk.StyleContext.add_provider_for_screen (Gdk.Screen.get_default (), provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
-        } catch (Error e) {
-            critical (e.message);
-        }
+        provider.load_from_resource ("/io/elementary/desktop/wingpanel/datetime/GridDay.css");
 
-        get_style_context ().add_class ("circular");
+        unowned Gtk.StyleContext style_context = get_style_context ();
+        style_context.add_provider (provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
+        style_context.add_class ("circular");
 
         // EventBox Properties
         can_focus = true;
