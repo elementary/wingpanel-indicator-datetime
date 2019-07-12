@@ -1,18 +1,18 @@
 /*
  * Copyright 2019 elementary, Inc. (https://elementary.io)
  *
- * grid program is free software; you can redistribute it and/or
+ * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public
  * License as published by the Free Software Foundation; either
  * version 2 of the License, or (at your option) any later version.
  *
- * grid program is distributed in the hope that it will be useful,
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  * General Public License for more details.
  *
  * You should have received a copy of the GNU General Public
- * License along with grid program; if not, write to the
+ * License along with this program; if not, write to the
  * Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
  * Boston, MA 02110-1301 USA.
  */
@@ -37,7 +37,6 @@ public class DateTime.EventRow : Gtk.ListBoxRow {
 
         var event_image_context = event_image.get_style_context ();
         event_image_context.add_provider (css_provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
-        event_image_context.add_class ("icon");
 
         var name_label = new Gtk.Label (cal_event.get_event_label ());
         name_label.hexpand = true;
@@ -71,32 +70,6 @@ public class DateTime.EventRow : Gtk.ListBoxRow {
         grid_context.add_class ("event");
         grid_context.add_provider (css_provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
 
-        /* Color menuitem per calendar source of event */
-        get_style_calendar_color (cal_event.cal, grid);
-        get_style_calendar_color (cal_event.cal, event_image);
-
-        cal_event.cal.notify["color"].connect (() => {
-            get_style_calendar_color (cal_event.cal, grid);
-            get_style_calendar_color (cal_event.cal, event_image);
-        });
-
         add (grid);
-    }
-
-    public void get_style_calendar_color (E.SourceCalendar cal, Gtk.Widget widget) {
-        var color = cal.dup_color ();
-
-        string style = """
-                        @define-color eventcolorAccent %s;
-                       """.printf(color);
-
-        var style_provider = new Gtk.CssProvider ();
-
-        try {
-            style_provider.load_from_data (style, style.length);
-            widget.get_style_context ().add_provider (style_provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
-        } catch (Error e) {
-            warning ("Could not create CSS Provider: %s\nStylesheet:\n%s", e.message, style);
-        }
     }
 }
