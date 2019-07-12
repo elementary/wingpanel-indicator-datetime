@@ -21,7 +21,7 @@ public class DateTime.Indicator : Wingpanel.Indicator {
     private Widgets.PanelLabel panel_label;
     private Gtk.Grid main_grid;
     private Widgets.Calendar calendar;
-    private Gtk.Grid event_grid;
+    private Gtk.ListBox event_listbox;
     private uint update_events_idle_source = 0;
 
     public Indicator () {
@@ -47,18 +47,39 @@ public class DateTime.Indicator : Wingpanel.Indicator {
     public override Gtk.Widget? get_widget () {
         if (main_grid == null) {
             calendar = new Widgets.Calendar ();
-            calendar.margin_top = 6;
             calendar.margin_bottom = 6;
+
+            var placeholder_label = new Gtk.Label (_("No Events on This Day"));
+            placeholder_label.wrap = true;
+            placeholder_label.wrap_mode = Pango.WrapMode.WORD;
+            placeholder_label.margin_start = 12;
+            placeholder_label.margin_end = 12;
+            placeholder_label.max_width_chars = 20;
+            placeholder_label.justify = Gtk.Justification.CENTER;
+            placeholder_label.show_all ();
+
+            var placeholder_style_context = placeholder_label.get_style_context ();
+            placeholder_style_context.add_class (Gtk.STYLE_CLASS_DIM_LABEL);
+            placeholder_style_context.add_class (Granite.STYLE_CLASS_H3_LABEL);
+
+            event_listbox = new Gtk.ListBox ();
+            event_listbox.selection_mode = Gtk.SelectionMode.NONE;
+            event_listbox.set_placeholder (placeholder_label);
 
             var settings_button = new Gtk.ModelButton ();
             settings_button.text = _("Date & Time Settings…");
 
             main_grid = new Gtk.Grid ();
-            main_grid.halign = Gtk.Align.CENTER;
-            main_grid.valign = Gtk.Align.START;
+            main_grid.margin_top = 12;
             main_grid.attach (calendar, 0, 0);
-            main_grid.attach (new Wingpanel.Widgets.Separator (), 0, 2);
-            main_grid.attach (settings_button, 0, 3);
+            main_grid.attach (new Gtk.Separator (Gtk.Orientation.VERTICAL), 1, 0);
+            main_grid.attach (event_listbox, 2, 0);
+            main_grid.attach (new Wingpanel.Widgets.Separator (), 0, 2, 3);
+            main_grid.attach (settings_button, 0, 3, 3);
+
+            var size_group = new Gtk.SizeGroup (Gtk.SizeGroupMode.HORIZONTAL);
+            size_group.add_widget (calendar);
+            size_group.add_widget (event_listbox);
 
             calendar.day_double_click.connect (() => {
                 close ();
@@ -66,6 +87,11 @@ public class DateTime.Indicator : Wingpanel.Indicator {
 
             calendar.selection_changed.connect ((date) => {
                 idle_update_events ();
+            });
+
+            event_listbox.row_activated.connect ((row) => {
+                calendar.show_date_in_maya (((DateTime.EventRow) row).cal_event.date);
+                close ();
             });
 
             settings_button.clicked.connect (() => {
@@ -93,8 +119,8 @@ public class DateTime.Indicator : Wingpanel.Indicator {
     }
 
     private bool update_events () {
-        if (event_grid != null) {
-            event_grid.destroy ();
+        foreach (unowned Gtk.Widget widget in event_listbox.get_children ()) {
+            widget.destroy ();
         }
 
         if (calendar.selected_date == null) {
@@ -108,22 +134,13 @@ public class DateTime.Indicator : Wingpanel.Indicator {
             return GLib.Source.REMOVE;
         }
 
-        event_grid = new Gtk.Grid ();
-        event_grid.orientation = Gtk.Orientation.VERTICAL;
-        main_grid.attach (event_grid, 0, 1);
-
         foreach (var event in events) {
             var menuitem = new DateTime.EventRow (event);
 
-            event_grid.add (menuitem);
-
-            menuitem.clicked.connect (() => {
-                calendar.show_date_in_maya (event.date);
-                close ();
-            });
+            event_listbox.add (menuitem);
         }
 
-        event_grid.show_all ();
+        event_listbox.show_all ();
         update_events_idle_source = 0;
         return GLib.Source.REMOVE;
     }

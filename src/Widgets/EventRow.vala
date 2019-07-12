@@ -17,7 +17,7 @@
  * Boston, MA 02110-1301 USA.
  */
 
-public class DateTime.EventRow : Gtk.Button {
+public class DateTime.EventRow : Gtk.ListBoxRow {
     public DateTime.Event cal_event { get; construct; }
 
     public EventRow (DateTime.Event cal_event) {
@@ -56,7 +56,5 @@ public class DateTime.EventRow : Gtk.Button {
 
         var style_context = get_style_context ();
         style_context.add_class (Gtk.STYLE_CLASS_MENUITEM);
-        style_context.remove_class (Gtk.STYLE_CLASS_BUTTON);
-        style_context.remove_class ("text-button");
     }
 }

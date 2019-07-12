@@ -33,6 +33,7 @@ namespace DateTime.Widgets {
         construct {
             var heading = new ControlHeader ();
             heading.margin = 6;
+            heading.margin_top = 0;
 
             cal = new CalendarView ();
 
