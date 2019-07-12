@@ -43,7 +43,6 @@ namespace DateTime.Widgets {
             var box_buttons = new Gtk.Grid ();
             box_buttons.valign = Gtk.Align.CENTER;
             box_buttons.get_style_context ().add_class (Gtk.STYLE_CLASS_LINKED);
-
             box_buttons.add (left_button);
             box_buttons.add (center_button);
             box_buttons.add (right_button);
