@@ -41,6 +41,7 @@ public class DateTime.Event : GLib.Object {
 
     construct {
         Util.get_local_datetimes_from_icalcomponent (component, out start_time, out end_time);
+
         if (end_time == null) {
             alarm = true;
         } else if (Util.is_the_all_day (start_time, end_time)) {
@@ -50,16 +51,15 @@ public class DateTime.Event : GLib.Object {
         cal = (E.SourceCalendar?)source.get_extension (E.SOURCE_EXTENSION_CALENDAR);
     }
 
-    public string get_label () {
-        var summary = component.get_summary ();
+    public string get_event_label () {
+        return component.get_summary ();
+    }
+
+    public string get_event_times () {
         if (day_event) {
-            return summary;
-        } else if (alarm) {
-            return "%s - %s".printf (start_time.format (Util.TimeFormat ()), summary);
-        } else if (range.days > 0 && date.compare (range.first_dt) != 0) {
-            return summary;
+            return "";
         }
-        return "%s - %s".printf (summary, start_time.format (Util.TimeFormat ()));
+        return "%s - %s".printf (start_time.format (Util.TimeFormat ()), end_time.format (Util.TimeFormat ()));
     }
 
     public string get_icon () {
