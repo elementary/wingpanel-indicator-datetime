@@ -67,6 +67,10 @@ public class DateTime.Indicator : Wingpanel.Indicator {
             event_listbox.set_header_func (header_update_func);
             event_listbox.set_placeholder (placeholder_label);
 
+            var scrolled_window = new Gtk.ScrolledWindow (null, null);
+            scrolled_window.hscrollbar_policy = Gtk.PolicyType.NEVER;
+            scrolled_window.add (event_listbox);
+
             var settings_button = new Gtk.ModelButton ();
             settings_button.text = _("Date & Time Settings…");
 
@@ -74,7 +78,7 @@ public class DateTime.Indicator : Wingpanel.Indicator {
             main_grid.margin_top = 12;
             main_grid.attach (calendar, 0, 0);
             main_grid.attach (new Gtk.Separator (Gtk.Orientation.VERTICAL), 1, 0);
-            main_grid.attach (event_listbox, 2, 0);
+            main_grid.attach (scrolled_window, 2, 0);
             main_grid.attach (new Wingpanel.Widgets.Separator (), 0, 2, 3);
             main_grid.attach (settings_button, 0, 3, 3);
 
