@@ -1,5 +1,6 @@
 .event {
-    background-color: alpha(@eventcolorAccent, 0.15);
+    background: alpha(@eventcolorAccent, 0.15);
+    border-radius: 3px;
     color: shade(@eventcolorAccent, 0.65);
     padding: 10px;
 }
