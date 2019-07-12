@@ -74,38 +74,6 @@ namespace Util {
         return datetime.add_full (0, 0, 0, -datetime.get_hour (), -datetime.get_minute (), -datetime.get_second ());
     }
 
-    public string get_style_calendar_color (E.SourceCalendar cal) {
-        var uid = cal.source.uid;
-        var color = cal.dup_color ();
-        string css_class = "event-color-%s".printf (uid);
-
-        string style = """
-                        @define-color calendar-color %s;
-                        .%s {
-                            background-color: alpha(@calendar-color, 0.15);
-                            color: shade(@calendar-color, 0.65);
-                            border-radius: 4px;
-                            padding: 3px;
-                            box-shadow: 0 1px 2px alpha (#000, 0.2),
-                                        0 1px 3px alpha (@calendar-color, 0.15);
-                        }
-                        .%s image {
-                            color: shade(@calendar-color, 0.65);
-                        }
-                       """.printf(color, css_class, css_class);
-
-        var style_provider = new Gtk.CssProvider ();
-
-        try {
-            style_provider.load_from_data (style, style.length);
-            Gtk.StyleContext.add_provider_for_screen (Gdk.Screen.get_default (), style_provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
-        } catch (Error e) {
-            warning ("Could not create CSS Provider: %s\nStylesheet:\n%s", e.message, style);
-        }
-
-        return css_class;
-    }
-
     /**
      * Converts the given TimeType to a DateTime.
      */

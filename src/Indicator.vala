@@ -169,15 +169,6 @@ public class DateTime.Indicator : Wingpanel.Indicator {
 
         foreach (var event in events) {
             var menuitem = new DateTime.EventRow (event);
-
-            /* Color menuitem per calendar source of event */
-            var css_class = Util.get_style_calendar_color (event.cal);
-            menuitem.get_style_context ().add_class (css_class);
-
-            event.cal.notify["color"].connect (() => {
-                Util.get_style_calendar_color (event.cal); /* Redefines same class */
-            });
-
             event_listbox.add (menuitem);
         }
 
