@@ -117,7 +117,8 @@ public class DateTime.Indicator : Wingpanel.Indicator {
             menuitem_icon.valign = Gtk.Align.START;
 
             string label, times;
-            e.get_label (out label, out times);
+            e.get_event_label (out label);
+            e.get_event_times (out times);
             var menuitem_label = new Gtk.Label ("");
             menuitem_label.set_markup ("<b>%s</b>\n%s".printf(label, times));
             menuitem_label.hexpand = true;
