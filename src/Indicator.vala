@@ -117,7 +117,7 @@ public class DateTime.Indicator : Wingpanel.Indicator {
             menuitem_icon.valign = Gtk.Align.START;
 
             var menuitem_label = new Gtk.Label ("");
-            menuitem_label.set_markup ("<b>%s</b>".printf(e.get_event_label ()));
+            menuitem_label.set_markup ("<b>%s</b>".printf (e.get_event_label ()));
             menuitem_label.hexpand = true;
             menuitem_label.lines = 3;
             menuitem_label.ellipsize = Pango.EllipsizeMode.END;
