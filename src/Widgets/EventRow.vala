@@ -32,7 +32,7 @@ public class DateTime.EventRow : Gtk.Button {
         name_label.hexpand = true;
         name_label.ellipsize = Pango.EllipsizeMode.END;
         name_label.lines = 3;
-        name_label.max_width_chars = 20;
+        name_label.max_width_chars = 30;
         name_label.wrap = true;
         name_label.wrap_mode = Pango.WrapMode.WORD_CHAR;
         name_label.xalign = 0;
