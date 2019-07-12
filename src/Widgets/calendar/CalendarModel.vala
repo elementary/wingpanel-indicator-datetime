@@ -144,9 +144,9 @@ namespace DateTime.Widgets {
                 return e1.start_time.compare(e2.start_time);
 
             // If they have the same date, sort them wholeday first
-            if (e1.day_event)
+            if (e1.is_allday)
                 return -1;
-            if (e2.day_event)
+            if (e2.is_allday)
                 return 1;
             return 0;
         }
