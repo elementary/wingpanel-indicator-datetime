@@ -128,13 +128,12 @@ public class DateTime.Indicator : Wingpanel.Indicator {
 
             var menuitem_times = new Gtk.Label ("");
             menuitem_times.set_markup ("<small>%s</small>".printf (e.get_event_times ()));
-            menuitem_times.hexpand = true;
-            menuitem_times.lines = 3;
             menuitem_times.ellipsize = Pango.EllipsizeMode.END;
             menuitem_times.max_width_chars = 30;
             menuitem_times.wrap = true;
             menuitem_times.wrap_mode = Pango.WrapMode.WORD_CHAR;
             menuitem_times.xalign = 0;
+            menuitem_times.get_style_context ().add_class (Gtk.STYLE_CLASS_DIM_LABEL);
 
             var menuitem_box = new Gtk.Grid ();
             menuitem_box.margin_end = 6;
