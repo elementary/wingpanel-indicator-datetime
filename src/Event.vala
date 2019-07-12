@@ -36,14 +36,25 @@ public class DateTime.Event : GLib.Object {
         );
     }
 
-    public string get_label () {
+    construct {
         Util.get_local_datetimes_from_icalcomponent (component, out start_time, out end_time);
-        var summary = component.get_summary ();
-        var event_times = "%s - %s".printf(start_time.format (Util.TimeFormat ()), end_time.format (Util.TimeFormat ()));
-        return summary + "\n" + event_times;
+
+        if (end_time == null) {
+            alarm = true;
+        } else if (Util.is_the_all_day (start_time, end_time)) {
+            day_event = true;
+        }
+    }
+
+    public void get_label (out string summary, out string event_times) {
+        summary = component.get_summary ();
+        event_times = "%s - %s".printf(start_time.format (Util.TimeFormat ()), end_time.format (Util.TimeFormat ()));
     }
 
     public string get_icon () {
+        if (alarm) {
+            return "alarm-symbolic";
+        }
         return "office-calendar-symbolic";
     }
 }
