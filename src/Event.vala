@@ -39,7 +39,8 @@ public class DateTime.Event : GLib.Object {
     }
 
     construct {
-        Util.get_local_datetimes_from_icalcomponent (component, out start_time, out end_time);
+        start_time = Util.ical_to_date_time (component.get_dtstart ());
+        end_time = Util.ical_to_date_time (component.get_dtend ());
 
         if (end_time == null) {
             alarm = true;
@@ -58,7 +59,7 @@ public class DateTime.Event : GLib.Object {
         if (day_event) {
             return "";
         }
-        return "%s - %s".printf (start_time.format (Util.TimeFormat ()), end_time.format (Util.TimeFormat ()));
+        return "%s - %s".printf (start_time.format (get_time_format ()), end_time.format (get_time_format ()));
     }
 
     public string get_icon () {
@@ -66,5 +67,26 @@ public class DateTime.Event : GLib.Object {
             return "alarm-symbolic";
         }
         return "office-calendar-symbolic";
+    }
+
+    private string get_time_format () {
+        /* If AM/PM doesn't exist, use 24h. */
+        if (Posix.nl_langinfo (Posix.NLItem.AM_STR) == null || Posix.nl_langinfo (Posix.NLItem.AM_STR) == "") {
+            return Granite.DateTime.get_default_time_format (false);
+        }
+
+        /* If AM/PM exists, assume it is the default time format and check for format override. */
+        var setting = new GLib.Settings ("org.gnome.desktop.interface");
+        var clockformat = setting.get_user_value ("clock-format");
+
+        if (clockformat == null) {
+            return Granite.DateTime.get_default_time_format (true);
+        }
+
+        if (clockformat.get_string ().contains ("12h")) {
+            return Granite.DateTime.get_default_time_format (true);
+        } else {
+            return Granite.DateTime.get_default_time_format (false);
+        }
     }
 }
