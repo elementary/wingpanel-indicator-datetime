@@ -54,6 +54,7 @@ public class DateTime.Indicator : Wingpanel.Indicator {
             placeholder_label.wrap_mode = Pango.WrapMode.WORD;
             placeholder_label.margin_start = 12;
             placeholder_label.margin_end = 12;
+            placeholder_label.max_width_chars = 20;
             placeholder_label.justify = Gtk.Justification.CENTER;
             placeholder_label.valign = Gtk.Align.CENTER;
             placeholder_label.show_all ();
