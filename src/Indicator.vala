@@ -147,14 +147,15 @@ public class DateTime.Indicator : Wingpanel.Indicator {
 
     public override void opened () {
         // Refreshes the model for events
-        Widgets.CalendarModel.get_default ().month_start = Util.get_start_of_month ();
-        Widgets.CalendarModel.get_default ().compute_ranges ();
+        var model = Widgets.CalendarModel.get_default ()
+        model.month_start = Util.get_start_of_month ();
+        model.compute_ranges ();
 
         calendar.show_today ();
 
-        Widgets.CalendarModel.get_default ().events_added.connect (update_events_model);
-        Widgets.CalendarModel.get_default ().events_updated.connect (update_events_model);
-        Widgets.CalendarModel.get_default ().events_removed.connect (update_events_model);
+        model.events_added.connect (update_events_model);
+        model.events_updated.connect (update_events_model);
+        model.events_removed.connect (update_events_model);
     }
 
     public override void closed () {
