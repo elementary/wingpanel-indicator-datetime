@@ -72,16 +72,17 @@ public class DateTime.EventRow : Gtk.ListBoxRow {
 
         /* Color menuitem per calendar source of event */
         var provider = new Gtk.CssProvider ();
-        Util.get_style_calendar_color (cal_event.cal, provider);
-        grid.get_style_context ().add_provider (provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
-        event_image.get_style_context ().add_provider (provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
+        set_color ();
 
         cal_event.cal.notify["color"].connect (() => {
-            Util.get_style_calendar_color (cal_event.cal, provider);
-            grid.get_style_context ().add_provider (provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
-            event_image.get_style_context ().add_provider (provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
+            set_color ();
         });
 
         add (grid);
+    }
+    public void set_color () {
+        Util.get_style_calendar_color (cal_event.cal, provider);
+        grid.get_style_context ().add_provider (provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
+        event_image.get_style_context ().add_provider (provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
     }
 }
