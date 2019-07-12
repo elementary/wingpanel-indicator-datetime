@@ -34,7 +34,7 @@ public class DateTime.Widgets.CalendarView : Gtk.Grid {
 
     private WeekLabels weeks { get; private set; }
     private Header header { get; private set; }
-    public Grid grid { get; private set; }
+    private Grid grid { get; private set; }
     private Gtk.Stack stack { get; private set; }
     private Gtk.Grid big_grid { get; private set; }
 
@@ -83,7 +83,6 @@ public class DateTime.Widgets.CalendarView : Gtk.Grid {
 
         // Grid properties
         var new_big_grid = new Gtk.Grid ();
-        new_big_grid.margin = 0;
         new_big_grid.attach (header, 1, 0, 1, 1);
         new_big_grid.attach (grid, 1, 1, 1, 1);
         new_big_grid.attach (weeks, 0, 1, 1, 1);
