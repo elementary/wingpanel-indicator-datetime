@@ -54,8 +54,8 @@ public class DateTime.Indicator : Wingpanel.Indicator {
             placeholder_label.wrap_mode = Pango.WrapMode.WORD;
             placeholder_label.margin_start = 12;
             placeholder_label.margin_end = 12;
-            placeholder_label.max_width_chars = 20;
             placeholder_label.justify = Gtk.Justification.CENTER;
+            placeholder_label.valign = Gtk.Align.CENTER;
             placeholder_label.show_all ();
 
             var placeholder_style_context = placeholder_label.get_style_context ();
@@ -63,18 +63,22 @@ public class DateTime.Indicator : Wingpanel.Indicator {
             placeholder_style_context.add_class (Granite.STYLE_CLASS_H3_LABEL);
 
             event_listbox = new Gtk.ListBox ();
+            event_listbox.margin_start = 12;
+            event_listbox.margin_end = 12;
             event_listbox.selection_mode = Gtk.SelectionMode.NONE;
             event_listbox.set_placeholder (placeholder_label);
 
             var settings_button = new Gtk.ModelButton ();
             settings_button.text = _("Date & Time Settings…");
 
+            var provider = new Gtk.CssProvider ();
+            provider.load_from_resource ("/io/elementary/desktop/wingpanel/datetime/ControlHeader.css");
             var header_label = new Gtk.Label (_("Events"));
             header_label.get_style_context ().add_class ("header-label");
             header_label.get_style_context ().add_provider (provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
             header_label.halign = Gtk.Align.START;
-            header_label.width_chars = 13;
-            header_label.xalign = 0;
+            header_label.hexpand = true;
+            header_label.margin_start = 6;
 
             var cal_icon = new Gtk.Image.from_icon_name ("office-calendar", Gtk.IconSize.LARGE_TOOLBAR);
             cal_icon.halign = Gtk.Align.END;
@@ -86,32 +90,21 @@ public class DateTime.Indicator : Wingpanel.Indicator {
             cal_button.set_tooltip_text (_("Open Calendar"));
 
             var header_grid = new Gtk.Grid ();
-            header_grid.column_spacing = 6;
-            header_grid.valign = Gtk.Align.CENTER;
-            header_grid.margin = 6;
             header_grid.attach (header_label, 0, 0);
             header_grid.attach (cal_button, 1, 0);
 
-            var sep = new Gtk.Separator (Gtk.Orientation.VERTICAL);
-
-            no_events_label = new Gtk.Label (_("No Events Scheduled In This Day"));
-            no_events_label.get_style_context ().add_class (Granite.STYLE_CLASS_H3_LABEL);
-            no_events_label.get_style_context ().add_class (Gtk.STYLE_CLASS_DIM_LABEL);
-            no_events_label.width_chars = 20;
-            no_events_label.max_width_chars = 20;
-            no_events_label.set_line_wrap (true);
-            no_events_label.set_line_wrap_mode (Pango.WrapMode.WORD_CHAR);
-            no_events_label.set_justify (Gtk.Justification.CENTER);
-            no_events_label.halign = Gtk.Align.CENTER;
-
-            heading = new Widgets.ControlHeader ();
-            heading.margin = 9;
+            var event_pane = new Gtk.Grid ();
+            event_pane.margin_top = 0;
+            event_pane.row_spacing = 6;
+            event_pane.orientation = Gtk.Orientation.VERTICAL;
+            event_pane.add (header_grid);
+            event_pane.add (event_listbox);
 
             main_grid = new Gtk.Grid ();
             main_grid.margin_top = 12;
             main_grid.attach (calendar, 0, 0);
             main_grid.attach (new Gtk.Separator (Gtk.Orientation.VERTICAL), 1, 0);
-            main_grid.attach (event_listbox, 2, 0);
+            main_grid.attach (event_pane, 2, 0);
             main_grid.attach (new Wingpanel.Widgets.Separator (), 0, 2, 3);
             main_grid.attach (settings_button, 0, 3, 3);
 
@@ -171,7 +164,6 @@ public class DateTime.Indicator : Wingpanel.Indicator {
         var events = model.get_events (calendar.selected_date);
         if (events.size == 0) {
             update_events_idle_source = 0;
-            no_events_label.visible = true;
             return GLib.Source.REMOVE;
         }
 
@@ -179,11 +171,11 @@ public class DateTime.Indicator : Wingpanel.Indicator {
             var menuitem = new DateTime.EventRow (event);
 
             /* Color menuitem per calendar source of event */
-            var css_class = Util.get_style_calendar_color (e.cal);
+            var css_class = Util.get_style_calendar_color (event.cal);
             menuitem.get_style_context ().add_class (css_class);
 
-            e.cal.notify["color"].connect (() => {
-                Util.get_style_calendar_color (e.cal); /* Redefines same class */
+            event.cal.notify["color"].connect (() => {
+                Util.get_style_calendar_color (event.cal); /* Redefines same class */
             });
 
             event_listbox.add (menuitem);

@@ -39,6 +39,7 @@ namespace DateTime.Widgets {
 
             margin_start = margin_end = 10;
             orientation = Gtk.Orientation.VERTICAL;
+            add (heading);
             add (cal);
 
             cal.selection_changed.connect ((date) => {

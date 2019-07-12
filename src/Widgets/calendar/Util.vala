@@ -106,6 +106,7 @@ namespace Util {
                             background-color: alpha(@calendar-color, 0.15);
                             color: shade(@calendar-color, 0.65);
                             border-radius: 4px;
+                            padding: 3px;
                             box-shadow: 0 1px 2px alpha (#000, 0.2),
                                         0 1px 3px alpha (@calendar-color, 0.15);
                         }
