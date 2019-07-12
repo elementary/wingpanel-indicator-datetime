@@ -116,11 +116,8 @@ public class DateTime.Indicator : Wingpanel.Indicator {
             var menuitem_icon = new Gtk.Image.from_icon_name (e.get_icon (), Gtk.IconSize.MENU);
             menuitem_icon.valign = Gtk.Align.START;
 
-            string label, times;
-            e.get_event_label (out label);
-            e.get_event_times (out times);
             var menuitem_label = new Gtk.Label ("");
-            menuitem_label.set_markup ("<b>%s</b>\n%s".printf(label, times));
+            menuitem_label.set_markup ("<b>%s</b>".printf(e.get_event_label ()));
             menuitem_label.hexpand = true;
             menuitem_label.lines = 3;
             menuitem_label.ellipsize = Pango.EllipsizeMode.END;
@@ -129,11 +126,22 @@ public class DateTime.Indicator : Wingpanel.Indicator {
             menuitem_label.wrap_mode = Pango.WrapMode.WORD_CHAR;
             menuitem_label.xalign = 0;
 
-            var menuitem_box = new Gtk.Box (Gtk.Orientation.HORIZONTAL, 6);
+            var menuitem_times = new Gtk.Label ("");
+            menuitem_times.set_markup (e.get_event_times ());
+            menuitem_times.hexpand = true;
+            menuitem_times.lines = 3;
+            menuitem_times.ellipsize = Pango.EllipsizeMode.END;
+            menuitem_times.max_width_chars = 30;
+            menuitem_times.wrap = true;
+            menuitem_times.wrap_mode = Pango.WrapMode.WORD_CHAR;
+            menuitem_times.xalign = 0;
+
+            var menuitem_box = new Gtk.Grid ();
             menuitem_box.margin_end = 6;
             menuitem_box.margin_start = 6;
-            menuitem_box.add (menuitem_icon);
-            menuitem_box.add (menuitem_label);
+            menuitem_box.attach (menuitem_icon, 0, 0);
+            menuitem_box.attach (menuitem_label, 1, 0);
+            menuitem_box.attach (menuitem_times, 1, 1);
 
             var menuitem = new Gtk.Button ();
             menuitem.add (menuitem_box);

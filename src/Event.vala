@@ -46,12 +46,12 @@ public class DateTime.Event : GLib.Object {
         }
     }
 
-    public void get_event_label (out string summary) {
-        summary = component.get_summary ();
+    public string get_event_label () {
+        return component.get_summary ();
     }
 
-    public void get_event_times (out string event_times) {
-        event_times = "%s - %s".printf(start_time.format (Util.TimeFormat ()), end_time.format (Util.TimeFormat ()));
+    public string get_event_times () {
+        return "%s - %s".printf(start_time.format (Util.TimeFormat ()), end_time.format (Util.TimeFormat ()));
     }
 
     public string get_icon () {
