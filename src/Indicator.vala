@@ -63,8 +63,6 @@ public class DateTime.Indicator : Wingpanel.Indicator {
             placeholder_style_context.add_class (Granite.STYLE_CLASS_H3_LABEL);
 
             event_listbox = new Gtk.ListBox ();
-            event_listbox.margin_start = 12;
-            event_listbox.margin_end = 12;
             event_listbox.selection_mode = Gtk.SelectionMode.NONE;
             event_listbox.set_header_func (header_update_func);
             event_listbox.set_placeholder (placeholder_label);
@@ -98,12 +96,11 @@ public class DateTime.Indicator : Wingpanel.Indicator {
             header_grid.attach (cal_button, 1, 0);
 
             var event_pane = new Gtk.Grid ();
-            event_pane.margin_top = 0;
             event_pane.row_spacing = 6;
             event_pane.orientation = Gtk.Orientation.VERTICAL;
             event_pane.add (header_grid);
             event_pane.add (event_listbox);
-            
+
             scrolled_window.add (event_pane);
 
             main_grid = new Gtk.Grid ();
