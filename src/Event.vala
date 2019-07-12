@@ -23,6 +23,7 @@ public class DateTime.Event : GLib.Object {
     public Util.DateRange range { get; construct; }
 
     public GLib.DateTime start_time;
+    public GLib.DateTime end_time;
     public bool day_event = false;
 
     private bool alarm = false;
