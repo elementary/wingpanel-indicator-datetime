@@ -21,7 +21,7 @@ public class DateTime.Indicator : Wingpanel.Indicator {
     private Widgets.PanelLabel panel_label;
     private Gtk.Grid main_grid;
     private Widgets.Calendar calendar;
-    private Gtk.Grid event_grid;
+    private Gtk.ListBox event_listbox;
     private uint update_events_idle_source = 0;
 
     public Indicator () {
@@ -47,18 +47,38 @@ public class DateTime.Indicator : Wingpanel.Indicator {
     public override Gtk.Widget? get_widget () {
         if (main_grid == null) {
             calendar = new Widgets.Calendar ();
-            calendar.margin_top = 6;
             calendar.margin_bottom = 6;
+
+            var placeholder_label = new Gtk.Label (_("No Events on This Day"));
+            placeholder_label.wrap = true;
+            placeholder_label.wrap_mode = Pango.WrapMode.WORD;
+            placeholder_label.margin_start = 12;
+            placeholder_label.margin_end = 12;
+            placeholder_label.max_width_chars = 20;
+            placeholder_label.justify = Gtk.Justification.CENTER;
+            placeholder_label.show_all ();
+
+            var placeholder_style_context = placeholder_label.get_style_context ();
+            placeholder_style_context.add_class (Gtk.STYLE_CLASS_DIM_LABEL);
+            placeholder_style_context.add_class (Granite.STYLE_CLASS_H3_LABEL);
+
+            event_listbox = new Gtk.ListBox ();
+            event_listbox.set_placeholder (placeholder_label);
 
             var settings_button = new Gtk.ModelButton ();
             settings_button.text = _("Date & Time Settings…");
 
             main_grid = new Gtk.Grid ();
-            main_grid.halign = Gtk.Align.CENTER;
-            main_grid.valign = Gtk.Align.START;
+            main_grid.margin_top = 12;
             main_grid.attach (calendar, 0, 0);
-            main_grid.attach (new Wingpanel.Widgets.Separator (), 0, 2);
-            main_grid.attach (settings_button, 0, 3);
+            main_grid.attach (new Gtk.Separator (Gtk.Orientation.VERTICAL), 1, 0);
+            main_grid.attach (event_listbox, 2, 0);
+            main_grid.attach (new Wingpanel.Widgets.Separator (), 0, 2, 3);
+            main_grid.attach (settings_button, 0, 3, 3);
+
+            var size_group = new Gtk.SizeGroup (Gtk.SizeGroupMode.HORIZONTAL);
+            size_group.add_widget (calendar);
+            size_group.add_widget (event_listbox);
 
             calendar.day_double_click.connect (() => {
                 close ();
@@ -93,8 +113,8 @@ public class DateTime.Indicator : Wingpanel.Indicator {
     }
 
     private bool update_events () {
-        if (event_grid != null) {
-            event_grid.destroy ();
+        foreach (unowned Gtk.Widget widget in event_listbox.get_children ()) {
+            widget.destroy ();
         }
 
         if (calendar.selected_date == null) {
@@ -108,15 +128,12 @@ public class DateTime.Indicator : Wingpanel.Indicator {
             return GLib.Source.REMOVE;
         }
 
-        event_grid = new Gtk.Grid ();
-        event_grid.orientation = Gtk.Orientation.VERTICAL;
-        main_grid.attach (event_grid, 0, 1);
-
         foreach (var e in events) {
             var menuitem_icon = new Gtk.Image.from_icon_name (e.get_icon (), Gtk.IconSize.MENU);
             menuitem_icon.valign = Gtk.Align.START;
 
-            var menuitem_label = new Gtk.Label (e.get_label ());
+            var menuitem_label = new Gtk.Label ("");
+            menuitem_label.set_markup ("<b>%s</b>".printf (e.get_event_label ()));
             menuitem_label.hexpand = true;
             menuitem_label.lines = 3;
             menuitem_label.ellipsize = Pango.EllipsizeMode.END;
@@ -125,11 +142,19 @@ public class DateTime.Indicator : Wingpanel.Indicator {
             menuitem_label.wrap_mode = Pango.WrapMode.WORD_CHAR;
             menuitem_label.xalign = 0;
 
-            var menuitem_box = new Gtk.Box (Gtk.Orientation.HORIZONTAL, 6);
+            var menuitem_times = new Gtk.Label ("");
+            menuitem_times.set_markup ("<small>%s</small>".printf (e.get_event_times ()));
+            menuitem_times.xalign = 0;
+            menuitem_times.get_style_context ().add_class (Gtk.STYLE_CLASS_DIM_LABEL);
+
+            var menuitem_box = new Gtk.Grid ();
             menuitem_box.margin_end = 6;
             menuitem_box.margin_start = 6;
-            menuitem_box.add (menuitem_icon);
-            menuitem_box.add (menuitem_label);
+            menuitem_box.attach (menuitem_icon, 0, 0);
+            menuitem_box.attach (menuitem_label, 1, 0);
+            if (!e.day_event) {
+                menuitem_box.attach (menuitem_times, 1, 1);
+            }
 
             var menuitem = new Gtk.Button ();
             menuitem.add (menuitem_box);
@@ -139,14 +164,14 @@ public class DateTime.Indicator : Wingpanel.Indicator {
             style_context.remove_class (Gtk.STYLE_CLASS_BUTTON);
             style_context.remove_class ("text-button");
 
-            event_grid.add (menuitem);
+            event_listbox.add (menuitem);
             menuitem.clicked.connect (() => {
                 calendar.show_date_in_maya (e.date);
                 this.close ();
             });
         }
 
-        event_grid.show_all ();
+        event_listbox.show_all ();
         update_events_idle_source = 0;
         return GLib.Source.REMOVE;
     }
