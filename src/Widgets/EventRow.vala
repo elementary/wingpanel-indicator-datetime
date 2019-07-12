@@ -21,6 +21,8 @@ public class DateTime.EventRow : Gtk.ListBoxRow {
     public DateTime.Event cal_event { get; construct; }
 
     private static Gtk.CssProvider css_provider;
+    private Gtk.StyleContext event_image_context;
+    private Gtk.StyleContext grid_context;
 
     public EventRow (DateTime.Event cal_event) {
         Object (cal_event: cal_event);
@@ -35,7 +37,7 @@ public class DateTime.EventRow : Gtk.ListBoxRow {
         var event_image = new Gtk.Image.from_icon_name (cal_event.get_icon (), Gtk.IconSize.MENU);
         event_image.valign = Gtk.Align.START;
 
-        var event_image_context = event_image.get_style_context ();
+        event_image_context = event_image.get_style_context ();
         event_image_context.add_provider (css_provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
 
         var name_label = new Gtk.Label (cal_event.get_event_label ());
@@ -66,7 +68,7 @@ public class DateTime.EventRow : Gtk.ListBoxRow {
             grid.attach (time_label, 1, 1);
         }
 
-        var grid_context = grid.get_style_context ();
+        grid_context = grid.get_style_context ();
         grid_context.add_class ("event");
         grid_context.add_provider (css_provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
 
