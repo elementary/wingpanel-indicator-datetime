@@ -169,6 +169,7 @@ public class DateTime.Indicator : Wingpanel.Indicator {
 
         foreach (var event in events) {
             var menuitem = new DateTime.EventRow (event);
+
             event_listbox.add (menuitem);
         }
 
