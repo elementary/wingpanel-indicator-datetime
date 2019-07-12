@@ -49,6 +49,9 @@ namespace DateTime.Widgets {
                 show_date_in_maya (date);
                 day_double_click (date);
             });
+            heading.center_clicked.connect (() => {
+                cal.today ();
+            });
         }
 
         public void show_today () {
