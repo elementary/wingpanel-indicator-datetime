@@ -23,6 +23,7 @@ public class DateTime.Event : GLib.Object {
     public Util.DateRange range { get; construct; }
 
     public GLib.DateTime start_time;
+    public GLib.DateTime end_time;
     public bool day_event = false;
 
     private bool alarm = false;
@@ -37,8 +38,8 @@ public class DateTime.Event : GLib.Object {
 
     construct {
         start_time = Util.ical_to_date_time (component.get_dtstart ());
+        end_time = Util.ical_to_date_time (component.get_dtend ());
 
-        var end_time = Util.ical_to_date_time (component.get_dtend ());
         if (end_time == null) {
             alarm = true;
         } else if (Util.is_the_all_day (start_time, end_time)) {
@@ -46,16 +47,15 @@ public class DateTime.Event : GLib.Object {
         }
     }
 
-    public string get_label () {
-        var summary = component.get_summary ();
+    public string get_event_label () {
+        return component.get_summary ();
+    }
+
+    public string get_event_times () {
         if (day_event) {
-            return summary;
-        } else if (alarm) {
-            return "%s - %s".printf (start_time.format (get_time_format ()), summary);
-        } else if (range.days > 0 && date.compare (range.first_dt) != 0) {
-            return summary;
+            return "";
         }
-        return "%s - %s".printf (summary, start_time.format (get_time_format ()));
+        return "%s - %s".printf (start_time.format (get_time_format ()), end_time.format (get_time_format ()));
     }
 
     public string get_icon () {
