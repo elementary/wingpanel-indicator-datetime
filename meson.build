@@ -26,6 +26,7 @@ shared_module(
     'src/DateRange.vala',
     'src/Event.vala',
     'src/Indicator.vala',
+    'src/Widgets/EventRow.vala',
     'src/Widgets/PanelLabel.vala',
     'src/Widgets/calendar/Calendar.vala',
     'src/Widgets/calendar/CalendarModel.vala',
