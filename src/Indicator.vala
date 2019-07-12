@@ -141,7 +141,9 @@ public class DateTime.Indicator : Wingpanel.Indicator {
             menuitem_box.margin_start = 6;
             menuitem_box.attach (menuitem_icon, 0, 0);
             menuitem_box.attach (menuitem_label, 1, 0);
-            menuitem_box.attach (menuitem_times, 1, 1);
+            if (!e.day_event) {
+                menuitem_box.attach (menuitem_times, 1, 1);
+            }
 
             var menuitem = new Gtk.Button ();
             menuitem.add (menuitem_box);

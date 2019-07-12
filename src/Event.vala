@@ -51,6 +51,9 @@ public class DateTime.Event : GLib.Object {
     }
 
     public string get_event_times () {
+        if (day_event) {
+            return "";
+        }
         return "%s - %s".printf(start_time.format (Util.TimeFormat ()), end_time.format (Util.TimeFormat ()));
     }
 
