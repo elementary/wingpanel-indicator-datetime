@@ -21,7 +21,7 @@ public class DateTime.Event : GLib.Object {
     public GLib.DateTime date { get; construct; }
     public unowned iCal.Component component { get; construct; }
     public Util.DateRange range { get; construct; }
-    public E.Source source {get; construct;}
+    public E.Source source { get; construct; }
     public E.SourceCalendar? cal {get; construct;}
 
     public GLib.DateTime start_time;
