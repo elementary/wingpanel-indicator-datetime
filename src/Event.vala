@@ -54,7 +54,7 @@ public class DateTime.Event : GLib.Object {
         if (day_event) {
             return "";
         }
-        return "%s - %s".printf(start_time.format (Util.TimeFormat ()), end_time.format (Util.TimeFormat ()));
+        return "%s - %s".printf (start_time.format (Util.TimeFormat ()), end_time.format (Util.TimeFormat ()));
     }
 
     public string get_icon () {
