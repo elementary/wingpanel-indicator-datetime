@@ -38,6 +38,7 @@ public class DateTime.Widgets.GridDay : Gtk.EventBox {
     public signal void on_event_add (GLib.DateTime date);
 
     private Gtk.Grid main_grid;
+    private Gtk.Grid event_dot_grid;
 
     public GLib.DateTime date { get; private set; }
     Gtk.Label label;
@@ -71,7 +72,7 @@ public class DateTime.Widgets.GridDay : Gtk.EventBox {
 
         main_grid = new Gtk.Grid ();
         main_grid.halign = Gtk.Align.CENTER;
-        main_grid.orientation = Gtk.Orientation.VERTICAL;
+        main_grid.valign = Gtk.Align.CENTER;
         main_grid.attach (label, 0, 0);
 
         add (main_grid);
@@ -98,8 +99,14 @@ public class DateTime.Widgets.GridDay : Gtk.EventBox {
         GLib.Idle.add (() => {
             var events = Widgets.CalendarModel.get_default ().get_events (date);
 
-            var event_dot_grid = new Gtk.Grid ();
+            // Unload unnecessary widgets
+            if (event_dot_grid != null) {
+                event_dot_grid.destroy ();
+            }
+
+            event_dot_grid = new Gtk.Grid ();
             event_dot_grid.halign = Gtk.Align.CENTER;
+            event_dot_grid.valign = Gtk.Align.START;
 
             var event_dot = new Gtk.Image ();
             event_dot.pixel_size = 6;
@@ -121,8 +128,8 @@ public class DateTime.Widgets.GridDay : Gtk.EventBox {
                     event_dot_grid.add (event_dot);
                 }
                 event_dot_grid.show_all ();
-                main_grid.margin_top = 5;
                 main_grid.attach (event_dot_grid, 0, 1);
+                main_grid.margin_top = 6;
             }
             return false;
         });
