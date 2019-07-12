@@ -20,27 +20,6 @@
  */
 
 namespace Util {
-    public string TimeFormat () {
-        /* If AM/PM doesn't exist, use 24h. */
-        if (Posix.nl_langinfo (Posix.NLItem.AM_STR) == null || Posix.nl_langinfo (Posix.NLItem.AM_STR) == "") {
-            return Granite.DateTime.get_default_time_format (false);
-        }
-
-        /* If AM/PM exists, assume it is the default time format and check for format override. */
-        var setting = new GLib.Settings ("org.gnome.desktop.interface");
-        var clockformat = setting.get_user_value ("clock-format");
-
-        if (clockformat == null) {
-            return Granite.DateTime.get_default_time_format (true);
-        }
-
-        if (clockformat.get_string ().contains ("12h")) {
-            return Granite.DateTime.get_default_time_format (true);
-        } else {
-            return Granite.DateTime.get_default_time_format (false);
-        }
-    }
-
     static bool has_scrolled = false;
     const uint interval = 500;
 
