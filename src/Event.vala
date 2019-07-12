@@ -51,7 +51,7 @@ public class DateTime.Event : GLib.Object {
     }
 
     public void get_event_times (out string event_times) {
-        summary = component.get_summary ();
+        event_times = "%s - %s".printf(start_time.format (Util.TimeFormat ()), end_time.format (Util.TimeFormat ()));
     }
 
     public string get_icon () {
