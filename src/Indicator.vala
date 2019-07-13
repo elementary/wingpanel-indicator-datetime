@@ -128,6 +128,8 @@ public class DateTime.Indicator : Wingpanel.Indicator {
                 close ();
             });
 
+            cal_button.clicked.connect (open_maya);
+
             settings_button.clicked.connect (() => {
                 try {
                     AppInfo.launch_default_for_uri ("settings://time", null);
@@ -138,6 +140,25 @@ public class DateTime.Indicator : Wingpanel.Indicator {
         }
 
         return main_grid;
+    }
+
+    // TODO: As far as maya supports it use the Dbus Activation feature to run the calendar-app.
+    public void show_date_in_maya (GLib.DateTime date) {
+        var command = "io.elementary.calendar";
+
+        try {
+            var appinfo = AppInfo.create_from_commandline (command, null, AppInfoCreateFlags.NONE);
+            appinfo.launch_uris (null, null);
+        } catch (GLib.Error e) {
+            var dialog = new Granite.MessageDialog.with_image_from_icon_name (
+                _("Unable To Launch Calendar"),
+                _("The program \"io.elementary.calendar\" may not be installed"),
+                "dialog-error"
+            );
+            dialog.show_error_details (e.message);
+            dialog.run ();
+            dialog.destroy ();
+        }
     }
 
     private void header_update_func (Gtk.ListBoxRow lbrow, Gtk.ListBoxRow? lbbefore) {
