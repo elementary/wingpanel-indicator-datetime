@@ -128,7 +128,9 @@ public class DateTime.Indicator : Wingpanel.Indicator {
                 close ();
             });
 
-            cal_button.clicked.connect (open_maya);
+            cal_button.clicked.connect (() => {
+                open_maya ();
+            });
 
             settings_button.clicked.connect (() => {
                 try {
