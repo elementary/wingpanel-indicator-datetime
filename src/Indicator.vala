@@ -145,7 +145,7 @@ public class DateTime.Indicator : Wingpanel.Indicator {
     }
 
     // TODO: As far as maya supports it use the Dbus Activation feature to run the calendar-app.
-    public void open_maya (GLib.DateTime date) {
+    public void open_maya () {
         var command = "io.elementary.calendar";
 
         try {
