@@ -22,7 +22,6 @@ public class DateTime.EventRow : Gtk.ListBoxRow {
 
     private static bool is_12h;
     private static Gtk.CssProvider css_provider;
-    private Gtk.Label time_label;
 
     public EventRow (DateTime.Event cal_event) {
         Object (cal_event: cal_event);
@@ -58,7 +57,7 @@ public class DateTime.EventRow : Gtk.ListBoxRow {
 
         var time_format = Granite.DateTime.get_default_time_format (is_12h);
 
-        time_label = new Gtk.Label ("<small>%s – %s</small>".printf (cal_event.start_time.format (time_format), cal_event.end_time.format (time_format)));
+        var time_label = new Gtk.Label ("<small>%s – %s</small>".printf (cal_event.start_time.format (time_format), cal_event.end_time.format (time_format)));
         time_label.use_markup = true;
         time_label.xalign = 0;
         time_label.get_style_context ().add_class (Gtk.STYLE_CLASS_DIM_LABEL);
