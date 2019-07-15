@@ -31,7 +31,6 @@ shared_module(
     'src/Widgets/calendar/Calendar.vala',
     'src/Widgets/calendar/CalendarModel.vala',
     'src/Widgets/calendar/CalendarView.vala',
-    'src/Widgets/calendar/ControlHeader.vala',
     'src/Widgets/calendar/Grid.vala',
     'src/Widgets/calendar/GridDay.vala',
     'src/Widgets/calendar/Header.vala',
