@@ -31,25 +31,64 @@ namespace DateTime.Widgets {
         }
 
         construct {
-            var heading = new ControlHeader ();
-            heading.margin = 6;
-            heading.margin_top = 0;
+            var label = new Gtk.Label (new GLib.DateTime.now_local ().format (_("%OB, %Y")));
+            label.hexpand = true;
+            label.margin_start = 6;
+            label.xalign = 0;
+            label.width_chars = 13;
+
+            var provider = new Gtk.CssProvider ();
+            provider.load_from_resource ("/io/elementary/desktop/wingpanel/datetime/ControlHeader.css");
+
+            var label_style_context = label.get_style_context ();
+            label_style_context.add_class ("header-label");
+            label_style_context.add_provider (provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
+
+            var left_button = new Gtk.Button.from_icon_name ("pan-start-symbolic");
+            var center_button = new Gtk.Button.from_icon_name ("office-calendar-symbolic");
+            center_button.tooltip_text = _("Go to today's date");
+            var right_button = new Gtk.Button.from_icon_name ("pan-end-symbolic");
+
+            var box_buttons = new Gtk.Grid ();
+            box_buttons.margin_end = 6;
+            box_buttons.valign = Gtk.Align.CENTER;
+            box_buttons.get_style_context ().add_class (Gtk.STYLE_CLASS_LINKED);
+            box_buttons.add (left_button);
+            box_buttons.add (center_button);
+            box_buttons.add (right_button);
 
             cal = new CalendarView ();
 
+            column_spacing = 6;
+            row_spacing = 6;
             margin_start = margin_end = 10;
-            orientation = Gtk.Orientation.VERTICAL;
-            add (heading);
-            add (cal);
+            attach (label, 0, 0);
+            attach (box_buttons, 1, 0);
+            attach (cal, 0, 1, 2);
 
             cal.selection_changed.connect ((date) => {
                 selection_changed (date);
             });
+
             cal.on_event_add.connect ((date) => {
                 show_date_in_maya (date);
                 day_double_click (date);
             });
-            heading.center_clicked.connect (() => {
+
+            CalendarModel.get_default ().parameters_changed.connect (() => {
+                var date = CalendarModel.get_default ().month_start;
+                label.set_label (date.format (_("%OB, %Y")));
+            });
+
+            left_button.clicked.connect (() => {
+                CalendarModel.get_default ().change_month (-1);
+            });
+
+            right_button.clicked.connect (() => {
+                CalendarModel.get_default ().change_month (1);
+            });
+
+            center_button.clicked.connect (() => {
                 cal.today ();
             });
         }
