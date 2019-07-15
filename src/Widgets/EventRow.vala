@@ -20,6 +20,7 @@
 public class DateTime.EventRow : Gtk.ListBoxRow {
     public DateTime.Event cal_event { get; construct; }
 
+    private static bool is_12h;
     private static Gtk.CssProvider css_provider;
     private Gtk.Label time_label;
 
@@ -30,6 +31,9 @@ public class DateTime.EventRow : Gtk.ListBoxRow {
     static construct {
         css_provider = new Gtk.CssProvider ();
         css_provider.load_from_resource ("/io/elementary/desktop/wingpanel/datetime/EventRow.css");
+
+        var clock_settings = new GLib.Settings ("org.gnome.desktop.interface");
+        is_12h = "12h" in clock_settings.get_string ("clock-format");
     }
 
     construct {
@@ -52,7 +56,9 @@ public class DateTime.EventRow : Gtk.ListBoxRow {
         name_label_context.add_class ("title");
         name_label_context.add_provider (css_provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
 
-        time_label = new Gtk.Label (null);
+        var time_format = Granite.DateTime.get_default_time_format (is_12h);
+
+        time_label = new Gtk.Label ("<small>%s – %s</small>".printf (cal_event.start_time.format (time_format), cal_event.end_time.format (time_format)));
         time_label.use_markup = true;
         time_label.xalign = 0;
         time_label.get_style_context ().add_class (Gtk.STYLE_CLASS_DIM_LABEL);
@@ -72,25 +78,5 @@ public class DateTime.EventRow : Gtk.ListBoxRow {
         grid_context.add_provider (css_provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
 
         add (grid);
-
-        setup_time_format ();
-    }
-
-    private void update_time_label (bool is_12h) {
-        if (cal_event.is_allday) {
-            return;
-        }
-        var time_format = Granite.DateTime.get_default_time_format (is_12h);
-
-        time_label.label = "<small>%s – %s</small>".printf (cal_event.start_time.format (time_format), cal_event.end_time.format (time_format));
-    }
-
-    private void setup_time_format () {
-        var clock_settings = new GLib.Settings ("org.gnome.desktop.interface");
-        clock_settings.changed["clock-format"].connect (() => {
-            update_time_label ("12h" in clock_settings.get_string ("clock-format"));
-        });
-
-        update_time_label ("12h" in clock_settings.get_string ("clock-format"));
     }
 }
