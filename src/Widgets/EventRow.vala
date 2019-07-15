@@ -21,6 +21,7 @@ public class DateTime.EventRow : Gtk.ListBoxRow {
     public DateTime.Event cal_event { get; construct; }
 
     private static Gtk.CssProvider css_provider;
+    private Gtk.Label time_label;
 
     public EventRow (DateTime.Event cal_event) {
         Object (cal_event: cal_event);
@@ -51,7 +52,7 @@ public class DateTime.EventRow : Gtk.ListBoxRow {
         name_label_context.add_class ("title");
         name_label_context.add_provider (css_provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
 
-        var time_label = new Gtk.Label ("<small>%s</small>".printf (cal_event.get_event_times ()));
+        time_label = new Gtk.Label (null);
         time_label.use_markup = true;
         time_label.xalign = 0;
         time_label.get_style_context ().add_class (Gtk.STYLE_CLASS_DIM_LABEL);
@@ -71,5 +72,25 @@ public class DateTime.EventRow : Gtk.ListBoxRow {
         grid_context.add_provider (css_provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
 
         add (grid);
+
+        setup_time_format ();
+    }
+
+    private void update_time_label (bool is_12h) {
+        if (cal_event.is_allday) {
+            return;
+        }
+        var time_format = Granite.DateTime.get_default_time_format (is_12h);
+
+        time_label.label = "<small>%s – %s</small>".printf (cal_event.start_time.format (time_format), cal_event.end_time.format (time_format));
+    }
+
+    private void setup_time_format () {
+        var clock_settings = new GLib.Settings ("org.gnome.desktop.interface");
+        clock_settings.changed["clock-format"].connect (() => {
+            update_time_label ("12h" in clock_settings.get_string ("clock-format"));
+        });
+
+        update_time_label ("12h" in clock_settings.get_string ("clock-format"));
     }
 }
