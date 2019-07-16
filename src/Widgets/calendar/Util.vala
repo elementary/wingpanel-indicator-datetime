@@ -111,8 +111,10 @@ namespace Util {
      * XXX : Track next versions of evolution in order to convert ICal.Timezone to GLib.TimeZone with a dedicated function…
      */
     public GLib.DateTime ical_to_date_time (ICal.Time date) {
-        return new GLib.DateTime (timezone_from_ical (date), date.year, date.month,
-                                  date.day, date.hour, date.minute, date.second);
+        int year, month, day, hour, minute, second;
+        date.get_date (out year, out month, out day);
+        date.get_time (out hour, out minute, out second);
+        return new GLib.DateTime (timezone_from_ical (date), year, month, day, hour, minute, second);
     }
 
     public Gee.Collection<DateRange> event_date_ranges (ICal.Component comp, Util.DateRange view_range) {
