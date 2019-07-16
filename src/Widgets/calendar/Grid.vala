@@ -167,7 +167,7 @@ namespace DateTime.Widgets {
                 day.sensitive_container (false);
             }
 
-            day.update_date (new_date);
+            day.date = new_date;
 
             return day;
         }
