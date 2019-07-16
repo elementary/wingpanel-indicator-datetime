@@ -19,7 +19,7 @@
 
 public class DateTime.Event : GLib.Object {
     public GLib.DateTime date { get; construct; }
-    public unowned iCal.Component component { get; construct; }
+    public unowned ICal.Component component { get; construct; }
     public Util.DateRange range { get; construct; }
 
     public GLib.DateTime start_time;
@@ -28,7 +28,7 @@ public class DateTime.Event : GLib.Object {
 
     private bool alarm = false;
 
-    public Event (GLib.DateTime date, Util.DateRange range, iCal.Component component) {
+    public Event (GLib.DateTime date, Util.DateRange range, ICal.Component component) {
         Object (
             component: component,
             date: date,

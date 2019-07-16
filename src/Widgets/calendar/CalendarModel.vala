@@ -41,9 +41,9 @@ namespace DateTime.Widgets {
         public Weekday week_starts_on { get; set; }
 
         /* Notifies when events are added, updated, or removed */
-        public signal void events_added (E.Source source, Gee.Collection<E.CalComponent> events);
-        public signal void events_updated (E.Source source, Gee.Collection<E.CalComponent> events);
-        public signal void events_removed (E.Source source, Gee.Collection<E.CalComponent> events);
+        public signal void events_added (E.Source source, Gee.Collection<ECal.Component> events);
+        public signal void events_updated (E.Source source, Gee.Collection<ECal.Component> events);
+        public signal void events_removed (E.Source source, Gee.Collection<ECal.Component> events);
 
         public signal void connecting (E.Source source, Cancellable cancellable);
         public signal void connected (E.Source source);
@@ -52,9 +52,9 @@ namespace DateTime.Widgets {
         /* The month_start, num_weeks, or week_starts_on have been changed */
         public signal void parameters_changed ();
 
-        HashTable<string, E.CalClient> source_client;
-        HashTable<string, E.CalClientView> source_view;
-        HashTable<E.Source, Gee.TreeMap<string, E.CalComponent> > source_events;
+        HashTable<string, ECal.Client> source_client;
+        HashTable<string, ECal.ClientView> source_view;
+        HashTable<E.Source, Gee.TreeMap<string, ECal.Component> > source_events;
 
         private static CalendarModel? calendar_model = null;
         public enum Weekday {
@@ -78,9 +78,9 @@ namespace DateTime.Widgets {
         }
 
         construct {
-            source_client = new HashTable<string, E.CalClient> (str_hash, str_equal);
-            source_events = new HashTable<E.Source, Gee.TreeMap<string, E.CalComponent> > (Util.source_hash_func, Util.source_equal_func);
-            source_view = new HashTable<string, E.CalClientView> (str_hash, str_equal);
+            source_client = new HashTable<string, ECal.Client> (str_hash, str_equal);
+            source_events = new HashTable<E.Source, Gee.TreeMap<string, ECal.Component> > (Util.source_hash_func, Util.source_equal_func);
+            source_view = new HashTable<string, ECal.ClientView> (str_hash, str_equal);
 
             int week_start = Posix.NLTime.FIRST_WEEKDAY.to_string ().data[0];
             if (week_start >= 1 && week_start <= 7) {
@@ -124,7 +124,7 @@ namespace DateTime.Widgets {
             var events_on_day = new Gee.TreeMap<string,Event> ();
             foreach (var entry in source_events.get_values ()) {
                 foreach (var comp in entry.values) {
-                    unowned iCal.Component ical = comp.get_icalcomponent ();
+                    unowned ICal.Component ical = comp.get_icalcomponent ();
                     foreach (var dt_range in Util.event_date_ranges (ical, data_range)) {
                         if (dt_range.contains (date)) {
                             if (!events_on_day.has_key (ical.get_uid ())) {
@@ -152,7 +152,7 @@ namespace DateTime.Widgets {
         }
 
         public bool calclient_is_readonly (E.Source source) {
-            E.CalClient client;
+            ECal.Client client;
             lock (source_client) {
                 client = source_client.get (source.dup_uid ());
             }
@@ -257,16 +257,16 @@ namespace DateTime.Widgets {
 
         private void load_source (E.Source source) {
             /* create empty source-event map */
-            var events = new Gee.TreeMap<string, E.CalComponent> (
-                (GLib.CompareDataFunc<E.CalComponent> ? )GLib.strcmp,
-                (Gee.EqualDataFunc<E.CalComponent>? )Util.calcomponent_equal_func);
+            var events = new Gee.TreeMap<string, ECal.Component> (
+                (GLib.CompareDataFunc<ECal.Component> ? )GLib.strcmp,
+                (Gee.EqualDataFunc<ECal.Component>? )Util.calcomponent_equal_func);
             source_events.set (source, events);
             /* query client view */
-            var iso_first = E.Util.isodate_from_time_t ((time_t)data_range.first_dt.to_unix ());
-            var iso_last = E.Util.isodate_from_time_t ((time_t)data_range.last_dt.add_days (1).to_unix ());
+            var iso_first = ECal.isodate_from_time_t ((time_t)data_range.first_dt.to_unix ());
+            var iso_last = ECal.isodate_from_time_t ((time_t)data_range.last_dt.add_days (1).to_unix ());
             var query = @"(occur-in-time-range? (make-time \"$iso_first\") (make-time \"$iso_last\"))";
 
-            E.CalClient client;
+            ECal.Client client;
             lock (source_client) {
                 client = source_client.get (source.dup_uid ());
             }
@@ -296,7 +296,7 @@ namespace DateTime.Widgets {
             try {
                 var cancellable = new GLib.Cancellable ();
                 connecting (source, cancellable);
-                var client = new E.CalClient.connect_sync (source, E.CalClientSourceType.EVENTS, -1, cancellable);
+                var client = (ECal.Client) ECal.Client.connect_sync (source, ECal.ClientSourceType.EVENTS, -1, cancellable);
                 source_client.insert (source.dup_uid (), client);
             } catch (Error e) {
                 error_received (e.message);
@@ -310,8 +310,8 @@ namespace DateTime.Widgets {
             });
         }
 
-        private void debug_event (E.Source source, E.CalComponent event) {
-            unowned iCal.Component comp = event.get_icalcomponent ();
+        private void debug_event (E.Source source, ECal.Component event) {
+            unowned ICal.Component comp = event.get_icalcomponent ();
             debug (@"Event ['$(comp.get_summary())', $(source.dup_display_name()), $(comp.get_uid()))]");
         }
 
@@ -325,8 +325,8 @@ namespace DateTime.Widgets {
         private void on_source_changed (E.Source source) {
         }
 
-        private E.CalClientView on_client_view_received (AsyncResult results, E.Source source, E.CalClient client) {
-            E.CalClientView view;
+        private ECal.ClientView on_client_view_received (AsyncResult results, E.Source source, ECal.Client client) {
+            ECal.ClientView view;
             try {
                 debug (@"Received client-view for source '%s'", source.dup_display_name ());
                 bool status = client.get_view.end (results, out view);
@@ -338,15 +338,15 @@ namespace DateTime.Widgets {
             return view;
         }
 
-        private void on_objects_added (E.Source source, E.CalClient client, SList<unowned iCal.Component> objects) {
+        private void on_objects_added (E.Source source, ECal.Client client, SList<unowned ICal.Component> objects) {
             debug (@"Received $(objects.length()) added event(s) for source '%s'", source.dup_display_name ());
             var events_from_source = source_events.get (source);
-            var added_events = new Gee.ArrayList<E.CalComponent> ((Gee.EqualDataFunc<E.CalComponent>? )Util.calcomponent_equal_func);
+            var added_events = new Gee.ArrayList<ECal.Component> ((Gee.EqualDataFunc<ECal.Component>? )Util.calcomponent_equal_func);
 
-            foreach (unowned iCal.Component comp in objects) {
-                var event = new E.CalComponent ();
-                event.set_icalcomponent (new iCal.Component.clone (comp));
-                string uid = comp.get_uid ();
+            foreach (unowned ICal.Component comp in objects) {
+                var event = new ECal.Component ();
+                event.set_icalcomponent (comp.clone ());
+                unowned string uid = comp.get_uid ();
                 debug_event (source, event);
                 events_from_source.set (uid, event);
                 added_events.add (event);
@@ -355,14 +355,14 @@ namespace DateTime.Widgets {
             events_added (source, added_events.read_only_view);
         }
 
-        private void on_objects_modified (E.Source source, E.CalClient client, SList<unowned iCal.Component> objects) {
+        private void on_objects_modified (E.Source source, ECal.Client client, SList<unowned ICal.Component> objects) {
             debug (@"Received $(objects.length()) modified event(s) for source '%s'", source.dup_display_name ());
-            var updated_events = new Gee.ArrayList<E.CalComponent> ((Gee.EqualDataFunc<E.CalComponent>? )Util.calcomponent_equal_func);
+            var updated_events = new Gee.ArrayList<ECal.Component> ((Gee.EqualDataFunc<ECal.Component>? )Util.calcomponent_equal_func);
 
-            foreach (unowned iCal.Component comp in objects) {
-                string uid = comp.get_uid ();
-                E.CalComponent event = source_events.get (source).get (uid);
-                event.set_icalcomponent (new iCal.Component.clone (comp));
+            foreach (unowned ICal.Component comp in objects) {
+                unowned string uid = comp.get_uid ();
+                ECal.Component event = source_events.get (source).get (uid);
+                event.set_icalcomponent (comp.clone ());
                 updated_events.add (event);
                 debug_event (source, event);
             }
@@ -370,14 +370,14 @@ namespace DateTime.Widgets {
             events_updated (source, updated_events.read_only_view);
         }
 
-        private void on_objects_removed (E.Source source, E.CalClient client, SList<unowned E.CalComponentId? > cids) {
+        private void on_objects_removed (E.Source source, ECal.Client client, SList<unowned ECal.ComponentId? > cids) {
             debug (@"Received $(cids.length()) removed event(s) for source '%s'", source.dup_display_name ());
             var events_from_source = source_events.get (source);
-            var removed_events = new Gee.ArrayList<E.CalComponent> ((Gee.EqualDataFunc<E.CalComponent>? )Util.calcomponent_equal_func);
+            var removed_events = new Gee.ArrayList<ECal.Component> ((Gee.EqualDataFunc<ECal.Component>? )Util.calcomponent_equal_func);
 
-            foreach (unowned E.CalComponentId? cid in cids) {
+            foreach (unowned ECal.ComponentId? cid in cids) {
                 assert (cid != null);
-                E.CalComponent event = events_from_source.get (cid.uid);
+                ECal.Component event = events_from_source.get (cid.uid);
                 removed_events.add (event);
                 debug_event (source, event);
             }
