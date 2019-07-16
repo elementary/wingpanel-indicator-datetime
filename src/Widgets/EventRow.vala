@@ -20,8 +20,10 @@
 public class DateTime.EventRow : Gtk.ListBoxRow {
     public DateTime.Event cal_event { get; construct; }
 
-    private static string time_format;
+    private static Services.TimeManager time_manager;
     private static Gtk.CssProvider css_provider;
+
+    private Gtk.Label time_label;
 
     public EventRow (DateTime.Event cal_event) {
         Object (cal_event: cal_event);
@@ -31,9 +33,7 @@ public class DateTime.EventRow : Gtk.ListBoxRow {
         css_provider = new Gtk.CssProvider ();
         css_provider.load_from_resource ("/io/elementary/desktop/wingpanel/datetime/EventRow.css");
 
-        var clock_settings = new GLib.Settings ("org.gnome.desktop.interface");
-        var is_12h = "12h" in clock_settings.get_string ("clock-format");
-        time_format = Granite.DateTime.get_default_time_format (is_12h);
+        time_manager = Services.TimeManager.get_default ();
     }
 
     construct {
@@ -56,7 +56,7 @@ public class DateTime.EventRow : Gtk.ListBoxRow {
         name_label_context.add_class ("title");
         name_label_context.add_provider (css_provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
 
-        var time_label = new Gtk.Label ("<small>%s – %s</small>".printf (cal_event.start_time.format (time_format), cal_event.end_time.format (time_format)));
+        time_label = new Gtk.Label (null);
         time_label.use_markup = true;
         time_label.xalign = 0;
         time_label.get_style_context ().add_class (Gtk.STYLE_CLASS_DIM_LABEL);
@@ -76,5 +76,13 @@ public class DateTime.EventRow : Gtk.ListBoxRow {
         grid_context.add_provider (css_provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
 
         add (grid);
+
+        update_timelabel ();
+        time_manager.notify["is-12h"].connect (update_timelabel);
+    }
+
+    private void update_timelabel () {
+        var time_format = Granite.DateTime.get_default_time_format (time_manager.is_12h);
+        time_label.label = "<small>%s – %s</small>".printf (cal_event.start_time.format (time_format), cal_event.end_time.format (time_format));
     }
 }
