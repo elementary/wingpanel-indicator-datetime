@@ -25,8 +25,6 @@ namespace DateTime.Widgets {
  * Represents the entire date grid as a table.
  */
     public class Grid : Gtk.Grid {
-        Gee.HashMap<uint, GridDay> data;
-
         public Util.DateRange grid_range { get; private set; }
 
         /*
@@ -36,19 +34,19 @@ namespace DateTime.Widgets {
 
         public signal void selection_changed (GLib.DateTime new_date);
 
+        private Gee.HashMap<uint, GridDay> data;
         private GridDay selected_gridday;
 
-        public Grid () {
-            insert_column (7);
-            set_column_homogeneous (true);
-            set_row_homogeneous (true);
+        construct {
+            column_homogeneous = true;
+            row_homogeneous = true;
 
             data = new Gee.HashMap<uint, GridDay> ();
             events |= Gdk.EventMask.SCROLL_MASK;
             events |= Gdk.EventMask.SMOOTH_SCROLL_MASK;
         }
 
-        void on_day_focus_in (GridDay day) {
+        private void on_day_focus_in (GridDay day) {
             debug ("on_day_focus_in "+day.date.to_string ());
             if (selected_gridday != null) {
                 selected_gridday.set_selected (false);
@@ -159,7 +157,7 @@ namespace DateTime.Widgets {
         /**
          * Updates the given GridDay so that it shows the given date. Changes to its style etc.
          */
-        GridDay update_day (GridDay day, GLib.DateTime new_date, GLib.DateTime today, GLib.DateTime month_start) {
+        private GridDay update_day (GridDay day, GLib.DateTime new_date, GLib.DateTime today, GLib.DateTime month_start) {
             update_today_style (day, new_date, today);
             if (new_date.get_month () == month_start.get_month ()) {
                 day.sensitive_container (true);
@@ -186,7 +184,7 @@ namespace DateTime.Widgets {
             }
         }
 
-        public void update_today_style (GridDay day, GLib.DateTime date, GLib.DateTime today) {
+        private void update_today_style (GridDay day, GLib.DateTime date, GLib.DateTime today) {
             if (date.get_day_of_year () == today.get_day_of_year () && date.get_year () == today.get_year ()) {
                 day.name = "today";
                 day.get_style_context ().add_class (Granite.STYLE_CLASS_ACCENT);
@@ -200,7 +198,7 @@ namespace DateTime.Widgets {
             }
         }
 
-        uint day_hash (GLib.DateTime date) {
+        private uint day_hash (GLib.DateTime date) {
             return date.get_year () * 10000 + date.get_month () * 100 + date.get_day_of_month ();
         }
 
