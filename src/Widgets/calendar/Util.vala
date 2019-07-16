@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011-2016 elementary LLC. (https://elementary.io)
+ * Copyright 2011-2019 elementary, Inc. (https://elementary.io)
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public
@@ -75,7 +75,7 @@ namespace Util {
     }
 
     /**
-     * Converts the given Time to a DateTime.
+     * Converts the given ICal.Time to a DateTime.
      */
     public TimeZone timezone_from_ical (ICal.Time date) {
         int is_daylight;
@@ -107,7 +107,7 @@ namespace Util {
     }
 
     /**
-     * Converts the given Time to a DateTime.
+     * Converts the given ICal.Time to a DateTime.
      * XXX : Track next versions of evolution in order to convert ICal.Timezone to GLib.TimeZone with a dedicated function…
      */
     public GLib.DateTime ical_to_date_time (ICal.Time date) {
