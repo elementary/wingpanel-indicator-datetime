@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011-2016 elementary LLC. (https://elementary.io)
+ * Copyright 2011-2019 elementary, Inc. (https://elementary.io)
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public
@@ -75,10 +75,11 @@ namespace Util {
     }
 
     /**
-     * Converts the given TimeType to a DateTime.
+     * Converts the given ICal.Time to a DateTime.
      */
-    public TimeZone timezone_from_ical (iCal.TimeType date) {
-        var interval = date.zone.get_utc_offset (date, date.is_daylight);
+    public TimeZone timezone_from_ical (ICal.Time date) {
+        int is_daylight;
+        var interval = date.get_timezone ().get_utc_offset (date, out is_daylight);
         var hours = (interval / 3600);
         string hour_string = "-";
 
@@ -106,15 +107,15 @@ namespace Util {
     }
 
     /**
-     * Converts the given TimeType to a DateTime.
-     * XXX : Track next versions of evolution in order to convert iCal.Timezone to GLib.TimeZone with a dedicated function…
+     * Converts the given ICal.Time to a DateTime.
+     * XXX : Track next versions of evolution in order to convert ICal.Timezone to GLib.TimeZone with a dedicated function…
      */
-    public GLib.DateTime ical_to_date_time (iCal.TimeType date) {
+    public GLib.DateTime ical_to_date_time (ICal.Time date) {
         return new GLib.DateTime (timezone_from_ical (date), date.year, date.month,
                                   date.day, date.hour, date.minute, date.second);
     }
 
-    public Gee.Collection<DateRange> event_date_ranges (iCal.Component comp, Util.DateRange view_range) {
+    public Gee.Collection<DateRange> event_date_ranges (ICal.Component comp, Util.DateRange view_range) {
         var dateranges = new Gee.LinkedList<DateRange> ();
 
         var start = ical_to_date_time (comp.get_dtstart ());
@@ -139,19 +140,19 @@ namespace Util {
         dateranges.add (new Util.DateRange (start, end));
 
         /* Search for recursive events. */
-        unowned iCal.Property property = comp.get_first_property (iCal.PropertyKind.RRULE);
+        unowned ICal.Property property = comp.get_first_property (ICal.PropertyKind.RRULE_PROPERTY);
 
         if (property != null) {
             var rrule = property.get_rrule ();
 
             switch (rrule.freq) {
-                case (iCal.RecurrenceTypeFrequency.WEEKLY) :
+                case (ICal.RecurrenceFrequency.WEEKLY_RECURRENCE) :
                     generate_week_reccurence (dateranges, view_range, rrule, start, end);
                     break;
-                case (iCal.RecurrenceTypeFrequency.MONTHLY) :
+                case (ICal.RecurrenceFrequency.MONTHLY_RECURRENCE) :
                     generate_month_reccurence (dateranges, view_range, rrule, start, end);
                     break;
-                case (iCal.RecurrenceTypeFrequency.YEARLY) :
+                case (ICal.RecurrenceFrequency.YEARLY_RECURRENCE) :
                     generate_year_reccurence (dateranges, view_range, rrule, start, end);
                     break;
                 default :
@@ -160,8 +161,8 @@ namespace Util {
             }
         }
 
-        /* EXDATEs elements are exceptions dates that should not appear. */
-        property = comp.get_first_property (iCal.PropertyKind.EXDATE);
+        /* EXDATE_PROPERTYs elements are exceptions dates that should not appear. */
+        property = comp.get_first_property (ICal.PropertyKind.EXDATE_PROPERTY);
 
         while (property != null) {
             var exdate = property.get_exdate ();
@@ -181,14 +182,14 @@ namespace Util {
                 return true;
             });
 
-            property = comp.get_next_property (iCal.PropertyKind.EXDATE);
+            property = comp.get_next_property (ICal.PropertyKind.EXDATE_PROPERTY);
         }
 
         return dateranges;
     }
 
     private void generate_day_reccurence (Gee.LinkedList<DateRange> dateranges, Util.DateRange view_range,
-                                          iCal.RecurrenceType rrule, GLib.DateTime start, GLib.DateTime end) {
+                                          ICal.Recurrence rrule, GLib.DateTime start, GLib.DateTime end) {
         if (rrule.until.is_null_time () == 0) {
             for (int i = 1; i <= (int)(rrule.until.day / rrule.interval); i++) {
                 int n = i * rrule.interval;
@@ -218,7 +219,7 @@ namespace Util {
     }
 
     private void generate_year_reccurence (Gee.LinkedList<DateRange> dateranges, Util.DateRange view_range,
-                                           iCal.RecurrenceType rrule, GLib.DateTime start, GLib.DateTime end) {
+                                           ICal.Recurrence rrule, GLib.DateTime start, GLib.DateTime end) {
         if (rrule.until.is_null_time () == 0) {
             /*for (int i = 0; i <= rrule.until.year; i++) {
              *   int n = i*rrule.interval;
@@ -259,10 +260,10 @@ namespace Util {
     }
 
     private void generate_month_reccurence (Gee.LinkedList<DateRange> dateranges, Util.DateRange view_range,
-                                            iCal.RecurrenceType rrule, GLib.DateTime start, GLib.DateTime end) {
+                                            ICal.Recurrence rrule, GLib.DateTime start, GLib.DateTime end) {
         /* Computes month recurrences by day (for example: third friday of the month). */
-        for (int k = 0; k <= iCal.Size.BY_DAY; k++) {
-            if (rrule.by_day[k] < iCal.Size.BY_DAY) {
+        for (int k = 0; k <= ICal.Size.BY_DAY; k++) {
+            if (rrule.by_day[k] < ICal.Size.BY_DAY) {
                 if (rrule.count > 0) {
                     for (int i = 1; i <= rrule.count; i++) {
                         int n = i * rrule.interval;
@@ -312,7 +313,7 @@ namespace Util {
         }
 
         /* Computes month recurrences by month day (for example: 4th of the month). */
-        if (rrule.by_month_day[0] < iCal.Size.BY_MONTHDAY) {
+        if (rrule.by_month_day[0] < ICal.Size.BY_MONTHDAY) {
             if (rrule.count > 0) {
                 for (int i = 1; i <= rrule.count; i++) {
                     int n = i * rrule.interval;
@@ -345,11 +346,11 @@ namespace Util {
     }
 
     private void generate_week_reccurence (Gee.LinkedList<DateRange> dateranges, Util.DateRange view_range,
-                                           iCal.RecurrenceType rrule, GLib.DateTime start_, GLib.DateTime end_) {
+                                           ICal.Recurrence rrule, GLib.DateTime start_, GLib.DateTime end_) {
         GLib.DateTime start = start_;
         GLib.DateTime end = end_;
 
-        for (int k = 0; k <= iCal.Size.BY_DAY; k++) {
+        for (int k = 0; k <= ICal.Size.BY_DAY; k++) {
             if (rrule.by_day[k] > 7) {
                 break;
             }
@@ -440,23 +441,23 @@ namespace Util {
     public GLib.DateTime get_date_from_ical_day (GLib.DateTime date, short day) {
         int day_to_add = 0;
 
-        switch (iCal.RecurrenceType.day_day_of_week (day)) {
-            case iCal.RecurrenceTypeWeekday.SUNDAY:
+        switch (ICal.Recurrence.day_day_of_week (day)) {
+            case ICal.RecurrenceWeekday.SUNDAY_WEEKDAY:
                 day_to_add = 7 - date.get_day_of_week ();
                 break;
-            case iCal.RecurrenceTypeWeekday.MONDAY:
+            case ICal.RecurrenceWeekday.MONDAY_WEEKDAY:
                 day_to_add = 1 - date.get_day_of_week ();
                 break;
-            case iCal.RecurrenceTypeWeekday.TUESDAY:
+            case ICal.RecurrenceWeekday.TUESDAY_WEEKDAY:
                 day_to_add = 2 - date.get_day_of_week ();
                 break;
-            case iCal.RecurrenceTypeWeekday.WEDNESDAY:
+            case ICal.RecurrenceWeekday.WEDNESDAY_WEEKDAY:
                 day_to_add = 3 - date.get_day_of_week ();
                 break;
-            case iCal.RecurrenceTypeWeekday.THURSDAY:
+            case ICal.RecurrenceWeekday.THURSDAY_WEEKDAY:
                 day_to_add = 4 - date.get_day_of_week ();
                 break;
-            case iCal.RecurrenceTypeWeekday.FRIDAY:
+            case ICal.RecurrenceWeekday.FRIDAY_WEEKDAY:
                 day_to_add = 5 - date.get_day_of_week ();
                 break;
             default:
@@ -472,7 +473,7 @@ namespace Util {
             day_to_add = day_to_add - 7;
         }
 
-        switch (iCal.RecurrenceType.day_position (day)) {
+        switch (ICal.Recurrence.day_position (day)) {
             case 1:
                 int n = (int)GLib.Math.trunc ((date.get_day_of_month () + day_to_add) / 7);
 
@@ -505,10 +506,10 @@ namespace Util {
         return key.dup_uid (). hash ();
     }
 
-    /* Returns true if 'a' and 'b' are the same E.CalComponent */
-    public bool calcomponent_equal_func (E.CalComponent a, E.CalComponent b) {
-        unowned iCal.Component comp_a = a.get_icalcomponent ();
-        unowned iCal.Component comp_b = b.get_icalcomponent ();
+    /* Returns true if 'a' and 'b' are the same ECal.Component */
+    public bool calcomponent_equal_func (ECal.Component a, ECal.Component b) {
+        unowned ICal.Component comp_a = a.get_icalcomponent ();
+        unowned ICal.Component comp_b = b.get_icalcomponent ();
         return comp_a.get_uid () == comp_b.get_uid ();
     }
 
