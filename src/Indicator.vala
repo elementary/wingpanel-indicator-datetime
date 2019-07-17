@@ -69,6 +69,7 @@ public class DateTime.Indicator : Wingpanel.Indicator {
             event_listbox.selection_mode = Gtk.SelectionMode.NONE;
             event_listbox.set_header_func (header_update_func);
             event_listbox.set_placeholder (placeholder_label);
+            event_listbox.set_sort_func (sort_function);
 
             var scrolled_window = new Gtk.ScrolledWindow (null, null);
             scrolled_window.hscrollbar_policy = Gtk.PolicyType.NEVER;
@@ -139,6 +140,25 @@ public class DateTime.Indicator : Wingpanel.Indicator {
             }
             return;
         }
+    }
+
+    [CCode (instance_pos = -1)]
+    private int sort_function (Gtk.ListBoxRow child1, Gtk.ListBoxRow child2) {
+        var e1 = ((EventRow) child1).cal_event;
+        var e2 = ((EventRow) child2).cal_event;
+
+        if (e1.start_time.compare (e2.start_time) != 0) {
+            return e1.start_time.compare (e2.start_time);
+        }
+
+        // If they have the same date, sort them wholeday first
+        if (e1.is_allday) {
+            return -1;
+        } else if (e2.is_allday) {
+            return 1;
+        }
+
+        return 0;
     }
 
     private void update_events_model (E.Source source, Gee.Collection<ECal.Component> events) {
