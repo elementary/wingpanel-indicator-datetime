@@ -60,14 +60,11 @@ public class DateTime.Widgets.WeekLabels : Gtk.Revealer {
                 next = next.add_weeks (1);
             }
 
-            no_show_all = false;
             transition_type = Gtk.RevealerTransitionType.SLIDE_RIGHT;
             set_reveal_child (true);
         } else {
             transition_type = Gtk.RevealerTransitionType.SLIDE_LEFT;
             set_reveal_child (false);
-            no_show_all = true;
-            hide ();
         }
     }
 }
