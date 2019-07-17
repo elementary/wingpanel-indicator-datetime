@@ -60,10 +60,7 @@ public class DateTime.Widgets.CalendarView : Gtk.Grid {
         });
 
         Services.SettingsManager.get_default ().changed["show-weeks"].connect (on_show_weeks_changed);
-        events |= Gdk.EventMask.BUTTON_PRESS_MASK;
-        events |= Gdk.EventMask.KEY_PRESS_MASK;
-        events |= Gdk.EventMask.SCROLL_MASK;
-        events |= Gdk.EventMask.SMOOTH_SCROLL_MASK;
+
         add (stack);
     }
 
@@ -92,10 +89,6 @@ public class DateTime.Widgets.CalendarView : Gtk.Grid {
         });
 
         return new_big_grid;
-    }
-
-    public override bool scroll_event (Gdk.EventScroll event) {
-        return Util.on_scroll_event (event);
     }
 
     //--- Public Methods ---//
