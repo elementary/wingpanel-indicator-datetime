@@ -84,43 +84,40 @@ public class DateTime.Widgets.GridDay : Gtk.EventBox {
     }
 
     public async void update_event_days () {
-        GLib.Idle.add (() => {
-            var events = Widgets.CalendarModel.get_default ().get_events (date);
+        var model = Widgets.CalendarModel.get_default ();
+        var events = model.get_events (date);
 
-            // Unload unnecessary widgets
-            if (event_dot_grid != null) {
-                event_dot_grid.destroy ();
-            }
+        // Unload unnecessary widgets
+        if (event_dot_grid != null) {
+            event_dot_grid.destroy ();
+        }
 
-            event_dot_grid = new Gtk.Grid ();
-            event_dot_grid.halign = Gtk.Align.CENTER;
-            event_dot_grid.valign = Gtk.Align.START;
+        event_dot_grid = new Gtk.Grid ();
+        event_dot_grid.halign = Gtk.Align.CENTER;
 
-            var event_dot = new Gtk.Image ();
-            event_dot.pixel_size = 6;
+        var event_dot = new Gtk.Image ();
+        event_dot.pixel_size = 6;
 
-            if (event_dot_grid != null) {
-                event_dot_grid.destroy ();
-            }
-            if (events.size != 0) {
-                if (events.size <= 4) {
-                    foreach (var e in events) {
-                        if (e != null) {
-                            event_dot.gicon = new ThemedIcon ("pager-checked-symbolic");
-                            Util.set_event_calendar_color (e.cal, event_dot);
-                            event_dot_grid.add (event_dot);
-                        }
+        if (event_dot_grid != null) {
+            event_dot_grid.destroy ();
+        }
+        if (events.size != 0) {
+            if (events.size <= 4) {
+                foreach (var e in events) {
+                    if (e != null) {
+                        event_dot.gicon = new ThemedIcon ("pager-checked-symbolic");
+                        Util.set_event_calendar_color (e.cal, event_dot);
+                        event_dot_grid.add (event_dot);
                     }
-                } else if (events.size > 4) {
-                    event_dot.gicon = new ThemedIcon ("events-bar-symbolic");
-                    event_dot_grid.add (event_dot);
                 }
-                event_dot_grid.show_all ();
-                main_grid.attach (event_dot_grid, 0, 1);
-                main_grid.margin_top = 6;
+            } else if (events.size > 4) {
+                event_dot.gicon = new ThemedIcon ("events-bar-symbolic");
+                event_dot_grid.add (event_dot);
             }
-            return false;
-        });
+            event_dot_grid.show_all ();
+            main_grid.attach (event_dot_grid, 0, 1);
+            main_grid.margin_top = 6;
+        }
     }
 
     public void set_selected (bool selected) {
