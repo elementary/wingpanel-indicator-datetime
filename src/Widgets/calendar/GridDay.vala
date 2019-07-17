@@ -95,18 +95,18 @@ public class DateTime.Widgets.GridDay : Gtk.EventBox {
             event_dot_grid.destroy ();
         }
 
-        var event_dot = new Granite.AsyncImage ();
+        var event_dot = new Gtk.Image ();
         event_dot.pixel_size = 6;
 
         if (events.size <= 4) {
             foreach (var e in events) {
-                event_dot.gicon_async = new ThemedIcon ("pager-checked-symbolic");
+                event_dot.gicon = new ThemedIcon ("pager-checked-symbolic");
                 Util.set_event_calendar_color (e.cal, event_dot);
                 event_dot_grid.add (event_dot);
                 main_grid.margin_top = 6;
             }
         } else if (events.size > 4) {
-            event_dot.gicon_async = new ThemedIcon ("events-bar-symbolic");
+            event_dot.gicon = new ThemedIcon ("events-bar-symbolic");
             event_dot_grid.add (event_dot);
             main_grid.margin_top = 6;
         }
