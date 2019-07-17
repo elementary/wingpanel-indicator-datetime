@@ -34,13 +34,18 @@ public class DateTime.EventRow : Gtk.ListBoxRow {
     }
 
     construct {
-        var event_image = new Gtk.Image.from_icon_name (cal_event.get_icon (), Gtk.IconSize.MENU);
+        unowned string icon_name = "office-calendar-symbolic";
+        if (cal_event.end_time == null) {
+            icon_name = "alarm-symbolic";
+        }
+
+        var event_image = new Gtk.Image.from_icon_name (icon_name, Gtk.IconSize.MENU);
         event_image.valign = Gtk.Align.START;
 
         event_image_context = event_image.get_style_context ();
         event_image_context.add_provider (css_provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
 
-        var name_label = new Gtk.Label (cal_event.get_event_label ());
+        var name_label = new Gtk.Label (cal_event.component.get_summary ());
         name_label.hexpand = true;
         name_label.ellipsize = Pango.EllipsizeMode.END;
         name_label.lines = 3;

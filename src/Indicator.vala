@@ -138,7 +138,7 @@ public class DateTime.Indicator : Wingpanel.Indicator {
         }
     }
 
-    private void update_events_model (E.Source source, Gee.Collection<E.CalComponent> events) {
+    private void update_events_model (E.Source source, Gee.Collection<ECal.Component> events) {
         idle_update_events ();
     }
 
