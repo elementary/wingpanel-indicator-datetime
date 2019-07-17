@@ -47,10 +47,6 @@ public class DateTime.Event : GLib.Object {
         }
     }
 
-    public string get_event_label () {
-        return component.get_summary ();
-    }
-
     public string get_event_times () {
         if (is_allday) {
             return "";
