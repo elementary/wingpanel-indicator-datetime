@@ -32,13 +32,13 @@ public class DateTime.Widgets.CalendarView : Gtk.Grid {
 
     public GLib.DateTime? selected_date { get; private set; }
 
-    private WeekLabels weeks { get; private set; }
-    private Header header { get; private set; }
-    private Grid grid { get; private set; }
-    private Gtk.Stack stack { get; private set; }
-    private Gtk.Grid big_grid { get; private set; }
+    private WeekLabels weeks;
+    private Header header;
+    private Grid grid;
+    private Gtk.Stack stack;
+    private Gtk.Grid big_grid;
 
-    public CalendarView () {
+    construct {
         big_grid = create_big_grid ();
 
         stack = new Gtk.Stack ();
@@ -67,27 +67,30 @@ public class DateTime.Widgets.CalendarView : Gtk.Grid {
         add (stack);
     }
 
-    public Gtk.Grid create_big_grid () {
+    private Gtk.Grid create_big_grid () {
         weeks = new WeekLabels ();
-        weeks.notify["child-revealed"].connect (() => {
-            header.queue_draw ();
-        });
 
         header = new Header ();
+
         grid = new Grid ();
+
+        var new_big_grid = new Gtk.Grid ();
+        new_big_grid.expand = true;
+        new_big_grid.attach (header, 1, 0);
+        new_big_grid.attach (grid, 1, 1);
+        new_big_grid.attach (weeks, 0, 1);
+        new_big_grid.show_all ();
+
         grid.on_event_add.connect ((date) => on_event_add (date));
         grid.selection_changed.connect ((date) => {
             selected_date = date;
             selection_changed (date);
         });
 
-        // Grid properties
-        var new_big_grid = new Gtk.Grid ();
-        new_big_grid.attach (header, 1, 0, 1, 1);
-        new_big_grid.attach (grid, 1, 1, 1, 1);
-        new_big_grid.attach (weeks, 0, 1, 1, 1);
-        new_big_grid.show_all ();
-        new_big_grid.expand = true;
+        weeks.notify["child-revealed"].connect (() => {
+            header.queue_draw ();
+        });
+
         return new_big_grid;
     }
 
@@ -102,8 +105,9 @@ public class DateTime.Widgets.CalendarView : Gtk.Grid {
         var today = Util.strip_time (new GLib.DateTime.now_local ());
         var start = Util.get_start_of_month (today);
         selected_date = today;
-        if (!start.equal (calmodel.month_start))
+        if (!start.equal (calmodel.month_start)) {
             calmodel.month_start = start;
+        }
         sync_with_model ();
 
         grid.set_focus_to_today ();
@@ -111,13 +115,13 @@ public class DateTime.Widgets.CalendarView : Gtk.Grid {
 
     //--- Signal Handlers ---//
 
-    void on_show_weeks_changed () {
+    private void on_show_weeks_changed () {
         var model = CalendarModel.get_default ();
         weeks.update (model.data_range.first_dt, model.num_weeks);
     }
 
     /* Indicates the month has changed */
-    void on_model_parameters_changed () {
+    private void on_model_parameters_changed () {
         var model = CalendarModel.get_default ();
         if (grid.grid_range != null && model.data_range.equals (grid.grid_range))
             return; // nothing to do
@@ -131,7 +135,7 @@ public class DateTime.Widgets.CalendarView : Gtk.Grid {
     //--- Helper Methods ---//
 
     /* Sets the calendar widgets to the date range of the model */
-    void sync_with_model () {
+    private void sync_with_model () {
         var model = CalendarModel.get_default ();
         if (grid.grid_range != null && (model.data_range.equals (grid.grid_range) || grid.grid_range.first_dt.compare (model.data_range.first_dt) == 0)) {
             grid.update_today();
