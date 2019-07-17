@@ -142,7 +142,6 @@ namespace DateTime.Widgets {
             });
 
             var list = new Gee.ArrayList<Event>.wrap (events.values.to_array ());
-            list.sort (sort_events);
             return list;
         }
 
