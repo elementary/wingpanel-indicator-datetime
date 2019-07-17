@@ -27,22 +27,23 @@ public class DateTime.Widgets.GridDay : Gtk.EventBox {
      * Event emitted when the day is double clicked or the ENTER key is pressed.
      */
     public signal void on_event_add (GLib.DateTime date);
-
     private Gtk.Grid main_grid;
     private Gtk.Grid event_dot_grid;
-
-    public GLib.DateTime date { get; private set; }
     Gtk.Label label;
-    int id;
     bool valid_grab = false;
+    public GLib.DateTime date { get; construct set; }
+    public int id { get; construct; }
+    private Gtk.Label label;
+    private bool valid_grab = false;
 
     public GridDay (GLib.DateTime date, int id) {
-        this.date = date;
-        this.id = id;
+        Object (
+            date: date,
+            id: id
+        );
+    }
 
-        label = new Gtk.Label ("");
-        set_size_request (32, 32);
-
+    construct {
         var provider = new Gtk.CssProvider ();
         provider.load_from_resource ("/io/elementary/desktop/wingpanel/datetime/GridDay.css");
 
@@ -50,7 +51,8 @@ public class DateTime.Widgets.GridDay : Gtk.EventBox {
         style_context.add_provider (provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
         style_context.add_class ("circular");
 
-        // EventBox Properties
+        label = new Gtk.Label (null);
+
         can_focus = true;
         events |= Gdk.EventMask.BUTTON_PRESS_MASK;
         events |= Gdk.EventMask.KEY_PRESS_MASK;
@@ -64,6 +66,7 @@ public class DateTime.Widgets.GridDay : Gtk.EventBox {
         main_grid.attach (label, 0, 0);
 
         add (main_grid);
+        set_size_request (32, 32);
         halign = Gtk.Align.CENTER;
         show_all ();
 
@@ -76,11 +79,10 @@ public class DateTime.Widgets.GridDay : Gtk.EventBox {
         model.events_added.connect (update_event_days);
         model.events_updated.connect (update_event_days);
         model.events_removed.connect (update_event_days);
-    }
 
-    public void update_date (GLib.DateTime date) {
-        this.date = date;
-        label.label = date.get_day_of_month ().to_string ();
+        notify["date"].connect (() => {
+            label.label = date.get_day_of_month ().to_string ();
+        });
     }
 
     public async void update_event_days () {
@@ -130,10 +132,12 @@ public class DateTime.Widgets.GridDay : Gtk.EventBox {
             set_state_flags (Gtk.StateFlags.NORMAL, true);
         }
     }
+
     public void grab_focus_force () {
         valid_grab = true;
         grab_focus ();
     }
+
     public override void grab_focus () {
         if (valid_grab) {
             base.grab_focus ();
