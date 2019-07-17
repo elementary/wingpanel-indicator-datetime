@@ -28,19 +28,20 @@ public class DateTime.Widgets.GridDay : Gtk.EventBox {
      */
     public signal void on_event_add (GLib.DateTime date);
 
-    public GLib.DateTime date { get; private set; }
-    Gtk.Label label;
-    int id;
-    bool valid_grab = false;
+    public GLib.DateTime date { get; construct set; }
+    public int id { get; construct; }
+
+    private Gtk.Label label;
+    private bool valid_grab = false;
 
     public GridDay (GLib.DateTime date, int id) {
-        this.date = date;
-        this.id = id;
+        Object (
+            date: date,
+            id: id
+        );
+    }
 
-        label = new Gtk.Label ("");
-        set_size_request (35, 32);
-        halign = Gtk.Align.CENTER;
-
+    construct {
         var provider = new Gtk.CssProvider ();
         provider.load_from_resource ("/io/elementary/desktop/wingpanel/datetime/GridDay.css");
 
@@ -48,14 +49,14 @@ public class DateTime.Widgets.GridDay : Gtk.EventBox {
         style_context.add_provider (provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
         style_context.add_class ("circular");
 
-        // EventBox Properties
+        label = new Gtk.Label (null);
+
         can_focus = true;
         events |= Gdk.EventMask.BUTTON_PRESS_MASK;
         events |= Gdk.EventMask.KEY_PRESS_MASK;
         events |= Gdk.EventMask.SMOOTH_SCROLL_MASK;
-
-        label.name = "date";
-
+        set_size_request (32, 32);
+        halign = Gtk.Align.CENTER;
         add (label);
         show_all ();
 
@@ -63,11 +64,10 @@ public class DateTime.Widgets.GridDay : Gtk.EventBox {
         button_press_event.connect (on_button_press);
         key_press_event.connect (on_key_press);
         scroll_event.connect ((event) => {return Util.on_scroll_event (event);});
-    }
 
-    public void update_date (GLib.DateTime date) {
-        this.date = date;
-        label.label = date.get_day_of_month ().to_string ();
+        notify["date"].connect (() => {
+            label.label = date.get_day_of_month ().to_string ();
+        });
     }
 
     public void set_selected (bool selected) {
@@ -77,10 +77,12 @@ public class DateTime.Widgets.GridDay : Gtk.EventBox {
             set_state_flags (Gtk.StateFlags.NORMAL, true);
         }
     }
+
     public void grab_focus_force () {
         valid_grab = true;
         grab_focus ();
     }
+
     public override void grab_focus () {
         if (valid_grab) {
             base.grab_focus ();
