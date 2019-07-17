@@ -38,6 +38,7 @@ namespace DateTime.Widgets {
         private GridDay selected_gridday;
 
         construct {
+            hexpand = true;
             column_homogeneous = true;
             row_homogeneous = true;
 
