@@ -32,7 +32,12 @@ public class DateTime.EventRow : Gtk.ListBoxRow {
     }
 
     construct {
-        var event_image = new Gtk.Image.from_icon_name (cal_event.get_icon (), Gtk.IconSize.MENU);
+        string icon_name = "office-calendar-symbolic";
+        if (cal_event.end_time == null) {
+            icon_name = "alarm-symbolic";
+        }
+
+        var event_image = new Gtk.Image.from_icon_name (icon_name, Gtk.IconSize.MENU);
         event_image.valign = Gtk.Align.START;
 
         var event_image_context = event_image.get_style_context ();
