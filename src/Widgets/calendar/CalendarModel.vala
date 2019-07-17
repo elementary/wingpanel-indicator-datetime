@@ -20,7 +20,7 @@ namespace DateTime.Widgets {
         /* The data_range is the range of dates for which this model is storing
          * data. The month_range is a subset of this range corresponding to the
          * calendar month that is being focused on. In summary:
-         * 
+         *
          * data_range.first <= month_range.first < month_range.last <= data_range.last
          *
          * There is no way to set the ranges publicly. They can only be modified by
@@ -127,7 +127,7 @@ namespace DateTime.Widgets {
                 var map = source_events.get (source);
                 if (map != null) {
                     foreach (var comp in source_events.get (source).values.read_only_view) {
-                        unowned iCal.Component ical = comp.get_icalcomponent ();
+                        unowned ICal.Component ical = comp.get_icalcomponent ();
                         foreach (var dt_range in Util.event_date_ranges (ical, data_range)) {
                             if (dt_range.contains (date)) {
                                 if (!events.has_key (ical.get_uid ())) {
