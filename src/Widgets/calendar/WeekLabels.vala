@@ -1,6 +1,5 @@
-// -*- Mode: vala; indent-tabs-mode: nil; tab-width: 4 -*-
-/*-
- * Copyright (c) 2011-2015 elementary LLC. (https://elementary.io)
+/*
+ * Copyright 2011-2019 elementary, Inc. (https://elementary.io)
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,78 +19,56 @@
  */
 
 public class DateTime.Widgets.WeekLabels : Gtk.Revealer {
-
     private Gtk.Grid day_grid;
     private Gtk.Label[] labels;
-    private int nr_of_weeks;
 
-    public WeekLabels () {
+    construct {
         vexpand = true;
 
         day_grid = new Gtk.Grid ();
-        set_nr_of_weeks (5);
-        day_grid.insert_row (1);
         day_grid.attach (new Gtk.Separator (Gtk.Orientation.VERTICAL), 1, 0, 1, 6);
         day_grid.column_spacing = 9;
         day_grid.show ();
-
-        day_grid.get_style_context().add_class ("weeks");
 
         add (day_grid);
     }
 
     public void update (GLib.DateTime date, int nr_of_weeks) {
-
-        update_nr_of_labels (nr_of_weeks);
-
         if (Services.SettingsManager.get_default ().show_weeks) {
-            no_show_all = false;
-            transition_type = Gtk.RevealerTransitionType.SLIDE_RIGHT;
-            set_reveal_child (true);
+            if (labels != null) {
+                foreach (var label in labels) {
+                    label.destroy ();
+                }
+            }
 
             var next = date;
             // Find the beginning of the week which is apparently always a monday
-            int days_to_add = (8 - next.get_day_of_week()) % 7;
-            next = next.add_days(days_to_add);
-            foreach (var label in labels) {
-                label.get_style_context ().add_class ("h4");
-                label.height_request = 30;
-                label.label = next.get_week_of_year ().to_string();
+            int days_to_add = (8 - next.get_day_of_week ()) % 7;
+            next = next.add_days (days_to_add);
+
+            labels = new Gtk.Label[nr_of_weeks];
+            for (int c = 0; c < nr_of_weeks; c++) {
+                labels[c] = new Gtk.Label (next.get_week_of_year ().to_string ());
+                labels[c].height_request = 30;
+                labels[c].margin = 1;
+                labels[c].valign = Gtk.Align.START;
+                labels[c].width_chars = 2;
+                labels[c].get_style_context ().add_class (Granite.STYLE_CLASS_H4_LABEL);
+                labels[c].show ();
+
+                day_grid.attach (labels[c], 0, c);
+
                 next = next.add_weeks (1);
             }
+
+            no_show_all = false;
+            transition_type = Gtk.RevealerTransitionType.SLIDE_RIGHT;
+            set_reveal_child (true);
         } else {
             transition_type = Gtk.RevealerTransitionType.SLIDE_LEFT;
             set_reveal_child (false);
             no_show_all = true;
             hide ();
-        }
-    }
-
-    public void set_nr_of_weeks (int new_number) {
-        day_grid.insert_row (new_number);
-        nr_of_weeks = new_number;
-    }
-
-    public int get_nr_of_weeks () {
-        return nr_of_weeks;
-    }
-
-    void update_nr_of_labels (int nr_of_weeks) {
-        // Destroy all the old ones
-
-        if (labels != null)
-            foreach (var label in labels)
-                label.destroy ();
-
-        // Create new labels
-        labels = new Gtk.Label[nr_of_weeks];
-        for (int c = 0; c < nr_of_weeks; c++) {
-            labels[c] = new Gtk.Label ("");
-            labels[c].valign = Gtk.Align.START;
-            labels[c].width_chars = 2;
-            labels[c].margin = 1;
-            day_grid.attach (labels[c], 0, c, 1, 1);
-            labels[c].show ();
         }
     }
 }
