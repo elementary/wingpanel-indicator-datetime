@@ -63,6 +63,9 @@ public class DateTime.Widgets.GridDay : Gtk.EventBox {
         main_grid.valign = Gtk.Align.CENTER;
         main_grid.attach (label, 0, 0);
 
+        event_dot_grid = new Gtk.Grid ();
+        event_dot_grid.halign = Gtk.Align.CENTER;
+
         add (main_grid);
         set_size_request (32, 32);
         halign = Gtk.Align.CENTER;
@@ -92,32 +95,23 @@ public class DateTime.Widgets.GridDay : Gtk.EventBox {
             event_dot_grid.destroy ();
         }
 
-        event_dot_grid = new Gtk.Grid ();
-        event_dot_grid.halign = Gtk.Align.CENTER;
-
-        var event_dot = new Gtk.Image ();
+        var event_dot = new Granite.AsyncImage ();
         event_dot.pixel_size = 6;
 
-        if (event_dot_grid != null) {
-            event_dot_grid.destroy ();
-        }
-        if (events.size != 0) {
-            if (events.size <= 4) {
-                foreach (var e in events) {
-                    if (e != null) {
-                        event_dot.gicon = new ThemedIcon ("pager-checked-symbolic");
-                        Util.set_event_calendar_color (e.cal, event_dot);
-                        event_dot_grid.add (event_dot);
-                    }
-                }
-            } else if (events.size > 4) {
-                event_dot.gicon = new ThemedIcon ("events-bar-symbolic");
+        if (events.size <= 4) {
+            foreach (var e in events) {
+                event_dot.gicon = new ThemedIcon ("pager-checked-symbolic");
+                Util.set_event_calendar_color (e.cal, event_dot);
                 event_dot_grid.add (event_dot);
+                main_grid.margin_top = 6;
             }
-            event_dot_grid.show_all ();
-            main_grid.attach (event_dot_grid, 0, 1);
+        } else if (events.size > 4) {
+            event_dot.gicon = new ThemedIcon ("events-bar-symbolic");
+            event_dot_grid.add (event_dot);
             main_grid.margin_top = 6;
         }
+        event_dot_grid.show_all ();
+        main_grid.attach (event_dot_grid, 0, 1);
     }
 
     public void set_selected (bool selected) {
