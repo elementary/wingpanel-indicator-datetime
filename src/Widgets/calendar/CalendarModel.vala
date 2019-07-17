@@ -119,29 +119,28 @@ namespace DateTime.Widgets {
         }
 
         /* --- Public Methods ---// */
-
-        public Gee.ArrayList<Event> get_events (GLib.DateTime date) {
+        public async Gee.ArrayList<Event> get_events (GLib.DateTime date) {
             var events = new Gee.TreeMap<string,Event> ();
-            registry.list_sources (E.SOURCE_EXTENSION_CALENDAR).foreach ((source) => {
-                E.SourceCalendar cal = (E.SourceCalendar)source.get_extension (E.SOURCE_EXTENSION_CALENDAR);
-                var map = source_events.get (source);
-                if (map != null) {
-                    foreach (var comp in source_events.get (source).values.read_only_view) {
-                        unowned ICal.Component ical = comp.get_icalcomponent ();
-                        foreach (var dt_range in Util.event_date_ranges (ical, data_range)) {
-                            if (dt_range.contains (date)) {
-                                if (!events.has_key (ical.get_uid ())) {
-                                    if (cal.selected == true && source.enabled == true) {
-                                        events.set (ical.get_uid (), new Event (date, dt_range, ical, source));
+                registry.list_sources (E.SOURCE_EXTENSION_CALENDAR).foreach ((source) => {
+                    E.SourceCalendar cal = (E.SourceCalendar)source.get_extension (E.SOURCE_EXTENSION_CALENDAR);
+                    var map = source_events.get (source);
+                    if (map != null) {
+                        foreach (var comp in source_events.get (source).values.read_only_view) {
+                            unowned ICal.Component ical = comp.get_icalcomponent ();
+                            foreach (var dt_range in Util.event_date_ranges (ical, data_range)) {
+                                if (dt_range.contains (date)) {
+                                    if (!events.has_key (ical.get_uid ())) {
+                                        if (cal.selected == true && source.enabled == true) {
+                                            events.set (ical.get_uid (), new Event (date, dt_range, ical, source));
+                                        }
                                     }
                                 }
                             }
                         }
                     }
-                }
-            });
-
+                });
             var list = new Gee.ArrayList<Event>.wrap (events.values.to_array ());
+            return list;
         }
 
         public bool calclient_is_readonly (E.Source source) {

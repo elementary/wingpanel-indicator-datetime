@@ -166,27 +166,24 @@ public class DateTime.Indicator : Wingpanel.Indicator {
     }
 
     private void idle_update_events () {
-        if (update_events_idle_source > 0) {
-            GLib.Source.remove (update_events_idle_source);
-        }
-
-        update_events_idle_source = GLib.Idle.add (update_events);
+        update_events_idle_source = (uint)update_events;
     }
 
-    private bool update_events () {
+    private async bool update_events () {
         foreach (unowned Gtk.Widget widget in event_listbox.get_children ()) {
             widget.destroy ();
         }
 
         if (calendar.selected_date == null) {
             update_events_idle_source = 0;
-            return GLib.Source.REMOVE;
+            return false;
         }
 
-        var events = Widgets.CalendarModel.get_default ().get_events (calendar.selected_date);
+        var model = Widgets.CalendarModel.get_default ();
+        var events = yield model.get_events (calendar.selected_date);
         if (events.size == 0) {
             update_events_idle_source = 0;
-            return GLib.Source.REMOVE;
+            return false;
         }
 
         foreach (var event in events) {
@@ -197,7 +194,7 @@ public class DateTime.Indicator : Wingpanel.Indicator {
 
         event_listbox.show_all ();
         update_events_idle_source = 0;
-        return GLib.Source.REMOVE;
+        return false;
     }
 
     public override void opened () {

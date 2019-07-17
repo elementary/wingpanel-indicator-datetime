@@ -88,7 +88,7 @@ public class DateTime.Widgets.GridDay : Gtk.EventBox {
 
     public async void update_event_days () {
         var model = Widgets.CalendarModel.get_default ();
-        var events = model.get_events (date);
+        var events = yield model.get_events (date);
 
         // Unload unnecessary widgets
         if (event_dot_grid != null) {
