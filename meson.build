@@ -33,7 +33,6 @@ shared_module(
     'src/Widgets/calendar/CalendarView.vala',
     'src/Widgets/calendar/Grid.vala',
     'src/Widgets/calendar/GridDay.vala',
-    'src/Widgets/calendar/Header.vala',
     'src/Widgets/calendar/Util.vala',
     'src/Widgets/calendar/WeekLabels.vala',
     'src/Services/TimeManager.vala',

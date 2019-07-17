@@ -33,10 +33,10 @@ public class DateTime.Widgets.CalendarView : Gtk.Grid {
     public GLib.DateTime? selected_date { get; private set; }
 
     private WeekLabels weeks;
-    private Header header;
     private Grid grid;
     private Gtk.Stack stack;
     private Gtk.Grid big_grid;
+    private Gtk.Label[] labels;
 
     construct {
         big_grid = create_big_grid ();
@@ -67,14 +67,22 @@ public class DateTime.Widgets.CalendarView : Gtk.Grid {
     private Gtk.Grid create_big_grid () {
         weeks = new WeekLabels ();
 
-        header = new Header ();
+        var new_big_grid = new Gtk.Grid ();
+        new_big_grid.column_homogeneous = true;
+        new_big_grid.expand = true;
+
+        labels = new Gtk.Label[7];
+        for (int c = 0; c < 7; c++) {
+            labels[c] = new Gtk.Label (null);
+            labels[c].margin_bottom = 4;
+            labels[c].get_style_context ().add_class (Granite.STYLE_CLASS_H4_LABEL);
+
+            new_big_grid.attach (labels[c], c + 1, 0);
+        }
 
         grid = new Grid ();
 
-        var new_big_grid = new Gtk.Grid ();
-        new_big_grid.expand = true;
-        new_big_grid.attach (header, 1, 0);
-        new_big_grid.attach (grid, 1, 1);
+        new_big_grid.attach (grid, 1, 1, 7);
         new_big_grid.attach (weeks, 0, 1);
         new_big_grid.show_all ();
 
@@ -82,10 +90,6 @@ public class DateTime.Widgets.CalendarView : Gtk.Grid {
         grid.selection_changed.connect ((date) => {
             selected_date = date;
             selection_changed (date);
-        });
-
-        weeks.notify["child-revealed"].connect (() => {
-            header.queue_draw ();
         });
 
         return new_big_grid;
@@ -142,7 +146,13 @@ public class DateTime.Widgets.CalendarView : Gtk.Grid {
         big_grid = create_big_grid ();
         stack.add (big_grid);
 
-        header.update_columns (model.week_starts_on);
+        var date = Util.strip_time (new GLib.DateTime.now_local ());
+        date = date.add_days (model.week_starts_on - date.get_day_of_week ());
+        foreach (var label in labels) {
+            label.label = date.format ("%a");
+            date = date.add_days (1);
+        }
+
         weeks.update (model.data_range.first_dt, model.num_weeks);
         grid.set_range (model.data_range, model.month_start);
 
