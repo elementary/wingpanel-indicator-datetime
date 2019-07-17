@@ -43,7 +43,7 @@ public class DateTime.EventRow : Gtk.ListBoxRow {
         var event_image_context = event_image.get_style_context ();
         event_image_context.add_provider (css_provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
 
-        var name_label = new Gtk.Label (cal_event.get_event_label ());
+        var name_label = new Gtk.Label (cal_event.component.get_summary ());
         name_label.hexpand = true;
         name_label.ellipsize = Pango.EllipsizeMode.END;
         name_label.lines = 3;
