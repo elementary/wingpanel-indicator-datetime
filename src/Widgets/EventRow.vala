@@ -32,7 +32,7 @@ public class DateTime.EventRow : Gtk.ListBoxRow {
     }
 
     construct {
-        string icon_name = "office-calendar-symbolic";
+        unowned string icon_name = "office-calendar-symbolic";
         if (cal_event.end_time == null) {
             icon_name = "alarm-symbolic";
         }
