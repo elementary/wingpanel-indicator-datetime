@@ -51,7 +51,6 @@ public class DateTime.Widgets.WeekLabels : Gtk.Revealer {
                 labels[c] = new Gtk.Label (next.get_week_of_year ().to_string ());
                 labels[c].height_request = 30;
                 labels[c].margin = 1;
-                labels[c].valign = Gtk.Align.START;
                 labels[c].width_chars = 2;
                 labels[c].get_style_context ().add_class (Granite.STYLE_CLASS_H4_LABEL);
                 labels[c].show ();
