@@ -143,19 +143,6 @@ namespace DateTime.Widgets {
 
             var list = new Gee.ArrayList<Event>.wrap (events.values.to_array ());
             list.sort (sort_events);
-            return list;
-        }
-
-        public int sort_events (Event e1, Event e2) {
-            if (e1.start_time.compare (e2.start_time) != 0)
-                return e1.start_time.compare(e2.start_time);
-
-            // If they have the same date, sort them wholeday first
-            if (e1.is_allday)
-                return -1;
-            if (e2.is_allday)
-                return 1;
-            return 0;
         }
 
         public bool calclient_is_readonly (E.Source source) {
