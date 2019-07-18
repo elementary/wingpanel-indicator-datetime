@@ -1,7 +1,15 @@
+.accent {
+    font-weight: bold;
+}
+
 .circular {
     border-radius: 50%;
 }
 
-.accent {
-    font-weight: bold;
+.circular:selected .accent {
+    color: @selected_fg_color;
+}
+
+grid:disabled .accent {
+    color: @insensitive_color;
 }
