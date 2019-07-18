@@ -158,6 +158,7 @@ public class DateTime.Widgets.GridDay : Gtk.EventBox {
 
     public void sensitive_container (bool sens) {
         label.sensitive = sens;
+        event_grid.sensitive = sens;
     }
 
     private bool on_button_press (Gdk.EventButton event) {
