@@ -499,7 +499,7 @@ namespace Util {
         }
     }
 
-    private Gee.HashMap<string, Gtk.CssProvider> providers;
+    private Gee.HashMap<string, Gtk.CssProvider>? providers;
     public void set_event_calendar_color (E.SourceCalendar cal, Gtk.Widget widget) {
         if (providers == null) {
             providers = new Gee.HashMap<string, Gtk.CssProvider> ();
