@@ -31,6 +31,8 @@ public class DateTime.Widgets.GridDay : Gtk.EventBox {
     public GLib.DateTime date { get; construct set; }
     public int id { get; construct; }
 
+    private Widgets.CalendarModel model;
+    private Gtk.Grid event_grid;
     private Gtk.Label label;
     private bool valid_grab = false;
 
@@ -51,13 +53,22 @@ public class DateTime.Widgets.GridDay : Gtk.EventBox {
 
         label = new Gtk.Label (null);
 
+        event_grid = new Gtk.Grid ();
+        event_grid.halign = Gtk.Align.CENTER;
+        event_grid.height_request = 6;
+
+        var grid = new Gtk.Grid ();
+        grid.halign = grid.valign = Gtk.Align.CENTER;
+        grid.attach (label, 0, 0);
+        grid.attach (event_grid, 0, 1);
+
         can_focus = true;
         events |= Gdk.EventMask.BUTTON_PRESS_MASK;
         events |= Gdk.EventMask.KEY_PRESS_MASK;
         events |= Gdk.EventMask.SMOOTH_SCROLL_MASK;
         set_size_request (32, 32);
         halign = Gtk.Align.CENTER;
-        add (label);
+        add (grid);
         show_all ();
 
         // Signals and handlers
@@ -68,6 +79,28 @@ public class DateTime.Widgets.GridDay : Gtk.EventBox {
         notify["date"].connect (() => {
             label.label = date.get_day_of_month ().to_string ();
         });
+
+        model = Widgets.CalendarModel.get_default ();
+        model.events_added.connect (update_event_days);
+        model.events_updated.connect (update_event_days);
+        model.events_removed.connect (update_event_days);
+    }
+
+    public async void update_event_days () {
+        foreach (unowned Gtk.Widget child in event_grid.get_children ()) {
+            child.destroy ();
+        }
+
+        var events = model.get_events (date);
+        for (int i = 0; i < events.size && i < 3; i++) {
+            var event_dot = new Gtk.Image ();
+            event_dot.gicon = new ThemedIcon ("pager-checked-symbolic");
+            event_dot.pixel_size = 6;
+            event_dot.get_style_context ().add_class (Granite.STYLE_CLASS_ACCENT);
+
+            event_grid.add (event_dot);
+        }
+        event_grid.show_all ();
     }
 
     public void set_selected (bool selected) {
