@@ -97,7 +97,11 @@ public class DateTime.Widgets.GridDay : Gtk.EventBox {
         foreach (var component in events) {
             unowned ICal.Component ical = component.get_icalcomponent ();
             foreach (var dt_range in Util.event_date_ranges (ical, model.data_range)) {
-                if (date in dt_range && event_dots.size < 3) {
+                if (event_dots.size >= 3) {
+                    return;
+                }
+
+                if (date in dt_range) {
                     var event_uid = ical.get_uid ();
                     if (!event_dots.has_key (event_uid)) {
                         var event_dot = new Gtk.Image ();
