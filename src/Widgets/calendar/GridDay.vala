@@ -31,10 +31,10 @@ public class DateTime.Widgets.GridDay : Gtk.EventBox {
     public GLib.DateTime date { get; construct set; }
     public int id { get; construct; }
 
+    private static Gtk.CssProvider provider;
     private static Widgets.CalendarModel model;
 
     private Gee.HashMap<string, Gtk.Widget> event_dots;
-    private Gtk.CssProvider provider;
     private Gtk.Grid event_grid;
     private Gtk.Label label;
     private bool valid_grab = false;
@@ -48,12 +48,12 @@ public class DateTime.Widgets.GridDay : Gtk.EventBox {
 
     static construct {
         model = Widgets.CalendarModel.get_default ();
+
+        provider = new Gtk.CssProvider ();
+        provider.load_from_resource ("/io/elementary/desktop/wingpanel/datetime/GridDay.css");
     }
 
     construct {
-        provider = new Gtk.CssProvider ();
-        provider.load_from_resource ("/io/elementary/desktop/wingpanel/datetime/GridDay.css");
-
         unowned Gtk.StyleContext style_context = get_style_context ();
         style_context.add_provider (provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
         style_context.add_class ("circular");
