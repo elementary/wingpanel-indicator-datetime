@@ -54,7 +54,7 @@ namespace DateTime.Widgets {
 
         HashTable<string, ECal.Client> source_client;
         HashTable<string, ECal.ClientView> source_view;
-        public HashTable<E.Source, Gee.TreeMap<string, ECal.Component> > source_events { get; private set; }
+        public HashTable<E.Source, Gee.TreeMap<string, ECal.Component>> source_events { get; private set; }
 
         private static CalendarModel? calendar_model = null;
         public enum Weekday {
