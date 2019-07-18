@@ -54,7 +54,7 @@ namespace DateTime.Widgets {
 
         HashTable<string, ECal.Client> source_client;
         HashTable<string, ECal.ClientView> source_view;
-        HashTable<E.Source, Gee.TreeMap<string, ECal.Component> > source_events;
+        public HashTable<E.Source, Gee.TreeMap<string, ECal.Component> > source_events { get; private set; }
 
         private static CalendarModel? calendar_model = null;
         public enum Weekday {
@@ -116,26 +116,6 @@ namespace DateTime.Widgets {
             } catch (GLib.Error error) {
                 critical (error.message);
             }
-        }
-
-        /* --- Public Methods ---// */
-
-        public Gee.ArrayList<Event> get_events (GLib.DateTime date) {
-            var events_on_day = new Gee.TreeMap<string,Event> ();
-            foreach (var entry in source_events.get_values ()) {
-                foreach (var comp in entry.values) {
-                    unowned ICal.Component ical = comp.get_icalcomponent ();
-                    foreach (var dt_range in Util.event_date_ranges (ical, data_range)) {
-                        if (dt_range.contains (date)) {
-                            if (!events_on_day.has_key (ical.get_uid ())) {
-                                events_on_day.set (ical.get_uid (), new Event (date, dt_range, ical));
-                            }
-                        }
-                    }
-                }
-            }
-            var list = new Gee.ArrayList<Event>.wrap (events_on_day.values.to_array ());
-            return list;
         }
 
         public bool calclient_is_readonly (E.Source source) {
