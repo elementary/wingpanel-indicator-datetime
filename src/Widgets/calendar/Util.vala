@@ -499,6 +499,32 @@ namespace Util {
         }
     }
 
+    private Gee.HashMap<string, Gtk.CssProvider>? providers;
+    public void set_event_calendar_color (E.SourceCalendar cal, Gtk.Widget widget) {
+        if (providers == null) {
+            providers = new Gee.HashMap<string, Gtk.CssProvider> ();
+        }
+
+        var color = cal.dup_color ();
+        if (!providers.has_key (color)) {
+            string style = """
+                @define-color colorAccent %s;
+            """.printf (color);
+
+            try {
+                var style_provider = new Gtk.CssProvider ();
+                style_provider.load_from_data (style, style.length);
+
+                providers[color] = style_provider;
+            } catch (Error e) {
+                critical ("Unable to set calendar color: %s", e.message);
+            }
+        }
+
+        unowned Gtk.StyleContext style_context = widget.get_style_context ();
+        style_context.add_provider (providers[color], Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
+    }
+
     /*
      * Gee Utility Functions
      */
