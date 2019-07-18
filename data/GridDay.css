@@ -2,6 +2,6 @@
     border-radius: 50%;
 }
 
-.accent {
-    font-weight: bold;
+.circular:selected .accent {
+    color: @selected_fg_color;
 }

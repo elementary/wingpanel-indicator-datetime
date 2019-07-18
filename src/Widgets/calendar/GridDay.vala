@@ -34,6 +34,7 @@ public class DateTime.Widgets.GridDay : Gtk.EventBox {
     private static Widgets.CalendarModel model;
 
     private Gee.HashMap<string, Gtk.Widget> event_dots;
+    private Gtk.CssProvider provider;
     private Gtk.Grid event_grid;
     private Gtk.Label label;
     private bool valid_grab = false;
@@ -50,7 +51,7 @@ public class DateTime.Widgets.GridDay : Gtk.EventBox {
     }
 
     construct {
-        var provider = new Gtk.CssProvider ();
+        provider = new Gtk.CssProvider ();
         provider.load_from_resource ("/io/elementary/desktop/wingpanel/datetime/GridDay.css");
 
         unowned Gtk.StyleContext style_context = get_style_context ();
@@ -106,7 +107,10 @@ public class DateTime.Widgets.GridDay : Gtk.EventBox {
                         var event_dot = new Gtk.Image ();
                         event_dot.gicon = new ThemedIcon ("pager-checked-symbolic");
                         event_dot.pixel_size = 6;
-                        event_dot.get_style_context ().add_class (Granite.STYLE_CLASS_ACCENT);
+
+                        unowned Gtk.StyleContext style_context = event_dot.get_style_context ();
+                        style_context.add_class (Granite.STYLE_CLASS_ACCENT);
+                        style_context.add_provider (provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
 
                         var source_calendar = (E.SourceCalendar?) source.get_extension (E.SOURCE_EXTENSION_CALENDAR);
                         Util.set_event_calendar_color (source_calendar, event_dot);
