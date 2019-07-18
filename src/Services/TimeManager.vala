@@ -42,6 +42,7 @@ public class DateTime.Services.TimeManager : Gtk.Calendar {
     private Manager? manager = null;
 
     public bool clock_show_seconds { get; set; }
+    public bool is_12h { get; set; }
 
     public TimeManager () {
         update_current_time ();
@@ -72,6 +73,39 @@ public class DateTime.Services.TimeManager : Gtk.Calendar {
             });
         } catch (Error e) {
             warning (e.message);
+        }
+    }
+
+    construct {
+        setup_time_format.begin ();
+    }
+
+    private async void setup_time_format () {
+        try {
+            var accounts_service = yield GLib.Bus.get_proxy<FDO.Accounts> (GLib.BusType.SYSTEM,
+                                                                           "org.freedesktop.Accounts",
+                                                                           "/org/freedesktop/Accounts");
+            var user_path = accounts_service.find_user_by_name (GLib.Environment.get_user_name ());
+
+            var greeter_act = yield GLib.Bus.get_proxy<Greeter.AccountsService> (GLib.BusType.SYSTEM,
+                                                    "org.freedesktop.Accounts",
+                                                    user_path,
+                                                    GLib.DBusProxyFlags.GET_INVALIDATED_PROPERTIES);
+            is_12h = ("12h" in greeter_act.time_format);
+            ((GLib.DBusProxy) greeter_act).g_properties_changed.connect ((changed_properties, invalidated_properties) => {
+                if (changed_properties.lookup_value ("TimeFormat", GLib.VariantType.STRING) != null) {
+                    is_12h = ("12h" in greeter_act.time_format);
+                }
+            });
+        } catch (Error e) {
+            critical (e.message);
+            // Connect to the GSettings instead
+            var clock_settings = new GLib.Settings ("org.gnome.desktop.interface");
+            clock_settings.changed["clock-format"].connect (() => {
+                is_12h = ("12h" in clock_settings.get_string ("clock-format"));
+            });
+
+            is_12h = ("12h" in clock_settings.get_string ("clock-format"));
         }
     }
 
