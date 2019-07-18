@@ -26,8 +26,6 @@ public class DateTime.Event : GLib.Object {
     public GLib.DateTime end_time;
     public bool is_allday = false;
 
-    private bool alarm = false;
-
     public Event (GLib.DateTime date, Util.DateRange range, ICal.Component component) {
         Object (
             component: component,
@@ -40,21 +38,8 @@ public class DateTime.Event : GLib.Object {
         start_time = Util.ical_to_date_time (component.get_dtstart ());
         end_time = Util.ical_to_date_time (component.get_dtend ());
 
-        if (end_time == null) {
-            alarm = true;
-        } else if (Util.is_the_all_day (start_time, end_time)) {
+        if (end_time != null && Util.is_the_all_day (start_time, end_time)) {
             is_allday = true;
         }
-    }
-
-    public string get_event_label () {
-        return component.get_summary ();
-    }
-
-    public string get_icon () {
-        if (alarm) {
-            return "alarm-symbolic";
-        }
-        return "office-calendar-symbolic";
     }
 }
