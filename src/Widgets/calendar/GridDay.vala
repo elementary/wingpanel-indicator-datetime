@@ -124,13 +124,9 @@ public class DateTime.Widgets.GridDay : Gtk.EventBox {
     private void remove_event_dots (E.Source source, Gee.Collection<ECal.Component> events) {
         foreach (var component in events) {
             unowned ICal.Component ical = component.get_icalcomponent ();
-            foreach (var dt_range in Util.event_date_ranges (ical, model.data_range)) {
-                if (dt_range.contains (date)) {
-                    var event_uid = ical.get_uid ();
-                    if (!event_dots.has_key (event_uid)) {
-                        event_dots.get (event_uid).destroy ();
-                    }
-                }
+            var event_uid = ical.get_uid ();
+            if (!event_dots.has_key (event_uid)) {
+                event_dots.get (event_uid).destroy ();
             }
         }
     }
