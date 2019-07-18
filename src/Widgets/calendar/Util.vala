@@ -499,6 +499,24 @@ namespace Util {
         }
     }
 
+    public void set_event_calendar_color (E.SourceCalendar cal, Gtk.Widget widget) {
+        var color = cal.dup_color ();
+
+        string style = """
+            @define-color colorAccent %s;
+        """.printf (color);
+
+        try {
+            var style_provider = new Gtk.CssProvider ();
+            style_provider.load_from_data (style, style.length);
+
+            var style_context = widget.get_style_context ();
+            style_context.add_provider (style_provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
+        } catch (Error e) {
+            critical ("Unable to set calendar color: %s", e.message);
+        }
+    }
+
     /*
      * Gee Utility Functions
      */

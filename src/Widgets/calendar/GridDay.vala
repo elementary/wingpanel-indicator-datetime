@@ -107,6 +107,9 @@ public class DateTime.Widgets.GridDay : Gtk.EventBox {
                         event_dot.pixel_size = 6;
                         event_dot.get_style_context ().add_class (Granite.STYLE_CLASS_ACCENT);
 
+                        var source_calendar = (E.SourceCalendar?) source.get_extension (E.SOURCE_EXTENSION_CALENDAR);
+                        Util.set_event_calendar_color (source_calendar, event_dot);
+
                         event_dots.set (event_uid, event_dot);
 
                         event_grid.add (event_dot);
