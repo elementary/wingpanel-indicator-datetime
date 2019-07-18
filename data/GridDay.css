@@ -5,3 +5,7 @@
 .circular:selected .accent {
     color: @selected_fg_color;
 }
+
+.accent {
+    font-weight: bold;
+}
