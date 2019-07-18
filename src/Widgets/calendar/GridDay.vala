@@ -31,16 +31,22 @@ public class DateTime.Widgets.GridDay : Gtk.EventBox {
     public GLib.DateTime date { get; construct set; }
     public int id { get; construct; }
 
-    private Widgets.CalendarModel model;
+    private static Widgets.CalendarModel model;
     private Gtk.Grid event_grid;
     private Gtk.Label label;
     private bool valid_grab = false;
+
+    private Gee.HashMap<string, Gtk.Widget> event_dots;
 
     public GridDay (GLib.DateTime date, int id) {
         Object (
             date: date,
             id: id
         );
+    }
+
+    static construct {
+        model = Widgets.CalendarModel.get_default ();
     }
 
     construct {
@@ -80,27 +86,50 @@ public class DateTime.Widgets.GridDay : Gtk.EventBox {
             label.label = date.get_day_of_month ().to_string ();
         });
 
-        model = Widgets.CalendarModel.get_default ();
-        model.events_added.connect (update_event_days);
-        model.events_updated.connect (update_event_days);
-        model.events_removed.connect (update_event_days);
+        event_dots = new Gee.HashMap<string, Gtk.Widget> ();
+
+        model.events_added.connect (add_event_dots);
+        model.events_removed.connect (remove_event_dots);
     }
 
-    public async void update_event_days () {
-        foreach (unowned Gtk.Widget child in event_grid.get_children ()) {
-            child.destroy ();
+    private void add_event_dots (E.Source source, Gee.Collection<ECal.Component> events) {
+        foreach (var component in events) {
+            if (event_dots.size >= 3) {
+                return;
+            }
+            unowned ICal.Component ical = component.get_icalcomponent ();
+            foreach (var dt_range in Util.event_date_ranges (ical, model.data_range)) {
+                if (dt_range.contains (date)) {
+                    var event_uid = ical.get_uid ();
+                    if (!event_dots.has_key (event_uid)) {
+                        var event_dot = new Gtk.Image ();
+                        event_dot.gicon = new ThemedIcon ("pager-checked-symbolic");
+                        event_dot.pixel_size = 6;
+                        event_dot.get_style_context ().add_class (Granite.STYLE_CLASS_ACCENT);
+
+                        event_dots.set (event_uid, event_dot);
+
+                        event_grid.add (event_dot);
+                    }
+                }
+            }
         }
 
-        var events = model.get_events (date);
-        for (int i = 0; i < events.size && i < 3; i++) {
-            var event_dot = new Gtk.Image ();
-            event_dot.gicon = new ThemedIcon ("pager-checked-symbolic");
-            event_dot.pixel_size = 6;
-            event_dot.get_style_context ().add_class (Granite.STYLE_CLASS_ACCENT);
-
-            event_grid.add (event_dot);
-        }
         event_grid.show_all ();
+    }
+
+    private void remove_event_dots (E.Source source, Gee.Collection<ECal.Component> events) {
+        foreach (var component in events) {
+            unowned ICal.Component ical = component.get_icalcomponent ();
+            foreach (var dt_range in Util.event_date_ranges (ical, model.data_range)) {
+                if (dt_range.contains (date)) {
+                    var event_uid = ical.get_uid ();
+                    if (!event_dots.has_key (event_uid)) {
+                        event_dots.get (event_uid).destroy ();
+                    }
+                }
+            }
+        }
     }
 
     public void set_selected (bool selected) {
