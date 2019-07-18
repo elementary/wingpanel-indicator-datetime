@@ -130,8 +130,9 @@ public class DateTime.Widgets.GridDay : Gtk.EventBox {
         foreach (var component in events) {
             unowned ICal.Component ical = component.get_icalcomponent ();
             var event_uid = ical.get_uid ();
-            if (event_dots.has_key (event_uid)) {
-                event_dots.get (event_uid).destroy ();
+            var dot = event_dots[event_uid];
+            if (dot != null) {
+                dot.destroy ();
                 event_dots.remove (event_uid);
             }
         }
