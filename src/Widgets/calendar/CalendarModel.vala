@@ -70,6 +70,8 @@ namespace DateTime.Widgets {
         }
 
         construct {
+            open.begin ();
+
             source_client = new HashTable<string, ECal.Client> (str_hash, str_equal);
             source_events = new HashTable<E.Source, Gee.TreeMap<string, ECal.Component> > (Util.source_hash_func, Util.source_equal_func);
             source_view = new HashTable<string, ECal.ClientView> (str_hash, str_equal);
@@ -82,10 +84,6 @@ namespace DateTime.Widgets {
             month_start = Util.get_start_of_month ();
             compute_ranges ();
             notify["month-start"].connect (on_parameter_changed);
-        }
-
-        public CalendarModel () {
-            open.begin ();
         }
 
         private async void open () {
