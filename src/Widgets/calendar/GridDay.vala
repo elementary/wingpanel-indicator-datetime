@@ -32,11 +32,11 @@ public class DateTime.Widgets.GridDay : Gtk.EventBox {
     public int id { get; construct; }
 
     private static Widgets.CalendarModel model;
+
+    private Gee.HashMap<string, Gtk.Widget> event_dots;
     private Gtk.Grid event_grid;
     private Gtk.Label label;
     private bool valid_grab = false;
-
-    private Gee.HashMap<string, Gtk.Widget> event_dots;
 
     public GridDay (GLib.DateTime date, int id) {
         Object (
@@ -97,6 +97,7 @@ public class DateTime.Widgets.GridDay : Gtk.EventBox {
             if (event_dots.size >= 3) {
                 return;
             }
+
             unowned ICal.Component ical = component.get_icalcomponent ();
             foreach (var dt_range in Util.event_date_ranges (ical, model.data_range)) {
                 if (dt_range.contains (date)) {
