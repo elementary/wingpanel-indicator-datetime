@@ -96,7 +96,7 @@ public class DateTime.Indicator : Wingpanel.Indicator {
             });
 
             event_listbox.row_activated.connect ((row) => {
-                calendar.show_date_in_maya (((DateTime.EventRow) row).cal_event.date);
+                calendar.show_date_in_maya (((DateTime.EventRow) row).date);
                 close ();
             });
 
@@ -116,12 +116,12 @@ public class DateTime.Indicator : Wingpanel.Indicator {
         var row = (DateTime.EventRow) lbrow;
         if (lbbefore != null) {
             var before = (DateTime.EventRow) lbbefore;
-            if (row.cal_event.is_allday == before.cal_event.is_allday) {
+            if (row.is_allday == before.is_allday) {
                 row.set_header (null);
                 return;
             }
 
-            if (row.cal_event.is_allday != before.cal_event.is_allday) {
+            if (row.is_allday != before.is_allday) {
                 var header_label = new Granite.HeaderLabel (_("During the Day"));
                 header_label.margin_start = header_label.margin_end = 6;
 
@@ -129,7 +129,7 @@ public class DateTime.Indicator : Wingpanel.Indicator {
                 return;
             }
         } else {
-            if (row.cal_event.is_allday) {
+            if (row.is_allday) {
                 var allday_header = new Granite.HeaderLabel (_("All Day"));
                 allday_header.margin_start = allday_header.margin_end = 6;
 
@@ -141,8 +141,8 @@ public class DateTime.Indicator : Wingpanel.Indicator {
 
     [CCode (instance_pos = -1)]
     private int sort_function (Gtk.ListBoxRow child1, Gtk.ListBoxRow child2) {
-        var e1 = ((EventRow) child1).cal_event;
-        var e2 = ((EventRow) child2).cal_event;
+        var e1 = (EventRow) child1;
+        var e2 = (EventRow) child2;
 
         if (e1.start_time.compare (e2.start_time) != 0) {
             return e1.start_time.compare (e2.start_time);
@@ -187,7 +187,7 @@ public class DateTime.Indicator : Wingpanel.Indicator {
         }
 
         foreach (var event in events) {
-            var menuitem = new DateTime.EventRow (event);
+            var menuitem = new DateTime.EventRow (event.date, event.component);
 
             event_listbox.add (menuitem);
         }

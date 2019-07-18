@@ -20,26 +20,11 @@
 public class DateTime.Event : GLib.Object {
     public GLib.DateTime date { get; construct; }
     public unowned ICal.Component component { get; construct; }
-    public Util.DateRange range { get; construct; }
 
-    public GLib.DateTime start_time;
-    public GLib.DateTime end_time;
-    public bool is_allday = false;
-
-    public Event (GLib.DateTime date, Util.DateRange range, ICal.Component component) {
+    public Event (GLib.DateTime date, ICal.Component component) {
         Object (
             component: component,
-            date: date,
-            range: range
+            date: date
         );
-    }
-
-    construct {
-        start_time = Util.ical_to_date_time (component.get_dtstart ());
-        end_time = Util.ical_to_date_time (component.get_dtend ());
-
-        if (end_time != null && Util.is_the_all_day (start_time, end_time)) {
-            is_allday = true;
-        }
     }
 }

@@ -128,7 +128,7 @@ namespace DateTime.Widgets {
                     foreach (var dt_range in Util.event_date_ranges (ical, data_range)) {
                         if (dt_range.contains (date)) {
                             if (!events_on_day.has_key (ical.get_uid ())) {
-                                events_on_day.set (ical.get_uid (), new Event (date, dt_range, ical));
+                                events_on_day.set (ical.get_uid (), new Event (date, ical));
                             }
                         }
                     }
