@@ -101,7 +101,7 @@ public class DateTime.Widgets.GridDay : Gtk.EventBox {
 
             unowned ICal.Component ical = component.get_icalcomponent ();
             foreach (var dt_range in Util.event_date_ranges (ical, model.data_range)) {
-                if (dt_range.contains (date)) {
+                if (date in dt_range) {
                     var event_uid = ical.get_uid ();
                     if (!event_dots.has_key (event_uid)) {
                         var event_dot = new Gtk.Image ();
@@ -115,7 +115,7 @@ public class DateTime.Widgets.GridDay : Gtk.EventBox {
                         var source_calendar = (E.SourceCalendar?) source.get_extension (E.SOURCE_EXTENSION_CALENDAR);
                         Util.set_event_calendar_color (source_calendar, event_dot);
 
-                        event_dots.set (event_uid, event_dot);
+                        event_dots[event_uid] = event_dot;
 
                         event_grid.add (event_dot);
                     }
