@@ -1,5 +1,5 @@
 /*
- * Copyright 2011-2018 elementary, Inc. (https://elementary.io)
+ * Copyright 2011-2019 elementary, Inc. (https://elementary.io)
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public
@@ -21,8 +21,9 @@
 
 /* Represents date range from 'first' to 'last' inclusive */
 public class Util.DateRange : Object, Gee.Traversable<GLib.DateTime>, Gee.Iterable<GLib.DateTime> {
-    public GLib.DateTime first_dt { get; private set; }
-    public GLib.DateTime last_dt { get; private set; }
+    public GLib.DateTime first_dt { get; construct; }
+    public GLib.DateTime last_dt { get; construct; }
+
     public bool @foreach (Gee.ForallFunc<GLib.DateTime> f) {
         foreach (var date in this) {
             if (f (date) == false) {
@@ -33,15 +34,11 @@ public class Util.DateRange : Object, Gee.Traversable<GLib.DateTime>, Gee.Iterab
         return true;
     }
 
-    public int64 days {
-        get {
-            return last_dt.difference (first_dt) / GLib.TimeSpan.DAY;
-        }
-    }
-
     public DateRange (GLib.DateTime first, GLib.DateTime last) {
-        first_dt = first;
-        last_dt = last;
+        Object (
+            first_dt: first,
+            last_dt: last
+        );
     }
 
     public DateRange.copy (DateRange date_range) {
@@ -52,28 +49,12 @@ public class Util.DateRange : Object, Gee.Traversable<GLib.DateTime>, Gee.Iterab
         return (first_dt == other.first_dt && last_dt == other.last_dt);
     }
 
-    public Type element_type {
-        get {
-            return typeof (GLib.DateTime);
-        }
-    }
-
     public Gee.Iterator<GLib.DateTime> iterator () {
         return new DateIterator (this);
     }
 
     public bool contains (GLib.DateTime time) {
         return (first_dt.compare (time) < 1) && (last_dt.compare (time) > -1);
-    }
-
-    public Gee.SortedSet<GLib.DateTime> to_set () {
-        var @set = new Gee.TreeSet<GLib.DateTime> ((GLib.CompareDataFunc<GLib.DateTime>? )GLib.DateTime.compare);
-
-        foreach (var date in this) {
-            set.add (date);
-        }
-
-        return @set;
     }
 
     public Gee.List<GLib.DateTime> to_list () {
@@ -87,7 +68,7 @@ public class Util.DateRange : Object, Gee.Traversable<GLib.DateTime>, Gee.Iterab
     }
 
     /* Returns true if 'a' and 'b' are the same GLib.DateTime */
-    public bool datetime_equal_func (GLib.DateTime a, GLib.DateTime b) {
+    private bool datetime_equal_func (GLib.DateTime a, GLib.DateTime b) {
         return a.equal (b);
     }
 }
