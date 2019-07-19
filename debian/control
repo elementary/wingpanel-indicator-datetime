@@ -19,6 +19,7 @@ Homepage: https://github.com/elementary/wingpanel-indicator-datetime
 Package: wingpanel-indicator-datetime
 Architecture: any
 Depends: ${misc:Depends}, ${shlibs:Depends}
+Recommends: elementary-default-settings (>= 5.2)
 Enhances: wingpanel
 Description: WingPanel Date & Time Indicator
  WingPanel Date & Time Indicator
