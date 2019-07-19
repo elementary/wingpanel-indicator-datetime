@@ -34,7 +34,7 @@ public class DateTime.Widgets.WeekLabels : Gtk.Revealer {
     }
 
     public void update (GLib.DateTime date, int nr_of_weeks) {
-        if (Services.SettingsManager.get_default ().show_weeks) {
+        if (DateTime.Indicator.settings.get_boolean ("show-weeks")) {
             if (labels != null) {
                 foreach (var label in labels) {
                     label.destroy ();
