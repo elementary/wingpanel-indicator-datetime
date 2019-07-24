@@ -70,11 +70,6 @@ namespace DateTime.Widgets {
                 selection_changed (date);
             });
 
-            cal.on_event_add.connect ((date) => {
-                show_date_in_maya (date);
-                day_double_click (date);
-            });
-
             CalendarModel.get_default ().parameters_changed.connect (() => {
                 var date = CalendarModel.get_default ().month_start;
                 label.set_label (date.format (_("%OB, %Y")));
@@ -95,25 +90,6 @@ namespace DateTime.Widgets {
 
         public void show_today () {
             cal.today ();
-        }
-
-        // TODO: As far as maya supports it use the Dbus Activation feature to run the calendar-app.
-        public void show_date_in_maya (GLib.DateTime date) {
-            var command = "io.elementary.calendar --show-day %s".printf (date.format ("%F"));
-
-            try {
-                var appinfo = AppInfo.create_from_commandline (command, null, AppInfoCreateFlags.NONE);
-                appinfo.launch_uris (null, null);
-            } catch (GLib.Error e) {
-                var dialog = new Granite.MessageDialog.with_image_from_icon_name (
-                    _("Unable To Launch Calendar"),
-                    _("The program \"io.elementary.calendar\" may not be installed"),
-                    "dialog-error"
-                );
-                dialog.show_error_details (e.message);
-                dialog.run ();
-                dialog.destroy ();
-            }
         }
     }
 }

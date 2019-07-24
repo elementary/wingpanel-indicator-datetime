@@ -27,11 +27,6 @@ namespace DateTime.Widgets {
     public class Grid : Gtk.Grid {
         public Util.DateRange grid_range { get; private set; }
 
-        /*
-         * Event emitted when the day is double clicked or the ENTER key is pressed.
-         */
-        public signal void on_event_add (GLib.DateTime date);
-
         public signal void selection_changed (GLib.DateTime new_date);
 
         private Gee.HashMap<uint, GridDay> data;
@@ -122,7 +117,6 @@ namespace DateTime.Widgets {
                 } else {
                     /* Still update_day to get the color of etc. right */
                     day = update_day (new GridDay (new_date, i), new_date, today, month_start);
-                    day.on_event_add.connect ((date) => on_event_add (date));
                     day.scroll_event.connect ((event) => { scroll_event (event); return false; });
                     day.focus_in_event.connect ((event) => {
                         on_day_focus_in (day);

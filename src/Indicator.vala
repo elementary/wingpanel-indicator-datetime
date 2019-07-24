@@ -20,6 +20,8 @@
 public class DateTime.Indicator : Wingpanel.Indicator {
     public static GLib.Settings settings;
 
+    private static Wingpanel.Indicator instance;
+
     private Widgets.PanelLabel panel_label;
     private Gtk.Grid main_grid;
     private Widgets.Calendar calendar;
@@ -39,6 +41,7 @@ public class DateTime.Indicator : Wingpanel.Indicator {
     }
 
     construct {
+        instance = this;
         visible = true;
     }
 
@@ -93,17 +96,12 @@ public class DateTime.Indicator : Wingpanel.Indicator {
             size_group.add_widget (calendar);
             size_group.add_widget (event_listbox);
 
-            calendar.day_double_click.connect (() => {
-                close ();
-            });
-
             calendar.selection_changed.connect ((date) => {
                 idle_update_events ();
             });
 
             event_listbox.row_activated.connect ((row) => {
-                calendar.show_date_in_maya (((DateTime.EventRow) row).cal_event.date);
-                close ();
+                show_in_calendar (((DateTime.EventRow) row).cal_event.date);
             });
 
             settings_button.clicked.connect (() => {
@@ -116,6 +114,27 @@ public class DateTime.Indicator : Wingpanel.Indicator {
         }
 
         return main_grid;
+    }
+
+    // TODO: As far as maya supports it use the Dbus Activation feature to run the calendar-app.
+    public static void show_in_calendar (GLib.DateTime date) {
+        var command = "io.elementary.calendar --show-day %s".printf (date.format ("%F"));
+
+        try {
+            var appinfo = AppInfo.create_from_commandline (command, null, AppInfoCreateFlags.NONE);
+            appinfo.launch_uris (null, null);
+        } catch (GLib.Error e) {
+            var dialog = new Granite.MessageDialog.with_image_from_icon_name (
+                _("Unable To Launch Calendar"),
+                _("The program \"io.elementary.calendar\" may not be installed"),
+                "dialog-error"
+            );
+            dialog.show_error_details (e.message);
+            dialog.run ();
+            dialog.destroy ();
+        }
+
+        instance.close ();
     }
 
     private void header_update_func (Gtk.ListBoxRow lbrow, Gtk.ListBoxRow? lbbefore) {

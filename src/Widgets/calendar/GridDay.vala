@@ -23,11 +23,6 @@
  * Represents a single day on the grid.
  */
 public class DateTime.Widgets.GridDay : Gtk.EventBox {
-    /*
-     * Event emitted when the day is double clicked or the ENTER key is pressed.
-     */
-    public signal void on_event_add (GLib.DateTime date);
-
     public GLib.DateTime date { get; construct set; }
     public int id { get; construct; }
 
@@ -164,8 +159,10 @@ public class DateTime.Widgets.GridDay : Gtk.EventBox {
     }
 
     private bool on_button_press (Gdk.EventButton event) {
-        if (event.type == Gdk.EventType.2BUTTON_PRESS && event.button == Gdk.BUTTON_PRIMARY)
-            on_event_add (date);
+        if (event.type == Gdk.EventType.2BUTTON_PRESS && event.button == Gdk.BUTTON_PRIMARY) {
+            DateTime.Indicator.show_in_calendar (date);
+        }
+
         valid_grab = true;
         grab_focus ();
         return false;
@@ -173,7 +170,7 @@ public class DateTime.Widgets.GridDay : Gtk.EventBox {
 
     private bool on_key_press (Gdk.EventKey event) {
         if (event.keyval == Gdk.keyval_from_name("Return") ) {
-            on_event_add (date);
+            DateTime.Indicator.show_in_calendar (date);
             return true;
         }
 

@@ -26,7 +26,6 @@ public class DateTime.Widgets.CalendarView : Gtk.Grid {
     /*
      * Event emitted when the day is double clicked or the ENTER key is pressed.
      */
-    public signal void on_event_add (GLib.DateTime date);
     public signal void selection_changed (GLib.DateTime? new_date);
     public signal void event_updates ();
 
@@ -78,7 +77,6 @@ public class DateTime.Widgets.CalendarView : Gtk.Grid {
         new_big_grid.attach (weeks, 0, 1);
         new_big_grid.show_all ();
 
-        grid.on_event_add.connect ((date) => on_event_add (date));
         grid.selection_changed.connect ((date) => {
             selected_date = date;
             selection_changed (date);
