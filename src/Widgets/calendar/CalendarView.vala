@@ -59,7 +59,7 @@ public class DateTime.Widgets.CalendarView : Gtk.Grid {
             }
         });
 
-        Services.SettingsManager.get_default ().changed["show-weeks"].connect (on_show_weeks_changed);
+        DateTime.Indicator.settings.changed["show-weeks"].connect (on_show_weeks_changed);
 
         add (stack);
     }
