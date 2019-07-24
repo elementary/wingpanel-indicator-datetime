@@ -18,6 +18,8 @@
  */
 
 public class DateTime.Indicator : Wingpanel.Indicator {
+    public static GLib.Settings settings;
+
     private Widgets.PanelLabel panel_label;
     private Gtk.Grid main_grid;
     private Widgets.Calendar calendar;
@@ -30,6 +32,10 @@ public class DateTime.Indicator : Wingpanel.Indicator {
             display_name: _("Date & Time"),
             description: _("The date and time indicator")
         );
+    }
+
+    static construct {
+        settings = new GLib.Settings ("io.elementary.desktop.wingpanel.datetime");
     }
 
     construct {
