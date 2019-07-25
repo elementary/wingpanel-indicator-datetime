@@ -81,7 +81,6 @@ public class DateTime.Widgets.GridDay : Gtk.EventBox {
         // Signals and handlers
         button_press_event.connect (on_button_press);
         key_press_event.connect (on_key_press);
-        scroll_event.connect ((event) => {return Util.on_scroll_event (event);});
 
         notify["date"].connect (() => {
             label.label = date.get_day_of_month ().to_string ();

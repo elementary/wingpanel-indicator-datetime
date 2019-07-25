@@ -38,7 +38,19 @@ public class DateTime.Widgets.CalendarView : Gtk.Grid {
     private Gtk.Stack stack;
     private Gtk.Grid big_grid;
 
+    /* Smooth scrolling support */
+    private const double DELTA_PER_MONTH = 4.0;
+    private double total_x_delta = 0;
+    private double total_y_delta= 0;
+    public bool natural_scroll_touchpad { get; set; }
+    public bool natural_scroll_mouse { get; set; }
+
     construct {
+        var touchpad_settings = new GLib.Settings ("org.gnome.desktop.peripherals.touchpad");
+        touchpad_settings.bind ("natural-scroll", this, "natural-scroll-touchpad", SettingsBindFlags.DEFAULT);
+        var mouse_settings = new GLib.Settings ("org.gnome.desktop.peripherals.mouse");
+        mouse_settings.bind ("natural-scroll", this, "natural-scroll-mouse", SettingsBindFlags.DEFAULT);
+
         big_grid = create_big_grid ();
 
         stack = new Gtk.Stack ();
@@ -60,6 +72,7 @@ public class DateTime.Widgets.CalendarView : Gtk.Grid {
         });
 
         DateTime.Indicator.settings.changed["show-weeks"].connect (on_show_weeks_changed);
+        scroll_event.connect (handle_scroll_event);
 
         add (stack);
     }
@@ -155,5 +168,80 @@ public class DateTime.Widgets.CalendarView : Gtk.Grid {
         }
 
         stack.set_visible_child (big_grid);
+    }
+
+    /* Handles both SMOOTH and non-SMOOTH events.
+     * In order to deliver smooth volume changes it:
+     * * accumulates very small changes until they become significant.
+     * * ignores rapid changes in direction.
+     * * responds to both horizontal and vertical scrolling.
+     * In the case of diagonal scrolling, it ignores the event unless movement in one direction
+     * is more than twice the movement in the other direction.
+     */
+    public bool handle_scroll_event (Gdk.EventScroll e) {
+        if (stack.transition_running) {
+            return true;
+        }
+
+        double dir = 0.0;
+        bool natural_scroll;
+        var event_source = e.get_source_device ().input_source;
+        if (event_source == Gdk.InputSource.MOUSE) {
+            natural_scroll = natural_scroll_mouse;
+        } else if (event_source == Gdk.InputSource.TOUCHPAD) {
+            natural_scroll = natural_scroll_touchpad;
+        } else {
+            natural_scroll = false;
+        }
+
+        switch (e.direction) {
+            case Gdk.ScrollDirection.SMOOTH:
+            /* Mouse events may also be SMOOTH */
+                if (event_source == Gdk.InputSource.MOUSE) {
+                    e.delta_x *= DELTA_PER_MONTH;
+                    e.delta_y *= DELTA_PER_MONTH;
+                }
+                var abs_x = double.max (e.delta_x.abs (), 0.0001);
+                var abs_y = double.max (e.delta_y.abs (), 0.0001);
+
+                if (abs_y / abs_x > 2.0) {
+                    total_y_delta += e.delta_y;
+                } else if (abs_x / abs_y > 2.0) {
+                    total_x_delta += e.delta_x;
+                }
+
+                break;
+
+            case Gdk.ScrollDirection.UP:
+                total_y_delta -= DELTA_PER_MONTH;
+                break;
+            case Gdk.ScrollDirection.DOWN:
+                total_y_delta += DELTA_PER_MONTH;
+                break;
+            case Gdk.ScrollDirection.LEFT:
+                total_x_delta -= DELTA_PER_MONTH;
+                break;
+            case Gdk.ScrollDirection.RIGHT:
+                total_x_delta += DELTA_PER_MONTH;
+                break;
+            default:
+                break;
+        }
+
+
+        /* The figure of 2.0  is chosen to reduce speed of month switching when scrolling */
+        if (total_y_delta.abs () >= DELTA_PER_MONTH) {
+            dir = natural_scroll ? total_y_delta : -total_y_delta;
+        } else if (total_x_delta.abs () >= DELTA_PER_MONTH) {
+            dir = natural_scroll ? -total_x_delta : total_x_delta;
+        }
+
+        if (dir != 0.0) {
+            DateTime.Widgets.CalendarModel.get_default ().change_month (dir > 0 ? -1 : 1);
+            total_y_delta = 0.0;
+            total_x_delta = 0.0;
+        }
+
+        return true;
     }
 }
