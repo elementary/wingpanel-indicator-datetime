@@ -185,10 +185,18 @@ public class DateTime.Widgets.CalendarView : Gtk.Grid {
 
         double dir = 0.0;
         bool natural_scroll;
+        var source_device = e.get_source_device ();
         var event_source = e.get_source_device ().input_source;
-        if (event_source == Gdk.InputSource.MOUSE) {
+
+        /* Fallback to device name to try to detect a touch device that reports itself as a mouse */
+        bool is_touchpad = (event_source == Gdk.InputSource.TOUCHPAD ||
+                           source_device.get_name ().up ().contains ("TOUCH"));
+
+        bool is_mouse = !is_touchpad && (event_source == Gdk.InputSource.MOUSE);
+
+        if (is_mouse) {
             natural_scroll = natural_scroll_mouse;
-        } else if (event_source == Gdk.InputSource.TOUCHPAD) {
+        } else if (is_touchpad) {
             natural_scroll = natural_scroll_touchpad;
         } else {
             natural_scroll = false;
@@ -197,10 +205,11 @@ public class DateTime.Widgets.CalendarView : Gtk.Grid {
         switch (e.direction) {
             case Gdk.ScrollDirection.SMOOTH:
             /* Mouse events may also be SMOOTH */
-                if (event_source == Gdk.InputSource.MOUSE) {
+                if (is_mouse) {
                     e.delta_x *= DELTA_PER_MONTH;
                     e.delta_y *= DELTA_PER_MONTH;
                 }
+
                 var abs_x = double.max (e.delta_x.abs (), 0.0001);
                 var abs_y = double.max (e.delta_y.abs (), 0.0001);
 
