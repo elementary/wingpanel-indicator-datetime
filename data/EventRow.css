@@ -1,8 +1,12 @@
 .event {
     background: alpha(@colorAccent, 0.15);
     border-radius: 3px;
-    color: shade(@colorAccent, 0.65);
     padding: 6px;
+}
+
+.event,
+.event image {
+    color: shade(@colorAccent, 0.65);
 }
 
 .event .title {
