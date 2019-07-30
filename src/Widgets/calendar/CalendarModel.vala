@@ -18,18 +18,13 @@
 namespace DateTime.Widgets {
     public class CalendarModel : Object {
         /* The data_range is the range of dates for which this model is storing
-         * data. The month_range is a subset of this range corresponding to the
-         * calendar month that is being focused on. In summary:
-         *
-         * data_range.first <= month_range.first < month_range.last <= data_range.last
+         * data.
          *
          * There is no way to set the ranges publicly. They can only be modified by
          * changing one of the following properties: month_start, num_weeks, and
          * week_starts_on.
          */
         public Util.DateRange data_range { get; private set; }
-        public Util.DateRange month_range { get; private set; }
-        public E.SourceRegistry registry { get; private set; }
 
         /* The first day of the month */
         public GLib.DateTime month_start { get; set; }
@@ -45,16 +40,13 @@ namespace DateTime.Widgets {
         public signal void events_updated (E.Source source, Gee.Collection<ECal.Component> events);
         public signal void events_removed (E.Source source, Gee.Collection<ECal.Component> events);
 
-        public signal void connecting (E.Source source, Cancellable cancellable);
-        public signal void connected (E.Source source);
-        public signal void error_received (string error);
-
         /* The month_start, num_weeks, or week_starts_on have been changed */
         public signal void parameters_changed ();
 
-        HashTable<string, ECal.Client> source_client;
-        HashTable<string, ECal.ClientView> source_view;
-        HashTable<E.Source, Gee.TreeMap<string, ECal.Component> > source_events;
+        private E.SourceRegistry registry { get; private set; }
+        private HashTable<string, ECal.Client> source_client;
+        private HashTable<string, ECal.ClientView> source_view;
+        private HashTable<E.Source, Gee.TreeMap<string, ECal.Component> > source_events;
 
         private static CalendarModel? calendar_model = null;
         public enum Weekday {
@@ -78,6 +70,8 @@ namespace DateTime.Widgets {
         }
 
         construct {
+            open.begin ();
+
             source_client = new HashTable<string, ECal.Client> (str_hash, str_equal);
             source_events = new HashTable<E.Source, Gee.TreeMap<string, ECal.Component> > (Util.source_hash_func, Util.source_equal_func);
             source_view = new HashTable<string, ECal.ClientView> (str_hash, str_equal);
@@ -92,11 +86,7 @@ namespace DateTime.Widgets {
             notify["month-start"].connect (on_parameter_changed);
         }
 
-        private CalendarModel () {
-            open.begin ();
-        }
-
-        public async void open () {
+        private async void open () {
             try {
                 registry = yield new E.SourceRegistry (null);
                 registry.source_removed.connect (remove_source);
@@ -138,22 +128,7 @@ namespace DateTime.Widgets {
             return list;
         }
 
-        public bool calclient_is_readonly (E.Source source) {
-            ECal.Client client;
-            lock (source_client) {
-                client = source_client.get (source.dup_uid ());
-            }
-
-            if (client != null) {
-                return client.is_readonly ();
-            } else {
-                critical ("No calendar client was found");
-            }
-
-            return true;
-        }
-
-        public void load_all_sources () {
+        private void load_all_sources () {
             lock (source_client) {
                 foreach (var id in source_client.get_keys ()) {
                     var source = registry.ref_source (id);
@@ -166,7 +141,7 @@ namespace DateTime.Widgets {
             }
         }
 
-        public void remove_source (E.Source source) {
+        private void remove_source (E.Source source) {
             debug ("Removing source '%s'", source.dup_display_name ());
             /* Already out of the model, so do nothing */
             var uid = source.dup_uid ();
@@ -204,7 +179,6 @@ namespace DateTime.Widgets {
 
         private void compute_ranges () {
             var month_end = month_start.add_full (0, 1, -1);
-            month_range = new Util.DateRange (month_start, month_end);
 
             int dow = month_start.get_day_of_week ();
             int wso = (int)week_starts_on;
@@ -282,15 +256,13 @@ namespace DateTime.Widgets {
             debug ("Adding source '%s'", source.dup_display_name ());
             try {
                 var cancellable = new GLib.Cancellable ();
-                connecting (source, cancellable);
                 var client = (ECal.Client) ECal.Client.connect_sync (source, ECal.ClientSourceType.EVENTS, -1, cancellable);
                 source_client.insert (source.dup_uid (), client);
             } catch (Error e) {
-                error_received (e.message);
+                critical (e.message);
             }
 
             Idle.add (() => {
-                connected (source);
                 load_source (source);
 
                 return false;
