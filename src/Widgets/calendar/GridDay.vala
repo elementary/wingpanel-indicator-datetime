@@ -29,7 +29,6 @@ public class DateTime.Widgets.GridDay : Gtk.EventBox {
     public signal void on_event_add (GLib.DateTime date);
 
     public GLib.DateTime date { get; construct set; }
-    public int id { get; construct; }
 
     private static Gtk.CssProvider provider;
     private static Widgets.CalendarModel model;
@@ -39,11 +38,8 @@ public class DateTime.Widgets.GridDay : Gtk.EventBox {
     private Gtk.Label label;
     private bool valid_grab = false;
 
-    public GridDay (GLib.DateTime date, int id) {
-        Object (
-            date: date,
-            id: id
-        );
+    public GridDay (GLib.DateTime date) {
+        Object (date: date);
     }
 
     static construct {
