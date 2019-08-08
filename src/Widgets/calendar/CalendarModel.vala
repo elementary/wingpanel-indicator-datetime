@@ -33,7 +33,7 @@ namespace DateTime.Widgets {
         public int num_weeks { get; private set; default = 6; }
 
         /* The start of week, ie. Monday=1 or Sunday=7 */
-        public Weekday week_starts_on { get; set; }
+        public GLib.DateWeekday week_starts_on { get; set; }
 
         /* Notifies when events are added, updated, or removed */
         public signal void events_added (E.Source source, Gee.Collection<ECal.Component> events);
@@ -49,15 +49,6 @@ namespace DateTime.Widgets {
         private HashTable<E.Source, Gee.TreeMap<string, ECal.Component> > source_events;
 
         private static CalendarModel? calendar_model = null;
-        public enum Weekday {
-            SUNDAY,
-            MONDAY,
-            TUESDAY,
-            WEDNESDAY,
-            THURSDAY,
-            FRIDAY,
-            SATURDAY
-        }
 
         public static CalendarModel get_default () {
             lock (calendar_model) {
@@ -78,7 +69,7 @@ namespace DateTime.Widgets {
 
             int week_start = Posix.NLTime.FIRST_WEEKDAY.to_string ().data[0];
             if (week_start >= 1 && week_start <= 7) {
-                week_starts_on = (Weekday) (week_start - 1);
+                week_starts_on = (GLib.DateWeekday) (week_start - 1);
             }
 
             month_start = Util.get_start_of_month ();
