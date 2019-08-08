@@ -90,7 +90,6 @@ namespace DateTime.Widgets {
             try {
                 registry = yield new E.SourceRegistry (null);
                 registry.source_removed.connect (remove_source);
-                registry.source_changed.connect (on_source_changed);
                 registry.source_added.connect ((source) => add_source_async.begin (source));
 
                 // Add sources
@@ -279,9 +278,6 @@ namespace DateTime.Widgets {
             compute_ranges ();
             load_all_sources ();
             parameters_changed ();
-        }
-
-        private void on_source_changed (E.Source source) {
         }
 
         private ECal.ClientView on_client_view_received (AsyncResult results, E.Source source, ECal.Client client) {
