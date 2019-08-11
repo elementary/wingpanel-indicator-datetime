@@ -121,7 +121,7 @@ namespace DateTime.Widgets {
                     day = update_day (data[day_hash (old_date)], new_date, today, month_start);
                 } else {
                     /* Still update_day to get the color of etc. right */
-                    day = update_day (new GridDay (new_date, i), new_date, today, month_start);
+                    day = update_day (new GridDay (new_date), new_date, today, month_start);
                     day.on_event_add.connect ((date) => on_event_add (date));
                     day.scroll_event.connect ((event) => { scroll_event (event); return false; });
                     day.focus_in_event.connect ((event) => {
