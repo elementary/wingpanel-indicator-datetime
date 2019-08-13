@@ -24,7 +24,7 @@ namespace Util {
         var color = cal.dup_color ();
         string style = """
                         @define-color colorAccent %s;
-                       """.printf(color);
+                       """.printf (color);
         try {
             provider.load_from_data (style, style.length);
         } catch (Error e) {
