@@ -21,10 +21,9 @@
 
 namespace Util {
     public void get_style_calendar_color (E.SourceCalendar cal, Gtk.CssProvider provider) {
-        var color = cal.dup_color ();
         string style = """
                         @define-color colorAccent %s;
-                       """.printf (color);
+                       """.printf (cal.dup_color ());
         try {
             provider.load_from_data (style, style.length);
         } catch (Error e) {
