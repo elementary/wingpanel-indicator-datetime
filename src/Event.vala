@@ -22,7 +22,7 @@ public class DateTime.Event : GLib.Object {
     public unowned ICal.Component component { get; construct; }
     public Util.DateRange range { get; construct; }
     public E.Source source { get; construct; }
-    public E.SourceCalendar? cal {get; construct;}
+    public E.SourceCalendar? cal { get; construct; }
 
     public GLib.DateTime start_time;
     public GLib.DateTime end_time;
