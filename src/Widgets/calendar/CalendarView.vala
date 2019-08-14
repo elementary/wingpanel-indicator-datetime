@@ -36,7 +36,6 @@ public class DateTime.Widgets.CalendarView : Gtk.Grid {
     private Grid grid;
     private Gtk.Stack stack;
     private Gtk.Grid big_grid;
-    private Gtk.Label[] header_labels;
 
     construct {
         big_grid = create_big_grid ();
@@ -66,24 +65,15 @@ public class DateTime.Widgets.CalendarView : Gtk.Grid {
 
     private Gtk.Grid create_big_grid () {
         weeks = new WeekLabels ();
+        weeks.margin_bottom = 3;
+        weeks.valign = Gtk.Align.END;
+
+        grid = new DateTime.Widgets.Grid ();
 
         var new_big_grid = new Gtk.Grid ();
-        new_big_grid.column_homogeneous = true;
         new_big_grid.expand = true;
-
-        header_labels = new Gtk.Label[7];
-        for (int c = 0; c < 7; c++) {
-            header_labels[c] = new Gtk.Label (null);
-            header_labels[c].margin_bottom = 4;
-            header_labels[c].get_style_context ().add_class (Granite.STYLE_CLASS_H4_LABEL);
-
-            new_big_grid.attach (header_labels[c], c + 1, 0);
-        }
-
-        grid = new Grid ();
-
-        new_big_grid.attach (grid, 1, 1, 7);
-        new_big_grid.attach (weeks, 0, 1);
+        new_big_grid.attach (grid, 1, 0);
+        new_big_grid.attach (weeks, 0, 0);
         new_big_grid.show_all ();
 
         grid.on_event_add.connect ((date) => on_event_add (date));
@@ -145,13 +135,6 @@ public class DateTime.Widgets.CalendarView : Gtk.Grid {
 
         big_grid = create_big_grid ();
         stack.add (big_grid);
-
-        var date = Util.strip_time (new GLib.DateTime.now_local ());
-        date = date.add_days (model.week_starts_on - date.get_day_of_week ());
-        foreach (var label in header_labels) {
-            label.label = date.format ("%a");
-            date = date.add_days (1);
-        }
 
         weeks.update (model.data_range.first_dt, model.num_weeks);
         grid.set_range (model.data_range, model.month_start);
