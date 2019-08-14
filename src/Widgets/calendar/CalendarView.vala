@@ -1,4 +1,3 @@
-// -*- Mode: vala; indent-tabs-mode: nil; tab-width: 4 -*-
 /*-
  * Copyright (c) 2011–2018 elementary, Inc. (https://elementary.io)
  *
@@ -19,16 +18,10 @@
  *              Corentin Noël <corentin@elementaryos.org>
  */
 
-/**
- * Represents the entire calendar, including the headers, the week labels and the grid.
- */
 public class DateTime.Widgets.CalendarView : Gtk.Grid {
-    /*
-     * Event emitted when the day is double clicked or the ENTER key is pressed.
-     */
-    public signal void on_event_add (GLib.DateTime date);
-    public signal void selection_changed (GLib.DateTime? new_date);
+    public signal void day_double_click ();
     public signal void event_updates ();
+    public signal void selection_changed (GLib.DateTime? new_date);
 
     public GLib.DateTime? selected_date { get; private set; }
 
@@ -38,6 +31,32 @@ public class DateTime.Widgets.CalendarView : Gtk.Grid {
     private Gtk.Grid big_grid;
 
     construct {
+        var label = new Gtk.Label (new GLib.DateTime.now_local ().format (_("%OB, %Y")));
+        label.hexpand = true;
+        label.margin_start = 6;
+        label.xalign = 0;
+        label.width_chars = 13;
+
+        var provider = new Gtk.CssProvider ();
+        provider.load_from_resource ("/io/elementary/desktop/wingpanel/datetime/ControlHeader.css");
+
+        var label_style_context = label.get_style_context ();
+        label_style_context.add_class ("header-label");
+        label_style_context.add_provider (provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
+
+        var left_button = new Gtk.Button.from_icon_name ("pan-start-symbolic");
+        var center_button = new Gtk.Button.from_icon_name ("office-calendar-symbolic");
+        center_button.tooltip_text = _("Go to today's date");
+        var right_button = new Gtk.Button.from_icon_name ("pan-end-symbolic");
+
+        var box_buttons = new Gtk.Grid ();
+        box_buttons.margin_end = 6;
+        box_buttons.valign = Gtk.Align.CENTER;
+        box_buttons.get_style_context ().add_class (Gtk.STYLE_CLASS_LINKED);
+        box_buttons.add (left_button);
+        box_buttons.add (center_button);
+        box_buttons.add (right_button);
+
         big_grid = create_big_grid ();
 
         stack = new Gtk.Stack ();
@@ -60,7 +79,29 @@ public class DateTime.Widgets.CalendarView : Gtk.Grid {
 
         DateTime.Indicator.settings.changed["show-weeks"].connect (on_show_weeks_changed);
 
-        add (stack);
+        column_spacing = 6;
+        row_spacing = 6;
+        margin_start = margin_end = 10;
+        attach (label, 0, 0);
+        attach (box_buttons, 1, 0);
+        attach (stack, 0, 1, 2);
+
+        CalendarModel.get_default ().parameters_changed.connect (() => {
+            var date = CalendarModel.get_default ().month_start;
+            label.set_label (date.format (_("%OB, %Y")));
+        });
+
+        left_button.clicked.connect (() => {
+            CalendarModel.get_default ().change_month (-1);
+        });
+
+        right_button.clicked.connect (() => {
+            CalendarModel.get_default ().change_month (1);
+        });
+
+        center_button.clicked.connect (() => {
+            show_today ();
+        });
     }
 
     private Gtk.Grid create_big_grid () {
@@ -76,7 +117,11 @@ public class DateTime.Widgets.CalendarView : Gtk.Grid {
         new_big_grid.attach (weeks, 0, 0);
         new_big_grid.show_all ();
 
-        grid.on_event_add.connect ((date) => on_event_add (date));
+        grid.on_event_add.connect ((date) => {
+            show_date_in_maya (date);
+            day_double_click ();
+        });
+
         grid.selection_changed.connect ((date) => {
             selected_date = date;
             selection_changed (date);
@@ -85,9 +130,7 @@ public class DateTime.Widgets.CalendarView : Gtk.Grid {
         return new_big_grid;
     }
 
-    //--- Public Methods ---//
-
-    public void today () {
+    public void show_today () {
         var calmodel = CalendarModel.get_default ();
         var today = Util.strip_time (new GLib.DateTime.now_local ());
         var start = Util.get_start_of_month (today);
@@ -100,7 +143,24 @@ public class DateTime.Widgets.CalendarView : Gtk.Grid {
         grid.set_focus_to_today ();
     }
 
-    //--- Signal Handlers ---//
+    // TODO: As far as maya supports it use the Dbus Activation feature to run the calendar-app.
+    public void show_date_in_maya (GLib.DateTime date) {
+        var command = "io.elementary.calendar --show-day %s".printf (date.format ("%F"));
+
+        try {
+            var appinfo = AppInfo.create_from_commandline (command, null, AppInfoCreateFlags.NONE);
+            appinfo.launch_uris (null, null);
+        } catch (GLib.Error e) {
+            var dialog = new Granite.MessageDialog.with_image_from_icon_name (
+                _("Unable To Launch Calendar"),
+                _("The program \"io.elementary.calendar\" may not be installed"),
+                "dialog-error"
+            );
+            dialog.show_error_details (e.message);
+            dialog.run ();
+            dialog.destroy ();
+        }
+    }
 
     private void on_show_weeks_changed () {
         var model = CalendarModel.get_default ();
@@ -118,8 +178,6 @@ public class DateTime.Widgets.CalendarView : Gtk.Grid {
         selected_date = null;
         selection_changed (selected_date);
     }
-
-    //--- Helper Methods ---//
 
     /* Sets the calendar widgets to the date range of the model */
     private void sync_with_model () {

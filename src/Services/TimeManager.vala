@@ -22,8 +22,8 @@ interface Manager : Object {
     public signal void prepare_for_sleep (bool sleeping);
 }
 
-[DBus (name = "io.elementary.greeter.AccountsService")]
-interface Greeter.AccountsService : Object {
+[DBus (name = "io.elementary.pantheon.AccountsService")]
+interface Pantheon.AccountsService : Object {
     public abstract string time_format { owned get; set; }
 }
 
@@ -87,7 +87,7 @@ public class DateTime.Services.TimeManager : Gtk.Calendar {
                                                                            "/org/freedesktop/Accounts");
             var user_path = accounts_service.find_user_by_name (GLib.Environment.get_user_name ());
 
-            var greeter_act = yield GLib.Bus.get_proxy<Greeter.AccountsService> (GLib.BusType.SYSTEM,
+            var greeter_act = yield GLib.Bus.get_proxy<Pantheon.AccountsService> (GLib.BusType.SYSTEM,
                                                     "org.freedesktop.Accounts",
                                                     user_path,
                                                     GLib.DBusProxyFlags.GET_INVALIDATED_PROPERTIES);
