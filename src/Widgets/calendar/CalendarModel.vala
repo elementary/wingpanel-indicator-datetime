@@ -33,7 +33,7 @@ namespace DateTime.Widgets {
         public int num_weeks { get; private set; default = 6; }
 
         /* The start of week, ie. Monday=1 or Sunday=7 */
-        public Weekday week_starts_on { get; set; }
+        public GLib.DateWeekday week_starts_on { get; set; }
 
         public HashTable<E.Source, Gee.TreeMap<string, ECal.Component>> source_events { get; private set; }
 
@@ -50,15 +50,6 @@ namespace DateTime.Widgets {
         private HashTable<string, ECal.ClientView> source_view;
 
         private static CalendarModel? calendar_model = null;
-        public enum Weekday {
-            SUNDAY,
-            MONDAY,
-            TUESDAY,
-            WEDNESDAY,
-            THURSDAY,
-            FRIDAY,
-            SATURDAY
-        }
 
         public static CalendarModel get_default () {
             lock (calendar_model) {
@@ -79,7 +70,7 @@ namespace DateTime.Widgets {
 
             int week_start = Posix.NLTime.FIRST_WEEKDAY.to_string ().data[0];
             if (week_start >= 1 && week_start <= 7) {
-                week_starts_on = (Weekday) (week_start - 1);
+                week_starts_on = (GLib.DateWeekday) (week_start - 1);
             }
 
             month_start = Util.get_start_of_month ();
@@ -91,7 +82,6 @@ namespace DateTime.Widgets {
             try {
                 registry = yield new E.SourceRegistry (null);
                 registry.source_removed.connect (remove_source);
-                registry.source_changed.connect (on_source_changed);
                 registry.source_added.connect ((source) => add_source_async.begin (source));
 
                 // Add sources
@@ -236,8 +226,7 @@ namespace DateTime.Widgets {
         private async void add_source_async (E.Source source) {
             debug ("Adding source '%s'", source.dup_display_name ());
             try {
-                var cancellable = new GLib.Cancellable ();
-                var client = (ECal.Client) ECal.Client.connect_sync (source, ECal.ClientSourceType.EVENTS, -1, cancellable);
+                var client = (ECal.Client) ECal.Client.connect_sync (source, ECal.ClientSourceType.EVENTS, -1, null);
                 source_client.insert (source.dup_uid (), client);
             } catch (Error e) {
                 critical (e.message);
@@ -260,9 +249,6 @@ namespace DateTime.Widgets {
             compute_ranges ();
             load_all_sources ();
             parameters_changed ();
-        }
-
-        private void on_source_changed (E.Source source) {
         }
 
         private ECal.ClientView on_client_view_received (AsyncResult results, E.Source source, ECal.Client client) {
