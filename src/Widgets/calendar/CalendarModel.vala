@@ -246,8 +246,7 @@ namespace DateTime.Widgets {
         private async void add_source_async (E.Source source) {
             debug ("Adding source '%s'", source.dup_display_name ());
             try {
-                var cancellable = new GLib.Cancellable ();
-                var client = (ECal.Client) ECal.Client.connect_sync (source, ECal.ClientSourceType.EVENTS, -1, cancellable);
+                var client = (ECal.Client) ECal.Client.connect_sync (source, ECal.ClientSourceType.EVENTS, -1, null);
                 source_client.insert (source.dup_uid (), client);
             } catch (Error e) {
                 critical (e.message);
