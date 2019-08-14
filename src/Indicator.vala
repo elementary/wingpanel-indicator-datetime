@@ -22,7 +22,7 @@ public class DateTime.Indicator : Wingpanel.Indicator {
 
     private Widgets.PanelLabel panel_label;
     private Gtk.Grid main_grid;
-    private Widgets.Calendar calendar;
+    private Widgets.CalendarView calendar;
     private Gtk.ListBox event_listbox;
     private uint update_events_idle_source = 0;
 
@@ -52,7 +52,7 @@ public class DateTime.Indicator : Wingpanel.Indicator {
 
     public override Gtk.Widget? get_widget () {
         if (main_grid == null) {
-            calendar = new Widgets.Calendar ();
+            calendar = new Widgets.CalendarView ();
             calendar.margin_bottom = 6;
 
             var placeholder_label = new Gtk.Label (_("No Events on This Day"));
