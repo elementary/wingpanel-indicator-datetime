@@ -3,9 +3,9 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-06-26 22:47+0200\n"
-"PO-Revision-Date: 2018-07-27 11:29+0000\n"
+"PO-Revision-Date: 2019-08-15 18:22+0000\n"
 "Last-Translator: Moo <hazap@hotmail.com>\n"
-"Language-Team: Lithuanian <https://weblate.elementary.io/projects/wingpanel/"
+"Language-Team: Lithuanian <https://l10n.elementary.io/projects/wingpanel/"
 "wingpanel-indicator-datetime/lt/>\n"
 "Language: lt\n"
 "MIME-Version: 1.0\n"
@@ -14,7 +14,7 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=(n % 10 == 1 && (n % 100 < 11 || n % 100 > "
 "19)) ? 0 : ((n % 10 >= 2 && n % 10 <= 9 && (n % 100 < 11 || n % 100 > 19)) ? "
 "1 : 2);\n"
-"X-Generator: Weblate 3.0.1\n"
+"X-Generator: Weblate 3.7.1\n"
 "X-Launchpad-Export-Date: 2017-02-19 05:57+0000\n"
 
 #: src/Indicator.vala:30
@@ -31,11 +31,11 @@ msgstr "Datos ir laiko nustatymai…"
 
 #: src/Widgets/calendar/Calendar.vala:71
 msgid "Unable To Launch Calendar"
-msgstr ""
+msgstr "Nepavyko paleisti kalendorių"
 
 #: src/Widgets/calendar/Calendar.vala:72
 msgid "The program \"io.elementary.calendar\" may not be installed"
-msgstr ""
+msgstr "Gali būti, kad programa \"io.elementary.calendar\" nėra įdiegta"
 
 #: src/Widgets/calendar/ControlHeader.vala:30
 #: src/Widgets/calendar/ControlHeader.vala:33
