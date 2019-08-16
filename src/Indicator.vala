@@ -186,16 +186,25 @@ public class DateTime.Indicator : Wingpanel.Indicator {
             return GLib.Source.REMOVE;
         }
 
-        var events = Widgets.CalendarModel.get_default ().get_events (calendar.selected_date);
-        if (events.size == 0) {
-            update_events_idle_source = 0;
-            return GLib.Source.REMOVE;
-        }
+        var date = calendar.selected_date;
 
-        foreach (var event in events) {
-            var menuitem = new DateTime.EventRow (event.date, event.component);
+        var model = Widgets.CalendarModel.get_default ();
 
-            event_listbox.add (menuitem);
+        var events_on_day = new Gee.TreeMap<string, DateTime.EventRow> ();
+        foreach (var entry in model.source_events.get_values ()) {
+            foreach (var comp in entry.values) {
+                unowned ICal.Component ical = comp.get_icalcomponent ();
+                foreach (var dt_range in Util.event_date_ranges (ical, model.data_range)) {
+                    if (date in dt_range) {
+                        var event_uid = ical.get_uid ();
+                        if (!events_on_day.has_key (event_uid)) {
+                            events_on_day[event_uid] = new DateTime.EventRow (date, ical);
+
+                            event_listbox.add (events_on_day[event_uid]);
+                        }
+                    }
+                }
+            }
         }
 
         event_listbox.show_all ();
