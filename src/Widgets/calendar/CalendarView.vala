@@ -26,7 +26,6 @@ public class DateTime.Widgets.CalendarView : Gtk.Grid {
     public GLib.DateTime? selected_date { get; private set; }
 
     private WeekLabels weeks;
-    private Header header;
     private Grid grid;
     private Gtk.Stack stack;
     private Gtk.Grid big_grid;
@@ -107,16 +106,15 @@ public class DateTime.Widgets.CalendarView : Gtk.Grid {
 
     private Gtk.Grid create_big_grid () {
         weeks = new WeekLabels ();
+        weeks.margin_bottom = 3;
+        weeks.valign = Gtk.Align.END;
 
-        header = new Header ();
-
-        grid = new Grid ();
+        grid = new DateTime.Widgets.Grid ();
 
         var new_big_grid = new Gtk.Grid ();
         new_big_grid.expand = true;
-        new_big_grid.attach (header, 1, 0);
-        new_big_grid.attach (grid, 1, 1);
-        new_big_grid.attach (weeks, 0, 1);
+        new_big_grid.attach (grid, 1, 0);
+        new_big_grid.attach (weeks, 0, 0);
         new_big_grid.show_all ();
 
         grid.on_event_add.connect ((date) => {
@@ -127,10 +125,6 @@ public class DateTime.Widgets.CalendarView : Gtk.Grid {
         grid.selection_changed.connect ((date) => {
             selected_date = date;
             selection_changed (date);
-        });
-
-        weeks.notify["child-revealed"].connect (() => {
-            header.queue_draw ();
         });
 
         return new_big_grid;
@@ -200,7 +194,6 @@ public class DateTime.Widgets.CalendarView : Gtk.Grid {
         big_grid = create_big_grid ();
         stack.add (big_grid);
 
-        header.update_columns (model.week_starts_on);
         weeks.update (model.data_range.first_dt, model.num_weeks);
         grid.set_range (model.data_range, model.month_start);
 

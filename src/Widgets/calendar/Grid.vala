@@ -36,8 +36,17 @@ namespace DateTime.Widgets {
 
         private Gee.HashMap<uint, GridDay> data;
         private GridDay selected_gridday;
+        private Gtk.Label[] header_labels;
 
         construct {
+            header_labels = new Gtk.Label[7];
+            for (int c = 0; c < 7; c++) {
+                header_labels[c] = new Gtk.Label (null);
+                header_labels[c].get_style_context ().add_class (Granite.STYLE_CLASS_H4_LABEL);
+
+                attach (header_labels[c], c, 0);
+            }
+
             hexpand = true;
             column_homogeneous = true;
             row_homogeneous = true;
@@ -107,8 +116,15 @@ namespace DateTime.Widgets {
 
             /* Create new widgets for the new range */
 
+            var date = Util.strip_time (today);
+            date = date.add_days (CalendarModel.get_default ().week_starts_on - date.get_day_of_week ());
+            foreach (var label in header_labels) {
+                label.label = date.format ("%a");
+                date = date.add_days (1);
+            }
+
             int i = 0;
-            int col = 0, row = 0;
+            int col = 0, row = 1;
 
             for (i = 0; i < new_dates.size; i++) {
                 var new_date = new_dates[i];
