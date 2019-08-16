@@ -22,6 +22,7 @@ public class DateTime.EventRow : Gtk.ListBoxRow {
 
     private static Services.TimeManager time_manager;
     private static Gtk.CssProvider css_provider;
+    private static Gtk.CssProvider css_color_provider;
     private Gtk.StyleContext event_image_context;
     private Gtk.StyleContext grid_context;
 
@@ -100,9 +101,8 @@ public class DateTime.EventRow : Gtk.ListBoxRow {
         time_label.label = "<small>%s – %s</small>".printf (cal_event.start_time.format (time_format), cal_event.end_time.format (time_format));
     }
     public void set_color () {
-        var provider = new Gtk.CssProvider ();
-        Util.get_style_calendar_color (cal_event.cal, provider);
-        grid_context.add_provider (provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
-        event_image_context.add_provider (provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
+        Util.get_style_calendar_color (cal_event.cal, css_color_provider);
+        grid_context.add_provider (css_color_provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
+        event_image_context.add_provider (css_color_provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
     }
 }
