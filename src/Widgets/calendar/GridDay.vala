@@ -69,8 +69,9 @@ public class DateTime.Widgets.GridDay : Gtk.EventBox {
         events |= Gdk.EventMask.BUTTON_PRESS_MASK;
         events |= Gdk.EventMask.KEY_PRESS_MASK;
         events |= Gdk.EventMask.SMOOTH_SCROLL_MASK;
-        set_size_request (32, 32);
+        set_size_request (35, 35);
         halign = Gtk.Align.CENTER;
+        hexpand = true;
         add (grid);
         show_all ();
 

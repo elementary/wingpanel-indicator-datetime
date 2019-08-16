@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011–2018 elementary, Inc. (https://elementary.io)
+ * Copyright 2011–2019 elementary, Inc. (https://elementary.io)
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public
@@ -37,6 +37,7 @@ namespace DateTime.Widgets {
         private Gee.HashMap<uint, GridDay> data;
         private GridDay selected_gridday;
         private Gtk.Label[] header_labels;
+        private Gtk.Revealer[] week_labels;
 
         construct {
             header_labels = new Gtk.Label[7];
@@ -44,12 +45,21 @@ namespace DateTime.Widgets {
                 header_labels[c] = new Gtk.Label (null);
                 header_labels[c].get_style_context ().add_class (Granite.STYLE_CLASS_H4_LABEL);
 
-                attach (header_labels[c], c, 0);
+                attach (header_labels[c], c + 2, 0);
             }
 
+            var week_sep = new Gtk.Separator (Gtk.Orientation.VERTICAL);
+            week_sep.margin_start = 9;
+            week_sep.margin_end = 3;
+
+            var week_sep_revealer = new Gtk.Revealer ();
+            week_sep_revealer.transition_type = Gtk.RevealerTransitionType.SLIDE_LEFT;
+            week_sep_revealer.add (week_sep);
+
             hexpand = true;
-            column_homogeneous = true;
-            row_homogeneous = true;
+            attach (week_sep_revealer, 1, 1, 1, 6);
+
+            DateTime.Indicator.settings.bind ("show-weeks", week_sep_revealer, "reveal-child", GLib.SettingsBindFlags.DEFAULT);
 
             data = new Gee.HashMap<uint, GridDay> ();
             events |= Gdk.EventMask.SCROLL_MASK;
@@ -146,7 +156,7 @@ namespace DateTime.Widgets {
                         return false;
                     });
 
-                    attach (day, col, row, 1, 1);
+                    attach (day, col + 2, row);
                     day.show_all ();
                 }
 
@@ -185,6 +195,38 @@ namespace DateTime.Widgets {
             day.date = new_date;
 
             return day;
+        }
+
+        public void update_weeks (GLib.DateTime date, int nr_of_weeks) {
+            if (week_labels != null) {
+                foreach (unowned Gtk.Widget widget in week_labels) {
+                    widget.destroy ();
+                }
+            }
+
+            var next = date;
+            // Find the beginning of the week which is apparently always a monday
+            int days_to_add = (8 - next.get_day_of_week ()) % 7;
+            next = next.add_days (days_to_add);
+
+            week_labels = new Gtk.Revealer[nr_of_weeks];
+            for (int c = 0; c < nr_of_weeks; c++) {
+                var week_label = new Gtk.Label (next.get_week_of_year ().to_string ());
+                week_label.margin_bottom = 6;
+                week_label.width_chars = 2;
+                week_label.get_style_context ().add_class (Granite.STYLE_CLASS_H4_LABEL);
+
+                week_labels[c] = new Gtk.Revealer ();
+                week_labels[c].transition_type = Gtk.RevealerTransitionType.SLIDE_LEFT;
+                week_labels[c].add (week_label);
+                week_labels[c].show_all ();
+
+                DateTime.Indicator.settings.bind ("show-weeks", week_labels[c], "reveal-child", GLib.SettingsBindFlags.DEFAULT);
+
+                attach (week_labels[c], 0, c + 1);
+
+                next = next.add_weeks (1);
+            }
         }
 
         public void update_today () {
