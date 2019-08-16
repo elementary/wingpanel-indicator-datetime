@@ -18,15 +18,23 @@
  */
 
 public class DateTime.EventRow : Gtk.ListBoxRow {
-    public DateTime.Event cal_event { get; construct; }
+    public GLib.DateTime date { get; construct; }
+    public unowned ICal.Component component { get; construct; }
+
+    public GLib.DateTime start_time { get; private set; }
+    public GLib.DateTime? end_time { get; private set; }
+    public bool is_allday { get; private set; default = false; }
 
     private static Services.TimeManager time_manager;
     private static Gtk.CssProvider css_provider;
 
     private Gtk.Label time_label;
 
-    public EventRow (DateTime.Event cal_event) {
-        Object (cal_event: cal_event);
+    public EventRow (GLib.DateTime date, ICal.Component component) {
+        Object (
+            component: component,
+            date: date
+        );
     }
 
     static construct {
@@ -37,8 +45,15 @@ public class DateTime.EventRow : Gtk.ListBoxRow {
     }
 
     construct {
+        start_time = Util.ical_to_date_time (component.get_dtstart ());
+        end_time = Util.ical_to_date_time (component.get_dtend ());
+
+        if (end_time != null && Util.is_the_all_day (start_time, end_time)) {
+            is_allday = true;
+        }
+
         unowned string icon_name = "office-calendar-symbolic";
-        if (cal_event.end_time == null) {
+        if (end_time == null) {
             icon_name = "alarm-symbolic";
         }
 
@@ -48,7 +63,7 @@ public class DateTime.EventRow : Gtk.ListBoxRow {
         var event_image_context = event_image.get_style_context ();
         event_image_context.add_provider (css_provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
 
-        var name_label = new Gtk.Label (cal_event.component.get_summary ());
+        var name_label = new Gtk.Label (component.get_summary ());
         name_label.hexpand = true;
         name_label.ellipsize = Pango.EllipsizeMode.END;
         name_label.lines = 3;
@@ -72,7 +87,7 @@ public class DateTime.EventRow : Gtk.ListBoxRow {
         grid.margin_start = grid.margin_end = 6;
         grid.attach (event_image, 0, 0);
         grid.attach (name_label, 1, 0);
-        if (!cal_event.is_allday) {
+        if (!is_allday) {
             grid.attach (time_label, 1, 1);
         }
 
@@ -88,6 +103,6 @@ public class DateTime.EventRow : Gtk.ListBoxRow {
 
     private void update_timelabel () {
         var time_format = Granite.DateTime.get_default_time_format (time_manager.is_12h);
-        time_label.label = "<small>%s – %s</small>".printf (cal_event.start_time.format (time_format), cal_event.end_time.format (time_format));
+        time_label.label = "<small>%s – %s</small>".printf (start_time.format (time_format), end_time.format (time_format));
     }
 }
