@@ -22,7 +22,7 @@ public class DateTime.EventRow : Gtk.ListBoxRow {
     public unowned ICal.Component component { get; construct; }
 
     public GLib.DateTime start_time { get; private set; }
-    public GLib.DateTime end_time { get; private set; }
+    public GLib.DateTime? end_time { get; private set; }
     public bool is_allday { get; private set; default = false; }
 
     private static Services.TimeManager time_manager;
