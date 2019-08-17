@@ -40,6 +40,7 @@ public class DateTime.EventRow : Gtk.ListBoxRow {
     }
 
     construct {
+        css_color_provider = new Gtk.CssProvider ();
         unowned string icon_name = "office-calendar-symbolic";
         if (cal_event.end_time == null) {
             icon_name = "alarm-symbolic";
