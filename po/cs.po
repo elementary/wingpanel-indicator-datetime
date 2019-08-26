@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-06-26 22:47+0200\n"
+"POT-Creation-Date: 2019-08-26 16:31+0300\n"
 "PO-Revision-Date: 2018-07-26 21:01+0000\n"
 "Last-Translator: Jan Marek <janmarek28@gmail.com>\n"
 "Language-Team: Czech <https://weblate.elementary.io/projects/wingpanel/"
@@ -15,30 +15,49 @@ msgstr ""
 "X-Generator: Weblate 3.0.1\n"
 "X-Launchpad-Export-Date: 2017-02-19 05:57+0000\n"
 
-#: src/Indicator.vala:30
+#: src/Indicator.vala:32
 msgid "Date & Time"
 msgstr "Datum a čas"
 
-#: src/Indicator.vala:31
+#: src/Indicator.vala:33
 msgid "The date and time indicator"
 msgstr "Indikátor data  a času"
 
-#: src/Indicator.vala:54
+#: src/Indicator.vala:58
+msgid "No Events on This Day"
+msgstr ""
+
+#: src/Indicator.vala:82
 msgid "Date & Time Settings…"
 msgstr "Nastavení data a času…"
 
-#: src/Widgets/calendar/Calendar.vala:71
+#: src/Indicator.vala:131
+msgid "During the Day"
+msgstr ""
+
+#: src/Indicator.vala:139
+msgid "All Day"
+msgstr ""
+
+#: src/Widgets/calendar/CalendarView.vala:34
+#: src/Widgets/calendar/CalendarView.vala:91
+msgid "%OB, %Y"
+msgstr ""
+
+#: src/Widgets/calendar/CalendarView.vala:49
+msgid "Go to today's date"
+msgstr ""
+
+#: src/Widgets/calendar/CalendarView.vala:155
 msgid "Unable To Launch Calendar"
 msgstr ""
 
-#: src/Widgets/calendar/Calendar.vala:72
+#: src/Widgets/calendar/CalendarView.vala:156
 msgid "The program \"io.elementary.calendar\" may not be installed"
 msgstr ""
 
-#: src/Widgets/calendar/ControlHeader.vala:30
-#: src/Widgets/calendar/ControlHeader.vala:33
-msgid "%OB %Y"
-msgstr "%OB %Y"
+#~ msgid "%OB %Y"
+#~ msgstr "%OB %Y"
 
 #~ msgid "%a, %b %e"
 #~ msgstr "%a, %e. %b"
