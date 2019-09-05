@@ -3,16 +3,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-08-26 16:31+0300\n"
-"PO-Revision-Date: 2018-12-18 00:02+0000\n"
+"PO-Revision-Date: 2019-09-07 10:22+0000\n"
 "Last-Translator: Prachi Joshi <josprachi@yahoo.com>\n"
-"Language-Team: Marathi <https://weblate.elementary.io/projects/wingpanel/"
+"Language-Team: Marathi <https://l10n.elementary.io/projects/wingpanel/"
 "wingpanel-indicator-datetime/mr/>\n"
 "Language: mr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 3.0.1\n"
+"X-Generator: Weblate 3.7.1\n"
 "X-Launchpad-Export-Date: 2017-02-19 05:57+0000\n"
 
 #: src/Indicator.vala:32
@@ -25,7 +25,7 @@ msgstr "तारीख आणि वेळ सूचक"
 
 #: src/Indicator.vala:58
 msgid "No Events on This Day"
-msgstr ""
+msgstr "या दिवशी कोणतेही कार्यक्रम नाहीत"
 
 #: src/Indicator.vala:82
 msgid "Date & Time Settings…"
@@ -33,28 +33,28 @@ msgstr "तारीख आणि वेळ सेटिंग्ज…"
 
 #: src/Indicator.vala:131
 msgid "During the Day"
-msgstr ""
+msgstr "दिवसा"
 
 #: src/Indicator.vala:139
 msgid "All Day"
-msgstr ""
+msgstr "संपूर्ण दिवस"
 
 #: src/Widgets/calendar/CalendarView.vala:34
 #: src/Widgets/calendar/CalendarView.vala:91
 msgid "%OB, %Y"
-msgstr ""
+msgstr "%OB, %Y"
 
 #: src/Widgets/calendar/CalendarView.vala:49
 msgid "Go to today's date"
-msgstr ""
+msgstr "आजच्या तारखेला जा"
 
 #: src/Widgets/calendar/CalendarView.vala:155
 msgid "Unable To Launch Calendar"
-msgstr ""
+msgstr "कॅलेंडर लाँच करण्यात अक्षम"
 
 #: src/Widgets/calendar/CalendarView.vala:156
 msgid "The program \"io.elementary.calendar\" may not be installed"
-msgstr ""
+msgstr "कदाचित प्रोग्राम \"io.elementary.cender\" स्थापित केलेला नसावा"
 
 #~ msgid "%OB %Y"
 #~ msgstr "%OB %Y"
