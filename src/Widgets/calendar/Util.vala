@@ -79,29 +79,12 @@ namespace Util {
      */
     public TimeZone timezone_from_ical (ICal.Time date) {
         int is_daylight;
-        var interval = date.get_timezone ().get_utc_offset (date, out is_daylight);
+        var interval = date.get_timezone ().get_utc_offset (null, out is_daylight);
+        bool is_positive = interval >= 0;
+        interval = interval.abs ();
         var hours = (interval / 3600);
-        string hour_string = "-";
-
-        if (hours >= 0) {
-            hour_string = "+";
-        }
-
-        hours = hours.abs ();
-
-        if (hours > 9) {
-            hour_string = "%s%d".printf (hour_string, hours);
-        } else {
-            hour_string = "%s0%d".printf (hour_string, hours);
-        }
-
-        var minutes = (interval.abs () % 3600) / 60;
-
-        if (minutes > 9) {
-            hour_string = "%s:%d".printf (hour_string, minutes);
-        } else {
-            hour_string = "%s:0%d".printf (hour_string, minutes);
-        }
+        var minutes = (interval % 3600)/60;
+        var hour_string = "%s%02d:%02d".printf (is_positive ? "+" : "-", hours, minutes);
 
         return new TimeZone (hour_string);
     }
@@ -111,10 +94,8 @@ namespace Util {
      * XXX : Track next versions of evolution in order to convert ICal.Timezone to GLib.TimeZone with a dedicated function…
      */
     public GLib.DateTime ical_to_date_time (ICal.Time date) {
-        int year, month, day, hour, minute, second;
-        date.get_date (out year, out month, out day);
-        date.get_time (out hour, out minute, out second);
-        return new GLib.DateTime (timezone_from_ical (date), year, month, day, hour, minute, second);
+        return new GLib.DateTime (timezone_from_ical (date), date.year, date.month,
+            date.day, date.hour, date.minute, date.second);
     }
 
     public Gee.Collection<DateRange> event_date_ranges (ICal.Component comp, Util.DateRange view_range) {
@@ -192,7 +173,7 @@ namespace Util {
 
     private void generate_day_reccurence (Gee.LinkedList<DateRange> dateranges, Util.DateRange view_range,
                                           ICal.Recurrence rrule, GLib.DateTime start, GLib.DateTime end) {
-        if (rrule.until.is_null_time () == 0) {
+        if (!rrule.until.is_null_time ()) {
             for (int i = 1; i <= (int)(rrule.until.day / rrule.interval); i++) {
                 int n = i * rrule.interval;
 
@@ -222,7 +203,7 @@ namespace Util {
 
     private void generate_year_reccurence (Gee.LinkedList<DateRange> dateranges, Util.DateRange view_range,
                                            ICal.Recurrence rrule, GLib.DateTime start, GLib.DateTime end) {
-        if (rrule.until.is_null_time () == 0) {
+        if (!rrule.until.is_null_time ()) {
             /*for (int i = 0; i <= rrule.until.year; i++) {
              *   int n = i*rrule.interval;
              *   if (view_range.contains (start.add_years (n)) || view_range.contains (end.add_years (n)))
@@ -239,7 +220,7 @@ namespace Util {
         } else {
             int i = 1;
             int n = i * rrule.interval;
-            bool is_null_time = rrule.until.is_null_time () == 1;
+            bool is_null_time = rrule.until.is_null_time ();
             var temp_start = start.add_years (n);
 
             while (view_range.last_dt.compare (temp_start) > 0) {
@@ -276,7 +257,7 @@ namespace Util {
                 } else {
                     int i = 1;
                     int n = i * rrule.interval;
-                    bool is_null_time = rrule.until.is_null_time () == 1;
+                    bool is_null_time = rrule.until.is_null_time ();
                     var start_ical_day = get_date_from_ical_day (start.add_months (n), rrule.by_day[k]);
                     int week_of_month = (int)GLib.Math.ceil ((double)start.get_day_of_month () / 7);
 
@@ -324,7 +305,7 @@ namespace Util {
             } else {
                 int i = 1;
                 int n = i * rrule.interval;
-                bool is_null_time = rrule.until.is_null_time () == 1;
+                bool is_null_time = rrule.until.is_null_time ();
                 var temp_start = start.add_months (n);
 
                 while (view_range.last_dt.compare (temp_start) > 0) {
@@ -401,7 +382,7 @@ namespace Util {
             } else {
                 int i = 1;
                 int n = i * rrule.interval * 7;
-                bool is_null_time = rrule.until.is_null_time () == 1;
+                bool is_null_time = rrule.until.is_null_time ();
                 var temp_start = start.add_days (n);
 
                 while (view_range.last_dt.compare (temp_start) > 0) {
