@@ -33,7 +33,7 @@ public class DateTime.Widgets.GridDay : Gtk.EventBox {
     private static Gtk.CssProvider provider;
     private static Widgets.CalendarModel model;
 
-    private Gee.HashMap<string, Gtk.Widget> event_dots;
+    private Gee.HashMap<ECal.Component, Gtk.Widget> event_dots;
     private Gtk.Grid event_grid;
     private Gtk.Label label;
     private bool valid_grab = false;
@@ -83,7 +83,7 @@ public class DateTime.Widgets.GridDay : Gtk.EventBox {
             label.label = date.get_day_of_month ().to_string ();
         });
 
-        event_dots = new Gee.HashMap<string, Gtk.Widget> ();
+        event_dots = new Gee.HashMap<ECal.Component, Gtk.Widget> ();
 
         model.events_added.connect (add_event_dots);
         model.events_removed.connect (remove_event_dots);
@@ -91,31 +91,29 @@ public class DateTime.Widgets.GridDay : Gtk.EventBox {
 
     private void add_event_dots (E.Source source, Gee.Collection<ECal.Component> events) {
         foreach (var component in events) {
-            unowned ICal.Component ical = component.get_icalcomponent ();
-            foreach (var dt_range in Util.event_date_ranges (ical, model.data_range)) {
-                if (event_dots.size >= 3) {
-                    return;
-                }
+            if (event_dots.size >= 3) {
+                break;
+            }
 
-                if (date in dt_range) {
-                    var event_uid = ical.get_uid ();
-                    if (!event_dots.has_key (event_uid)) {
-                        var event_dot = new Gtk.Image ();
-                        event_dot.gicon = new ThemedIcon ("pager-checked-symbolic");
-                        event_dot.pixel_size = 6;
+            if (!Util.calcomp_is_on_day (component, date)) {
+                continue;
+            }
 
-                        unowned Gtk.StyleContext style_context = event_dot.get_style_context ();
-                        style_context.add_class (Granite.STYLE_CLASS_ACCENT);
-                        style_context.add_provider (provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
+            if (!event_dots.has_key (component)) {
+                var event_dot = new Gtk.Image ();
+                event_dot.gicon = new ThemedIcon ("pager-checked-symbolic");
+                event_dot.pixel_size = 6;
 
-                        var source_calendar = (E.SourceCalendar?) source.get_extension (E.SOURCE_EXTENSION_CALENDAR);
-                        Util.set_event_calendar_color (source_calendar, event_dot);
+                unowned Gtk.StyleContext style_context = event_dot.get_style_context ();
+                style_context.add_class (Granite.STYLE_CLASS_ACCENT);
+                style_context.add_provider (provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
 
-                        event_dots[event_uid] = event_dot;
+                var source_calendar = (E.SourceCalendar?) source.get_extension (E.SOURCE_EXTENSION_CALENDAR);
+                Util.set_event_calendar_color (source_calendar, event_dot);
 
-                        event_grid.add (event_dot);
-                    }
-                }
+                event_dots[component] = event_dot;
+
+                event_grid.add (event_dot);
             }
         }
 
@@ -124,12 +122,10 @@ public class DateTime.Widgets.GridDay : Gtk.EventBox {
 
     private void remove_event_dots (E.Source source, Gee.Collection<ECal.Component> events) {
         foreach (var component in events) {
-            unowned ICal.Component ical = component.get_icalcomponent ();
-            var event_uid = ical.get_uid ();
-            var dot = event_dots[event_uid];
+            var dot = event_dots[component];
             if (dot != null) {
                 dot.destroy ();
-                event_dots.remove (event_uid);
+                event_dots.unset (component);
             }
         }
     }

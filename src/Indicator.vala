@@ -24,7 +24,6 @@ public class DateTime.Indicator : Wingpanel.Indicator {
     private Gtk.Grid main_grid;
     private Widgets.CalendarView calendar;
     private Gtk.ListBox event_listbox;
-    private uint update_events_idle_source = 0;
 
     public Indicator () {
         Object (
@@ -73,6 +72,7 @@ public class DateTime.Indicator : Wingpanel.Indicator {
             event_listbox.set_header_func (header_update_func);
             event_listbox.set_placeholder (placeholder_label);
             event_listbox.set_sort_func (sort_function);
+            event_listbox.set_filter_func (filter_function);
 
             var scrolled_window = new Gtk.ScrolledWindow (null, null);
             scrolled_window.hscrollbar_policy = Gtk.PolicyType.NEVER;
@@ -93,16 +93,22 @@ public class DateTime.Indicator : Wingpanel.Indicator {
             size_group.add_widget (calendar);
             size_group.add_widget (event_listbox);
 
+            var model = Widgets.CalendarModel.get_default ();
+            foreach (var event in model.get_events ()) {
+                var row = new DateTime.EventRow (event);
+                event_listbox.add (row);
+            }
+
             calendar.day_double_click.connect (() => {
                 close ();
             });
 
             calendar.selection_changed.connect ((date) => {
-                idle_update_events ();
+                event_listbox.invalidate_filter ();
             });
 
             event_listbox.row_activated.connect ((row) => {
-                calendar.show_date_in_maya (((DateTime.EventRow) row).date);
+                calendar.show_date_in_maya (((DateTime.EventRow) row).start_time);
                 close ();
             });
 
@@ -113,117 +119,99 @@ public class DateTime.Indicator : Wingpanel.Indicator {
                     warning ("Failed to open time and date settings: %s", e.message);
                 }
             });
+
+            model.events_added.connect (add_events);
+            model.events_updated.connect (update_events);
+            model.events_removed.connect (remove_events);
+
+            main_grid.show_all ();
         }
 
         return main_grid;
     }
 
-    private void header_update_func (Gtk.ListBoxRow lbrow, Gtk.ListBoxRow? lbbefore) {
-        var row = (DateTime.EventRow) lbrow;
-        if (lbbefore != null) {
-            var before = (DateTime.EventRow) lbbefore;
-            if (row.is_allday == before.is_allday) {
-                row.set_header (null);
-                return;
-            }
+    private static int search_calcomp (Gtk.Widget widget, ECal.Component comp) {
+        unowned EventRow row = widget as EventRow;
+        return Util.calcomponent_compare_func (row.comp, comp);
+    }
 
-            if (row.is_allday != before.is_allday) {
-                var header_label = new Granite.HeaderLabel (_("During the Day"));
-                header_label.margin_start = header_label.margin_end = 6;
-
-                row.set_header (header_label);
-                return;
+    private void add_events (E.Source source, Gee.Collection<ECal.Component> events) {
+        foreach (var event in events) {
+            GLib.List<weak Gtk.Widget> children = event_listbox.get_children ();
+            unowned List<weak Gtk.Widget> found = children.search<ECal.Component> (event, search_calcomp);
+            if (found == null) {
+                var row = new DateTime.EventRow (event);
+                event_listbox.add (row);
             }
-        } else {
-            if (row.is_allday) {
-                var allday_header = new Granite.HeaderLabel (_("All Day"));
-                allday_header.margin_start = allday_header.margin_end = 6;
-
-                row.set_header (allday_header);
-            }
-            return;
         }
     }
 
-    [CCode (instance_pos = -1)]
-    private int sort_function (Gtk.ListBoxRow child1, Gtk.ListBoxRow child2) {
-        var e1 = (EventRow) child1;
-        var e2 = (EventRow) child2;
+    private void remove_events (E.Source source, Gee.Collection<ECal.Component> events) {
+        GLib.List<weak Gtk.Widget> children = event_listbox.get_children ();
+        foreach (var event in events) {
+            unowned List<weak Gtk.Widget> found = children.search<ECal.Component> (event, search_calcomp);
+            if (found != null) {
+                var row = ((EventRow) found.data);
+                row.destroy ();
+            }
+        }
+    }
 
-        if (e1.start_time.compare (e2.start_time) != 0) {
-            return e1.start_time.compare (e2.start_time);
+    private void update_events (E.Source source, Gee.Collection<ECal.Component> events) {
+        
+    }
+
+    private bool filter_function (Gtk.ListBoxRow row) {
+        var date = calendar.selected_date;
+        if (calendar.selected_date == null) {
+            date = new GLib.DateTime.now_local ();
+            date = date.add_full (0, 0, 0, -date.get_hour (), -date.get_minute (), -date.get_second ());
         }
 
-        // If they have the same date, sort them wholeday first
-        if (e1.is_allday) {
+        unowned EventRow event_row = (EventRow) row;
+        unowned ECal.Component comp = event_row.comp;
+        if (Util.calcomp_is_on_day (comp, date)) {
+            return true;
+        }
+
+        return false;
+    }
+
+    private static void header_update_func (Gtk.ListBoxRow lbrow, Gtk.ListBoxRow? lbbefore) {
+        unowned DateTime.EventRow row = (DateTime.EventRow) lbrow;
+        unowned DateTime.EventRow before = (DateTime.EventRow) lbbefore;
+        if (before != null && row.is_allday == before.is_allday) {
+            row.set_header (null);
+            return;
+        }
+
+        var header_label = new Granite.HeaderLabel (row.is_allday ? _("All Day") : _("During the Day"));
+        header_label.margin_start = header_label.margin_end = 6;
+        row.set_header (header_label);
+    }
+
+    private static int sort_function (Gtk.ListBoxRow child1, Gtk.ListBoxRow child2) {
+        unowned EventRow e1 = (EventRow) child1;
+        unowned EventRow e2 = (EventRow) child2;
+
+        /* Sort them wholeday first */
+        if (e1.is_allday && e2.is_allday) {
+            return Util.compare_event_alphabetically (e1.comp, e2.comp);
+        } else if (e1.is_allday) {
             return -1;
         } else if (e2.is_allday) {
             return 1;
         }
 
-        return 0;
-    }
-
-    private void update_events_model (E.Source source, Gee.Collection<ECal.Component> events) {
-        idle_update_events ();
-    }
-
-    private void idle_update_events () {
-        if (update_events_idle_source > 0) {
-            GLib.Source.remove (update_events_idle_source);
-        }
-
-        update_events_idle_source = GLib.Idle.add (update_events);
-    }
-
-    private bool update_events () {
-        foreach (unowned Gtk.Widget widget in event_listbox.get_children ()) {
-            widget.destroy ();
-        }
-
-        if (calendar.selected_date == null) {
-            update_events_idle_source = 0;
-            return GLib.Source.REMOVE;
-        }
-
-        var date = calendar.selected_date;
-
-        var model = Widgets.CalendarModel.get_default ();
-
-        var events_on_day = new Gee.TreeMap<string, DateTime.EventRow> ();
-        foreach (var entry in model.source_events.get_values ()) {
-            foreach (var comp in entry.values) {
-                unowned ICal.Component ical = comp.get_icalcomponent ();
-                foreach (var dt_range in Util.event_date_ranges (ical, model.data_range)) {
-                    if (date in dt_range) {
-                        var event_uid = ical.get_uid ();
-                        if (!events_on_day.has_key (event_uid)) {
-                            events_on_day[event_uid] = new DateTime.EventRow (date, ical);
-
-                            event_listbox.add (events_on_day[event_uid]);
-                        }
-                    }
-                }
-            }
-        }
-
-        event_listbox.show_all ();
-        update_events_idle_source = 0;
-        return GLib.Source.REMOVE;
+        return Util.compare_events (e1.comp, e2.comp);
     }
 
     public override void opened () {
         calendar.show_today ();
-
-        Widgets.CalendarModel.get_default ().events_added.connect (update_events_model);
-        Widgets.CalendarModel.get_default ().events_updated.connect (update_events_model);
-        Widgets.CalendarModel.get_default ().events_removed.connect (update_events_model);
     }
 
     public override void closed () {
-        Widgets.CalendarModel.get_default ().events_added.disconnect (update_events_model);
-        Widgets.CalendarModel.get_default ().events_updated.disconnect (update_events_model);
-        Widgets.CalendarModel.get_default ().events_removed.disconnect (update_events_model);
+        
     }
 }
 

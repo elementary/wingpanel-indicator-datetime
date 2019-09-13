@@ -18,8 +18,7 @@
  */
 
 public class DateTime.EventRow : Gtk.ListBoxRow {
-    public GLib.DateTime date { get; construct; }
-    public unowned ICal.Component component { get; construct; }
+    public ECal.Component comp { get; construct; }
 
     public GLib.DateTime start_time { get; private set; }
     public GLib.DateTime? end_time { get; private set; }
@@ -30,10 +29,9 @@ public class DateTime.EventRow : Gtk.ListBoxRow {
 
     private Gtk.Label time_label;
 
-    public EventRow (GLib.DateTime date, ICal.Component component) {
+    public EventRow (ECal.Component comp) {
         Object (
-            component: component,
-            date: date
+            comp: comp
         );
     }
 
@@ -45,6 +43,7 @@ public class DateTime.EventRow : Gtk.ListBoxRow {
     }
 
     construct {
+        unowned ICal.Component component = comp.get_icalcomponent ();
         start_time = Util.ical_to_date_time (component.get_dtstart ());
         end_time = Util.ical_to_date_time (component.get_dtend ());
 
@@ -96,6 +95,7 @@ public class DateTime.EventRow : Gtk.ListBoxRow {
         grid_context.add_provider (css_provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
 
         add (grid);
+        show_all ();
 
         update_timelabel ();
         time_manager.notify["is-12h"].connect (update_timelabel);

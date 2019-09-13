@@ -35,7 +35,7 @@ namespace DateTime.Widgets {
         /* The start of week, ie. Monday=1 or Sunday=7 */
         public GLib.DateWeekday week_starts_on { get; set; }
 
-        public HashTable<E.Source, Gee.TreeMap<string, ECal.Component>> source_events { get; private set; }
+        public HashTable<E.Source, Gee.TreeMultiMap<string, ECal.Component>> source_events { get; private set; }
 
         /* Notifies when events are added, updated, or removed */
         public signal void events_added (E.Source source, Gee.Collection<ECal.Component> events);
@@ -62,7 +62,7 @@ namespace DateTime.Widgets {
             open.begin ();
 
             source_client = new HashTable<string, ECal.Client> (str_hash, str_equal);
-            source_events = new HashTable<E.Source, Gee.TreeMap<string, ECal.Component> > (Util.source_hash_func, Util.source_equal_func);
+            source_events = new HashTable<E.Source, Gee.TreeMultiMap<string, ECal.Component>> (Util.source_hash_func, Util.source_equal_func);
             source_view = new HashTable<string, ECal.ClientView> (str_hash, str_equal);
 
             int week_start = Posix.NLTime.FIRST_WEEKDAY.to_string ().data[0];
@@ -129,7 +129,7 @@ namespace DateTime.Widgets {
                 source_client.remove (uid);
             }
 
-            var events = source_events.get (source).values.read_only_view;
+            var events = source_events.get (source).get_values ().read_only_view;
             events_removed (source, events);
             source_events.remove (source);
         }
@@ -185,9 +185,9 @@ namespace DateTime.Widgets {
 
         private void load_source (E.Source source) {
             /* create empty source-event map */
-            var events = new Gee.TreeMap<string, ECal.Component> (
-                (GLib.CompareDataFunc<ECal.Component> ? )GLib.strcmp,
-                (Gee.EqualDataFunc<ECal.Component>? )Util.calcomponent_equal_func);
+            var events = new Gee.TreeMultiMap<string, ECal.Component> (
+                (GLib.CompareDataFunc<string>?)GLib.strcmp,
+                (GLib.CompareDataFunc<ECal.Component>?) Util.calcomponent_compare_func);
             source_events.set (source, events);
             /* query client view */
             var iso_first = ECal.isodate_from_time_t ((time_t)data_range.first_dt.to_unix ());
@@ -263,15 +263,15 @@ namespace DateTime.Widgets {
             debug (@"Received $(objects.length()) added event(s) for source '%s'", source.dup_display_name ());
             var events_from_source = source_events.get (source);
             var added_events = new Gee.ArrayList<ECal.Component> ((Gee.EqualDataFunc<ECal.Component>? )Util.calcomponent_equal_func);
-
-            foreach (unowned ICal.Component comp in objects) {
-                var event = new ECal.Component ();
-                event.set_icalcomponent (comp.clone ());
+            objects.foreach ((comp) => {
                 unowned string uid = comp.get_uid ();
-                debug_event (source, event);
-                events_from_source.set (uid, event);
-                added_events.add (event);
-            }
+                client.generate_instances_for_object_sync (comp, (time_t) data_range.first_dt.to_unix (), (time_t) data_range.last_dt.to_unix (), (event, start, end) => {
+                    debug_event (source, event);
+                    events_from_source.set (uid, event);
+                    added_events.add (event);
+                    return true;
+                });
+            });
 
             events_added (source, added_events.read_only_view);
         }
@@ -280,13 +280,14 @@ namespace DateTime.Widgets {
             debug (@"Received $(objects.length()) modified event(s) for source '%s'", source.dup_display_name ());
             var updated_events = new Gee.ArrayList<ECal.Component> ((Gee.EqualDataFunc<ECal.Component>? )Util.calcomponent_equal_func);
 
-            foreach (unowned ICal.Component comp in objects) {
+            objects.foreach ((comp) => {
                 unowned string uid = comp.get_uid ();
-                ECal.Component event = source_events.get (source).get (uid);
-                event.set_icalcomponent (comp.clone ());
-                updated_events.add (event);
-                debug_event (source, event);
-            }
+                var events = source_events.get (source).get (uid);
+                updated_events.add_all (events);
+                foreach (var event in events) {
+                    debug_event (source, event);
+                }
+            });
 
             events_updated (source, updated_events.read_only_view);
         }
@@ -296,14 +297,26 @@ namespace DateTime.Widgets {
             var events_from_source = source_events.get (source);
             var removed_events = new Gee.ArrayList<ECal.Component> ((Gee.EqualDataFunc<ECal.Component>? )Util.calcomponent_equal_func);
 
-            foreach (unowned ECal.ComponentId? cid in cids) {
-                assert (cid != null);
-                ECal.Component event = events_from_source.get (cid.uid);
-                removed_events.add (event);
-                debug_event (source, event);
-            }
+            cids.foreach ((cid) => {
+                var comps = events_from_source.get (cid.uid);
+                foreach (ECal.Component event in comps) {
+                    removed_events.add (event);
+                    debug_event (source, event);
+                }
+            });
 
             events_removed (source, removed_events.read_only_view);
+        }
+
+        public Gee.Collection<ECal.Component> get_events () {
+            Gee.ArrayList<ECal.Component> events = new Gee.ArrayList<ECal.Component> ();
+            registry.list_sources (E.SOURCE_EXTENSION_CALENDAR).foreach ((source) => {
+                E.SourceCalendar cal = (E.SourceCalendar)source.get_extension (E.SOURCE_EXTENSION_CALENDAR);
+                if (cal.selected == true && source.enabled == true) {
+                    events.add_all (source_events.get (source).get_values ().read_only_view);
+                }
+            });
+            return events;
         }
     }
 }
