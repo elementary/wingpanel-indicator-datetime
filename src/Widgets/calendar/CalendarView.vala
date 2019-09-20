@@ -64,9 +64,6 @@ public class DateTime.Widgets.CalendarView : Gtk.Grid {
         stack.show_all ();
         stack.expand = true;
 
-        var model = CalendarModel.get_default ();
-        model.parameters_changed.connect (on_model_parameters_changed);
-
         stack.notify["transition-running"].connect (() => {
             if (stack.transition_running == false) {
                 stack.get_children ().foreach ((child) => {
@@ -86,17 +83,22 @@ public class DateTime.Widgets.CalendarView : Gtk.Grid {
         attach (box_buttons, 1, 0);
         attach (stack, 0, 1, 2);
 
-        CalendarModel.get_default ().parameters_changed.connect (() => {
-            var date = CalendarModel.get_default ().month_start;
-            label.set_label (date.format (_("%OB, %Y")));
+        var model = CalendarModel.get_default ();
+        model.notify["data-range"].connect (() => {
+            label.label = model.month_start.format (_("%OB, %Y"));
+
+            sync_with_model ();
+
+            selected_date = null;
+            selection_changed (selected_date);
         });
 
         left_button.clicked.connect (() => {
-            CalendarModel.get_default ().change_month (-1);
+            model.change_month (-1);
         });
 
         right_button.clicked.connect (() => {
-            CalendarModel.get_default ().change_month (1);
+            model.change_month (1);
         });
 
         center_button.clicked.connect (() => {
@@ -165,18 +167,6 @@ public class DateTime.Widgets.CalendarView : Gtk.Grid {
     private void on_show_weeks_changed () {
         var model = CalendarModel.get_default ();
         weeks.update (model.data_range.first_dt, model.num_weeks);
-    }
-
-    /* Indicates the month has changed */
-    private void on_model_parameters_changed () {
-        var model = CalendarModel.get_default ();
-        if (grid.grid_range != null && model.data_range.equals (grid.grid_range))
-            return; // nothing to do
-
-        sync_with_model ();
-
-        selected_date = null;
-        selection_changed (selected_date);
     }
 
     /* Sets the calendar widgets to the date range of the model */
