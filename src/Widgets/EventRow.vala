@@ -20,6 +20,7 @@
 public class DateTime.EventRow : Gtk.ListBoxRow {
     public GLib.DateTime date { get; construct; }
     public unowned ICal.Component component { get; construct; }
+    public unowned E.SourceCalendar cal { get; construct; }
 
     public GLib.DateTime start_time { get; private set; }
     public GLib.DateTime? end_time { get; private set; }
@@ -27,13 +28,17 @@ public class DateTime.EventRow : Gtk.ListBoxRow {
 
     private static Services.TimeManager time_manager;
     private static Gtk.CssProvider css_provider;
+    private static Gtk.CssProvider css_color_provider;
+    private Gtk.StyleContext event_image_context;
+    private Gtk.StyleContext grid_context;
 
     private Gtk.Label time_label;
 
-    public EventRow (GLib.DateTime date, ICal.Component component) {
+    public EventRow (GLib.DateTime date, ICal.Component component, E.Source source) {
         Object (
             component: component,
-            date: date
+            date: date,
+            cal: (E.SourceCalendar?) source.get_extension (E.SOURCE_EXTENSION_CALENDAR)
         );
     }
 
@@ -45,6 +50,7 @@ public class DateTime.EventRow : Gtk.ListBoxRow {
     }
 
     construct {
+        css_color_provider = new Gtk.CssProvider ();
         start_time = Util.ical_to_date_time (component.get_dtstart ());
         end_time = Util.ical_to_date_time (component.get_dtend ());
 
@@ -60,7 +66,7 @@ public class DateTime.EventRow : Gtk.ListBoxRow {
         var event_image = new Gtk.Image.from_icon_name (icon_name, Gtk.IconSize.MENU);
         event_image.valign = Gtk.Align.START;
 
-        var event_image_context = event_image.get_style_context ();
+        event_image_context = event_image.get_style_context ();
         event_image_context.add_provider (css_provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
 
         var name_label = new Gtk.Label (component.get_summary ());
@@ -91,9 +97,16 @@ public class DateTime.EventRow : Gtk.ListBoxRow {
             grid.attach (time_label, 1, 1);
         }
 
-        var grid_context = grid.get_style_context ();
+        grid_context = grid.get_style_context ();
         grid_context.add_class ("event");
         grid_context.add_provider (css_provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
+
+        /* Color menuitem per calendar source of event */
+        set_color ();
+
+        cal.notify["color"].connect (() => {
+            set_color ();
+        });
 
         add (grid);
 
@@ -104,5 +117,10 @@ public class DateTime.EventRow : Gtk.ListBoxRow {
     private void update_timelabel () {
         var time_format = Granite.DateTime.get_default_time_format (time_manager.is_12h);
         time_label.label = "<small>%s – %s</small>".printf (start_time.format (time_format), end_time.format (time_format));
+    }
+    public void set_color () {
+        Util.get_style_calendar_color (cal, css_color_provider);
+        grid_context.add_provider (css_color_provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
+        event_image_context.add_provider (css_color_provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
     }
 }
