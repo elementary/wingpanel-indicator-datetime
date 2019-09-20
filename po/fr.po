@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-08-26 16:31+0300\n"
-"PO-Revision-Date: 2019-08-20 11:22+0000\n"
-"Last-Translator: Nathan <bonnemainsnathan@gmail.com>\n"
+"PO-Revision-Date: 2019-08-29 17:22+0000\n"
+"Last-Translator: Corentin Noël <corentin@elementary.io>\n"
 "Language-Team: French <https://l10n.elementary.io/projects/wingpanel/"
 "wingpanel-indicator-datetime/fr/>\n"
 "Language: fr\n"
@@ -25,7 +25,7 @@ msgstr "L'indicateur de date et heure"
 
 #: src/Indicator.vala:58
 msgid "No Events on This Day"
-msgstr ""
+msgstr "Aucun événement en ce jour"
 
 #: src/Indicator.vala:82
 msgid "Date & Time Settings…"
@@ -33,20 +33,20 @@ msgstr "Paramètres de la date et de l'heure…"
 
 #: src/Indicator.vala:131
 msgid "During the Day"
-msgstr ""
+msgstr "Pendant la journée"
 
 #: src/Indicator.vala:139
 msgid "All Day"
-msgstr ""
+msgstr "Toute la journée"
 
 #: src/Widgets/calendar/CalendarView.vala:34
 #: src/Widgets/calendar/CalendarView.vala:91
 msgid "%OB, %Y"
-msgstr ""
+msgstr "%OB %Y"
 
 #: src/Widgets/calendar/CalendarView.vala:49
 msgid "Go to today's date"
-msgstr ""
+msgstr "Aller à aujourd'hui"
 
 #: src/Widgets/calendar/CalendarView.vala:155
 msgid "Unable To Launch Calendar"

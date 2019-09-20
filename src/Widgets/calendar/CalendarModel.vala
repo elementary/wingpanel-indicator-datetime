@@ -42,9 +42,6 @@ namespace DateTime.Widgets {
         public signal void events_updated (E.Source source, Gee.Collection<ECal.Component> events);
         public signal void events_removed (E.Source source, Gee.Collection<ECal.Component> events);
 
-        /* The month_start, num_weeks, or week_starts_on have been changed */
-        public signal void parameters_changed ();
-
         private E.SourceRegistry registry { get; private set; }
         private HashTable<string, ECal.Client> source_client;
         private HashTable<string, ECal.ClientView> source_view;
@@ -93,7 +90,6 @@ namespace DateTime.Widgets {
                 });
 
                 load_all_sources ();
-                parameters_changed ();
             } catch (GLib.Error error) {
                 critical (error.message);
             }
@@ -248,7 +244,6 @@ namespace DateTime.Widgets {
         private void on_parameter_changed () {
             compute_ranges ();
             load_all_sources ();
-            parameters_changed ();
         }
 
         private ECal.ClientView on_client_view_received (AsyncResult results, E.Source source, ECal.Client client) {
