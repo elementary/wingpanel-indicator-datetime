@@ -37,7 +37,6 @@ shared_module(
     'src/Widgets/calendar/Grid.vala',
     'src/Widgets/calendar/GridDay.vala',
     'src/Widgets/calendar/Util.vala',
-    'src/Widgets/calendar/WeekLabels.vala',
     'src/Services/TimeManager.vala',
     dependencies: [
         dependency('glib-2.0'),

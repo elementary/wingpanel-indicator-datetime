@@ -25,7 +25,6 @@ public class DateTime.Widgets.CalendarView : Gtk.Grid {
 
     public GLib.DateTime? selected_date { get; private set; }
 
-    private WeekLabels weeks;
     private Grid grid;
     private Gtk.Stack stack;
     private Gtk.Grid big_grid;
@@ -74,8 +73,6 @@ public class DateTime.Widgets.CalendarView : Gtk.Grid {
             }
         });
 
-        DateTime.Indicator.settings.changed["show-weeks"].connect (on_show_weeks_changed);
-
         column_spacing = 6;
         row_spacing = 6;
         margin_start = margin_end = 10;
@@ -107,17 +104,8 @@ public class DateTime.Widgets.CalendarView : Gtk.Grid {
     }
 
     private Gtk.Grid create_big_grid () {
-        weeks = new WeekLabels ();
-        weeks.margin_bottom = 3;
-        weeks.valign = Gtk.Align.END;
-
         grid = new DateTime.Widgets.Grid ();
-
-        var new_big_grid = new Gtk.Grid ();
-        new_big_grid.expand = true;
-        new_big_grid.attach (grid, 1, 0);
-        new_big_grid.attach (weeks, 0, 0);
-        new_big_grid.show_all ();
+        grid.show_all ();
 
         grid.on_event_add.connect ((date) => {
             show_date_in_maya (date);
@@ -129,7 +117,7 @@ public class DateTime.Widgets.CalendarView : Gtk.Grid {
             selection_changed (date);
         });
 
-        return new_big_grid;
+        return grid;
     }
 
     public void show_today () {
@@ -164,11 +152,6 @@ public class DateTime.Widgets.CalendarView : Gtk.Grid {
         }
     }
 
-    private void on_show_weeks_changed () {
-        var model = CalendarModel.get_default ();
-        weeks.update (model.data_range.first_dt, model.num_weeks);
-    }
-
     /* Sets the calendar widgets to the date range of the model */
     private void sync_with_model () {
         var model = CalendarModel.get_default ();
@@ -184,8 +167,8 @@ public class DateTime.Widgets.CalendarView : Gtk.Grid {
         big_grid = create_big_grid ();
         stack.add (big_grid);
 
-        weeks.update (model.data_range.first_dt, model.num_weeks);
         grid.set_range (model.data_range, model.month_start);
+        grid.update_weeks (model.data_range.first_dt, model.num_weeks);
 
         if (previous_first != null) {
             if (previous_first.compare (grid.grid_range.first_dt) == -1) {
