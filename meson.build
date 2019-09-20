@@ -24,7 +24,6 @@ shared_module(
     gresource,
     'src/DateIterator.vala',
     'src/DateRange.vala',
-    'src/Event.vala',
     'src/Indicator.vala',
     'src/Widgets/EventRow.vala',
     'src/Widgets/PanelLabel.vala',

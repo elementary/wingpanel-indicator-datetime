@@ -35,6 +35,8 @@ namespace DateTime.Widgets {
         /* The start of week, ie. Monday=1 or Sunday=7 */
         public GLib.DateWeekday week_starts_on { get; set; }
 
+        public HashTable<E.Source, Gee.TreeMap<string, ECal.Component>> source_events { get; private set; }
+
         /* Notifies when events are added, updated, or removed */
         public signal void events_added (E.Source source, Gee.Collection<ECal.Component> events);
         public signal void events_updated (E.Source source, Gee.Collection<ECal.Component> events);
@@ -46,7 +48,6 @@ namespace DateTime.Widgets {
         private E.SourceRegistry registry { get; private set; }
         private HashTable<string, ECal.Client> source_client;
         private HashTable<string, ECal.ClientView> source_view;
-        private HashTable<E.Source, Gee.TreeMap<string, ECal.Component> > source_events;
 
         private static CalendarModel? calendar_model = null;
 
@@ -96,33 +97,6 @@ namespace DateTime.Widgets {
             } catch (GLib.Error error) {
                 critical (error.message);
             }
-        }
-
-        /* --- Public Methods ---// */
-
-        public Gee.ArrayList<Event> get_events (GLib.DateTime date) {
-            var events = new Gee.TreeMap<string,Event> ();
-            registry.list_sources (E.SOURCE_EXTENSION_CALENDAR).foreach ((source) => {
-                E.SourceCalendar cal = (E.SourceCalendar)source.get_extension (E.SOURCE_EXTENSION_CALENDAR);
-                var map = source_events.get (source);
-                if (map != null) {
-                    foreach (var comp in source_events.get (source).values.read_only_view) {
-                        unowned ICal.Component ical = comp.get_icalcomponent ();
-                        foreach (var dt_range in Util.event_date_ranges (ical, data_range)) {
-                            if (dt_range.contains (date)) {
-                                if (!events.has_key (ical.get_uid ())) {
-                                    if (cal.selected == true && source.enabled == true) {
-                                        events.set (ical.get_uid (), new Event (date, dt_range, ical, source));
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            });
-
-            var list = new Gee.ArrayList<Event>.wrap (events.values.to_array ());
-            return list;
         }
 
         private void load_all_sources () {
