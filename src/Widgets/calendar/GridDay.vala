@@ -57,6 +57,11 @@ public class DateTime.Widgets.GridDay : Gtk.EventBox {
 
         label = new Gtk.Label (null);
 
+        event_dots = new Gee.HashMap<string, Gtk.Widget> ();
+
+        model.events_added.connect (add_event_dots);
+        model.events_removed.connect (remove_event_dots);
+
         event_grid = new Gtk.Grid ();
         event_grid.halign = Gtk.Align.CENTER;
         event_grid.height_request = 6;
@@ -64,6 +69,11 @@ public class DateTime.Widgets.GridDay : Gtk.EventBox {
         grid = new Gtk.Grid ();
         grid.halign = grid.valign = Gtk.Align.CENTER;
         grid.attach (label, 0, 0);
+
+        if (event_grid.get_parent () == null) {
+            grid.attach (event_grid, 0, 1);
+            grid.margin_top = 6;
+        }
 
         can_focus = true;
         events |= Gdk.EventMask.BUTTON_PRESS_MASK;
@@ -83,11 +93,6 @@ public class DateTime.Widgets.GridDay : Gtk.EventBox {
         notify["date"].connect (() => {
             label.label = date.get_day_of_month ().to_string ();
         });
-
-        event_dots = new Gee.HashMap<string, Gtk.Widget> ();
-
-        model.events_added.connect (add_event_dots);
-        model.events_removed.connect (remove_event_dots);
     }
 
     private void add_event_dots (E.Source source, Gee.Collection<ECal.Component> events) {
@@ -115,8 +120,6 @@ public class DateTime.Widgets.GridDay : Gtk.EventBox {
                         event_dots[event_uid] = event_dot;
 
                         event_grid.add (event_dot);
-                        grid.attach (event_grid, 0, 1);
-                        grid.margin_top = 6;
                     }
                 }
             }
