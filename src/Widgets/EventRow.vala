@@ -28,10 +28,9 @@ public class DateTime.EventRow : Gtk.ListBoxRow {
 
     private static Services.TimeManager time_manager;
     private static Gtk.CssProvider css_provider;
-    private static Gtk.CssProvider css_color_provider;
-    private Gtk.StyleContext event_image_context;
-    private Gtk.StyleContext grid_context;
 
+    private Gtk.Grid grid;
+    private Gtk.Image event_image;
     private Gtk.Label time_label;
 
     public EventRow (GLib.DateTime date, ICal.Component component, E.Source source) {
@@ -50,7 +49,6 @@ public class DateTime.EventRow : Gtk.ListBoxRow {
     }
 
     construct {
-        css_color_provider = new Gtk.CssProvider ();
         start_time = Util.ical_to_date_time (component.get_dtstart ());
         end_time = Util.ical_to_date_time (component.get_dtend ());
 
@@ -63,10 +61,10 @@ public class DateTime.EventRow : Gtk.ListBoxRow {
             icon_name = "alarm-symbolic";
         }
 
-        var event_image = new Gtk.Image.from_icon_name (icon_name, Gtk.IconSize.MENU);
+        event_image = new Gtk.Image.from_icon_name (icon_name, Gtk.IconSize.MENU);
         event_image.valign = Gtk.Align.START;
 
-        event_image_context = event_image.get_style_context ();
+        unowned Gtk.StyleContext event_image_context = event_image.get_style_context ();
         event_image_context.add_provider (css_provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
 
         var name_label = new Gtk.Label (component.get_summary ());
@@ -78,7 +76,7 @@ public class DateTime.EventRow : Gtk.ListBoxRow {
         name_label.wrap_mode = Pango.WrapMode.WORD_CHAR;
         name_label.xalign = 0;
 
-        var name_label_context = name_label.get_style_context ();
+        unowned Gtk.StyleContext name_label_context = name_label.get_style_context ();
         name_label_context.add_class ("title");
         name_label_context.add_provider (css_provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
 
@@ -87,7 +85,7 @@ public class DateTime.EventRow : Gtk.ListBoxRow {
         time_label.xalign = 0;
         time_label.get_style_context ().add_class (Gtk.STYLE_CLASS_DIM_LABEL);
 
-        var grid = new Gtk.Grid ();
+        grid = new Gtk.Grid ();
         grid.column_spacing = 6;
         grid.margin = 3;
         grid.margin_start = grid.margin_end = 6;
@@ -97,7 +95,7 @@ public class DateTime.EventRow : Gtk.ListBoxRow {
             grid.attach (time_label, 1, 1);
         }
 
-        grid_context = grid.get_style_context ();
+        unowned Gtk.StyleContext grid_context = grid.get_style_context ();
         grid_context.add_class ("event");
         grid_context.add_provider (css_provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
 
@@ -118,9 +116,9 @@ public class DateTime.EventRow : Gtk.ListBoxRow {
         var time_format = Granite.DateTime.get_default_time_format (time_manager.is_12h);
         time_label.label = "<small>%s – %s</small>".printf (start_time.format (time_format), end_time.format (time_format));
     }
+
     public void set_color () {
-        Util.get_style_calendar_color (cal, css_color_provider);
-        grid_context.add_provider (css_color_provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
-        event_image_context.add_provider (css_color_provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
+        Util.set_event_calendar_color (cal, grid);
+        Util.set_event_calendar_color (cal, event_image);
     }
 }
