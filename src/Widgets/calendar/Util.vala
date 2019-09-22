@@ -20,17 +20,6 @@
  */
 
 namespace Util {
-    public void get_style_calendar_color (E.SourceCalendar cal, Gtk.CssProvider provider) {
-        string style = """
-                        @define-color colorAccent %s;
-                       """.printf (cal.dup_color ());
-        try {
-            provider.load_from_data (style, style.length);
-        } catch (Error e) {
-            warning ("Could not create CSS Provider: %s\nStylesheet:\n%s", e.message, style);
-        }
-    }
-
     static bool has_scrolled = false;
     const uint interval = 500;
 
