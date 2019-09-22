@@ -99,14 +99,10 @@ public class DateTime.EventRow : Gtk.ListBoxRow {
         grid_context.add_class ("event");
         grid_context.add_provider (css_provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
 
-        /* Color menuitem per calendar source of event */
-        set_color ();
-
-        cal.notify["color"].connect (() => {
-            set_color ();
-        });
-
         add (grid);
+
+        set_color ();
+        cal.notify["color"].connect (set_color);
 
         update_timelabel ();
         time_manager.notify["is-12h"].connect (update_timelabel);
