@@ -113,7 +113,7 @@ public class DateTime.EventRow : Gtk.ListBoxRow {
         time_label.label = "<small>%s – %s</small>".printf (start_time.format (time_format), end_time.format (time_format));
     }
 
-    public void set_color () {
+    private void set_color () {
         Util.set_event_calendar_color (cal, grid);
         Util.set_event_calendar_color (cal, event_image);
     }
