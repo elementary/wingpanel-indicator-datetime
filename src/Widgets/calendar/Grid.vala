@@ -212,7 +212,6 @@ namespace DateTime.Widgets {
             week_labels = new Gtk.Revealer[nr_of_weeks];
             for (int c = 0; c < nr_of_weeks; c++) {
                 var week_label = new Gtk.Label (next.get_week_of_year ().to_string ());
-                week_label.margin_bottom = 6;
                 week_label.width_chars = 2;
                 week_label.get_style_context ().add_class (Granite.STYLE_CLASS_H4_LABEL);
 
