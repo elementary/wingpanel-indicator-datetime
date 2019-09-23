@@ -35,7 +35,6 @@ public class DateTime.Widgets.GridDay : Gtk.EventBox {
 
     private Gee.HashMap<string, Gtk.Widget> event_dots;
     private Gtk.Grid event_grid;
-    private Gtk.Grid grid;
     private Gtk.Label label;
     private bool valid_grab = false;
 
@@ -66,7 +65,7 @@ public class DateTime.Widgets.GridDay : Gtk.EventBox {
         event_grid.halign = Gtk.Align.CENTER;
         event_grid.height_request = 6;
 
-        grid = new Gtk.Grid ();
+        var grid = new Gtk.Grid ();
         grid.halign = grid.valign = Gtk.Align.CENTER;
         grid.attach (label, 0, 0);
         grid.attach (event_grid, 0, 1);
