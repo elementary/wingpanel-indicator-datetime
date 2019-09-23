@@ -69,11 +69,8 @@ public class DateTime.Widgets.GridDay : Gtk.EventBox {
         grid = new Gtk.Grid ();
         grid.halign = grid.valign = Gtk.Align.CENTER;
         grid.attach (label, 0, 0);
-
-        if (event_grid.get_parent () == null) {
-            grid.attach (event_grid, 0, 1);
-            grid.margin_top = 6;
-        }
+        grid.attach (event_grid, 0, 1);
+        grid.margin_top = 6;
 
         can_focus = true;
         events |= Gdk.EventMask.BUTTON_PRESS_MASK;
