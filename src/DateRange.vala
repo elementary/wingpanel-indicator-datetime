@@ -41,15 +41,11 @@ public class Util.DateRange : Object, Gee.Traversable<GLib.DateTime>, Gee.Iterab
         );
     }
 
-    private DateRange.copy (DateRange date_range) {
-        this(date_range.first_dt, date_range.last_dt);
-    }
-
     public bool equals (DateRange other) {
         return (first_dt == other.first_dt && last_dt == other.last_dt);
     }
 
-    private Gee.Iterator<GLib.DateTime> iterator () {
+    public Gee.Iterator<GLib.DateTime> iterator () {
         return new DateIterator (this);
     }
 
