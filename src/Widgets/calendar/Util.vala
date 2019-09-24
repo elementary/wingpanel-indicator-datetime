@@ -21,7 +21,6 @@
 
 namespace Util {
     static bool has_scrolled = false;
-    const uint interval = 500;
 
     public bool on_scroll_event (Gdk.EventScroll event) {
         double delta_x;
@@ -83,7 +82,7 @@ namespace Util {
         bool is_positive = interval >= 0;
         interval = interval.abs ();
         var hours = (interval / 3600);
-        var minutes = (interval % 3600)/60;
+        var minutes = (interval % 3600) / 60;
         var hour_string = "%s%02d:%02d".printf (is_positive ? "+" : "-", hours, minutes);
 
         return new TimeZone (hour_string);
@@ -411,10 +410,10 @@ namespace Util {
      * Say if an event lasts all day.
      */
     public bool is_the_all_day (GLib.DateTime dtstart, GLib.DateTime dtend) {
-        var UTC_start = dtstart.to_timezone (new TimeZone.utc ());
+        var utc_start = dtstart.to_timezone (new TimeZone.utc ());
         var timespan = dtend.difference (dtstart);
 
-        if (timespan % GLib.TimeSpan.DAY == 0 && UTC_start.get_hour () == 0) {
+        if (timespan % GLib.TimeSpan.DAY == 0 && utc_start.get_hour () == 0) {
             return true;
         } else {
             return false;
@@ -529,7 +528,7 @@ namespace Util {
 
     public async void reset_timer () {
         has_scrolled = true;
-        Timeout.add (interval, () => {
+        Timeout.add (500, () => {
             has_scrolled = false;
 
             return false;
