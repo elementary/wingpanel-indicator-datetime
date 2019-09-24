@@ -41,7 +41,7 @@ public class Util.DateRange : Object, Gee.Traversable<GLib.DateTime>, Gee.Iterab
         );
     }
 
-    public DateRange.copy (DateRange date_range) {
+    private DateRange.copy (DateRange date_range) {
         this(date_range.first_dt, date_range.last_dt);
     }
 
@@ -49,12 +49,8 @@ public class Util.DateRange : Object, Gee.Traversable<GLib.DateTime>, Gee.Iterab
         return (first_dt == other.first_dt && last_dt == other.last_dt);
     }
 
-    public Gee.Iterator<GLib.DateTime> iterator () {
+    private Gee.Iterator<GLib.DateTime> iterator () {
         return new DateIterator (this);
-    }
-
-    public bool contains (GLib.DateTime time) {
-        return (first_dt.compare (time) < 1) && (last_dt.compare (time) > -1);
     }
 
     public Gee.List<GLib.DateTime> to_list () {
