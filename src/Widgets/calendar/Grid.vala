@@ -67,7 +67,7 @@ namespace DateTime.Widgets {
         }
 
         private void on_day_focus_in (GridDay day) {
-            debug ("on_day_focus_in "+day.date.to_string ());
+            debug ("on_day_focus_in %s", day.date.to_string ());
             if (selected_gridday != null) {
                 selected_gridday.set_selected (false);
             }

@@ -170,7 +170,7 @@ public class DateTime.Widgets.GridDay : Gtk.EventBox {
     }
 
     private bool on_key_press (Gdk.EventKey event) {
-        if (event.keyval == Gdk.keyval_from_name("Return") ) {
+        if (event.keyval == Gdk.keyval_from_name ("Return") ) {
             on_event_add (date);
             return true;
         }

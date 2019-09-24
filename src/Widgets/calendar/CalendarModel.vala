@@ -249,7 +249,7 @@ namespace DateTime.Widgets {
         private ECal.ClientView on_client_view_received (AsyncResult results, E.Source source, ECal.Client client) {
             ECal.ClientView view;
             try {
-                debug (@"Received client-view for source '%s'", source.dup_display_name ());
+                debug ("Received client-view for source '%s'", source.dup_display_name ());
                 bool status = client.get_view.end (results, out view);
                 assert (status == true);
             } catch (Error e) {
