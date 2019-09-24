@@ -156,7 +156,7 @@ public class DateTime.Widgets.CalendarView : Gtk.Grid {
     private void sync_with_model () {
         var model = CalendarModel.get_default ();
         if (grid.grid_range != null && (model.data_range.equals (grid.grid_range) || grid.grid_range.first_dt.compare (model.data_range.first_dt) == 0)) {
-            grid.update_today();
+            grid.update_today ();
             return; // nothing else to do
         }
 
