@@ -261,7 +261,7 @@ namespace DateTime.Widgets {
         }
 
         private void on_objects_added (E.Source source, ECal.Client client, SList<unowned ICal.Component> objects) {
-            debug (@"Received $(objects.length ()) added event(s) for source '%s'", source.dup_display_name());
+            debug (@"Received $(objects.length()) added event(s) for source '%s'", source.dup_display_name ());
             var events = source_events.get (source);
             var added_events = new Gee.ArrayList<ECal.Component> ((Gee.EqualDataFunc<ECal.Component>?) Util.calcomponent_equal_func);
 
