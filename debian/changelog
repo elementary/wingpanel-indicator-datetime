@@ -1,3 +1,73 @@
+wingpanel-indicator-datetime (2.2.0) bionic; urgency=medium
+
+  * Release 2.2.0 (#197)
+  * Add AppData & translations (#196)
+  * Add release ci action (#195)
+  * Delete CODE_OF_CONDUCT.md
+  * run installation in CI (#194)
+  * update translation files
+  * Add Lint to CI (#192)
+  * fix whitespace error
+  * fix whitespace error
+  * Use EDS to compute recursive events (#190)
+  * Fix vala-lint errors (#193)
+  * Add GitHub CI (#191)
+  * EventRow: Simplify assigning color (#189)
+  * Combine WeekLabels and Grid (#184)
+  * Coloring events in the events pane by calendar colors (#143)
+  * Fix libical.vapi
+  * Update the .vapi from the latest Calendar ones
+  * CalendarView: listen specifically for datarange and simplify (#183)
+  * build: fix install path for wingpanel indicator (#185)
+  * Update indicator translation and template
+  * EventRow: no longer depend on Event (#167)
+  * Move get_events to Indicator (#166)
+  * Remove Header class (#159)
+  * Combine Calendar and CalendarView (#174)
+  * CalendarModel: Remove unused on_source_changed (#178)
+  * CalendarModel: Remove unused cancellable (#179)
+  * CalendarModel: Use GLib.DateWeekday (#180)
+  * TimeManager: Update AccountsService rdnn (#177)
+  * Remove unused ID (#175)
+  * CalenderModel: remove unused signals and methods (#162)
+  * EventRow.css: Fix event image color (#176)
+  * CalendarView: misc cleanup (#155)
+  * Rewrite WeekLabels (#153)
+  * DateRange: remove unused properties and functions (#169)
+  * Update screenshot (#168)
+  * Get 12h from TimeManager (#147)
+  * Add dots for events in the calendar (#163)
+  * Move event sorting from CalendarModel to the ListBox (#158)
+  * Handle icon name in EventRow (#157)
+  * Event: Remove get_event_label (#156)
+  * Grid: fix a regression with filling horizontal space (#154)
+  * Header: Remove dead code, GObject-style (#152)
+  * Grid: Use GObject-style construction (#151)
+  * GridDay: Use GObject-style construction (#150)
+  * Util: rewrite ical_to_date_time (#149)
+  * Update ECal and ICal bindings (#148)
+  * Combine ControlHeader and Calendar classes (#146)
+  * Add event row headers (#144)
+  * Indicator: Add events to a scrolledwindow (#145)
+  * Move utils only used in Event class (#141)
+  * Add EventRow.css (#142)
+  * Create EventRow class (#139)
+  * Indicator: Display events in their own column (#138)
+  * Indicator: Add event end times and style event rows (#140)
+  * Move GridDay CSS to GResource (#130)
+  * ControlHeader: change month without signals (#128)
+  * Rename main.css to ControlHeader.css (#129)
+  * Calendar: GObject-style (#131)
+  * Util: Remove dead CSS (#132)
+  * Make Event class its own file (#133)
+  * CalendarModel: Remove extra license (#134)
+  * Redesign ControlHeader (#120)
+  * Add Silesian and update translation template
+  * Use user timeformat (#121)
+  * Calendar: don't use absolute path or error silently (#117)
+
+ -- Cody Garver <cody@elementary.io>  Thu, 31 Oct 2019 20:39:07 +0000
+
 wingpanel-indicator-datetime (2.1.3) bionic; urgency=medium
 
   * New upstream release.
