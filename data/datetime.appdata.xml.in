@@ -6,7 +6,7 @@
   <name>Date &amp; Time Indicator</name>
   <summary>The date and time indicator</summary>
   <releases>
-    <release version="2.2.0" date="2019-10-31" urgency="medium">
+    <release version="2.2.0" date="2019-10-30" urgency="medium">
       <description>
         <p>Redesigned the way upcoming events are displayed</p>
         <p>Fixed issues with large text size</p>
