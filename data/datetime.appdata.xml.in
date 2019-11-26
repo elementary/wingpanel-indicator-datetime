@@ -6,6 +6,12 @@
   <name>Date &amp; Time Indicator</name>
   <summary>The date and time indicator</summary>
   <releases>
+    <release version="2.2.1" date="2019-11-25" urgency="medium">
+      <description>
+        <p>Fix potential crash when loading events with no start or end time</p>
+        <p>Updated translations</p>
+      </description>
+    </release>
     <release version="2.2.0" date="2019-10-31" urgency="medium">
       <description>
         <p>Redesigned the way upcoming events are displayed</p>
