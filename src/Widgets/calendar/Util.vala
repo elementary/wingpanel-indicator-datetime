@@ -93,8 +93,16 @@ namespace Util {
      * XXX : Track next versions of evolution in order to convert ICal.Timezone to GLib.TimeZone with a dedicated function…
      */
     public GLib.DateTime ical_to_date_time (ICal.Time date) {
+#if E_CAL_2_0
+        int year, month, day, hour, minute, second;
+        date.get_date (out year, out month, out day);
+        date.get_time (out hour, out minute, out second);
+        return new GLib.DateTime (timezone_from_ical (date), year, month,
+            day, hour, minute, second);
+#else
         return new GLib.DateTime (timezone_from_ical (date), date.year, date.month,
             date.day, date.hour, date.minute, date.second);
+#endif
     }
 
     /**
@@ -162,9 +170,9 @@ namespace Util {
 
         var a_id = a.get_id ();
         var b_id = b.get_id ();
-        int res = GLib.strcmp (a_id.uid, b_id.uid);
+        int res = GLib.strcmp (a_id.get_uid (), b_id.get_uid ());
         if (res == 0) {
-            return GLib.strcmp (a_id.rid, b_id.rid);
+            return GLib.strcmp (a_id.get_rid (), b_id.get_rid ());
         }
 
         return res;
