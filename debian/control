@@ -5,7 +5,7 @@ Maintainer: Cody Garver <cody@elementary.io>
 Build-Depends: debhelper (>= 10.5.1),
                gettext,
                gobject-introspection,
-               libecal1.2-dev,
+               libecal2.0-dev | libecal1.2-dev,
                libedataserver1.2-dev,
                libical-dev,
                libgranite-dev,
