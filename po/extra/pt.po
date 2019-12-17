@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: extra\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-10-31 09:08-0700\n"
+"POT-Creation-Date: 2019-12-17 14:39-0800\n"
 "PO-Revision-Date: 2019-11-07 20:24+0000\n"
 "Last-Translator: Hugo Carvalho <hugokarvalho@hotmail.com>\n"
 "Language-Team: Portuguese <https://l10n.elementary.io/projects/wingpanel/"
@@ -28,33 +28,37 @@ msgid "The date and time indicator"
 msgstr "O indicador de data e hora"
 
 #: data/datetime.appdata.xml.in:11
-msgid "Redesigned the way upcoming events are displayed"
-msgstr "Redesenhada a forma como os próximos eventos são exibidos"
+msgid "Fix potential crash when loading events with no start or end time"
+msgstr ""
 
-#: data/datetime.appdata.xml.in:12
-msgid "Fixed issues with large text size"
-msgstr "Corrigidos problemas com tamanho de texto grande"
-
-#: data/datetime.appdata.xml.in:13
-msgid "Show dots on days with events"
-msgstr "Mostrar pontos em dias com eventos"
-
-#: data/datetime.appdata.xml.in:14
-msgid "Better handling of recurring events"
-msgstr "Melhor tratamento de eventos recorrentes"
-
-#: data/datetime.appdata.xml.in:15
-msgid "Performance improvements"
-msgstr "Melhorias de desempenho"
-
-#: data/datetime.appdata.xml.in:16
-msgid "Display an error dialog if Calendar fails to open"
-msgstr "Exibir um diálogo de erro se o Calendário não abrir"
-
-#: data/datetime.appdata.xml.in:17
+#: data/datetime.appdata.xml.in:12 data/datetime.appdata.xml.in:23
 msgid "Updated translations"
 msgstr "Traduções atualizadas"
 
-#: data/datetime.appdata.xml.in:26
+#: data/datetime.appdata.xml.in:17
+msgid "Redesigned the way upcoming events are displayed"
+msgstr "Redesenhada a forma como os próximos eventos são exibidos"
+
+#: data/datetime.appdata.xml.in:18
+msgid "Fixed issues with large text size"
+msgstr "Corrigidos problemas com tamanho de texto grande"
+
+#: data/datetime.appdata.xml.in:19
+msgid "Show dots on days with events"
+msgstr "Mostrar pontos em dias com eventos"
+
+#: data/datetime.appdata.xml.in:20
+msgid "Better handling of recurring events"
+msgstr "Melhor tratamento de eventos recorrentes"
+
+#: data/datetime.appdata.xml.in:21
+msgid "Performance improvements"
+msgstr "Melhorias de desempenho"
+
+#: data/datetime.appdata.xml.in:22
+msgid "Display an error dialog if Calendar fails to open"
+msgstr "Exibir um diálogo de erro se o Calendário não abrir"
+
+#: data/datetime.appdata.xml.in:32
 msgid "elementary, Inc."
 msgstr "elementary, Inc."
