@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: extra\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-12-17 14:39-0800\n"
-"PO-Revision-Date: 2019-12-19 13:07+0000\n"
+"PO-Revision-Date: 2019-12-21 01:07+0000\n"
 "Last-Translator: Ozgur Baskin <bebeto_baskin@yahoo.com>\n"
 "Language-Team: Turkish <https://l10n.elementary.io/projects/wingpanel/"
 "indicator-datetime-extra/tr/>\n"
@@ -37,27 +37,27 @@ msgstr "Çeviriler güncellendi"
 
 #: data/datetime.appdata.xml.in:17
 msgid "Redesigned the way upcoming events are displayed"
-msgstr ""
+msgstr "Yaklaşan etkinliklerin görüntülenme biçimi yeniden tasarlandı"
 
 #: data/datetime.appdata.xml.in:18
 msgid "Fixed issues with large text size"
-msgstr ""
+msgstr "Büyük metin boyutuyla ilgili sorunlar giderildi"
 
 #: data/datetime.appdata.xml.in:19
 msgid "Show dots on days with events"
-msgstr ""
+msgstr "Etkinlik olan günlerde nokta göster"
 
 #: data/datetime.appdata.xml.in:20
 msgid "Better handling of recurring events"
-msgstr ""
+msgstr "Tekrarlanan etkinliklerin yönetimi iyileştirildi"
 
 #: data/datetime.appdata.xml.in:21
 msgid "Performance improvements"
-msgstr ""
+msgstr "Performans iyileştirmeleri"
 
 #: data/datetime.appdata.xml.in:22
 msgid "Display an error dialog if Calendar fails to open"
-msgstr ""
+msgstr "Takvim açılamıyorsa bir hata iletişim kutusu görüntüle"
 
 #: data/datetime.appdata.xml.in:32
 msgid "elementary, Inc."
