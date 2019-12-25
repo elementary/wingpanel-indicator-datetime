@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: extra\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-12-17 14:39-0800\n"
-"PO-Revision-Date: 2019-12-25 15:17+0000\n"
+"PO-Revision-Date: 2019-12-26 01:08+0000\n"
 "Last-Translator: Jörg Arnold <j.ar@mailbox.org>\n"
 "Language-Team: German <https://l10n.elementary.io/projects/wingpanel/"
 "indicator-datetime-extra/de/>\n"
@@ -53,7 +53,7 @@ msgstr ""
 
 #: data/datetime.appdata.xml.in:21
 msgid "Performance improvements"
-msgstr ""
+msgstr "Leistungsverbesserungen"
 
 #: data/datetime.appdata.xml.in:22
 msgid "Display an error dialog if Calendar fails to open"
