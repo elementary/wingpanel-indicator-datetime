@@ -260,25 +260,35 @@ namespace DateTime.Widgets {
             return view;
         }
 
-        private void on_objects_added (E.Source source, ECal.Client client, SList<unowned ICal.Component> objects) {
+#if E_CAL_2_0
+        private void on_objects_added (E.Source source, ECal.Client client, SList<ICal.Component> objects) {
+#else
+        private void on_objects_added (E.Source source, ECal.Client client, SList<weak ICal.Component> objects) {
+#endif
             debug (@"Received $(objects.length()) added event(s) for source '%s'", source.dup_display_name ());
             var events = source_events.get (source);
             var added_events = new Gee.ArrayList<ECal.Component> ((Gee.EqualDataFunc<ECal.Component>?) Util.calcomponent_equal_func);
-
             objects.foreach ((comp) => {
                 unowned string uid = comp.get_uid ();
+#if E_CAL_2_0
+                client.generate_instances_for_object_sync (comp, (time_t) data_range.first_dt.to_unix (), (time_t) data_range.last_dt.to_unix (), null, (comp, start, end) => {
+                    var event = new ECal.Component.from_icalcomponent (comp);
+#else
                 client.generate_instances_for_object_sync (comp, (time_t) data_range.first_dt.to_unix (), (time_t) data_range.last_dt.to_unix (), (event, start, end) => {
+#endif
                     debug_event (source, event);
                     events.set (uid, event);
                     added_events.add (event);
                     return true;
                 });
             });
-
-            events_added (source, added_events.read_only_view);
         }
 
-        private void on_objects_modified (E.Source source, ECal.Client client, SList<unowned ICal.Component> objects) {
+#if E_CAL_2_0
+        private void on_objects_modified (E.Source source, ECal.Client client, SList<ICal.Component> objects) {
+#else
+        private void on_objects_modified (E.Source source, ECal.Client client, SList<weak ICal.Component> objects) {
+#endif
             debug (@"Received $(objects.length()) modified event(s) for source '%s'", source.dup_display_name ());
             var updated_events = new Gee.ArrayList<ECal.Component> ((Gee.EqualDataFunc<ECal.Component>?) Util.calcomponent_equal_func);
 
@@ -294,7 +304,11 @@ namespace DateTime.Widgets {
             events_updated (source, updated_events.read_only_view);
         }
 
-        private void on_objects_removed (E.Source source, ECal.Client client, SList<unowned ECal.ComponentId?> cids) {
+#if E_CAL_2_0
+        private void on_objects_removed (E.Source source, ECal.Client client, SList<ECal.ComponentId?> cids) {
+#else
+        private void on_objects_removed (E.Source source, ECal.Client client, SList<weak ECal.ComponentId?> cids) {
+#endif
             debug (@"Received $(cids.length()) removed event(s) for source '%s'", source.dup_display_name ());
             var events = source_events.get (source);
             var removed_events = new Gee.ArrayList<ECal.Component> ((Gee.EqualDataFunc<ECal.Component>?) Util.calcomponent_equal_func);
@@ -304,7 +318,7 @@ namespace DateTime.Widgets {
                     return;
                 }
 
-                var comps = events.get (cid.uid);
+                var comps = events.get (cid.get_uid ());
                 foreach (ECal.Component event in comps) {
                     removed_events.add (event);
                     debug_event (source, event);
