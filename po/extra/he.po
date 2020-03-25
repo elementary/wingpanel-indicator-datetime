@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: extra\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-12-17 14:39-0800\n"
-"PO-Revision-Date: 2020-03-01 20:09+0000\n"
+"PO-Revision-Date: 2020-03-26 22:09+0000\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: Hebrew <https://l10n.elementary.io/projects/wingpanel/"
 "indicator-datetime-extra/he/>\n"
@@ -21,11 +21,11 @@ msgstr ""
 
 #: data/datetime.appdata.xml.in:6
 msgid "Date &amp; Time Indicator"
-msgstr ""
+msgstr "מחוון תאריך ושעה"
 
 #: data/datetime.appdata.xml.in:7
 msgid "The date and time indicator"
-msgstr ""
+msgstr "מחוון התאריך והשעה"
 
 #: data/datetime.appdata.xml.in:11
 msgid "Fix potential crash when loading events with no start or end time"
@@ -37,19 +37,19 @@ msgstr "התרגומים עודכנו"
 
 #: data/datetime.appdata.xml.in:17
 msgid "Redesigned the way upcoming events are displayed"
-msgstr ""
+msgstr "הדרך באה אירועים קרבים מופיעים עוצבה מחדש"
 
 #: data/datetime.appdata.xml.in:18
 msgid "Fixed issues with large text size"
-msgstr ""
+msgstr "תוקנו תקלות עם גודל גופן גדול"
 
 #: data/datetime.appdata.xml.in:19
 msgid "Show dots on days with events"
-msgstr ""
+msgstr "מוצגות נקודות בימים עם אירועים"
 
 #: data/datetime.appdata.xml.in:20
 msgid "Better handling of recurring events"
-msgstr ""
+msgstr "טיפול משופר באירועים מחזוריים"
 
 #: data/datetime.appdata.xml.in:21
 msgid "Performance improvements"
@@ -57,7 +57,7 @@ msgstr "שיפורי ביצועים"
 
 #: data/datetime.appdata.xml.in:22
 msgid "Display an error dialog if Calendar fails to open"
-msgstr ""
+msgstr "הצגת תיבת שגיאה אם פתיחת לוח השנה נכשלת"
 
 #: data/datetime.appdata.xml.in:32
 msgid "elementary, Inc."
