@@ -15,8 +15,8 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace DateTime.Widgets {
-    public class CalendarModel : Object {
+namespace DateTimeIndicator {
+    public class Models.CalendarModel : Object {
         /* The data_range is the range of dates for which this model is storing
          * data.
          *

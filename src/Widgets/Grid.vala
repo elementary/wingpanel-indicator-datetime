@@ -20,11 +20,11 @@
  *              Corentin Noël <corentin@elementaryos.org>
  */
 
-namespace DateTime.Widgets {
+namespace DateTimeIndicator {
 /**
  * Represents the entire date grid as a table.
  */
-    public class Grid : Gtk.Grid {
+    public class Widgets.Grid : Gtk.Grid {
         public Util.DateRange grid_range { get; private set; }
 
         /*
@@ -59,7 +59,7 @@ namespace DateTime.Widgets {
             hexpand = true;
             attach (week_sep_revealer, 1, 1, 1, 6);
 
-            DateTime.Indicator.settings.bind ("show-weeks", week_sep_revealer, "reveal-child", GLib.SettingsBindFlags.DEFAULT);
+            Indicator.settings.bind ("show-weeks", week_sep_revealer, "reveal-child", GLib.SettingsBindFlags.DEFAULT);
 
             data = new Gee.HashMap<uint, GridDay> ();
             events |= Gdk.EventMask.SCROLL_MASK;
@@ -77,7 +77,7 @@ namespace DateTime.Widgets {
             day.set_selected (true);
             day.set_state_flags (Gtk.StateFlags.FOCUSED, false);
             selection_changed (selected_date);
-            var calmodel = CalendarModel.get_default ();
+            var calmodel = Models.CalendarModel.get_default ();
             var date_month = selected_date.get_month () - calmodel.month_start.get_month ();
             var date_year = selected_date.get_year () - calmodel.month_start.get_year ();
 
@@ -127,7 +127,7 @@ namespace DateTime.Widgets {
             /* Create new widgets for the new range */
 
             var date = Util.strip_time (today);
-            date = date.add_days (CalendarModel.get_default ().week_starts_on - date.get_day_of_week ());
+            date = date.add_days (Models.CalendarModel.get_default ().week_starts_on - date.get_day_of_week ());
             foreach (var label in header_labels) {
                 label.label = date.format ("%a");
                 date = date.add_days (1);
@@ -221,7 +221,7 @@ namespace DateTime.Widgets {
                 week_labels[c].add (week_label);
                 week_labels[c].show_all ();
 
-                DateTime.Indicator.settings.bind ("show-weeks", week_labels[c], "reveal-child", GLib.SettingsBindFlags.DEFAULT);
+                Indicator.settings.bind ("show-weeks", week_labels[c], "reveal-child", GLib.SettingsBindFlags.DEFAULT);
 
                 attach (week_labels[c], 0, c + 1);
 

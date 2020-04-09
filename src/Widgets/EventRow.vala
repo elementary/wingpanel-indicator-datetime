@@ -17,104 +17,106 @@
  * Boston, MA 02110-1301 USA.
  */
 
-public class DateTime.EventRow : Gtk.ListBoxRow {
-    public GLib.DateTime date { get; construct; }
-    public unowned ICal.Component component { get; construct; }
-    public unowned E.SourceCalendar cal { get; construct; }
+namespace DateTimeIndicator {
+    public class EventRow : Gtk.ListBoxRow {
+        public GLib.DateTime date { get; construct; }
+        public unowned ICal.Component component { get; construct; }
+        public unowned E.SourceCalendar cal { get; construct; }
 
-    public GLib.DateTime start_time { get; private set; }
-    public GLib.DateTime? end_time { get; private set; }
-    public bool is_allday { get; private set; default = false; }
+        public GLib.DateTime start_time { get; private set; }
+        public GLib.DateTime? end_time { get; private set; }
+        public bool is_allday { get; private set; default = false; }
 
-    private static Services.TimeManager time_manager;
-    private static Gtk.CssProvider css_provider;
+        private static Services.TimeManager time_manager;
+        private static Gtk.CssProvider css_provider;
 
-    private Gtk.Grid grid;
-    private Gtk.Image event_image;
-    private Gtk.Label time_label;
+        private Gtk.Grid grid;
+        private Gtk.Image event_image;
+        private Gtk.Label time_label;
 
-    public EventRow (GLib.DateTime date, ICal.Component component, E.Source source) {
-        Object (
-            component: component,
-            date: date,
-            cal: (E.SourceCalendar?) source.get_extension (E.SOURCE_EXTENSION_CALENDAR)
-        );
-    }
-
-    static construct {
-        css_provider = new Gtk.CssProvider ();
-        css_provider.load_from_resource ("/io/elementary/desktop/wingpanel/datetime/EventRow.css");
-
-        time_manager = Services.TimeManager.get_default ();
-    }
-
-    construct {
-        start_time = Util.ical_to_date_time (component.get_dtstart ());
-        end_time = Util.ical_to_date_time (component.get_dtend ());
-
-        if (end_time != null && Util.is_the_all_day (start_time, end_time)) {
-            is_allday = true;
+        public EventRow (GLib.DateTime date, ICal.Component component, E.Source source) {
+            Object (
+                component: component,
+                date: date,
+                cal: (E.SourceCalendar?) source.get_extension (E.SOURCE_EXTENSION_CALENDAR)
+            );
         }
 
-        unowned string icon_name = "office-calendar-symbolic";
-        if (end_time == null) {
-            icon_name = "alarm-symbolic";
+        static construct {
+            css_provider = new Gtk.CssProvider ();
+            css_provider.load_from_resource ("/io/elementary/desktop/wingpanel/datetime/EventRow.css");
+
+            time_manager = Services.TimeManager.get_default ();
         }
 
-        event_image = new Gtk.Image.from_icon_name (icon_name, Gtk.IconSize.MENU);
-        event_image.valign = Gtk.Align.START;
+        construct {
+            start_time = Util.ical_to_date_time (component.get_dtstart ());
+            end_time = Util.ical_to_date_time (component.get_dtend ());
 
-        unowned Gtk.StyleContext event_image_context = event_image.get_style_context ();
-        event_image_context.add_provider (css_provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
+            if (end_time != null && Util.is_the_all_day (start_time, end_time)) {
+                is_allday = true;
+            }
 
-        var name_label = new Gtk.Label (component.get_summary ());
-        name_label.hexpand = true;
-        name_label.ellipsize = Pango.EllipsizeMode.END;
-        name_label.lines = 3;
-        name_label.max_width_chars = 30;
-        name_label.wrap = true;
-        name_label.wrap_mode = Pango.WrapMode.WORD_CHAR;
-        name_label.xalign = 0;
+            unowned string icon_name = "office-calendar-symbolic";
+            if (end_time == null) {
+                icon_name = "alarm-symbolic";
+            }
 
-        unowned Gtk.StyleContext name_label_context = name_label.get_style_context ();
-        name_label_context.add_class ("title");
-        name_label_context.add_provider (css_provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
+            event_image = new Gtk.Image.from_icon_name (icon_name, Gtk.IconSize.MENU);
+            event_image.valign = Gtk.Align.START;
 
-        time_label = new Gtk.Label (null);
-        time_label.use_markup = true;
-        time_label.xalign = 0;
-        time_label.get_style_context ().add_class (Gtk.STYLE_CLASS_DIM_LABEL);
+            unowned Gtk.StyleContext event_image_context = event_image.get_style_context ();
+            event_image_context.add_provider (css_provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
 
-        grid = new Gtk.Grid ();
-        grid.column_spacing = 6;
-        grid.margin = 3;
-        grid.margin_start = grid.margin_end = 6;
-        grid.attach (event_image, 0, 0);
-        grid.attach (name_label, 1, 0);
-        if (!is_allday) {
-            grid.attach (time_label, 1, 1);
+            var name_label = new Gtk.Label (component.get_summary ());
+            name_label.hexpand = true;
+            name_label.ellipsize = Pango.EllipsizeMode.END;
+            name_label.lines = 3;
+            name_label.max_width_chars = 30;
+            name_label.wrap = true;
+            name_label.wrap_mode = Pango.WrapMode.WORD_CHAR;
+            name_label.xalign = 0;
+
+            unowned Gtk.StyleContext name_label_context = name_label.get_style_context ();
+            name_label_context.add_class ("title");
+            name_label_context.add_provider (css_provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
+
+            time_label = new Gtk.Label (null);
+            time_label.use_markup = true;
+            time_label.xalign = 0;
+            time_label.get_style_context ().add_class (Gtk.STYLE_CLASS_DIM_LABEL);
+
+            grid = new Gtk.Grid ();
+            grid.column_spacing = 6;
+            grid.margin = 3;
+            grid.margin_start = grid.margin_end = 6;
+            grid.attach (event_image, 0, 0);
+            grid.attach (name_label, 1, 0);
+            if (!is_allday) {
+                grid.attach (time_label, 1, 1);
+            }
+
+            unowned Gtk.StyleContext grid_context = grid.get_style_context ();
+            grid_context.add_class ("event");
+            grid_context.add_provider (css_provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
+
+            add (grid);
+
+            set_color ();
+            cal.notify["color"].connect (set_color);
+
+            update_timelabel ();
+            time_manager.notify["is-12h"].connect (update_timelabel);
         }
 
-        unowned Gtk.StyleContext grid_context = grid.get_style_context ();
-        grid_context.add_class ("event");
-        grid_context.add_provider (css_provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
+        private void update_timelabel () {
+            var time_format = Granite.DateTime.get_default_time_format (time_manager.is_12h);
+            time_label.label = "<small>%s – %s</small>".printf (start_time.format (time_format), end_time.format (time_format));
+        }
 
-        add (grid);
-
-        set_color ();
-        cal.notify["color"].connect (set_color);
-
-        update_timelabel ();
-        time_manager.notify["is-12h"].connect (update_timelabel);
-    }
-
-    private void update_timelabel () {
-        var time_format = Granite.DateTime.get_default_time_format (time_manager.is_12h);
-        time_label.label = "<small>%s – %s</small>".printf (start_time.format (time_format), end_time.format (time_format));
-    }
-
-    private void set_color () {
-        Util.set_event_calendar_color (cal, grid);
-        Util.set_event_calendar_color (cal, event_image);
+        private void set_color () {
+            Util.set_event_calendar_color (cal, grid);
+            Util.set_event_calendar_color (cal, event_image);
+        }
     }
 }

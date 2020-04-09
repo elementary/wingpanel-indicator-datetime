@@ -19,7 +19,7 @@
  * Authored by: Corentin Noël <corentin@elementaryos.org>
  */
 
-namespace Util {
+namespace DateTimeIndicator.Util {
     static bool has_scrolled = false;
 
     public bool on_scroll_event (Gdk.EventScroll event) {
@@ -35,7 +35,7 @@ namespace Util {
 
         /* It's mouse scroll ! */
         if (choice == 1 || choice == -1) {
-            DateTime.Widgets.CalendarModel.get_default ().change_month ((int)choice);
+            Models.CalendarModel.get_default ().change_month ((int)choice);
 
             return true;
         }
@@ -46,14 +46,14 @@ namespace Util {
 
         if (choice > 0.3) {
             reset_timer.begin ();
-            DateTime.Widgets.CalendarModel.get_default ().change_month (1);
+            Models.CalendarModel.get_default ().change_month (1);
 
             return true;
         }
 
         if (choice < -0.3) {
             reset_timer.begin ();
-            DateTime.Widgets.CalendarModel.get_default ().change_month (-1);
+            Models.CalendarModel.get_default ().change_month (-1);
 
             return true;
         }
