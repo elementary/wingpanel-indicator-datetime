@@ -46,6 +46,7 @@ shared_module(
     'src/Models/CalendarModel.vala',
     'src/Widgets/CalendarView.vala',
     'src/Widgets/EventRow.vala',
+    'src/Widgets/EventsListBox.vala',
     'src/Widgets/Grid.vala',
     'src/Widgets/GridDay.vala',
     'src/Widgets/PanelLabel.vala',
