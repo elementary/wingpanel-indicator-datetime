@@ -26,7 +26,7 @@ namespace DateTimeIndicator {
 
         public GLib.DateTime? selected_date { get; private set; }
 
-        private Widgets.Grid grid;
+        private Widgets.CalendarGrid calendar_grid;
         private Gtk.Stack stack;
         private Gtk.Grid big_grid;
 
@@ -105,20 +105,20 @@ namespace DateTimeIndicator {
         }
 
         private Gtk.Grid create_big_grid () {
-            grid = new Widgets.Grid ();
-            grid.show_all ();
+            calendar_grid = new Widgets.CalendarGrid ();
+            calendar_grid.show_all ();
 
-            grid.on_event_add.connect ((date) => {
+            calendar_grid.on_event_add.connect ((date) => {
                 show_date_in_maya (date);
                 day_double_click ();
             });
 
-            grid.selection_changed.connect ((date) => {
+            calendar_grid.selection_changed.connect ((date) => {
                 selected_date = date;
                 selection_changed (date);
             });
 
-            return grid;
+            return calendar_grid;
         }
 
         public void show_today () {
@@ -131,7 +131,7 @@ namespace DateTimeIndicator {
             }
             sync_with_model ();
 
-            grid.set_focus_to_today ();
+            calendar_grid.set_focus_to_today ();
         }
 
         // TODO: As far as maya supports it use the Dbus Activation feature to run the calendar-app.
@@ -156,23 +156,23 @@ namespace DateTimeIndicator {
         /* Sets the calendar widgets to the date range of the model */
         private void sync_with_model () {
             var model = Models.CalendarModel.get_default ();
-            if (grid.grid_range != null && (model.data_range.equals (grid.grid_range) || grid.grid_range.first_dt.compare (model.data_range.first_dt) == 0)) {
-                grid.update_today ();
+            if (calendar_grid.grid_range != null && (model.data_range.equals (calendar_grid.grid_range) || calendar_grid.grid_range.first_dt.compare (model.data_range.first_dt) == 0)) {
+                calendar_grid.update_today ();
                 return; // nothing else to do
             }
 
             GLib.DateTime previous_first = null;
-            if (grid.grid_range != null)
-                previous_first = grid.grid_range.first_dt;
+            if (calendar_grid.grid_range != null)
+                previous_first = calendar_grid.grid_range.first_dt;
 
             big_grid = create_big_grid ();
             stack.add (big_grid);
 
-            grid.set_range (model.data_range, model.month_start);
-            grid.update_weeks (model.data_range.first_dt, model.num_weeks);
+            calendar_grid.set_range (model.data_range, model.month_start);
+            calendar_grid.update_weeks (model.data_range.first_dt, model.num_weeks);
 
             if (previous_first != null) {
-                if (previous_first.compare (grid.grid_range.first_dt) == -1) {
+                if (previous_first.compare (calendar_grid.grid_range.first_dt) == -1) {
                     stack.transition_type = Gtk.StackTransitionType.SLIDE_LEFT;
                 } else {
                     stack.transition_type = Gtk.StackTransitionType.SLIDE_RIGHT;
@@ -183,12 +183,11 @@ namespace DateTimeIndicator {
         }
 
         public void add_event_dots (E.Source source, Gee.Collection<ECal.Component> events) {
-            grid.add_event_dots (source, events);
+            calendar_grid.add_event_dots (source, events);
         }
 
-
         public void remove_event_dots (E.Source source, Gee.Collection<ECal.Component> events) {
-            grid.remove_event_dots (source, events);
+            calendar_grid.remove_event_dots (source, events);
         }
     }
 }

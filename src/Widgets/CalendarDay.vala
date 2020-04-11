@@ -23,7 +23,7 @@ namespace DateTimeIndicator {
 /**
  * Represents a single day on the grid.
  */
-    public class Widgets.GridDay : Gtk.EventBox {
+    public class Widgets.CalendarDay : Gtk.EventBox {
         /*
          * Event emitted when the day is double clicked or the ENTER key is pressed.
          */
@@ -41,7 +41,7 @@ namespace DateTimeIndicator {
         private Gtk.Label label;
         private bool valid_grab = false;
 
-        public GridDay (GLib.DateTime date) {
+        public CalendarDay (GLib.DateTime date) {
             Object (date: date);
         }
 

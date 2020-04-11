@@ -24,7 +24,7 @@ namespace DateTimeIndicator {
 /**
  * Represents the entire date grid as a table.
  */
-    public class Widgets.Grid : Gtk.Grid {
+    public class Widgets.CalendarGrid : Gtk.Grid {
         public Util.DateRange grid_range { get; private set; }
 
         /*
@@ -34,8 +34,8 @@ namespace DateTimeIndicator {
 
         public signal void selection_changed (GLib.DateTime new_date);
 
-        private Gee.HashMap<uint, GridDay> data;
-        private GridDay selected_gridday;
+        private Gee.HashMap<uint, Widgets.CalendarDay> data;
+        private Widgets.CalendarDay selected_gridday;
         private Gtk.Label[] header_labels;
         private Gtk.Revealer[] week_labels;
 
@@ -61,12 +61,12 @@ namespace DateTimeIndicator {
 
             Indicator.settings.bind ("show-weeks", week_sep_revealer, "reveal-child", GLib.SettingsBindFlags.DEFAULT);
 
-            data = new Gee.HashMap<uint, GridDay> ();
+            data = new Gee.HashMap<uint, Widgets.CalendarDay> ();
             events |= Gdk.EventMask.SCROLL_MASK;
             events |= Gdk.EventMask.SMOOTH_SCROLL_MASK;
         }
 
-        private void on_day_focus_in (GridDay day) {
+        private void on_day_focus_in (Widgets.CalendarDay day) {
             debug ("on_day_focus_in %s", day.date.to_string ());
             if (selected_gridday != null) {
                 selected_gridday.set_selected (false);
@@ -94,7 +94,7 @@ namespace DateTimeIndicator {
             Gee.List<GLib.DateTime> dates = grid_range.to_list ();
             for (int i = 0; i < dates.size; i++) {
                 var date = dates[i];
-                GridDay? day = data[day_hash (date)];
+                Widgets.CalendarDay? day = data[day_hash (date)];
                 if (day != null && day.name == "today") {
                     day.grab_focus_force ();
                     return;
@@ -119,7 +119,7 @@ namespace DateTimeIndicator {
 
             var new_dates = new_range.to_list ();
 
-            var data_new = new Gee.HashMap<uint, GridDay> ();
+            var data_new = new Gee.HashMap<uint, Widgets.CalendarDay> ();
 
             /* Assert that a valid number of weeks should be displayed */
             assert (new_dates.size % 7 == 0);
@@ -138,7 +138,7 @@ namespace DateTimeIndicator {
 
             for (i = 0; i < new_dates.size; i++) {
                 var new_date = new_dates[i];
-                GridDay day;
+                Widgets.CalendarDay day;
 
                 if (i < old_dates.size) {
                     /* A widget already exists for this date, just change it */
@@ -147,7 +147,7 @@ namespace DateTimeIndicator {
                     day = update_day (data[day_hash (old_date)], new_date, today, month_start);
                 } else {
                     /* Still update_day to get the color of etc. right */
-                    day = update_day (new GridDay (new_date), new_date, today, month_start);
+                    day = update_day (new Widgets.CalendarDay (new_date), new_date, today, month_start);
                     day.on_event_add.connect ((date) => on_event_add (date));
                     day.scroll_event.connect ((event) => { scroll_event (event); return false; });
                     day.focus_in_event.connect ((event) => {
@@ -182,9 +182,9 @@ namespace DateTimeIndicator {
         }
 
         /**
-         * Updates the given GridDay so that it shows the given date. Changes to its style etc.
+         * Updates the given CalendarDay so that it shows the given date. Changes to its style etc.
          */
-        private GridDay update_day (GridDay day, GLib.DateTime new_date, GLib.DateTime today, GLib.DateTime month_start) {
+        private Widgets.CalendarDay update_day (Widgets.CalendarDay day, GLib.DateTime new_date, GLib.DateTime today, GLib.DateTime month_start) {
             update_today_style (day, new_date, today);
             if (new_date.get_month () == month_start.get_month ()) {
                 day.sensitive_container (true);
@@ -237,13 +237,13 @@ namespace DateTimeIndicator {
             int i = 0;
             for (i = 0; i < dates.size; i++) {
                 var date = dates[i];
-                GridDay? day = data[day_hash (date)];
+                Widgets.CalendarDay? day = data[day_hash (date)];
                 if (day == null) return;
                 update_today_style (day, date, today);
             }
         }
 
-        private void update_today_style (GridDay day, GLib.DateTime date, GLib.DateTime today) {
+        private void update_today_style (Widgets.CalendarDay day, GLib.DateTime date, GLib.DateTime today) {
             if (date.get_day_of_year () == today.get_day_of_year () && date.get_year () == today.get_year ()) {
                 day.name = "today";
                 day.get_style_context ().add_class (Granite.STYLE_CLASS_ACCENT);
