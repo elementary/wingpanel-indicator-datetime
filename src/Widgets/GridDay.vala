@@ -31,6 +31,8 @@ namespace DateTimeIndicator {
 
         public GLib.DateTime date { get; construct set; }
 
+        private bool has_scrolled = false;
+
         private static Gtk.CssProvider provider;
         private static Models.CalendarModel model;
 
@@ -79,59 +81,100 @@ namespace DateTimeIndicator {
             // Signals and handlers
             button_press_event.connect (on_button_press);
             key_press_event.connect (on_key_press);
-            scroll_event.connect ((event) => {return Util.on_scroll_event (event);});
+            scroll_event.connect (on_scroll_event);
 
             notify["date"].connect (() => {
                 label.label = date.get_day_of_month ().to_string ();
             });
 
             event_dots = new Gee.HashMap<string, Gtk.Widget> ();
-
-            model.events_added.connect (add_event_dots);
-            model.events_removed.connect (remove_event_dots);
         }
 
-        private void add_event_dots (E.Source source, Gee.Collection<ECal.Component> events) {
-            foreach (var component in events) {
-                if (event_dots.size >= 3) {
-                    return;
-                }
+        public bool on_scroll_event (Gdk.EventScroll event) {
+            double delta_x;
+            double delta_y;
+            event.get_scroll_deltas (out delta_x, out delta_y);
 
-                if (Util.calcomp_is_on_day (component, date)) {
-                    unowned ICal.Component ical = component.get_icalcomponent ();
+            double choice = delta_x;
 
-                    var event_uid = ical.get_uid ();
-                    if (!event_dots.has_key (event_uid)) {
-                        var event_dot = new Gtk.Image ();
-                        event_dot.gicon = new ThemedIcon ("pager-checked-symbolic");
-                        event_dot.pixel_size = 6;
-
-                        unowned Gtk.StyleContext style_context = event_dot.get_style_context ();
-                        style_context.add_class (Granite.STYLE_CLASS_ACCENT);
-                        style_context.add_provider (provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
-
-                        var source_calendar = (E.SourceCalendar?) source.get_extension (E.SOURCE_EXTENSION_CALENDAR);
-                        Util.set_event_calendar_color (source_calendar, event_dot);
-
-                        event_dots[event_uid] = event_dot;
-
-                        event_grid.add (event_dot);
-                    }
-                }
+            if (((int)delta_x).abs () < ((int)delta_y).abs ()) {
+                choice = delta_y;
             }
 
+            /* It's mouse scroll ! */
+            if (choice == 1 || choice == -1) {
+                Models.CalendarModel.get_default ().change_month ((int)choice);
+
+                return true;
+            }
+
+            if (has_scrolled == true) {
+                return true;
+            }
+
+            if (choice > 0.3) {
+                reset_timer.begin ();
+                Models.CalendarModel.get_default ().change_month (1);
+
+                return true;
+            }
+
+            if (choice < -0.3) {
+                reset_timer.begin ();
+                Models.CalendarModel.get_default ().change_month (-1);
+
+                return true;
+            }
+
+            return false;
+        }
+
+        public async void reset_timer () {
+            has_scrolled = true;
+            Timeout.add (500, () => {
+                has_scrolled = false;
+
+                return false;
+            });
+        }
+
+        public bool skip_day () {
+            return event_dots.size >= 3 ? true : false;
+        }
+
+        public void show_event_grid () {
             event_grid.show_all ();
         }
 
-        private void remove_event_dots (E.Source source, Gee.Collection<ECal.Component> events) {
-            foreach (var component in events) {
-                unowned ICal.Component ical = component.get_icalcomponent ();
-                var event_uid = ical.get_uid ();
-                var dot = event_dots[event_uid];
-                if (dot != null) {
-                    dot.destroy ();
-                    event_dots.remove (event_uid);
-                }
+        public void add_dots (E.Source source, ICal.Component ical) {
+            var event_uid = ical.get_uid ();
+            if (!event_dots.has_key (event_uid)) {
+                var event_dot = new Gtk. Image ();
+                event_dot.gicon = new ThemedIcon ("pager-checked-symbolic");
+                event_dot.pixel_size = 6;
+
+                unowned Gtk.StyleContext style_context = event_dot.get_style_context ();
+                style_context.add_class (Granite.STYLE_CLASS_ACCENT);
+                style_context.add_provider (provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
+
+                var source_calendar = (E.SourceCalendar?) source.get_extension (E.SOURCE_EXTENSION_CALENDAR);
+                Util.set_event_calendar_color (source_calendar, event_dot);
+
+                event_dots[event_uid] = event_dot;
+
+                event_grid.add (event_dot);
+            }
+        }
+
+        public bool exist_event (string ical_uid) {
+            return event_dots.has_key (ical_uid);
+        }
+
+        public void remove_dots (string event_uid) {
+            var dot = event_dots[event_uid];
+            if (dot != null) {
+                dot.destroy ();
+                event_dots.unset (event_uid);
             }
         }
 

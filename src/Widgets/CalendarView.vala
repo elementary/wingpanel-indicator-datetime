@@ -181,5 +181,14 @@ namespace DateTimeIndicator {
 
             stack.set_visible_child (big_grid);
         }
+
+        public void add_event_dots (E.Source source, Gee.Collection<ECal.Component> events) {
+            grid.add_event_dots (source, events);
+        }
+
+
+        public void remove_event_dots (E.Source source, Gee.Collection<ECal.Component> events) {
+            grid.remove_event_dots (source, events);
+        }
     }
 }

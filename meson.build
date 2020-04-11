@@ -50,6 +50,7 @@ shared_module(
     'src/Widgets/Grid.vala',
     'src/Widgets/GridDay.vala',
     'src/Widgets/PanelLabel.vala',
+    'src/Services/EventsManager.vala',
     'src/Services/TimeManager.vala',
     dependencies: [
         dependency('glib-2.0'),

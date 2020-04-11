@@ -20,47 +20,6 @@
  */
 
 namespace DateTimeIndicator.Util {
-    static bool has_scrolled = false;
-
-    public bool on_scroll_event (Gdk.EventScroll event) {
-        double delta_x;
-        double delta_y;
-        event.get_scroll_deltas (out delta_x, out delta_y);
-
-        double choice = delta_x;
-
-        if (((int)delta_x).abs () < ((int)delta_y).abs ()) {
-            choice = delta_y;
-        }
-
-        /* It's mouse scroll ! */
-        if (choice == 1 || choice == -1) {
-            Models.CalendarModel.get_default ().change_month ((int)choice);
-
-            return true;
-        }
-
-        if (has_scrolled == true) {
-            return true;
-        }
-
-        if (choice > 0.3) {
-            reset_timer.begin ();
-            Models.CalendarModel.get_default ().change_month (1);
-
-            return true;
-        }
-
-        if (choice < -0.3) {
-            reset_timer.begin ();
-            Models.CalendarModel.get_default ().change_month (-1);
-
-            return true;
-        }
-
-        return false;
-    }
-
     public GLib.DateTime get_start_of_month (owned GLib.DateTime? date = null) {
         if (date == null) {
             date = new GLib.DateTime.now_local ();
@@ -225,12 +184,12 @@ namespace DateTimeIndicator.Util {
         return a.dup_uid () == b.dup_uid ();
     }
 
-    public async void reset_timer () {
-        has_scrolled = true;
-        Timeout.add (500, () => {
-            has_scrolled = false;
-
-            return false;
-        });
-    }
+    // public async void reset_timer () {
+    //     has_scrolled = true;
+    //     Timeout.add (500, () => {
+    //         has_scrolled = false;
+    //
+    //         return false;
+    //     });
+    // }
 }

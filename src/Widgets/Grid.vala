@@ -261,5 +261,36 @@ namespace DateTimeIndicator {
             return date.get_year () * 10000 + date.get_month () * 100 + date.get_day_of_month ();
         }
 
+        public void add_event_dots (E.Source source, Gee.Collection<ECal.Component> events) {
+            data.foreach ((entry) => {
+
+                foreach (var component in events) {
+                    if (entry.value.skip_day ()) {
+                        return true;
+                    }
+
+                    if (Util.calcomp_is_on_day (component, entry.value.date)) {
+                        entry.value.add_dots (source, component.get_icalcomponent ());
+                    }
+                }
+
+                entry.value.show_event_grid ();
+
+                return true;
+            });
+        }
+
+        public void remove_event_dots (E.Source source, Gee.Collection<ECal.Component> events) {
+            foreach (var component in events) {
+                unowned ICal.Component ical = component.get_icalcomponent ();
+                var event_uid = ical.get_uid ();
+                data.foreach ((entry) => {
+                    if (entry.value.exist_event (event_uid)) {
+                        entry.value.remove_dots (event_uid);
+                    }
+                    return true;
+                });
+            }
+        }
     }
 }

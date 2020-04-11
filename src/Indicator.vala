@@ -24,8 +24,13 @@ namespace DateTimeIndicator {
         private Widgets.PanelLabel panel_label;
         private Widgets.CalendarView calendar;
         private Widgets.EventsListBox event_listbox;
+
+        private Services.EventsManager event_manager;
+
         private Gtk.Grid main_grid;
         private uint update_events_idle_source = 0;
+
+        private bool opened_widget = false;
 
         public Indicator () {
             Object (
@@ -56,10 +61,22 @@ namespace DateTimeIndicator {
                 calendar = new Widgets.CalendarView ();
                 calendar.margin_bottom = 6;
 
+                event_manager = new Services.EventsManager ();
+                event_manager.events_updated.connect (update_events_model);
+                event_manager.events_added.connect ((source, events) => {
+                    calendar.add_event_dots (source, events);
+                    update_events_model (source, events);
+                });
+                event_manager.events_removed.connect ((source, events) => {
+                    calendar.remove_event_dots (source, events);
+                    update_events_model (source, events);
+                });
+
                 event_listbox = new Widgets.EventsListBox ();
 
                 var scrolled_window = new Gtk.ScrolledWindow (null, null);
                 scrolled_window.hscrollbar_policy = Gtk.PolicyType.NEVER;
+                scrolled_window.vscrollbar_policy = Gtk.PolicyType.AUTOMATIC;
                 scrolled_window.add (event_listbox);
 
                 var settings_button = new Gtk.ModelButton ();
@@ -90,6 +107,12 @@ namespace DateTimeIndicator {
                     close ();
                 });
 
+                var model = Models.CalendarModel.get_default ();
+                model.notify["month-start"].connect (() => {
+                    model.compute_ranges ();
+                    event_manager.load_all_sources ();
+                });
+
                 settings_button.clicked.connect (() => {
                     try {
                         AppInfo.launch_default_for_uri ("settings://time", null);
@@ -103,7 +126,9 @@ namespace DateTimeIndicator {
         }
 
         private void update_events_model (E.Source source, Gee.Collection<ECal.Component> events) {
-            idle_update_events ();
+            if (opened_widget) {
+                idle_update_events ();
+            }
         }
 
         private void idle_update_events () {
@@ -112,7 +137,7 @@ namespace DateTimeIndicator {
             }
 
             update_events_idle_source = GLib.Idle.add (() => {
-                event_listbox.update_events (calendar.selected_date);
+                event_listbox.update_events (calendar.selected_date, event_manager.source_events);
 
                 update_events_idle_source = 0;
                 return GLib.Source.REMOVE;
@@ -122,18 +147,15 @@ namespace DateTimeIndicator {
         public override void opened () {
             calendar.show_today ();
 
-            Models.CalendarModel.get_default ().events_added.connect (update_events_model);
-            Models.CalendarModel.get_default ().events_updated.connect (update_events_model);
-            Models.CalendarModel.get_default ().events_removed.connect (update_events_model);
+            opened_widget = true;
         }
 
         public override void closed () {
-            Models.CalendarModel.get_default ().events_added.disconnect (update_events_model);
-            Models.CalendarModel.get_default ().events_updated.disconnect (update_events_model);
-            Models.CalendarModel.get_default ().events_removed.disconnect (update_events_model);
+            opened_widget = false;
         }
     }
 }
+
 public Wingpanel.Indicator get_indicator (Module module) {
     debug ("Activating DateTime Indicator");
     var indicator = new DateTimeIndicator.Indicator ();

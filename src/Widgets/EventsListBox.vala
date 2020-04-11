@@ -1,6 +1,5 @@
 namespace DateTimeIndicator {
     public class Widgets.EventsListBox : Gtk.ListBox {
-
         public EventsListBox () {
             selection_mode = Gtk.SelectionMode.NONE;
 
@@ -22,7 +21,7 @@ namespace DateTimeIndicator {
             set_sort_func (sort_function);
         }
 
-        public void update_events (GLib.DateTime? selected_date) {
+        public void update_events (GLib.DateTime? selected_date, HashTable<E.Source, Gee.TreeMultiMap<string, ECal.Component>> source_events) {
             foreach (unowned Gtk.Widget widget in get_children ()) {
                 widget.destroy ();
             }
@@ -31,11 +30,9 @@ namespace DateTimeIndicator {
                 return;
             }
 
-            var model = Models.CalendarModel.get_default ();
-
             var events_on_day = new Gee.TreeMap<string, EventRow> ();
 
-            model.source_events.@foreach ((source, component_map) => {
+            source_events.@foreach ((source, component_map) => {
                 foreach (var comp in component_map.get_values ()) {
                     if (Util.calcomp_is_on_day (comp, selected_date)) {
                         unowned ICal.Component ical = comp.get_icalcomponent ();
