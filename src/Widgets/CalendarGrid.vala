@@ -261,6 +261,7 @@ namespace DateTimeIndicator {
             return date.get_year () * 10000 + date.get_month () * 100 + date.get_day_of_month ();
         }
 
+#if USE_EVO
         public void add_event_dots (E.Source source, Gee.Collection<ECal.Component> events) {
             data.foreach ((entry) => {
 
@@ -292,5 +293,6 @@ namespace DateTimeIndicator {
                 });
             }
         }
+#endif
     }
 }

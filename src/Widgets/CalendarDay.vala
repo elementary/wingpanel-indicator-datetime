@@ -146,6 +146,7 @@ namespace DateTimeIndicator {
             event_grid.show_all ();
         }
 
+#if USE_EVO
         public void add_dots (E.Source source, ICal.Component ical) {
             var event_uid = ical.get_uid ();
             if (!event_dots.has_key (event_uid)) {
@@ -177,6 +178,7 @@ namespace DateTimeIndicator {
                 event_dots.unset (event_uid);
             }
         }
+#endif
 
         public void set_selected (bool selected) {
             if (selected) {

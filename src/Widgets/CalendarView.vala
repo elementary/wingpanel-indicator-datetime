@@ -182,6 +182,7 @@ namespace DateTimeIndicator {
             stack.set_visible_child (big_grid);
         }
 
+#if USE_EVO
         public void add_event_dots (E.Source source, Gee.Collection<ECal.Component> events) {
             calendar_grid.add_event_dots (source, events);
         }
@@ -189,5 +190,6 @@ namespace DateTimeIndicator {
         public void remove_event_dots (E.Source source, Gee.Collection<ECal.Component> events) {
             calendar_grid.remove_event_dots (source, events);
         }
+#endif
     }
 }

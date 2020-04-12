@@ -33,6 +33,47 @@ namespace DateTimeIndicator.Util {
     }
 
     /**
+     * Say if an event lasts all day.
+     */
+    public bool is_the_all_day (GLib.DateTime dtstart, GLib.DateTime dtend) {
+        var utc_start = dtstart.to_timezone (new TimeZone.utc ());
+        var timespan = dtend.difference (dtstart);
+
+        if (timespan % GLib.TimeSpan.DAY == 0 && utc_start.get_hour () == 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+#if USE_EVO
+    private Gee.HashMap<string, Gtk.CssProvider>? providers;
+    public void set_event_calendar_color (E.SourceCalendar cal, Gtk.Widget widget) {
+        if (providers == null) {
+            providers = new Gee.HashMap<string, Gtk.CssProvider> ();
+        }
+
+        var color = cal.dup_color ();
+        if (!providers.has_key (color)) {
+            string style = """
+                @define-color colorAccent %s;
+            """.printf (color);
+
+            try {
+                var style_provider = new Gtk.CssProvider ();
+                style_provider.load_from_data (style, style.length);
+
+                providers[color] = style_provider;
+            } catch (Error e) {
+                critical ("Unable to set calendar color: %s", e.message);
+            }
+        }
+
+        unowned Gtk.StyleContext style_context = widget.get_style_context ();
+        style_context.add_provider (providers[color], Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
+    }
+
+    /**
      * Converts the given ICal.Time to a DateTime.
      */
     public TimeZone timezone_from_ical (ICal.Time date) {
@@ -64,46 +105,6 @@ namespace DateTimeIndicator.Util {
 #endif
     }
 
-    /**
-     * Say if an event lasts all day.
-     */
-    public bool is_the_all_day (GLib.DateTime dtstart, GLib.DateTime dtend) {
-        var utc_start = dtstart.to_timezone (new TimeZone.utc ());
-        var timespan = dtend.difference (dtstart);
-
-        if (timespan % GLib.TimeSpan.DAY == 0 && utc_start.get_hour () == 0) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    private Gee.HashMap<string, Gtk.CssProvider>? providers;
-    public void set_event_calendar_color (E.SourceCalendar cal, Gtk.Widget widget) {
-        if (providers == null) {
-            providers = new Gee.HashMap<string, Gtk.CssProvider> ();
-        }
-
-        var color = cal.dup_color ();
-        if (!providers.has_key (color)) {
-            string style = """
-                @define-color colorAccent %s;
-            """.printf (color);
-
-            try {
-                var style_provider = new Gtk.CssProvider ();
-                style_provider.load_from_data (style, style.length);
-
-                providers[color] = style_provider;
-            } catch (Error e) {
-                critical ("Unable to set calendar color: %s", e.message);
-            }
-        }
-
-        unowned Gtk.StyleContext style_context = widget.get_style_context ();
-        style_context.add_provider (providers[color], Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
-    }
-
     /*
      * Gee Utility Functions
      */
@@ -111,6 +112,11 @@ namespace DateTimeIndicator.Util {
     /* Computes hash value for E.Source */
     public uint source_hash_func (E.Source key) {
         return key.dup_uid (). hash ();
+    }
+
+    /* Returns true if 'a' and 'b' are the same E.Source */
+    public bool source_equal_func (E.Source a, E.Source b) {
+        return a.dup_uid () == b.dup_uid ();
     }
 
     /* Returns true if 'a' and 'b' are the same ECal.Component */
@@ -178,18 +184,5 @@ namespace DateTimeIndicator.Util {
 
         return false;
     }
-
-    /* Returns true if 'a' and 'b' are the same E.Source */
-    public bool source_equal_func (E.Source a, E.Source b) {
-        return a.dup_uid () == b.dup_uid ();
-    }
-
-    // public async void reset_timer () {
-    //     has_scrolled = true;
-    //     Timeout.add (500, () => {
-    //         has_scrolled = false;
-    //
-    //         return false;
-    //     });
-    // }
+#endif
 }

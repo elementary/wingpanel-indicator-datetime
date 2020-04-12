@@ -23,9 +23,11 @@ namespace DateTimeIndicator {
 
         private Widgets.PanelLabel panel_label;
         private Widgets.CalendarView calendar;
-        private Widgets.EventsListBox event_listbox;
 
+#if USE_EVO
+        private Widgets.EventsListBox event_listbox;
         private Services.EventsManager event_manager;
+#endif
 
         private Gtk.Grid main_grid;
         private uint update_events_idle_source = 0;
@@ -60,7 +62,20 @@ namespace DateTimeIndicator {
             if (main_grid == null) {
                 calendar = new Widgets.CalendarView ();
                 calendar.margin_bottom = 6;
+                calendar.day_double_click.connect (() => {
+                    close ();
+                });
 
+                var settings_button = new Gtk.ModelButton ();
+                settings_button.text = _("Date & Time Settings…");
+
+                main_grid = new Gtk.Grid ();
+                main_grid.margin_top = 12;
+                main_grid.attach (calendar,                           0, 0);
+                main_grid.attach (new Wingpanel.Widgets.Separator (), 0, 1);
+                main_grid.attach (settings_button,                    0, 2);
+
+#if USE_EVO
                 event_manager = new Services.EventsManager ();
                 event_manager.events_updated.connect (update_events_model);
                 event_manager.events_added.connect ((source, events) => {
@@ -73,20 +88,16 @@ namespace DateTimeIndicator {
                 });
 
                 event_listbox = new Widgets.EventsListBox ();
+                event_listbox.row_activated.connect ((row) => {
+                    calendar.show_date_in_maya (((EventRow) row).date);
+                    close ();
+                });
 
                 var scrolled_window = new Gtk.ScrolledWindow (null, null);
                 scrolled_window.hscrollbar_policy = Gtk.PolicyType.NEVER;
                 scrolled_window.vscrollbar_policy = Gtk.PolicyType.AUTOMATIC;
                 scrolled_window.add (event_listbox);
 
-                var settings_button = new Gtk.ModelButton ();
-                settings_button.text = _("Date & Time Settings…");
-
-                main_grid = new Gtk.Grid ();
-                main_grid.margin_top = 12;
-                main_grid.attach (calendar,                                     0, 0);
-                main_grid.attach (new Wingpanel.Widgets.Separator (),           0, 1);
-                main_grid.attach (settings_button,                              0, 2);
                 main_grid.attach (new Gtk.Separator (Gtk.Orientation.VERTICAL), 1, 0, 1, 3);
                 main_grid.attach (scrolled_window,                              2, 0, 1, 3);
 
@@ -94,23 +105,17 @@ namespace DateTimeIndicator {
                 size_group.add_widget (calendar);
                 size_group.add_widget (event_listbox);
 
-                calendar.day_double_click.connect (() => {
-                    close ();
-                });
-
                 calendar.selection_changed.connect ((date) => {
                     idle_update_events ();
                 });
-
-                event_listbox.row_activated.connect ((row) => {
-                    calendar.show_date_in_maya (((EventRow) row).date);
-                    close ();
-                });
+#endif
 
                 var model = Models.CalendarModel.get_default ();
                 model.notify["month-start"].connect (() => {
                     model.compute_ranges ();
+#if USE_EVO
                     event_manager.load_all_sources ();
+#endif
                 });
 
                 settings_button.clicked.connect (() => {
@@ -125,6 +130,7 @@ namespace DateTimeIndicator {
             return main_grid;
         }
 
+#if USE_EVO
         private void update_events_model (E.Source source, Gee.Collection<ECal.Component> events) {
             if (opened_widget) {
                 idle_update_events ();
@@ -143,6 +149,7 @@ namespace DateTimeIndicator {
                 return GLib.Source.REMOVE;
             });
         }
+#endif
 
         public override void opened () {
             calendar.show_today ();
