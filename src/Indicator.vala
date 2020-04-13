@@ -105,8 +105,10 @@ namespace DateTimeIndicator {
                 size_group.add_widget (calendar);
                 size_group.add_widget (event_listbox);
 
-                calendar.selection_changed.connect ((date) => {
-                    idle_update_events ();
+                event_manager.open.begin ((obj, res) => {
+                    calendar.selection_changed.connect ((date) => {
+                        idle_update_events ();
+                    });
                 });
 #endif
 

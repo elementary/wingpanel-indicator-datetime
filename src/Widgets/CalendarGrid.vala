@@ -263,22 +263,16 @@ namespace DateTimeIndicator {
 
 #if USE_EVO
         public void add_event_dots (E.Source source, Gee.Collection<ECal.Component> events) {
-            data.foreach ((entry) => {
-
-                foreach (var component in events) {
-                    if (entry.value.skip_day ()) {
-                        return true;
-                    }
-
-                    if (Util.calcomp_is_on_day (component, entry.value.date)) {
-                        entry.value.add_dots (source, component.get_icalcomponent ());
-                    }
+            foreach (var component in events) {
+                unowned ICal.Component? icomp = component.get_icalcomponent ();
+                ICal.Time? start_time = icomp.get_dtstart ();
+                time_t start_unix = start_time.as_timet ();
+                var t = new DateTime.from_unix_utc (start_unix);
+                var d_hash = day_hash (t);
+                if (data.has_key (d_hash)) {
+                    data[d_hash].add_dots (source, component.get_icalcomponent ());
                 }
-
-                entry.value.show_event_grid ();
-
-                return true;
-            });
+            }
         }
 
         public void remove_event_dots (E.Source source, Gee.Collection<ECal.Component> events) {
@@ -286,9 +280,8 @@ namespace DateTimeIndicator {
                 unowned ICal.Component ical = component.get_icalcomponent ();
                 var event_uid = ical.get_uid ();
                 data.foreach ((entry) => {
-                    if (entry.value.exist_event (event_uid)) {
-                        entry.value.remove_dots (event_uid);
-                    }
+                    entry.value.remove_dots (event_uid);
+
                     return true;
                 });
             }

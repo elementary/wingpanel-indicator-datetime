@@ -10,33 +10,25 @@ namespace DateTimeIndicator {
         private HashTable<string, ECal.Client> source_client;
         private HashTable<string, ECal.ClientView> source_view;
 
-        public EventsManager () {
-
-        }
-
         construct {
             source_client = new HashTable<string, ECal.Client> (str_hash, str_equal);
             source_events = new HashTable<E.Source, Gee.TreeMultiMap<string, ECal.Component> > (Util.source_hash_func, Util.source_equal_func);
             source_view = new HashTable<string, ECal.ClientView> (str_hash, str_equal);
-
-            open.begin ();
         }
 
-        private async void open () {
+        public async void open () {
             try {
                 registry = yield new E.SourceRegistry (null);
                 registry.source_removed.connect (remove_source);
-                registry.source_added.connect ((source) => add_source_async.begin (source));
+                registry.source_added.connect (add_source);
 
                 // Add sources
                 registry.list_sources (E.SOURCE_EXTENSION_CALENDAR).foreach ((source) => {
-                    E.SourceCalendar cal = (E.SourceCalendar)source.get_extension (E.SOURCE_EXTENSION_CALENDAR);
+                    E.SourceCalendar cal = (E.SourceCalendar) source.get_extension (E.SOURCE_EXTENSION_CALENDAR);
                     if (cal.selected == true && source.enabled == true) {
-                        add_source_async.begin (source);
+                        add_source (source);
                     }
                 });
-
-                load_all_sources ();
             } catch (GLib.Error error) {
                 critical (error.message);
             }
@@ -46,7 +38,7 @@ namespace DateTimeIndicator {
             lock (source_client) {
                 foreach (var id in source_client.get_keys ()) {
                     var source = registry.ref_source (id);
-                    E.SourceCalendar cal = (E.SourceCalendar)source.get_extension (E.SOURCE_EXTENSION_CALENDAR);
+                    E.SourceCalendar cal = (E.SourceCalendar) source.get_extension (E.SOURCE_EXTENSION_CALENDAR);
 
                     if (cal.selected == true && source.enabled == true) {
                         load_source (source);
@@ -120,7 +112,7 @@ namespace DateTimeIndicator {
             });
         }
 
-        private async void add_source_async (E.Source source) {
+        private void add_source (E.Source source) {
             debug ("Adding source '%s'", source.dup_display_name ());
             try {
                 var client = (ECal.Client) ECal.Client.connect_sync (source, ECal.ClientSourceType.EVENTS, -1, null);
@@ -129,11 +121,7 @@ namespace DateTimeIndicator {
                 critical (e.message);
             }
 
-            Idle.add (() => {
-                load_source (source);
-
-                return false;
-            });
+            load_source (source);
         }
 
         private void debug_event (E.Source source, ECal.Component event) {
@@ -177,6 +165,8 @@ namespace DateTimeIndicator {
                     return true;
                 });
             });
+
+            events_added (source, added_events.read_only_view);
         }
 
 #if E_CAL_2_0
