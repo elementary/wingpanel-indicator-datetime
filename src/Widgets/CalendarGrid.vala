@@ -279,11 +279,14 @@ namespace DateTimeIndicator {
             foreach (var component in events) {
                 unowned ICal.Component ical = component.get_icalcomponent ();
                 var event_uid = ical.get_uid ();
-                data.foreach ((entry) => {
-                    entry.value.remove_dots (event_uid);
 
-                    return true;
-                });
+                ICal.Time? start_time = ical.get_dtstart ();
+                time_t start_unix = start_time.as_timet ();
+                var t = new DateTime.from_unix_utc (start_unix);
+                var d_hash = day_hash (t);
+                if (data.has_key (d_hash)) {
+                    data[d_hash].remove_dots (event_uid);
+                }
             }
         }
 #endif

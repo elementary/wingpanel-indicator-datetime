@@ -168,7 +168,7 @@ namespace DateTimeIndicator {
         }
 
         public void remove_dots (string event_uid) {
-            if (event_dots.contains (event_uid)) {
+            if (!event_dots.contains (event_uid)) {
                 return;
             }
 

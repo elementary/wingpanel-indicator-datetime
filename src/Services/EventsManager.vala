@@ -208,6 +208,8 @@ namespace DateTimeIndicator {
                     removed_events.add (event);
                     debug_event (source, event);
                 }
+
+                events.remove_all (cid.get_uid ());
             });
 
             events_removed (source, removed_events.read_only_view);
