@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: extra\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-03-29 19:42+0000\n"
-"PO-Revision-Date: 2020-03-26 22:09+0000\n"
+"PO-Revision-Date: 2020-04-09 14:10+0000\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: Hebrew <https://l10n.elementary.io/projects/wingpanel/"
 "indicator-datetime-extra/he/>\n"
@@ -34,7 +34,7 @@ msgstr "התרגומים עודכנו"
 
 #: data/datetime.appdata.xml.in:16
 msgid "Fix potential crash when loading events with no start or end time"
-msgstr ""
+msgstr "תיקון קריסה אפשרית בעת טעינת אירועים ללא מועד התחלה או סיום"
 
 #: data/datetime.appdata.xml.in:22
 msgid "Redesigned the way upcoming events are displayed"
