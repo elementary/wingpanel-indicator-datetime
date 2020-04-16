@@ -85,10 +85,7 @@ namespace DateTimeIndicator {
             model.notify["data-range"].connect (() => {
                 label.label = model.month_start.format (_("%OB, %Y"));
 
-                sync_with_model ();
-
-                selected_date = null;
-                selection_changed (selected_date);
+                sync_with_model (selected_date != null);
             });
 
             left_button.clicked.connect (() => {
@@ -113,9 +110,11 @@ namespace DateTimeIndicator {
                 day_double_click ();
             });
 
-            calendar_grid.selection_changed.connect ((date) => {
+            calendar_grid.selection_changed.connect ((date, up) => {
                 selected_date = date;
-                selection_changed (date);
+                if (up) {
+                    selection_changed (date);
+                }
             });
 
             return calendar_grid;
@@ -154,9 +153,9 @@ namespace DateTimeIndicator {
         }
 
         /* Sets the calendar widgets to the date range of the model */
-        private void sync_with_model () {
+        private void sync_with_model (bool show_selected = false) {
             var model = Models.CalendarModel.get_default ();
-            if (calendar_grid.grid_range != null && (model.data_range.equals (calendar_grid.grid_range) || calendar_grid.grid_range.first_dt.compare (model.data_range.first_dt) == 0)) {
+            if (!show_selected && calendar_grid.grid_range != null && (model.data_range.equals (calendar_grid.grid_range) || calendar_grid.grid_range.first_dt.compare (model.data_range.first_dt) == 0)) {
                 calendar_grid.update_today ();
                 return; // nothing else to do
             }
@@ -168,7 +167,7 @@ namespace DateTimeIndicator {
             big_grid = create_big_grid ();
             stack.add (big_grid);
 
-            calendar_grid.set_range (model.data_range, model.month_start);
+            calendar_grid.set_range (model.data_range, model.month_start, show_selected ? selected_date : null);
             calendar_grid.update_weeks (model.data_range.first_dt, model.num_weeks);
 
             if (previous_first != null) {

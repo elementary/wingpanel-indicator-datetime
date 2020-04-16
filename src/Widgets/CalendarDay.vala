@@ -36,7 +36,6 @@ namespace DateTimeIndicator {
         private static Gtk.CssProvider provider;
         private static Models.CalendarModel model;
 
-        // private Gee.HashMap<string, Gtk.Widget> event_dots;
         private Gee.ArrayList<string> event_dots;
         private Gtk.Grid event_grid;
         private Gtk.Label label;
@@ -105,7 +104,7 @@ namespace DateTimeIndicator {
 
             /* It's mouse scroll ! */
             if (choice == 1 || choice == -1) {
-                Models.CalendarModel.get_default ().change_month ((int)choice);
+                Models.CalendarModel.get_default ().change_month ((int) choice);
 
                 return true;
             }

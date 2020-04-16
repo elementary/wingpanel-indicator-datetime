@@ -57,12 +57,17 @@ namespace DateTimeIndicator {
             compute_ranges ();
         }
 
-        public void change_month (int relative) {
-            month_start = month_start.add_months (relative);
-        }
-
-        public void change_year (int relative) {
-            month_start = month_start.add_years (relative);
+        public void change_month (int m_relative, int y_relative = 0) {
+            if (y_relative == 0) {
+                month_start = month_start.add_months (m_relative);
+            } else {
+                if (m_relative == 0) {
+                    month_start = month_start.add_years (y_relative);
+                } else {
+                    GLib.DateTime tmp_date = month_start.add_months (m_relative);
+                    month_start = tmp_date.add_years (y_relative);
+                }
+            }
         }
 
         /* --- Helper Methods ---// */

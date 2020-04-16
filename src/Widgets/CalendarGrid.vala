@@ -32,7 +32,7 @@ namespace DateTimeIndicator {
          */
         public signal void on_event_add (GLib.DateTime date);
 
-        public signal void selection_changed (GLib.DateTime new_date);
+        public signal void selection_changed (GLib.DateTime new_date, bool up);
 
         private Gee.HashMap<uint, Widgets.CalendarDay> data;
         private Widgets.CalendarDay selected_gridday;
@@ -66,25 +66,32 @@ namespace DateTimeIndicator {
             events |= Gdk.EventMask.SMOOTH_SCROLL_MASK;
         }
 
-        private void on_day_focus_in (Widgets.CalendarDay day) {
-            debug ("on_day_focus_in %s", day.date.to_string ());
+        private bool on_day_focus_in (Gdk.EventFocus event) {
+            var day = get_focus_child ();
+            if (day == null) {
+                return false;
+            }
+
             if (selected_gridday != null) {
                 selected_gridday.set_selected (false);
             }
 
-            var selected_date = day.date;
-            selected_gridday = day;
-            day.set_selected (true);
+            var selected_date = (day as Widgets.CalendarDay).date;
+            selected_gridday = day as Widgets.CalendarDay;
+            (day as Widgets.CalendarDay).set_selected (true);
             day.set_state_flags (Gtk.StateFlags.FOCUSED, false);
-            selection_changed (selected_date);
             var calmodel = Models.CalendarModel.get_default ();
             var date_month = selected_date.get_month () - calmodel.month_start.get_month ();
             var date_year = selected_date.get_year () - calmodel.month_start.get_year ();
 
             if (date_month != 0 || date_year != 0) {
-                calmodel.change_month (date_month);
-                calmodel.change_year (date_year);
+                selection_changed (selected_date, false);
+                calmodel.change_month (date_month, date_year);
+            } else {
+                selection_changed (selected_date, true);
             }
+
+            return false;
         }
 
         public void set_focus_to_today () {
@@ -106,7 +113,7 @@ namespace DateTimeIndicator {
          * Sets the given range to be displayed in the grid. Note that the number of days
          * must remain the same.
          */
-        public void set_range (Util.DateRange new_range, GLib.DateTime month_start) {
+        public void set_range (Util.DateRange new_range, GLib.DateTime month_start, GLib.DateTime? selected_date) {
             var today = new GLib.DateTime.now_local ();
 
             Gee.List<GLib.DateTime> old_dates;
@@ -138,26 +145,44 @@ namespace DateTimeIndicator {
 
             for (i = 0; i < new_dates.size; i++) {
                 var new_date = new_dates[i];
-                Widgets.CalendarDay day;
+                Widgets.CalendarDay? day = null;
 
                 if (i < old_dates.size) {
                     /* A widget already exists for this date, just change it */
 
                     var old_date = old_dates[i];
-                    day = update_day (data[day_hash (old_date)], new_date, today, month_start);
-                } else {
-                    /* Still update_day to get the color of etc. right */
-                    day = update_day (new Widgets.CalendarDay (new_date), new_date, today, month_start);
-                    day.on_event_add.connect ((date) => on_event_add (date));
-                    day.scroll_event.connect ((event) => { scroll_event (event); return false; });
-                    day.focus_in_event.connect ((event) => {
-                        on_day_focus_in (day);
+                    var d_hash = day_hash (old_date);
+                    if (data.has_key (d_hash)) {
+                        day = data[d_hash];
+                    }
+                }
 
+                if (day == null) {
+                    /* Still update_day to get the color of etc. right */
+                    day = new Widgets.CalendarDay (new_date);
+                    day.on_event_add.connect ((date) => on_event_add (date));
+                    day.scroll_event.connect ((event) => {
+                        scroll_event (event);
                         return false;
                     });
+                    day.focus_in_event.connect (on_day_focus_in);
 
                     attach (day, col + 2, row);
                     day.show_all ();
+                }
+
+                update_day (day, new_date, month_start);
+                update_today_style (day, new_date, today);
+                if (selected_date != null && day.date.equal (selected_date)) {
+                    /* disabled the signal to avoid unnecessary signals and selected
+                    * the specified day from the new period */
+                    debug (@"focus selected day $selected_date");
+                    day.focus_in_event.disconnect (on_day_focus_in);
+                    day.grab_focus_force ();
+                    day.set_selected (true);
+                    day.set_state_flags (Gtk.StateFlags.FOCUSED, false);
+                    selected_gridday = day;
+                    day.focus_in_event.connect (on_day_focus_in);
                 }
 
                 col = (col + 1) % 7;
@@ -184,8 +209,7 @@ namespace DateTimeIndicator {
         /**
          * Updates the given CalendarDay so that it shows the given date. Changes to its style etc.
          */
-        private Widgets.CalendarDay update_day (Widgets.CalendarDay day, GLib.DateTime new_date, GLib.DateTime today, GLib.DateTime month_start) {
-            update_today_style (day, new_date, today);
+        private void update_day (Widgets.CalendarDay day, GLib.DateTime new_date, GLib.DateTime month_start) {
             if (new_date.get_month () == month_start.get_month ()) {
                 day.sensitive_container (true);
             } else {
@@ -193,8 +217,6 @@ namespace DateTimeIndicator {
             }
 
             day.date = new_date;
-
-            return day;
         }
 
         public void update_weeks (GLib.DateTime date, int nr_of_weeks) {

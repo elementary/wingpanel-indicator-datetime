@@ -21,10 +21,14 @@ namespace DateTimeIndicator {
             set_sort_func (sort_function);
         }
 
-        public void update_events (GLib.DateTime? selected_date, HashTable<E.Source, Gee.TreeMultiMap<string, ECal.Component>> source_events) {
+        public void clear_list () {
             foreach (unowned Gtk.Widget widget in get_children ()) {
                 widget.destroy ();
             }
+        }
+
+        public void update_events (GLib.DateTime? selected_date, HashTable<E.Source, Gee.TreeMultiMap<string, ECal.Component>> source_events) {
+            clear_list ();
 
             if (selected_date == null) {
                 return;
