@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: extra\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-03-29 19:42+0000\n"
-"PO-Revision-Date: 2020-04-03 04:09+0000\n"
+"PO-Revision-Date: 2020-04-21 01:10+0000\n"
 "Last-Translator: Ryo Nakano <ryonakaknock3@gmail.com>\n"
 "Language-Team: Japanese <https://l10n.elementary.io/projects/wingpanel/"
 "indicator-datetime-extra/ja/>\n"
@@ -38,7 +38,7 @@ msgstr "開始時刻または終了時刻が指定されていない予定を読
 
 #: data/datetime.appdata.xml.in:22
 msgid "Redesigned the way upcoming events are displayed"
-msgstr "直近の予定の表示方法を再設計"
+msgstr "直近の予定の表示方法のデザインを変更"
 
 #: data/datetime.appdata.xml.in:23
 msgid "Fixed issues with large text size"
