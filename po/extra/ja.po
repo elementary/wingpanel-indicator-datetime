@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: extra\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-24 03:37+0000\n"
-"PO-Revision-Date: 2020-04-21 01:10+0000\n"
+"PO-Revision-Date: 2020-04-25 11:10+0000\n"
 "Last-Translator: Ryo Nakano <ryonakaknock3@gmail.com>\n"
 "Language-Team: Japanese <https://l10n.elementary.io/projects/wingpanel/"
 "indicator-datetime-extra/ja/>\n"
@@ -29,7 +29,7 @@ msgstr "日付と時刻のインジケーター"
 
 #: data/datetime.appdata.xml.in:11
 msgid "Fix event appearance with dark style"
-msgstr ""
+msgstr "ダークスタイルで予定が見にくくなる問題を修正"
 
 #: data/datetime.appdata.xml.in:12 data/datetime.appdata.xml.in:17
 #: data/datetime.appdata.xml.in:23 data/datetime.appdata.xml.in:34
