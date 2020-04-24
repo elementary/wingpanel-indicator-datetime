@@ -6,6 +6,12 @@
   <name>Date &amp; Time Indicator</name>
   <summary>The date and time indicator</summary>
   <releases>
+    <release version="2.2.3" date="2020-04-23" urgency="medium">
+      <description>
+        <p>Fix event appearance with dark style</p>
+        <p>Updated translations</p>
+      </description>
+    </release>
     <release version="2.2.2" date="2020-03-27" urgency="medium">
       <description>
         <p>Updated translations</p>
