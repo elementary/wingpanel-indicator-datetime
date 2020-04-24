@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: extra\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-03-29 19:42+0000\n"
+"POT-Creation-Date: 2020-04-24 03:37+0000\n"
 "PO-Revision-Date: 2019-12-04 21:24+0000\n"
 "Last-Translator: Jiri Grönroos <jiri.gronroos@iki.fi>\n"
 "Language-Team: Finnish <https://l10n.elementary.io/projects/wingpanel/"
@@ -27,39 +27,43 @@ msgstr "Ajan ja päiväyksen ilmaisin"
 msgid "The date and time indicator"
 msgstr "Ajan ja päiväyksen ilmaisin"
 
-#: data/datetime.appdata.xml.in:11 data/datetime.appdata.xml.in:17
-#: data/datetime.appdata.xml.in:28
+#: data/datetime.appdata.xml.in:11
+msgid "Fix event appearance with dark style"
+msgstr ""
+
+#: data/datetime.appdata.xml.in:12 data/datetime.appdata.xml.in:17
+#: data/datetime.appdata.xml.in:23 data/datetime.appdata.xml.in:34
 msgid "Updated translations"
 msgstr "Päivitetyt käännökset"
 
-#: data/datetime.appdata.xml.in:16
+#: data/datetime.appdata.xml.in:22
 msgid "Fix potential crash when loading events with no start or end time"
 msgstr ""
 
-#: data/datetime.appdata.xml.in:22
+#: data/datetime.appdata.xml.in:28
 msgid "Redesigned the way upcoming events are displayed"
 msgstr ""
 
-#: data/datetime.appdata.xml.in:23
+#: data/datetime.appdata.xml.in:29
 msgid "Fixed issues with large text size"
 msgstr ""
 
-#: data/datetime.appdata.xml.in:24
+#: data/datetime.appdata.xml.in:30
 msgid "Show dots on days with events"
 msgstr ""
 
-#: data/datetime.appdata.xml.in:25
+#: data/datetime.appdata.xml.in:31
 msgid "Better handling of recurring events"
 msgstr ""
 
-#: data/datetime.appdata.xml.in:26
+#: data/datetime.appdata.xml.in:32
 msgid "Performance improvements"
 msgstr ""
 
-#: data/datetime.appdata.xml.in:27
+#: data/datetime.appdata.xml.in:33
 msgid "Display an error dialog if Calendar fails to open"
 msgstr ""
 
-#: data/datetime.appdata.xml.in:37
+#: data/datetime.appdata.xml.in:43
 msgid "elementary, Inc."
 msgstr "elementary, Inc."
