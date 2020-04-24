@@ -1,5 +1,5 @@
 .event {
-    background: alpha(@colorAccent, 0.15);
+    background: mix(@colorAccent, shade (#fff, 0.96), 0.8);
     border-radius: 3px;
     padding: 6px;
 }
