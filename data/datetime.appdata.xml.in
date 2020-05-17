@@ -8,6 +8,7 @@
   <releases>
     <release version="2.2.3" date="2020-04-23" urgency="medium">
       <description>
+        <p>Fix missing event dots in the calendar view</p>
         <p>Fix event appearance with dark style</p>
         <p>Updated translations</p>
       </description>

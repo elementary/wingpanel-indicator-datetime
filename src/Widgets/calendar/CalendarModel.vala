@@ -282,6 +282,8 @@ namespace DateTime.Widgets {
                     return true;
                 });
             });
+
+            events_added (source, added_events.read_only_view);
         }
 
 #if E_CAL_2_0
