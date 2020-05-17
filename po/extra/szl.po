@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: extra\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-04-24 03:37+0000\n"
+"POT-Creation-Date: 2020-05-17 22:03+0000\n"
 "PO-Revision-Date: 2020-02-23 00:08+0000\n"
 "Last-Translator: gkkulik <g.kulik@o2.pl>\n"
 "Language-Team: Silesian <https://l10n.elementary.io/projects/wingpanel/"
@@ -29,42 +29,46 @@ msgid "The date and time indicator"
 msgstr "Skaźnik daty i godziny"
 
 #: data/datetime.appdata.xml.in:11
+msgid "Fix missing event dots in the calendar view"
+msgstr ""
+
+#: data/datetime.appdata.xml.in:12
 msgid "Fix event appearance with dark style"
 msgstr ""
 
-#: data/datetime.appdata.xml.in:12 data/datetime.appdata.xml.in:17
-#: data/datetime.appdata.xml.in:23 data/datetime.appdata.xml.in:34
+#: data/datetime.appdata.xml.in:13 data/datetime.appdata.xml.in:18
+#: data/datetime.appdata.xml.in:24 data/datetime.appdata.xml.in:35
 msgid "Updated translations"
 msgstr "Zaktualizowane przekłady"
 
-#: data/datetime.appdata.xml.in:22
+#: data/datetime.appdata.xml.in:23
 msgid "Fix potential crash when loading events with no start or end time"
 msgstr ""
 
-#: data/datetime.appdata.xml.in:28
+#: data/datetime.appdata.xml.in:29
 msgid "Redesigned the way upcoming events are displayed"
 msgstr "Przeprojektowany spusōb pokazowanio nojbliższych zdarzyń"
 
-#: data/datetime.appdata.xml.in:29
+#: data/datetime.appdata.xml.in:30
 msgid "Fixed issues with large text size"
 msgstr "Sprawiōne problymy ze srogim tekstym"
 
-#: data/datetime.appdata.xml.in:30
+#: data/datetime.appdata.xml.in:31
 msgid "Show dots on days with events"
 msgstr "Pokazowanie kropek na dniach ze zdarzyniami"
 
-#: data/datetime.appdata.xml.in:31
+#: data/datetime.appdata.xml.in:32
 msgid "Better handling of recurring events"
 msgstr "Lepszo ôbsuga powtorzanych zdarzyń"
 
-#: data/datetime.appdata.xml.in:32
+#: data/datetime.appdata.xml.in:33
 msgid "Performance improvements"
 msgstr "Ulepszynia wydajności"
 
-#: data/datetime.appdata.xml.in:33
+#: data/datetime.appdata.xml.in:34
 msgid "Display an error dialog if Calendar fails to open"
 msgstr "Pokazowanie ôkna feleru, jak Kalyndorz sie niy ôtwiyro"
 
-#: data/datetime.appdata.xml.in:43
+#: data/datetime.appdata.xml.in:44
 msgid "elementary, Inc."
 msgstr "elementary, Inc."
