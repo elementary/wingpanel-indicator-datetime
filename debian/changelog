@@ -1,3 +1,17 @@
+wingpanel-indicator-datetime (2.2.3) bionic; urgency=medium
+
+  * Release 2.2.3 (#215)
+  * Update translation files
+  * Update translation template
+  * Fix missing event dots (#214)
+  * Update translation files
+  * Update translation template
+  * EventRow: Fix appearance in dark style (#209)
+  * Update translation files
+  * Update translation template
+
+ -- Cody Garver <cody@elementary.io>  Mon, 18 May 2020 03:13:05 +0000
+
 wingpanel-indicator-datetime (2.2.2) bionic; urgency=medium
 
   * Release 2.2.2 (#205)
