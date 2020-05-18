@@ -3,9 +3,9 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-09-26 16:48-0700\n"
-"PO-Revision-Date: 2018-07-27 05:04+0000\n"
+"PO-Revision-Date: 2020-03-26 22:09+0000\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
-"Language-Team: Hebrew <https://weblate.elementary.io/projects/wingpanel/"
+"Language-Team: Hebrew <https://l10n.elementary.io/projects/wingpanel/"
 "wingpanel-indicator-datetime/he/>\n"
 "Language: he\n"
 "MIME-Version: 1.0\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=(n == 1) ? 0 : ((n == 2) ? 1 : ((n > 10 && "
 "n % 10 == 0) ? 2 : 3));\n"
-"X-Generator: Weblate 3.0.1\n"
+"X-Generator: Weblate 3.9.1\n"
 "X-Launchpad-Export-Date: 2017-02-19 05:57+0000\n"
 
 #: src/Indicator.vala:32
@@ -26,7 +26,7 @@ msgstr "מחוון התאריך והשעה"
 
 #: src/Indicator.vala:58
 msgid "No Events on This Day"
-msgstr ""
+msgstr "אין אירועים ביום הזה"
 
 #: src/Indicator.vala:82
 msgid "Date & Time Settings…"
@@ -34,28 +34,28 @@ msgstr "הגדרות תאריך ושעה…"
 
 #: src/Indicator.vala:131
 msgid "During the Day"
-msgstr ""
+msgstr "במהלך היום"
 
 #: src/Indicator.vala:139
 msgid "All Day"
-msgstr ""
+msgstr "כל היום"
 
 #: src/Widgets/calendar/CalendarView.vala:33
 #: src/Widgets/calendar/CalendarView.vala:85
 msgid "%OB, %Y"
-msgstr ""
+msgstr "%OB, %Y"
 
 #: src/Widgets/calendar/CalendarView.vala:48
 msgid "Go to today's date"
-msgstr ""
+msgstr "מעבר לתאריך של היום"
 
 #: src/Widgets/calendar/CalendarView.vala:145
 msgid "Unable To Launch Calendar"
-msgstr ""
+msgstr "לא ניתן לטעון את לוח השנה"
 
 #: src/Widgets/calendar/CalendarView.vala:146
 msgid "The program \"io.elementary.calendar\" may not be installed"
-msgstr ""
+msgstr "יתכן כי התכנית „io.elementary.calendar” לא מותקנת"
 
 #~ msgid "%OB %Y"
 #~ msgstr "%OB %Y"

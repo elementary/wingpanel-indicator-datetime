@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: extra\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-12-17 14:39-0800\n"
-"PO-Revision-Date: 2019-11-07 20:24+0000\n"
+"POT-Creation-Date: 2020-05-17 22:03+0000\n"
+"PO-Revision-Date: 2020-05-18 03:11+0000\n"
 "Last-Translator: Ryo Nakano <ryonakaknock3@gmail.com>\n"
 "Language-Team: Japanese <https://l10n.elementary.io/projects/wingpanel/"
 "indicator-datetime-extra/ja/>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 3.7.1\n"
+"X-Generator: Weblate 3.9.1\n"
 
 #: data/datetime.appdata.xml.in:6
 msgid "Date &amp; Time Indicator"
@@ -28,37 +28,48 @@ msgid "The date and time indicator"
 msgstr "日付と時刻のインジケーター"
 
 #: data/datetime.appdata.xml.in:11
-msgid "Fix potential crash when loading events with no start or end time"
-msgstr ""
+msgid "Fix missing event dots in the calendar view"
+msgstr "カレンダー表示で予定を示す点が表示されなくなった問題を修正"
 
-#: data/datetime.appdata.xml.in:12 data/datetime.appdata.xml.in:23
+#: data/datetime.appdata.xml.in:12
+msgid "Fix event appearance with dark style"
+msgstr "ダークスタイルで予定が見にくくなる問題を修正"
+
+#: data/datetime.appdata.xml.in:13 data/datetime.appdata.xml.in:18
+#: data/datetime.appdata.xml.in:24 data/datetime.appdata.xml.in:35
 msgid "Updated translations"
 msgstr "翻訳の更新"
 
-#: data/datetime.appdata.xml.in:17
-msgid "Redesigned the way upcoming events are displayed"
-msgstr "直近の予定の表示方法を再設計"
+#: data/datetime.appdata.xml.in:23
+msgid "Fix potential crash when loading events with no start or end time"
+msgstr ""
+"開始時刻または終了時刻が指定されていない予定を読み込んだ際にアプリがクラッ"
+"シュすることがある問題を修正"
 
-#: data/datetime.appdata.xml.in:18
+#: data/datetime.appdata.xml.in:29
+msgid "Redesigned the way upcoming events are displayed"
+msgstr "直近の予定の表示方法のデザインを変更"
+
+#: data/datetime.appdata.xml.in:30
 msgid "Fixed issues with large text size"
 msgstr "大きいテキストサイズで生じる問題を修正"
 
-#: data/datetime.appdata.xml.in:19
+#: data/datetime.appdata.xml.in:31
 msgid "Show dots on days with events"
 msgstr "予定のある日に点を表示"
 
-#: data/datetime.appdata.xml.in:20
+#: data/datetime.appdata.xml.in:32
 msgid "Better handling of recurring events"
 msgstr "定期的に行われる予定の管理の改善"
 
-#: data/datetime.appdata.xml.in:21
+#: data/datetime.appdata.xml.in:33
 msgid "Performance improvements"
 msgstr "パフォーマンスの改善"
 
-#: data/datetime.appdata.xml.in:22
+#: data/datetime.appdata.xml.in:34
 msgid "Display an error dialog if Calendar fails to open"
 msgstr "カレンダーアプリの起動に失敗した際にエラーダイアログを表示"
 
-#: data/datetime.appdata.xml.in:32
+#: data/datetime.appdata.xml.in:44
 msgid "elementary, Inc."
 msgstr "elementary, Inc."

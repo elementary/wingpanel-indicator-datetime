@@ -7,56 +7,67 @@ msgid ""
 msgstr ""
 "Project-Id-Version: extra\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-12-17 14:39-0800\n"
-"PO-Revision-Date: 2019-10-31 09:08-0700\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"POT-Creation-Date: 2020-05-17 22:03+0000\n"
+"PO-Revision-Date: 2020-05-01 13:10+0000\n"
+"Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
+"Language-Team: Hebrew <https://l10n.elementary.io/projects/wingpanel/"
+"indicator-datetime-extra/he/>\n"
 "Language: he\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=ASCII\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Weblate 3.9.1\n"
 
 #: data/datetime.appdata.xml.in:6
 msgid "Date &amp; Time Indicator"
-msgstr ""
+msgstr "מחוון תאריך ושעה"
 
 #: data/datetime.appdata.xml.in:7
 msgid "The date and time indicator"
-msgstr ""
+msgstr "מחוון התאריך והשעה"
 
 #: data/datetime.appdata.xml.in:11
-msgid "Fix potential crash when loading events with no start or end time"
+msgid "Fix missing event dots in the calendar view"
 msgstr ""
 
-#: data/datetime.appdata.xml.in:12 data/datetime.appdata.xml.in:23
+#: data/datetime.appdata.xml.in:12
+msgid "Fix event appearance with dark style"
+msgstr "תיקון הופעת אירועים במצב חשוך"
+
+#: data/datetime.appdata.xml.in:13 data/datetime.appdata.xml.in:18
+#: data/datetime.appdata.xml.in:24 data/datetime.appdata.xml.in:35
 msgid "Updated translations"
-msgstr ""
+msgstr "התרגומים עודכנו"
 
-#: data/datetime.appdata.xml.in:17
+#: data/datetime.appdata.xml.in:23
+msgid "Fix potential crash when loading events with no start or end time"
+msgstr "תיקון קריסה אפשרית בעת טעינת אירועים ללא מועד התחלה או סיום"
+
+#: data/datetime.appdata.xml.in:29
 msgid "Redesigned the way upcoming events are displayed"
-msgstr ""
+msgstr "הדרך באה אירועים קרבים מופיעים עוצבה מחדש"
 
-#: data/datetime.appdata.xml.in:18
+#: data/datetime.appdata.xml.in:30
 msgid "Fixed issues with large text size"
-msgstr ""
+msgstr "תוקנו תקלות עם גודל גופן גדול"
 
-#: data/datetime.appdata.xml.in:19
+#: data/datetime.appdata.xml.in:31
 msgid "Show dots on days with events"
-msgstr ""
-
-#: data/datetime.appdata.xml.in:20
-msgid "Better handling of recurring events"
-msgstr ""
-
-#: data/datetime.appdata.xml.in:21
-msgid "Performance improvements"
-msgstr ""
-
-#: data/datetime.appdata.xml.in:22
-msgid "Display an error dialog if Calendar fails to open"
-msgstr ""
+msgstr "מוצגות נקודות בימים עם אירועים"
 
 #: data/datetime.appdata.xml.in:32
+msgid "Better handling of recurring events"
+msgstr "טיפול משופר באירועים מחזוריים"
+
+#: data/datetime.appdata.xml.in:33
+msgid "Performance improvements"
+msgstr "שיפורי ביצועים"
+
+#: data/datetime.appdata.xml.in:34
+msgid "Display an error dialog if Calendar fails to open"
+msgstr "הצגת תיבת שגיאה אם פתיחת לוח השנה נכשלת"
+
+#: data/datetime.appdata.xml.in:44
 msgid "elementary, Inc."
-msgstr ""
+msgstr "elementary בע״מ."
