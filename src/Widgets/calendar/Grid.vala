@@ -26,6 +26,7 @@ namespace DateTime.Widgets {
  */
     public class Grid : Gtk.Grid {
         public Util.DateRange grid_range { get; private set; }
+        private static Widgets.CalendarModel model;
 
         /*
          * Event emitted when the day is double clicked or the ENTER key is pressed.
@@ -40,6 +41,7 @@ namespace DateTime.Widgets {
         private Gtk.Revealer[] week_labels;
 
         construct {
+            model = Widgets.CalendarModel.get_default ();
             header_labels = new Gtk.Label[7];
             for (int c = 0; c < 7; c++) {
                 header_labels[c] = new Gtk.Label (null);
@@ -64,6 +66,8 @@ namespace DateTime.Widgets {
             data = new Gee.HashMap<uint, GridDay> ();
             events |= Gdk.EventMask.SCROLL_MASK;
             events |= Gdk.EventMask.SMOOTH_SCROLL_MASK;
+            model.events_added.connect (add_event_dots);
+            model.events_removed.connect (remove_event_dots);
         }
 
         private void on_day_focus_in (GridDay day) {
@@ -259,6 +263,36 @@ namespace DateTime.Widgets {
 
         private uint day_hash (GLib.DateTime date) {
             return date.get_year () * 10000 + date.get_month () * 100 + date.get_day_of_month ();
+        }
+        
+                
+        public void add_event_dots (E.Source source, Gee.Collection<ECal.Component> events) {
+            foreach (var component in events) {
+            
+                unowned ICal.Component ical = component.get_icalcomponent ();
+                ICal.Time? start_time = ical.get_dtstart ();
+                time_t start_unix = start_time.as_timet ();
+                var t = new GLib.DateTime.from_unix_utc (start_unix);
+                var d_hash = day_hash (t);
+                if (data.has_key (d_hash)) {
+                    data[d_hash].add_dots (source, component.get_icalcomponent ());
+                }
+            }
+        }
+
+        public void remove_event_dots (E.Source source, Gee.Collection<ECal.Component> events) {
+            foreach (var component in events) {
+                unowned ICal.Component ical = component.get_icalcomponent ();
+                var event_uid = ical.get_uid ();
+
+                ICal.Time? start_time = ical.get_dtstart ();
+                time_t start_unix = start_time.as_timet ();
+                var t = new GLib.DateTime.from_unix_utc (start_unix);
+                var d_hash = day_hash (t);
+                if (data.has_key (d_hash)) {
+                    data[d_hash].remove_dots (event_uid);
+                }
+            }
         }
 
     }

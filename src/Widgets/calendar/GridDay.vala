@@ -31,9 +31,8 @@ public class DateTime.Widgets.GridDay : Gtk.EventBox {
     public GLib.DateTime date { get; construct set; }
 
     private static Gtk.CssProvider provider;
-    private static Widgets.CalendarModel model;
 
-    private Gee.HashMap<string, Gtk.Widget> event_dots;
+    private Gee.ArrayList<string> event_dots;
     private Gtk.Grid event_grid;
     private Gtk.Label label;
     private bool valid_grab = false;
@@ -43,8 +42,7 @@ public class DateTime.Widgets.GridDay : Gtk.EventBox {
     }
 
     static construct {
-        model = Widgets.CalendarModel.get_default ();
-
+    
         provider = new Gtk.CssProvider ();
         provider.load_from_resource ("/io/elementary/desktop/wingpanel/datetime/GridDay.css");
     }
@@ -84,53 +82,49 @@ public class DateTime.Widgets.GridDay : Gtk.EventBox {
             label.label = date.get_day_of_month ().to_string ();
         });
 
-        event_dots = new Gee.HashMap<string, Gtk.Widget> ();
-
-        model.events_added.connect (add_event_dots);
-        model.events_removed.connect (remove_event_dots);
+        event_dots = new Gee.ArrayList<string> ();
     }
 
-    private void add_event_dots (E.Source source, Gee.Collection<ECal.Component> events) {
-        foreach (var component in events) {
-            if (event_dots.size >= 3) {
-                return;
-            }
 
-            if (Util.calcomp_is_on_day (component, date)) {
-                unowned ICal.Component ical = component.get_icalcomponent ();
-
-                var event_uid = ical.get_uid ();
-                if (!event_dots.has_key (event_uid)) {
-                    var event_dot = new Gtk.Image ();
-                    event_dot.gicon = new ThemedIcon ("pager-checked-symbolic");
-                    event_dot.pixel_size = 6;
-
-                    unowned Gtk.StyleContext style_context = event_dot.get_style_context ();
-                    style_context.add_class (Granite.STYLE_CLASS_ACCENT);
-                    style_context.add_provider (provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
-
-                    var source_calendar = (E.SourceCalendar?) source.get_extension (E.SOURCE_EXTENSION_CALENDAR);
-                    Util.set_event_calendar_color (source_calendar, event_dot);
-
-                    event_dots[event_uid] = event_dot;
-
-                    event_grid.add (event_dot);
-                }
-            }
+    public void add_dots (E.Source source, ICal.Component ical) {
+        var event_uid = ical.get_uid ();
+        if (event_dots.contains (event_uid)) {
+            return;
         }
 
-        event_grid.show_all ();
+        event_dots.add (event_uid);
+        if (event_dots.size > 3) {
+            return;
+        }
+
+        var event_dot = new Gtk.Image ();
+        event_dot.gicon = new ThemedIcon ("pager-checked-symbolic");
+        event_dot.pixel_size = 6;
+
+        unowned Gtk.StyleContext style_context = event_dot.get_style_context ();
+        style_context.add_class (Granite.STYLE_CLASS_ACCENT);
+        style_context.add_provider (provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
+
+        var source_calendar = (E.SourceCalendar?) source.get_extension (E.SOURCE_EXTENSION_CALENDAR);
+        Util.set_event_calendar_color (source_calendar, event_dot);
+
+        event_grid.add (event_dot);
+        event_dot.show ();
     }
 
-    private void remove_event_dots (E.Source source, Gee.Collection<ECal.Component> events) {
-        foreach (var component in events) {
-            unowned ICal.Component ical = component.get_icalcomponent ();
-            var event_uid = ical.get_uid ();
-            var dot = event_dots[event_uid];
-            if (dot != null) {
-                dot.destroy ();
-                event_dots.remove (event_uid);
-            }
+    public void remove_dots (string event_uid) {
+        if (!event_dots.contains (event_uid)) {
+            return;
+        }
+
+        event_dots.remove (event_uid);
+        if (event_dots.size >= 3) {
+            return;
+        }
+
+        var dot = event_grid.get_children ();
+        if (dot.length () > 0) {
+            dot.nth_data (0).destroy ();
         }
     }
 
