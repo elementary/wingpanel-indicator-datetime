@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: extra\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-05-17 22:03+0000\n"
-"PO-Revision-Date: 2020-04-25 11:10+0000\n"
+"PO-Revision-Date: 2020-05-18 03:11+0000\n"
 "Last-Translator: Ryo Nakano <ryonakaknock3@gmail.com>\n"
 "Language-Team: Japanese <https://l10n.elementary.io/projects/wingpanel/"
 "indicator-datetime-extra/ja/>\n"
@@ -29,7 +29,7 @@ msgstr "日付と時刻のインジケーター"
 
 #: data/datetime.appdata.xml.in:11
 msgid "Fix missing event dots in the calendar view"
-msgstr ""
+msgstr "カレンダー表示で予定を示す点が表示されなくなった問題を修正"
 
 #: data/datetime.appdata.xml.in:12
 msgid "Fix event appearance with dark style"
