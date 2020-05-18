@@ -33,6 +33,7 @@ public class DateTime.Widgets.GridDay : Gtk.EventBox {
     private static Gtk.CssProvider provider;
 
     private Gee.ArrayList<string> event_dots;
+    private Gee.HashMap<string, Gtk.Widget> dot_map;
     private Gtk.Grid event_grid;
     private Gtk.Label label;
     private bool valid_grab = false;
@@ -83,6 +84,7 @@ public class DateTime.Widgets.GridDay : Gtk.EventBox {
         });
 
         event_dots = new Gee.ArrayList<string> ();
+        dot_map = new Gee.HashMap<string, Gtk.Widget> ();
     }
 
 
@@ -122,9 +124,9 @@ public class DateTime.Widgets.GridDay : Gtk.EventBox {
             return;
         }
 
-        var dot = event_grid.get_children ();
-        if (dot.length () > 0) {
-            dot.nth_data (0).destroy ();
+        var dot = dot_map[event_uid];
+        if (dot != null) {
+            dot.destroy ();
         }
     }
 
