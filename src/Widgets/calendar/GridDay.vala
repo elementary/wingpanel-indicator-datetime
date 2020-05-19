@@ -85,6 +85,10 @@ public class DateTime.Widgets.GridDay : Gtk.EventBox {
     }
 
     public void add_event_dot (E.Source source, ICal.Component ical) {
+        if (event_dots.size >= 3) {
+            return;
+        }
+
         var event_uid = ical.get_uid ();
         if (!event_dots.has_key (event_uid)) {
             var event_dot = new Gtk.Image ();
