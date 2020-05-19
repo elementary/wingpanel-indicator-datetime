@@ -6,6 +6,12 @@
   <name>Date &amp; Time Indicator</name>
   <summary>The date and time indicator</summary>
   <releases>
+    <release version="2.2.4" date="2020-05-18" urgency="medium">
+      <description>
+        <p>Improved performance when switching months</p>
+        <p>Updated translations</p>
+      </description>
+    </release>
     <release version="2.2.3" date="2020-05-17" urgency="medium">
       <description>
         <p>Fix missing event dots in the calendar view</p>
