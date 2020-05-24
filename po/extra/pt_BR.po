@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: extra\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-05-17 22:03+0000\n"
-"PO-Revision-Date: 2020-04-27 00:10+0000\n"
+"PO-Revision-Date: 2020-05-21 03:11+0000\n"
 "Last-Translator: Rodrigo Oliveira <rod.oliveira@gmail.com>\n"
 "Language-Team: Portuguese (Brazil) <https://l10n.elementary.io/projects/"
 "wingpanel/indicator-datetime-extra/pt_BR/>\n"
@@ -29,7 +29,7 @@ msgstr "O indicador de data e hora"
 
 #: data/datetime.appdata.xml.in:11
 msgid "Fix missing event dots in the calendar view"
-msgstr ""
+msgstr "Corrige pontos de evento ausentes na exibição do calendário"
 
 #: data/datetime.appdata.xml.in:12
 msgid "Fix event appearance with dark style"

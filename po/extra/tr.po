@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: extra\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-05-17 22:03+0000\n"
-"PO-Revision-Date: 2020-05-17 22:01+0000\n"
+"PO-Revision-Date: 2020-05-22 14:11+0000\n"
 "Last-Translator: Ozgur Baskin <bebeto_baskin@yahoo.com>\n"
 "Language-Team: Turkish <https://l10n.elementary.io/projects/wingpanel/"
 "indicator-datetime-extra/tr/>\n"
@@ -29,7 +29,7 @@ msgstr "Tarih ve saat göstergesi"
 
 #: data/datetime.appdata.xml.in:11
 msgid "Fix missing event dots in the calendar view"
-msgstr ""
+msgstr "Takvim görünümündeki eksik olan etkinlik noktaları düzeltildi"
 
 #: data/datetime.appdata.xml.in:12
 msgid "Fix event appearance with dark style"
