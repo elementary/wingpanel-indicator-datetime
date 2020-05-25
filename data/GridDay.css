@@ -7,9 +7,9 @@
 }
 
 .circular:selected .accent {
-    color: @selected_fg_color;
+    color: @accent_color_500;
 }
 
 grid:disabled .accent {
-    color: @insensitive_color;
+    color: @accent_color_500;
 }
