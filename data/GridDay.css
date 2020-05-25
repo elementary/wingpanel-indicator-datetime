@@ -6,10 +6,19 @@
     border-radius: 50%;
 }
 
+.circular:selected {
+    background-color: @accent_color_300;
+}
+
 .circular:selected .accent {
-    color: @accent_color_500;
+    color: @bg_color;
 }
 
 grid:disabled .accent {
-    color: @accent_color_500;
+    color: @accent_color_300;
+}
+
+.event-dot,
+.event-dot image {
+    color: @accent_color;
 }
