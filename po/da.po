@@ -3,16 +3,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-09-26 16:48-0700\n"
-"PO-Revision-Date: 2018-07-27 06:39+0000\n"
-"Last-Translator: Kaj Printz Madsen <kajprintz@gmail.com>\n"
-"Language-Team: Danish <https://weblate.elementary.io/projects/wingpanel/"
+"PO-Revision-Date: 2020-05-26 11:11+0000\n"
+"Last-Translator: Rantyrant <diseasemonger@gmail.com>\n"
+"Language-Team: Danish <https://l10n.elementary.io/projects/wingpanel/"
 "wingpanel-indicator-datetime/da/>\n"
 "Language: da\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 3.0.1\n"
+"X-Generator: Weblate 3.9.1\n"
 "X-Launchpad-Export-Date: 2017-02-19 05:57+0000\n"
 
 #: src/Indicator.vala:32
@@ -25,7 +25,7 @@ msgstr "Indikatoren for dato og klokkeslæt"
 
 #: src/Indicator.vala:58
 msgid "No Events on This Day"
-msgstr ""
+msgstr "Ingen Begivenheder på Denne Dag"
 
 #: src/Indicator.vala:82
 msgid "Date & Time Settings…"
@@ -33,28 +33,28 @@ msgstr "Indstillinger for dato og klokkeslæt…"
 
 #: src/Indicator.vala:131
 msgid "During the Day"
-msgstr ""
+msgstr "I Løbet af Dagen"
 
 #: src/Indicator.vala:139
 msgid "All Day"
-msgstr ""
+msgstr "Hele Dagen"
 
 #: src/Widgets/calendar/CalendarView.vala:33
 #: src/Widgets/calendar/CalendarView.vala:85
 msgid "%OB, %Y"
-msgstr ""
+msgstr "%OB, %Y"
 
 #: src/Widgets/calendar/CalendarView.vala:48
 msgid "Go to today's date"
-msgstr ""
+msgstr "Gå til Dags Dato"
 
 #: src/Widgets/calendar/CalendarView.vala:145
 msgid "Unable To Launch Calendar"
-msgstr ""
+msgstr "Ude Af Stand til At Åbne Kalender"
 
 #: src/Widgets/calendar/CalendarView.vala:146
 msgid "The program \"io.elementary.calendar\" may not be installed"
-msgstr ""
+msgstr "Programmet  \"io.elementary.calendar\" er måske ikke installeret"
 
 #~ msgid "%OB %Y"
 #~ msgstr "%OB %Y"
