@@ -20,19 +20,7 @@
  */
 
 namespace Util {
-    public void get_style_calendar_color (E.SourceCalendar cal, Gtk.CssProvider provider) {
-        string style = """
-                        @define-color colorAccent %s;
-                       """.printf (cal.dup_color ());
-        try {
-            provider.load_from_data (style, style.length);
-        } catch (Error e) {
-            warning ("Could not create CSS Provider: %s\nStylesheet:\n%s", e.message, style);
-        }
-    }
-
     static bool has_scrolled = false;
-    const uint interval = 500;
 
     public bool on_scroll_event (Gdk.EventScroll event) {
         double delta_x;
@@ -94,7 +82,7 @@ namespace Util {
         bool is_positive = interval >= 0;
         interval = interval.abs ();
         var hours = (interval / 3600);
-        var minutes = (interval % 3600)/60;
+        var minutes = (interval % 3600) / 60;
         var hour_string = "%s%02d:%02d".printf (is_positive ? "+" : "-", hours, minutes);
 
         return new TimeZone (hour_string);
@@ -105,389 +93,29 @@ namespace Util {
      * XXX : Track next versions of evolution in order to convert ICal.Timezone to GLib.TimeZone with a dedicated function…
      */
     public GLib.DateTime ical_to_date_time (ICal.Time date) {
+#if E_CAL_2_0
+        int year, month, day, hour, minute, second;
+        date.get_date (out year, out month, out day);
+        date.get_time (out hour, out minute, out second);
+        return new GLib.DateTime (timezone_from_ical (date), year, month,
+            day, hour, minute, second);
+#else
         return new GLib.DateTime (timezone_from_ical (date), date.year, date.month,
             date.day, date.hour, date.minute, date.second);
-    }
-
-    public Gee.Collection<DateRange> event_date_ranges (ICal.Component comp, Util.DateRange view_range) {
-        var dateranges = new Gee.LinkedList<DateRange> ();
-
-        var start = ical_to_date_time (comp.get_dtstart ());
-        var end = ical_to_date_time (comp.get_dtend ());
-
-        if (end == null) {
-            end = start;
-        }
-
-        /* All days events are stored in UTC time and should only being shown at one day. */
-        bool allday = is_the_all_day (start, end);
-
-        if (allday) {
-            end = end.add_days (-1);
-            var interval = (new GLib.DateTime.now_local ()).get_utc_offset ();
-            start = start.add (-interval);
-            end = end.add (-interval);
-        }
-
-        start = strip_time (start.to_timezone (new TimeZone.local ()));
-        end = strip_time (end.to_timezone (new TimeZone.local ()));
-        dateranges.add (new Util.DateRange (start, end));
-
-        /* Search for recursive events. */
-        unowned ICal.Property property = comp.get_first_property (ICal.PropertyKind.RRULE_PROPERTY);
-
-        if (property != null) {
-            var rrule = property.get_rrule ();
-
-            switch (rrule.freq) {
-                case (ICal.RecurrenceFrequency.WEEKLY_RECURRENCE) :
-                    generate_week_reccurence (dateranges, view_range, rrule, start, end);
-                    break;
-                case (ICal.RecurrenceFrequency.MONTHLY_RECURRENCE) :
-                    generate_month_reccurence (dateranges, view_range, rrule, start, end);
-                    break;
-                case (ICal.RecurrenceFrequency.YEARLY_RECURRENCE) :
-                    generate_year_reccurence (dateranges, view_range, rrule, start, end);
-                    break;
-                default :
-                    generate_day_reccurence (dateranges, view_range, rrule, start, end);
-                    break;
-            }
-        }
-
-        /* EXDATE_PROPERTYs elements are exceptions dates that should not appear. */
-        property = comp.get_first_property (ICal.PropertyKind.EXDATE_PROPERTY);
-
-        while (property != null) {
-            var exdate = property.get_exdate ();
-            var date = ical_to_date_time (exdate);
-            dateranges.@foreach ((daterange) => {
-                var first = daterange.first_dt;
-                var last = daterange.last_dt;
-
-                if (first.get_year () <= date.get_year () && last.get_year () >= date.get_year ()) {
-                    if (first.get_day_of_year () <= date.get_day_of_year () && last.get_day_of_year () >= date.get_day_of_year ()) {
-                        dateranges.remove (daterange);
-
-                        return false;
-                    }
-                }
-
-                return true;
-            });
-
-            property = comp.get_next_property (ICal.PropertyKind.EXDATE_PROPERTY);
-        }
-
-        return dateranges;
-    }
-
-    private void generate_day_reccurence (Gee.LinkedList<DateRange> dateranges, Util.DateRange view_range,
-                                          ICal.Recurrence rrule, GLib.DateTime start, GLib.DateTime end) {
-        if (!rrule.until.is_null_time ()) {
-            for (int i = 1; i <= (int)(rrule.until.day / rrule.interval); i++) {
-                int n = i * rrule.interval;
-
-                if (view_range.contains (start.add_days (n)) || view_range.contains (end.add_days (n))) {
-                    dateranges.add (new Util.DateRange (start.add_days (n), end.add_days (n)));
-                }
-            }
-        } else if (rrule.count > 0) {
-            for (int i = 1; i <= rrule.count; i++) {
-                int n = i * rrule.interval;
-
-                if (view_range.contains (start.add_days (n)) || view_range.contains (end.add_days (n))) {
-                    dateranges.add (new Util.DateRange (start.add_days (n), end.add_days (n)));
-                }
-            }
-        } else {
-            int i = 1;
-            int n = i * rrule.interval;
-
-            while (view_range.last_dt.compare (start.add_days (n)) > 0) {
-                dateranges.add (new Util.DateRange (start.add_days (n), end.add_days (n)));
-                i++;
-                n = i * rrule.interval;
-            }
-        }
-    }
-
-    private void generate_year_reccurence (Gee.LinkedList<DateRange> dateranges, Util.DateRange view_range,
-                                           ICal.Recurrence rrule, GLib.DateTime start, GLib.DateTime end) {
-        if (!rrule.until.is_null_time ()) {
-            /*for (int i = 0; i <= rrule.until.year; i++) {
-             *   int n = i*rrule.interval;
-             *   if (view_range.contains (start.add_years (n)) || view_range.contains (end.add_years (n)))
-             *       dateranges.add (new Util.DateRange (start.add_years (n), end.add_years (n)));
-             *  }*/
-        } else if (rrule.count > 0) {
-            for (int i = 1; i <= rrule.count; i++) {
-                int n = i * rrule.interval;
-
-                if (view_range.contains (start.add_years (n)) || view_range.contains (end.add_years (n))) {
-                    dateranges.add (new Util.DateRange (start.add_years (n), end.add_years (n)));
-                }
-            }
-        } else {
-            int i = 1;
-            int n = i * rrule.interval;
-            bool is_null_time = rrule.until.is_null_time ();
-            var temp_start = start.add_years (n);
-
-            while (view_range.last_dt.compare (temp_start) > 0) {
-                if (is_null_time == false) {
-                    if (temp_start.get_year () > rrule.until.year) {
-                        break;
-                    } else if (temp_start.get_year () == rrule.until.year && temp_start.get_month () > rrule.until.month) {
-                        break;
-                    } else if (temp_start.get_year () == rrule.until.year && temp_start.get_month () == rrule.until.month && temp_start.get_day_of_month () > rrule.until.day) {
-                        break;
-                    }
-                }
-
-                dateranges.add (new Util.DateRange (temp_start, end.add_years (n)));
-                i++;
-                n = i * rrule.interval;
-                temp_start = start.add_years (n);
-            }
-        }
-    }
-
-    private void generate_month_reccurence (Gee.LinkedList<DateRange> dateranges, Util.DateRange view_range,
-                                            ICal.Recurrence rrule, GLib.DateTime start, GLib.DateTime end) {
-        /* Computes month recurrences by day (for example: third friday of the month). */
-        for (int k = 0; k <= ICal.Size.BY_DAY; k++) {
-            if (rrule.by_day[k] < ICal.Size.BY_DAY) {
-                if (rrule.count > 0) {
-                    for (int i = 1; i <= rrule.count; i++) {
-                        int n = i * rrule.interval;
-                        var start_ical_day = get_date_from_ical_day (start.add_months (n), rrule.by_day[k]);
-                        int interval = start_ical_day.get_day_of_month () - start.get_day_of_month ();
-                        dateranges.add (new Util.DateRange (start_ical_day, end.add_months (n).add_days (interval)));
-                    }
-                } else {
-                    int i = 1;
-                    int n = i * rrule.interval;
-                    bool is_null_time = rrule.until.is_null_time ();
-                    var start_ical_day = get_date_from_ical_day (start.add_months (n), rrule.by_day[k]);
-                    int week_of_month = (int)GLib.Math.ceil ((double)start.get_day_of_month () / 7);
-
-                    while (view_range.last_dt.compare (start_ical_day) > 0) {
-                        if (is_null_time == false) {
-                            if (start_ical_day.get_year () > rrule.until.year) {
-                                break;
-                            } else if (start_ical_day.get_year () == rrule.until.year && start_ical_day.get_month () > rrule.until.month) {
-                                break;
-                            } else if (start_ical_day.get_year () == rrule.until.year && start_ical_day.get_month () == rrule.until.month && start_ical_day.get_day_of_month () > rrule.until.day) {
-                                break;
-                            }
-                        }
-
-                        /* Set it at the right weekday */
-                        int interval = start_ical_day.get_day_of_month () - start.get_day_of_month ();
-                        var start_daterange_date = start_ical_day;
-                        var end_daterange_date = end.add_months (n).add_days (interval);
-                        var new_week_of_month = (int)GLib.Math.ceil ((double)start_daterange_date.get_day_of_month () / 7);
-
-                        /* Set it at the right week */
-                        if (week_of_month != new_week_of_month) {
-                            start_daterange_date = start_daterange_date.add_weeks (week_of_month - new_week_of_month);
-                            end_daterange_date = end_daterange_date.add_weeks (week_of_month - new_week_of_month);
-                        }
-
-                        dateranges.add (new Util.DateRange (start_daterange_date, end_daterange_date));
-                        i++;
-                        n = i * rrule.interval;
-                        start_ical_day = get_date_from_ical_day (start.add_months (n), rrule.by_day[k]);
-                    }
-                }
-            } else {
-                break;
-            }
-        }
-
-        /* Computes month recurrences by month day (for example: 4th of the month). */
-        if (rrule.by_month_day[0] < ICal.Size.BY_MONTHDAY) {
-            if (rrule.count > 0) {
-                for (int i = 1; i <= rrule.count; i++) {
-                    int n = i * rrule.interval;
-                    dateranges.add (new Util.DateRange (start.add_months (n), end.add_months (n)));
-                }
-            } else {
-                int i = 1;
-                int n = i * rrule.interval;
-                bool is_null_time = rrule.until.is_null_time ();
-                var temp_start = start.add_months (n);
-
-                while (view_range.last_dt.compare (temp_start) > 0) {
-                    if (is_null_time == false) {
-                        if (temp_start.get_year () > rrule.until.year) {
-                            break;
-                        } else if (temp_start.get_year () == rrule.until.year && temp_start.get_month () > rrule.until.month) {
-                            break;
-                        } else if (temp_start.get_year () == rrule.until.year && temp_start.get_month () == rrule.until.month && temp_start.get_day_of_month () > rrule.until.day) {
-                            break;
-                        }
-                    }
-
-                    dateranges.add (new Util.DateRange (temp_start, end.add_months (n)));
-                    i++;
-                    n = i * rrule.interval;
-                    temp_start = start.add_months (n);
-                }
-            }
-        }
-    }
-
-    private void generate_week_reccurence (Gee.LinkedList<DateRange> dateranges, Util.DateRange view_range,
-                                           ICal.Recurrence rrule, GLib.DateTime start_, GLib.DateTime end_) {
-        GLib.DateTime start = start_;
-        GLib.DateTime end = end_;
-
-        for (int k = 0; k <= ICal.Size.BY_DAY; k++) {
-            if (rrule.by_day[k] > 7) {
-                break;
-            }
-
-            int day_to_add = 0;
-
-            switch (rrule.by_day[k]) {
-                case 1:
-                    day_to_add = 7 - start.get_day_of_week ();
-                    break;
-                case 2:
-                    day_to_add = 1 - start.get_day_of_week ();
-                    break;
-                case 3:
-                    day_to_add = 2 - start.get_day_of_week ();
-                    break;
-                case 4:
-                    day_to_add = 3 - start.get_day_of_week ();
-                    break;
-                case 5:
-                    day_to_add = 4 - start.get_day_of_week ();
-                    break;
-                case 6:
-                    day_to_add = 5 - start.get_day_of_week ();
-                    break;
-                default:
-                    day_to_add = 6 - start.get_day_of_week ();
-                    break;
-            }
-
-            if (start.add_days (day_to_add).get_month () < start.get_month ()) {
-                day_to_add = day_to_add + 7;
-            }
-
-            start = start.add_days (day_to_add);
-            end = end.add_days (day_to_add);
-
-            if (rrule.count > 0) {
-                for (int i = 1; i <= rrule.count; i++) {
-                    int n = i * rrule.interval * 7;
-
-                    if (view_range.contains (start.add_days (n)) || view_range.contains (end.add_days (n))) {
-                        dateranges.add (new Util.DateRange (start.add_days (n), end.add_days (n)));
-                    }
-                }
-            } else {
-                int i = 1;
-                int n = i * rrule.interval * 7;
-                bool is_null_time = rrule.until.is_null_time ();
-                var temp_start = start.add_days (n);
-
-                while (view_range.last_dt.compare (temp_start) > 0) {
-                    if (is_null_time == false) {
-                        if (temp_start.get_year () > rrule.until.year) {
-                            break;
-                        } else if (temp_start.get_year () == rrule.until.year) {
-                            if (temp_start.get_month () > rrule.until.month) {
-                                break;
-                            } else if (temp_start.get_month () == rrule.until.month && temp_start.get_day_of_month () > rrule.until.day) {
-                                break;
-                            }
-                        }
-                    }
-
-                    dateranges.add (new Util.DateRange (temp_start, end.add_days (n)));
-                    i++;
-                    n = i * rrule.interval * 7;
-                    temp_start = start.add_days (n);
-                }
-            }
-        }
+#endif
     }
 
     /**
      * Say if an event lasts all day.
      */
     public bool is_the_all_day (GLib.DateTime dtstart, GLib.DateTime dtend) {
-        var UTC_start = dtstart.to_timezone (new TimeZone.utc ());
+        var utc_start = dtstart.to_timezone (new TimeZone.utc ());
         var timespan = dtend.difference (dtstart);
 
-        if (timespan % GLib.TimeSpan.DAY == 0 && UTC_start.get_hour () == 0) {
+        if (timespan % GLib.TimeSpan.DAY == 0 && utc_start.get_hour () == 0) {
             return true;
         } else {
             return false;
-        }
-    }
-
-    public GLib.DateTime get_date_from_ical_day (GLib.DateTime date, short day) {
-        int day_to_add = 0;
-
-        switch (ICal.Recurrence.day_day_of_week (day)) {
-            case ICal.RecurrenceWeekday.SUNDAY_WEEKDAY:
-                day_to_add = 7 - date.get_day_of_week ();
-                break;
-            case ICal.RecurrenceWeekday.MONDAY_WEEKDAY:
-                day_to_add = 1 - date.get_day_of_week ();
-                break;
-            case ICal.RecurrenceWeekday.TUESDAY_WEEKDAY:
-                day_to_add = 2 - date.get_day_of_week ();
-                break;
-            case ICal.RecurrenceWeekday.WEDNESDAY_WEEKDAY:
-                day_to_add = 3 - date.get_day_of_week ();
-                break;
-            case ICal.RecurrenceWeekday.THURSDAY_WEEKDAY:
-                day_to_add = 4 - date.get_day_of_week ();
-                break;
-            case ICal.RecurrenceWeekday.FRIDAY_WEEKDAY:
-                day_to_add = 5 - date.get_day_of_week ();
-                break;
-            default:
-                day_to_add = 6 - date.get_day_of_week ();
-                break;
-        }
-
-        if (date.add_days (day_to_add).get_month () < date.get_month ()) {
-            day_to_add = day_to_add + 7;
-        }
-
-        if (date.add_days (day_to_add).get_month () > date.get_month ()) {
-            day_to_add = day_to_add - 7;
-        }
-
-        switch (ICal.Recurrence.day_position (day)) {
-            case 1:
-                int n = (int)GLib.Math.trunc ((date.get_day_of_month () + day_to_add) / 7);
-
-                return date.add_days (day_to_add - n * 7);
-            case 2:
-                int n = (int)GLib.Math.trunc ((date.get_day_of_month () + day_to_add - 7) / 7);
-
-                return date.add_days (day_to_add - n * 7);
-            case 3:
-                int n = (int)GLib.Math.trunc ((date.get_day_of_month () + day_to_add - 14) / 7);
-
-                return date.add_days (day_to_add - n * 7);
-            case 4:
-                int n = (int)GLib.Math.trunc ((date.get_day_of_month () + day_to_add - 21) / 7);
-
-                return date.add_days (day_to_add - n * 7);
-            default:
-                int n = (int)GLib.Math.trunc ((date.get_day_of_month () + day_to_add - 28) / 7);
-
-                return date.add_days (day_to_add - n * 7);
         }
     }
 
@@ -528,9 +156,68 @@ namespace Util {
 
     /* Returns true if 'a' and 'b' are the same ECal.Component */
     public bool calcomponent_equal_func (ECal.Component a, ECal.Component b) {
-        unowned ICal.Component comp_a = a.get_icalcomponent ();
-        unowned ICal.Component comp_b = b.get_icalcomponent ();
-        return comp_a.get_uid () == comp_b.get_uid ();
+        return a.get_id ().equal (b.get_id ());
+    }
+
+    public int calcomponent_compare_func (ECal.Component? a, ECal.Component? b) {
+        if (a == null && b != null) {
+            return 1;
+        } else if (b == null && a != null) {
+            return -1;
+        } else if (b == null && a == null) {
+            return 0;
+        }
+
+        var a_id = a.get_id ();
+        var b_id = b.get_id ();
+        int res = GLib.strcmp (a_id.get_uid (), b_id.get_uid ());
+        if (res == 0) {
+            return GLib.strcmp (a_id.get_rid (), b_id.get_rid ());
+        }
+
+        return res;
+    }
+
+    public bool calcomp_is_on_day (ECal.Component comp, GLib.DateTime day) {
+#if E_CAL_2_0
+        unowned ICal.Timezone system_timezone = ECal.util_get_system_timezone ();
+#else
+        unowned ICal.Timezone system_timezone = ECal.Util.get_system_timezone ();
+#endif
+
+        var stripped_time = new GLib.DateTime.local (day.get_year (), day.get_month (), day.get_day_of_month (), 0, 0, 0);
+
+        var selected_date_unix = stripped_time.to_unix ();
+        var selected_date_unix_next = stripped_time.add_days (1).to_unix ();
+
+        /* We want to be relative to the local timezone */
+        unowned ICal.Component? icomp = comp.get_icalcomponent ();
+        ICal.Time? start_time = icomp.get_dtstart ();
+        ICal.Time? end_time = icomp.get_dtend ();
+        time_t start_unix = start_time.as_timet_with_zone (system_timezone);
+        time_t end_unix = end_time.as_timet_with_zone (system_timezone);
+
+        /* If the selected date is inside the event */
+        if (start_unix < selected_date_unix && selected_date_unix_next < end_unix) {
+            return true;
+        }
+
+        /* If the event start before the selected date but finished in the selected date */
+        if (start_unix < selected_date_unix && selected_date_unix < end_unix) {
+            return true;
+        }
+
+        /* If the event start after the selected date but finished after the selected date */
+        if (start_unix < selected_date_unix_next && selected_date_unix_next < end_unix) {
+            return true;
+        }
+
+        /* If the event is inside the selected date */
+        if (start_unix < selected_date_unix_next && selected_date_unix < end_unix) {
+            return true;
+        }
+
+        return false;
     }
 
     /* Returns true if 'a' and 'b' are the same E.Source */
@@ -540,7 +227,7 @@ namespace Util {
 
     public async void reset_timer () {
         has_scrolled = true;
-        Timeout.add (interval, () => {
+        Timeout.add (500, () => {
             has_scrolled = false;
 
             return false;

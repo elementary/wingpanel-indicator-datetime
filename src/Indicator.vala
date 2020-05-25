@@ -193,16 +193,14 @@ public class DateTime.Indicator : Wingpanel.Indicator {
         var events_on_day = new Gee.TreeMap<string, DateTime.EventRow> ();
 
         model.source_events.@foreach ((source, component_map) => {
-            foreach (var comp in component_map.values) {
-                unowned ICal.Component ical = comp.get_icalcomponent ();
-                foreach (var dt_range in Util.event_date_ranges (ical, model.data_range)) {
-                    if (date in dt_range) {
-                        var event_uid = ical.get_uid ();
-                        if (!events_on_day.has_key (event_uid)) {
-                            events_on_day[event_uid] = new DateTime.EventRow (date, ical, source);
+            foreach (var comp in component_map.get_values ()) {
+                if (Util.calcomp_is_on_day (comp, date)) {
+                    unowned ICal.Component ical = comp.get_icalcomponent ();
+                    var event_uid = ical.get_uid ();
+                    if (!events_on_day.has_key (event_uid)) {
+                        events_on_day[event_uid] = new DateTime.EventRow (date, ical, source);
 
-                            event_listbox.add (events_on_day[event_uid]);
-                        }
+                        event_listbox.add (events_on_day[event_uid]);
                     }
                 }
             }

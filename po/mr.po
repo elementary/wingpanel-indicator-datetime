@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-08-26 16:31+0300\n"
+"POT-Creation-Date: 2019-09-26 16:48-0700\n"
 "PO-Revision-Date: 2019-09-07 10:22+0000\n"
 "Last-Translator: Prachi Joshi <josprachi@yahoo.com>\n"
 "Language-Team: Marathi <https://l10n.elementary.io/projects/wingpanel/"
@@ -39,20 +39,20 @@ msgstr "दिवसा"
 msgid "All Day"
 msgstr "संपूर्ण दिवस"
 
-#: src/Widgets/calendar/CalendarView.vala:34
-#: src/Widgets/calendar/CalendarView.vala:91
+#: src/Widgets/calendar/CalendarView.vala:33
+#: src/Widgets/calendar/CalendarView.vala:85
 msgid "%OB, %Y"
 msgstr "%OB, %Y"
 
-#: src/Widgets/calendar/CalendarView.vala:49
+#: src/Widgets/calendar/CalendarView.vala:48
 msgid "Go to today's date"
 msgstr "आजच्या तारखेला जा"
 
-#: src/Widgets/calendar/CalendarView.vala:155
+#: src/Widgets/calendar/CalendarView.vala:145
 msgid "Unable To Launch Calendar"
 msgstr "कॅलेंडर लाँच करण्यात अक्षम"
 
-#: src/Widgets/calendar/CalendarView.vala:156
+#: src/Widgets/calendar/CalendarView.vala:146
 msgid "The program \"io.elementary.calendar\" may not be installed"
 msgstr "कदाचित प्रोग्राम \"io.elementary.cender\" स्थापित केलेला नसावा"
 
