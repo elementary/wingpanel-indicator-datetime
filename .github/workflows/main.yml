@@ -11,11 +11,11 @@ jobs:
       image: elementary/docker:unstable
     
     steps:
-    - uses: actions/checkout@v1
+    - uses: actions/checkout@v2
     - name: Install Dependencies
       run: |
         apt update
-        apt install -y gobject-introspection libecal1.2-dev libedataserver1.2-dev libical-dev libgranite-dev libwingpanel-2.0-dev meson valac
+        apt install -y gobject-introspection libecal2.0-dev libedataserver1.2-dev libical-dev libgranite-dev libwingpanel-2.0-dev meson valac
     - name: Build
       env:
         DESTDIR: out
@@ -32,6 +32,6 @@ jobs:
       image: valalang/lint
       
     steps:
-    - uses: actions/checkout@v1
+    - uses: actions/checkout@v2
     - name: Lint
       run: io.elementary.vala-lint -d .
