@@ -1,3 +1,14 @@
+wingpanel-indicator-datetime (2.2.4) bionic; urgency=medium
+
+  * Release 2.2.4 (#223)
+  * Indicator: Remove vertical seperator (#220)
+  * Update CI for Odin (#221)
+  * Update translation files
+  * Update translation template
+  * Grid: Fewer CalendarModel connections (#217)
+
+ -- Cody Garver <cody@elementary.io>  Thu, 28 May 2020 18:55:06 +0000
+
 wingpanel-indicator-datetime (2.2.3) bionic; urgency=medium
 
   * Release 2.2.3 (#215)
