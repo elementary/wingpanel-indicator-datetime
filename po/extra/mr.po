@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: extra\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-05-24 22:27+0000\n"
-"PO-Revision-Date: 2020-04-06 15:10+0000\n"
+"PO-Revision-Date: 2020-05-31 16:11+0000\n"
 "Last-Translator: Prachi Joshi <josprachi@yahoo.com>\n"
 "Language-Team: Marathi <https://l10n.elementary.io/projects/wingpanel/"
 "indicator-datetime-extra/mr/>\n"
@@ -29,7 +29,7 @@ msgstr "तारीख आणि वेळ सूचक"
 
 #: data/datetime.appdata.xml.in:11
 msgid "Improved performance when switching months"
-msgstr ""
+msgstr "महिने स्विच करताना सुधारित कार्यप्रदर्शन"
 
 #: data/datetime.appdata.xml.in:12 data/datetime.appdata.xml.in:19
 #: data/datetime.appdata.xml.in:24 data/datetime.appdata.xml.in:30
@@ -39,11 +39,11 @@ msgstr "अद्ययावत भाषांतर"
 
 #: data/datetime.appdata.xml.in:17
 msgid "Fix missing event dots in the calendar view"
-msgstr ""
+msgstr "कॅलेंडर दृश्यात गहाळ इव्हेंट डॉट्सचे निराकरण करा"
 
 #: data/datetime.appdata.xml.in:18
 msgid "Fix event appearance with dark style"
-msgstr ""
+msgstr "गडद शैलीसह इव्हेंट दिसण्याशी संबंधित समस्यांचे निराकरण करा"
 
 #: data/datetime.appdata.xml.in:29
 msgid "Fix potential crash when loading events with no start or end time"
