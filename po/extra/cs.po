@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: extra\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-05-24 22:27+0000\n"
-"PO-Revision-Date: 2020-05-08 13:10+0000\n"
+"PO-Revision-Date: 2020-05-28 18:53+0000\n"
 "Last-Translator: p-bo <pavel.borecki@gmail.com>\n"
 "Language-Team: Czech <https://l10n.elementary.io/projects/wingpanel/"
 "indicator-datetime-extra/cs/>\n"
@@ -21,15 +21,15 @@ msgstr ""
 
 #: data/datetime.appdata.xml.in:6
 msgid "Date &amp; Time Indicator"
-msgstr ""
+msgstr "Indikátor data a času"
 
 #: data/datetime.appdata.xml.in:7
 msgid "The date and time indicator"
-msgstr ""
+msgstr "Indikátor data a času"
 
 #: data/datetime.appdata.xml.in:11
 msgid "Improved performance when switching months"
-msgstr ""
+msgstr "Svižnější přepínání měsíců"
 
 #: data/datetime.appdata.xml.in:12 data/datetime.appdata.xml.in:19
 #: data/datetime.appdata.xml.in:24 data/datetime.appdata.xml.in:30
@@ -39,31 +39,33 @@ msgstr "Aktualizovány překlady"
 
 #: data/datetime.appdata.xml.in:17
 msgid "Fix missing event dots in the calendar view"
-msgstr ""
+msgstr "Oprava chybějících teček událostí ve zobrazení kalendáře"
 
 #: data/datetime.appdata.xml.in:18
 msgid "Fix event appearance with dark style"
-msgstr ""
+msgstr "Opraven vzhled události pro tmavý styl"
 
 #: data/datetime.appdata.xml.in:29
 msgid "Fix potential crash when loading events with no start or end time"
 msgstr ""
+"Opraven potenciální pád při načítání událostí s nezadaným časem začátku či "
+"konce"
 
 #: data/datetime.appdata.xml.in:35
 msgid "Redesigned the way upcoming events are displayed"
-msgstr ""
+msgstr "Předělán způsob zobrazování nadcházejících událostí"
 
 #: data/datetime.appdata.xml.in:36
 msgid "Fixed issues with large text size"
-msgstr ""
+msgstr "Opraveny problémy s velikostí rozsáhlého textu"
 
 #: data/datetime.appdata.xml.in:37
 msgid "Show dots on days with events"
-msgstr ""
+msgstr "Zobrazovány tečky u dnů s událostmi"
 
 #: data/datetime.appdata.xml.in:38
 msgid "Better handling of recurring events"
-msgstr ""
+msgstr "Lepší zacházení s opakujícími se událostmi"
 
 #: data/datetime.appdata.xml.in:39
 msgid "Performance improvements"
@@ -71,8 +73,8 @@ msgstr "Vylepšení výkonnosti"
 
 #: data/datetime.appdata.xml.in:40
 msgid "Display an error dialog if Calendar fails to open"
-msgstr ""
+msgstr "Zobrazení chybového hlášení pokud se kalendář nepodaří otevřít"
 
 #: data/datetime.appdata.xml.in:50
 msgid "elementary, Inc."
-msgstr ""
+msgstr "elementary, Inc."

@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: extra\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-05-24 22:27+0000\n"
-"PO-Revision-Date: 2020-05-18 03:11+0000\n"
+"PO-Revision-Date: 2020-05-31 16:11+0000\n"
 "Last-Translator: Ryo Nakano <ryonakaknock3@gmail.com>\n"
 "Language-Team: Japanese <https://l10n.elementary.io/projects/wingpanel/"
 "indicator-datetime-extra/ja/>\n"
@@ -29,7 +29,7 @@ msgstr "日付と時刻のインジケーター"
 
 #: data/datetime.appdata.xml.in:11
 msgid "Improved performance when switching months"
-msgstr ""
+msgstr "表示する月の切り替え時のパフォーマンスを改善"
 
 #: data/datetime.appdata.xml.in:12 data/datetime.appdata.xml.in:19
 #: data/datetime.appdata.xml.in:24 data/datetime.appdata.xml.in:30
