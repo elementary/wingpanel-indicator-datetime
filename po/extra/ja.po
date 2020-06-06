@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: extra\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-05-24 22:27+0000\n"
-"PO-Revision-Date: 2020-05-31 16:11+0000\n"
+"PO-Revision-Date: 2020-06-07 20:11+0000\n"
 "Last-Translator: Ryo Nakano <ryonakaknock3@gmail.com>\n"
 "Language-Team: Japanese <https://l10n.elementary.io/projects/wingpanel/"
 "indicator-datetime-extra/ja/>\n"
@@ -39,17 +39,15 @@ msgstr "翻訳の更新"
 
 #: data/datetime.appdata.xml.in:17
 msgid "Fix missing event dots in the calendar view"
-msgstr "カレンダー表示で予定を示す点が表示されなくなった問題を修正"
+msgstr "カレンダー表示で予定を示す点が表示されなくなった不具合を修正"
 
 #: data/datetime.appdata.xml.in:18
 msgid "Fix event appearance with dark style"
-msgstr "ダークスタイルで予定が見にくくなる問題を修正"
+msgstr "ダークスタイルで予定が見にくくなる不具合を修正"
 
 #: data/datetime.appdata.xml.in:29
 msgid "Fix potential crash when loading events with no start or end time"
-msgstr ""
-"開始時刻または終了時刻が指定されていない予定を読み込んだ際にアプリがクラッ"
-"シュすることがある問題を修正"
+msgstr "開始時刻または終了時刻が指定されていない予定を読み込んだ際に、アプリがクラッシュすることがある不具合を修正"
 
 #: data/datetime.appdata.xml.in:35
 msgid "Redesigned the way upcoming events are displayed"
@@ -57,7 +55,7 @@ msgstr "直近の予定の表示方法のデザインを変更"
 
 #: data/datetime.appdata.xml.in:36
 msgid "Fixed issues with large text size"
-msgstr "大きいテキストサイズで生じる問題を修正"
+msgstr "大きいテキストサイズで生じる不具合を修正"
 
 #: data/datetime.appdata.xml.in:37
 msgid "Show dots on days with events"
