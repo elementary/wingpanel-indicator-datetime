@@ -29,18 +29,20 @@ public class CalendarStore : Object {
 	public signal void components_modified (Gee.Collection<ECal.Component> components, E.Source source);
 	public signal void components_removed (Gee.Collection<ECal.Component> components, E.Source source);
 
-	public ECal.ClientSourceType client_source_type { get; construct; }
+	public ECal.ClientSourceType source_type { get; construct; }
 	private E.SourceRegistry registry { get; private set; }
 	private HashTable<string, ECal.Client> source_client;
 	private HashTable<string, Gee.Collection<ECal.ClientView>> source_views;
+	private HashTable<string, Gee.TreeMultiMap<string, ECal.Component>> source_components;
 
 	private GLib.Queue<E.Source> source_trash;
 #if EDataServerUI
 	private E.CredentialsPrompter credentials_prompter;
 #endif
+    private static GLib.Settings state_settings;
 
-	private CalendarStore (ECal.ClientSourceType client_source_type) {
-		Object (client_source_type: client_source_type);
+	private CalendarStore (ECal.ClientSourceType source_type) {
+		Object (source_type: source_type);
 	}
 
 	private static CalendarStore? event_store = null;
@@ -49,27 +51,41 @@ public class CalendarStore : Object {
 	public static CalendarStore get_event_store () {
         if (event_store == null)
             event_store = new CalendarStore (ECal.ClientSourceType.EVENTS);
+        if (state_settings == null)
+            state_settings = new GLib.Settings ("io.elementary.calendar.savedstate");
         return event_store;
     }
 
     public static CalendarStore get_task_store () {
         if (task_store == null)
             task_store = new CalendarStore (ECal.ClientSourceType.TASKS);
+        if (state_settings == null)
+            state_settings = new GLib.Settings ("io.elementary.tasks.savedstate");
         return task_store;
     }
 
 	/* The start of week, ie. Monday=1 or Sunday=7 */
-	public GLib.DateWeekday calendar_week_starts_on { get; set; }
+    public GLib.DateWeekday week_starts_on { get; set; default = GLib.DateWeekday.MONDAY; }
+
+    /* The component that is currently dragged */
+    public ECal.Component drag_component { get; set; }
 
 	construct {
 		open.begin ();
 
 		source_client = new HashTable<string, ECal.Client> (str_hash, str_equal);
 		source_views = new HashTable<string, Gee.Collection<ECal.ClientView>> (str_hash, str_equal);
+		source_components = new HashTable<string, Gee.TreeMultiMap<string, ECal.Component>> (str_hash, str_equal);
 
-		int calendar_week_start = Posix.NLTime.FIRST_WEEKDAY.to_string ().data[0];
-		if (calendar_week_start >= 1 && calendar_week_start <= 7) {
-			calendar_week_starts_on = (GLib.DateWeekday) (calendar_week_start - 1);
+		int week_start = Posix.NLTime.FIRST_WEEKDAY.to_string ().data[0];
+		if (week_start >= 1 && week_start <= 7) {
+			week_starts_on = (GLib.DateWeekday) (week_start - 1);
+		}
+
+		if (source_type == ECal.ClientSourceType.EVENTS) {
+		    events_month_start = Util.get_start_of_month (events_get_page ());
+		    events_compute_ranges ();
+		    notify["events-month-start"].connect (events_on_parameter_changed);
 		}
 	}
 
@@ -98,7 +114,7 @@ public class CalendarStore : Object {
 	//--- Public Source API ---//
 
 	public bool is_source_enabled (E.Source source) {
-	    switch (client_source_type) {
+	    switch (source_type) {
 		    case ECal.ClientSourceType.EVENTS:
 			    E.SourceCalendar cal = (E.SourceCalendar)source.get_extension (E.SOURCE_EXTENSION_CALENDAR);
 			    return cal.selected == true && source.enabled == true;
@@ -241,11 +257,126 @@ public class CalendarStore : Object {
     	});
     }
 
-	//--- Private Source Utilities --//
+    //--- Helper Methods To Display Calendar Events --//
+
+    /* The events_month_start, events_num_weeks, or week_starts_on have been changed */
+    public signal void events_parameters_changed ();
+
+    /* The data_range is the range of dates for which this model is storing
+     * data. The month_range is a subset of this range corresponding to the
+     * calendar month that is being focused on. In summary:
+     *
+     * data_range.first_dt <= month_range.first_dt < month_range.last_dt <= data_range.last_dt
+     *
+     * There is no way to set the ranges publicly. They can only be modified by
+     * changing one of the following properties: month_start, num_weeks, and
+     * week_starts_on.
+    */
+    public Util.DateRange events_data_range { get; private set; }
+    public Util.DateRange events_month_range { get; private set; }
+
+    /* The first day of the month */
+    public GLib.DateTime events_month_start { get; set; }
+
+    /* The number of weeks to show */
+    public int events_num_weeks { get; private set; default = 6; }
+
+    public void events_change_month (int relative) {
+        events_month_start = events_month_start.add_months (relative);
+    }
+
+    public void events_change_year (int relative) {
+        events_month_start = events_month_start.add_years (relative);
+    }
+
+    public void events_load_all_sources () {
+        lock (source_client) {
+            foreach (var id in source_client.get_keys ()) {
+                var source = registry.ref_source (id);
+
+                if (is_source_enabled (source)) {
+                    events_load_source (source);
+                }
+            }
+        }
+    }
+
+    private void events_load_source (E.Source source) {
+        var iso_first = ECal.isodate_from_time_t ((time_t) events_data_range.first_dt.to_unix ());
+        var iso_last = ECal.isodate_from_time_t ((time_t) events_data_range.last_dt.add_days (1).to_unix ());
+        var query = @"(occur-in-time-range? (make-time \"$iso_first\") (make-time \"$iso_last\"))";
+
+        try {
+            add_view (source, query);
+        } catch (Error e) {
+            error_received (e);
+            critical ("Error from source '%s': %s", source.dup_display_name (), e.message);
+        }
+    }
+
+    private void events_on_parameter_changed () {
+        events_compute_ranges ();
+        events_parameters_changed ();
+        events_load_all_sources ();
+    }
+
+    private GLib.DateTime events_get_page () {
+        var events_month_page = state_settings.get_string ("events-month-page");
+        if (events_month_page == null || events_month_page == "") {
+            return new GLib.DateTime.now_local ();
+        }
+
+        var numbers = events_month_page.split ("-", 2);
+        var dt = new GLib.DateTime.local (int.parse (numbers[0]), 1, 1, 0, 0, 0);
+        dt = dt.add_months (int.parse (numbers[1]) - 1);
+        return dt;
+    }
+
+    private void events_compute_ranges () {
+        state_settings.set_string ("events-month-page", events_month_start.format ("%Y-%m"));
+
+        var events_month_end = events_month_start.add_full (0, 1, -1);
+        events_month_range = new Util.DateRange (events_month_start, events_month_end);
+
+        int dow = events_month_start.get_day_of_week ();
+        int wso = (int) week_starts_on;
+        int offset = 0;
+
+        if (wso < dow) {
+            offset = dow - wso;
+        } else if (wso > dow) {
+            offset = 7 + dow - wso;
+        }
+
+        var data_range_first = events_month_start.add_days (-offset);
+
+        dow = events_month_end.get_day_of_week ();
+        wso = (int) (week_starts_on + 6);
+
+        // WSO must be between 1 and 7
+        if (wso > 7)
+            wso = wso - 7;
+
+        offset = 0;
+
+        if (wso < dow)
+            offset = 7 + wso - dow;
+        else if (wso > dow)
+            offset = wso - dow;
+
+        var data_range_last = events_month_end.add_days (offset);
+
+        events_data_range = new Util.DateRange (data_range_first, data_range_last);
+        events_num_weeks = events_data_range.to_list ().size / 7;
+
+        debug (@"Events date ranges: ($data_range_first <= $events_month_start < $events_month_end <= $data_range_last)");
+    }
+
+    //--- Private Source Utilities --//
 
 	private List<E.Source>? list_sources () {
 	    if (registry != null) {
-	        switch (client_source_type) {
+	        switch (source_type) {
 	            case ECal.ClientSourceType.EVENTS:
 	                return registry.list_sources (E.SOURCE_EXTENSION_CALENDAR);
 	            case ECal.ClientSourceType.TASKS:
@@ -287,12 +418,26 @@ public class CalendarStore : Object {
         source_connecting (source, cancellable);
 
         try {
-            var client = (ECal.Client) yield ECal.Client.connect (source, client_source_type, 30, cancellable);
+            var client = (ECal.Client) yield ECal.Client.connect (source, source_type, 30, cancellable);
 
             lock (source_client) {
                 source_client.insert (source_uid, client);
             }
-            source_added (source);
+
+            // create empty source-component map
+            var components = new Gee.TreeMultiMap<string, ECal.Component> (
+                (GLib.CompareDataFunc<string>?) GLib.strcmp,
+                (GLib.CompareDataFunc<ECal.Component>?) Util.calcomponent_compare_func);
+            source_components.set (source_uid, components);
+
+            Idle.add (() => {
+                source_added (source);
+
+                if (source_type == ECal.ClientSourceType.EVENTS) {
+                    events_load_source (source);
+                }
+                return GLib.Source.REMOVE;
+            });
 
         } catch (Error e) {
             error_received (e);
@@ -327,6 +472,12 @@ public class CalendarStore : Object {
         lock (source_client) {
             source_client.remove (source_uid);
         }
+        source_removed (source);
+
+        var components = source_components.get (source_uid).get_values ().read_only_view;
+        components_removed (components, source);
+        source_components.remove (source_uid);
+
         source_removed (source);
     }
 
