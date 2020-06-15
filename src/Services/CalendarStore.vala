@@ -127,7 +127,7 @@ public class CalendarStore : Object {
         on_source_added_to_backend (source);
     }
 
-    public void delete_trashed_calendars () {
+    public void delete_trashed_sources () {
         E.Source source = source_trash.pop_tail ();
         while (source != null) {
             source.remove.begin (null);
@@ -165,7 +165,65 @@ public class CalendarStore : Object {
         }
     }
 
-	//--- Private Source Handlers --//
+    //--- Public Component API ---//
+
+    public void add_component (E.Source source, ECal.Component component) {
+    	var components = new Gee.ArrayList<ECal.Component> ((Gee.EqualDataFunc<ECal.Component>?) Util.calcomponent_equal_func);  // vala-lint=line-length
+    	components.add (component);
+
+    	components_added (components.read_only_view, source);
+    	add_component_to_backend.begin (source, component, (obj, res) => {
+    		components_removed (components.read_only_view, source);
+    		components.clear ();
+
+    		try {
+    			components.add (add_component_to_backend.end (res));
+    			components_added (components.read_only_view, source);
+
+    		} catch (Error e) {
+    			error_received (e);
+    			critical (e.message);
+    		}
+    	});
+    }
+
+    public void modify_component (E.Source source, ECal.Component component, ECal.ObjModType mod_type) {
+    	var components = new Gee.ArrayList<ECal.Component> ((Gee.EqualDataFunc<ECal.Component>?) Util.calcomponent_equal_func);  // vala-lint=line-length
+    	components.add (component);
+
+    	components_modified (components.read_only_view, source);
+    	modify_component_in_backend.begin (source, component, mod_type, (obj, res) => {
+    		components.clear ();
+
+    		try {
+    			components.add (modify_component_in_backend.end (res));
+    			components_modified (components.read_only_view, source);
+
+    		} catch (Error e) {
+    			error_received (e);
+    			critical (e.message);
+    		}
+    	});
+    }
+
+    public void remove_component (E.Source source, ECal.Component component, ECal.ObjModType mod_type) {
+    	var components = new Gee.ArrayList<ECal.Component> ((Gee.EqualDataFunc<ECal.Component>?) Util.calcomponent_equal_func);  // vala-lint=line-length
+    	components.add (component);
+
+    	components_removed (components.read_only_view, source);
+    	remove_component_from_backend.begin (source, component, mod_type, (obj, res) => {
+    		try {
+    			remove_component_from_backend.end (res);
+
+    		} catch (Error e) {
+    			components_added (components.read_only_view, source);
+    			error_received (e);
+    			critical (e.message);
+    		}
+    	});
+    }
+
+	//--- Private Source Utilities --//
 
 	private List<E.Source>? list_sources () {
 	    if (registry != null) {
@@ -178,6 +236,8 @@ public class CalendarStore : Object {
 	    }
 	    return null;
 	}
+
+	//--- Private Source Event Handlers --//
 
 	private void on_source_added_to_backend (E.Source source) {
 	    if (is_source_enabled (source)) {
@@ -260,65 +320,7 @@ public class CalendarStore : Object {
         return client;
     }
 
-    /* -- Component API -- */
-
-    public void add_component (E.Source source, ECal.Component component) {
-    	var components = new Gee.ArrayList<ECal.Component> ((Gee.EqualDataFunc<ECal.Component>?) Util.calcomponent_equal_func);  // vala-lint=line-length
-    	components.add (component);
-
-    	components_added (components.read_only_view, source);
-    	add_component_to_backend.begin (source, component, (obj, res) => {
-    		components_removed (components.read_only_view, source);
-    		components.clear ();
-
-    		try {
-    			components.add (add_component_to_backend.end (res));
-    			components_added (components.read_only_view, source);
-
-    		} catch (Error e) {
-    			error_received (e);
-    			critical (e.message);
-    		}
-    	});
-    }
-
-    public void modify_component (E.Source source, ECal.Component component, ECal.ObjModType mod_type) {
-    	var components = new Gee.ArrayList<ECal.Component> ((Gee.EqualDataFunc<ECal.Component>?) Util.calcomponent_equal_func);  // vala-lint=line-length
-    	components.add (component);
-
-    	components_modified (components.read_only_view, source);
-    	modify_component_in_backend.begin (source, component, mod_type, (obj, res) => {
-    		components.clear ();
-
-    		try {
-    			components.add (modify_component_in_backend.end (res));
-    			components_modified (components.read_only_view, source);
-
-    		} catch (Error e) {
-    			error_received (e);
-    			critical (e.message);
-    		}
-    	});
-    }
-
-    public void remove_component (E.Source source, ECal.Component component, ECal.ObjModType mod_type) {
-    	var components = new Gee.ArrayList<ECal.Component> ((Gee.EqualDataFunc<ECal.Component>?) Util.calcomponent_equal_func);  // vala-lint=line-length
-    	components.add (component);
-
-    	components_removed (components.read_only_view, source);
-    	remove_component_from_backend.begin (source, component, mod_type, (obj, res) => {
-    		try {
-    			remove_component_from_backend.end (res);
-
-    		} catch (Error e) {
-    			components_added (components.read_only_view, source);
-    			error_received (e);
-    			critical (e.message);
-    		}
-    	});
-    }
-
-    /* -- Backend Component Handlers -- */
+    //--- Private Component Event Handlers ---//
 
     private async ECal.Component add_component_to_backend (E.Source source, ECal.Component component) throws Error {
     	var added_component = component.clone ();
@@ -384,9 +386,6 @@ public class CalendarStore : Object {
         yield client.remove_object (uid, rid, mod_type, null);
 #endif
     }
-
-
-    /* -- Backend Event Handlers -- */
 
 #if E_CAL_2_0
     private void on_objects_added_to_backend (E.Source source, SList<ICal.Component> objects) {
