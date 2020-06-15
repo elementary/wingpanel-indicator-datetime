@@ -161,14 +161,14 @@ public class CalendarStore : Object {
     	var components = new Gee.ArrayList<ECal.Component> ((Gee.EqualDataFunc<ECal.Component>?) Util.calcomponent_equal_func);  // vala-lint=line-length
     	components.add (component);
     	
-    	add_components_to_frontend (source, components.read_only_view);
+    	add_or_modify_components_in_frontend (source, components.read_only_view);
     	add_component_to_backend.begin (source, component, (obj, res) => {
     		remove_components_from_frontend (components.read_only_view, source);
     		components.clear ();
     		
     		try {
     			components.add (add_component_to_backend.end (obj, res));
-    			add_components_to_frontend (components.read_only_view, source);
+    			add_or_modify_components_in_frontend (components.read_only_view, source);
     			
     		} catch (Error e) {
     			error_received (e.message);
@@ -207,7 +207,7 @@ public class CalendarStore : Object {
     			remove_component_from_backend.end (obj, res);
     		
     		} catch (Error e) {
-    			add_components_to_frontend (components.read_only_view, source);
+    			add_or_modify_components_in_frontend (components.read_only_view, source);
     			error_received (e.message);
     			critical (e.message);
     		}
