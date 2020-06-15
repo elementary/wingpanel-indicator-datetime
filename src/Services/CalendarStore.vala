@@ -33,7 +33,8 @@ public class CalendarStore : Object {
 	private E.SourceRegistry registry { get; private set; }
 	private HashTable<string, ECal.Client> source_client;
 	private HashTable<string, Gee.Collection<ECal.ClientView>> source_views;
-	private HashTable<string, Gee.TreeMultiMap<string, ECal.Component>> source_components;
+
+	internal HashTable<string, Gee.TreeMultiMap<string, ECal.Component>> source_components;
 
 	private GLib.Queue<E.Source> source_trash;
 #if EDataServerUI
@@ -112,6 +113,10 @@ public class CalendarStore : Object {
 	}
 
 	//--- Public Source API ---//
+
+	public E.Source get_source_by_uid (string uid) {
+	    return registry.ref_source (uid);
+	}
 
 	public bool is_source_enabled (E.Source source) {
 	    switch (source_type) {
@@ -291,8 +296,8 @@ public class CalendarStore : Object {
 
     public void events_load_all_sources () {
         lock (source_client) {
-            foreach (var id in source_client.get_keys ()) {
-                var source = registry.ref_source (id);
+            foreach (var uid in source_client.get_keys ()) {
+                var source = get_source_by_uid (uid);
 
                 if (is_source_enabled (source)) {
                     events_load_source (source);
@@ -560,19 +565,39 @@ public class CalendarStore : Object {
         lock (source_client) {
             client = source_client.get (source.get_uid ());
         }
+        var source_comps = source_components.get (source.get_uid ());
 
         objects.foreach ((ical_comp) => {
+            unowned string uid = ical_comp.get_uid ();
+
             try {
                 SList<ECal.Component> ecal_comps;
-                client.get_objects_for_uid_sync (ical_comp.get_uid (), out ecal_comps, null);
 
-                ecal_comps.foreach ((ecal_comp) => {
-                    debug_component (source, ecal_comp);
+                if (source_type == ECal.ClientSourceType.EVENTS) {
+#if E_CAL_2_0
+                    client.generate_instances_for_object_sync (ical_comp, (time_t) events_data_range.first_dt.to_unix (), (time_t) events_data_range.last_dt.to_unix (), null, (comp, start, end) => {
+                        var ecal_comp = new ECal.Component.from_icalcomponent (comp);
+#else
+                    client.generate_instances_for_object_sync (ical_comp, (time_t) events_data_range.first_dt.to_unix (), (time_t) events_data_range.last_dt.to_unix (), (comp, start, end) => {
+#endif
+                        debug_component (source, comp);
+                        source_comps.set (uid, comp);
+                        added_components.add (comp);
+                        return true;
+                    });
 
-                    if (!added_components.contains (ecal_comp)) {
-                    	added_components.add (ecal_comp);
-                    }
-                });
+                } else {
+                    client.get_objects_for_uid_sync (ical_comp.get_uid (), out ecal_comps, null);
+
+                    ecal_comps.foreach ((ecal_comp) => {
+                        debug_component (source, ecal_comp);
+
+                        if (!added_components.contains (ecal_comp)) {
+                        	added_components.add (ecal_comp);
+                        	source_comps.set (uid, ecal_comp);
+                        }
+                    });
+                }
 
             } catch (Error e) {
                 warning (e.message);
@@ -627,14 +652,18 @@ public class CalendarStore : Object {
 #endif
         debug (@"Received $(cids.length()) removed component(s) for source '%s'", source.dup_display_name ());
         var removed_components = new Gee.ArrayList<ECal.Component> ((Gee.EqualDataFunc<ECal.Component>?) Util.calcomponent_equal_func);  // vala-lint=line-length
+        var source_comps = source_components.get (source.get_uid ());
 
         cids.foreach ((cid) => {
-            var component = new ECal.Component ();
-            var component_id = component.get_id ();
-            component_id.set_uid (cid.get_uid ());
-            component_id.set_rid (cid.get_rid ());
+            if (cid == null) {
+                return;
+            }
 
-            removed_components.add (component);
+            var comps = source_comps.get (cid.get_uid ());
+            foreach (ECal.Component comp in comps) {
+                removed_components.add (comp);
+                debug_component (source, comp);
+            }
     	});
 
 	    if (!removed_components.is_empty) {

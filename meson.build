@@ -44,7 +44,6 @@ shared_module(
     'src/Indicator.vala',
     'src/Widgets/EventRow.vala',
     'src/Widgets/PanelLabel.vala',
-    'src/Widgets/calendar/CalendarModel.vala',
     'src/Widgets/calendar/CalendarView.vala',
     'src/Widgets/calendar/Grid.vala',
     'src/Widgets/calendar/GridDay.vala',

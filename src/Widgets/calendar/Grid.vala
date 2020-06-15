@@ -39,10 +39,10 @@ namespace DateTime.Widgets {
         private Gtk.Label[] header_labels;
         private Gtk.Revealer[] week_labels;
 
-        private static Widgets.CalendarModel calendar_model;
+        private static CalendarStore event_store;
 
         static construct {
-            calendar_model = Widgets.CalendarModel.get_default ();
+            event_store = CalendarStore.get_event_store ();
         }
 
         construct {
@@ -71,11 +71,11 @@ namespace DateTime.Widgets {
             events |= Gdk.EventMask.SCROLL_MASK;
             events |= Gdk.EventMask.SMOOTH_SCROLL_MASK;
 
-            calendar_model.events_added.connect (add_event_dots);
-            calendar_model.events_removed.connect (remove_event_dots);
+            event_store.components_added.connect (add_event_dots);
+            event_store.components_removed.connect (remove_event_dots);
         }
 
-        private void add_event_dots (E.Source source, Gee.Collection<ECal.Component> events) {
+        private void add_event_dots (Gee.Collection<ECal.Component> events, E.Source source) {
             foreach (var component in events) {
                 unowned ICal.Component ical = component.get_icalcomponent ();
 
@@ -91,7 +91,7 @@ namespace DateTime.Widgets {
             show_all ();
         }
 
-        private void remove_event_dots (E.Source source, Gee.Collection<ECal.Component> events) {
+        private void remove_event_dots (Gee.Collection<ECal.Component> events, E.Source source) {
             foreach (var component in events) {
                 unowned ICal.Component ical = component.get_icalcomponent ();
 
@@ -117,13 +117,13 @@ namespace DateTime.Widgets {
             day.set_selected (true);
             day.set_state_flags (Gtk.StateFlags.FOCUSED, false);
             selection_changed (selected_date);
-            var calmodel = CalendarModel.get_default ();
-            var date_month = selected_date.get_month () - calmodel.month_start.get_month ();
-            var date_year = selected_date.get_year () - calmodel.month_start.get_year ();
+            var event_store = CalendarStore.get_event_store ();
+            var date_month = selected_date.get_month () - event_store.events_month_start.get_month ();
+            var date_year = selected_date.get_year () - event_store.events_month_start.get_year ();
 
             if (date_month != 0 || date_year != 0) {
-                calmodel.change_month (date_month);
-                calmodel.change_year (date_year);
+                event_store.events_change_month (date_month);
+                event_store.events_change_year (date_year);
             }
         }
 
@@ -167,7 +167,7 @@ namespace DateTime.Widgets {
             /* Create new widgets for the new range */
 
             var date = Util.strip_time (today);
-            date = date.add_days (CalendarModel.get_default ().week_starts_on - date.get_day_of_week ());
+            date = date.add_days (CalendarStore.get_event_store ().week_starts_on - date.get_day_of_week ());
             foreach (var label in header_labels) {
                 label.label = date.format ("%a");
                 date = date.add_days (1);

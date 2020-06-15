@@ -163,7 +163,7 @@ public class DateTime.Indicator : Wingpanel.Indicator {
         return 0;
     }
 
-    private void update_events_model (E.Source source, Gee.Collection<ECal.Component> events) {
+    private void update_events_model (Gee.Collection<ECal.Component> events, E.Source source) {
         idle_update_events ();
     }
 
@@ -187,17 +187,17 @@ public class DateTime.Indicator : Wingpanel.Indicator {
 
         var date = calendar.selected_date;
 
-        var model = Widgets.CalendarModel.get_default ();
+        var event_store = CalendarStore.get_event_store ();
 
         var events_on_day = new Gee.TreeMap<string, DateTime.EventRow> ();
 
-        model.source_events.@foreach ((source, component_map) => {
+        event_store.source_components.@foreach ((source_uid, component_map) => {
             foreach (var comp in component_map.get_values ()) {
                 if (Util.calcomp_is_on_day (comp, date)) {
                     unowned ICal.Component ical = comp.get_icalcomponent ();
                     var event_uid = ical.get_uid ();
                     if (!events_on_day.has_key (event_uid)) {
-                        events_on_day[event_uid] = new DateTime.EventRow (date, ical, source);
+                        events_on_day[event_uid] = new DateTime.EventRow (date, ical, event_store.get_source_by_uid (source_uid));
 
                         event_listbox.add (events_on_day[event_uid]);
                     }
@@ -213,15 +213,17 @@ public class DateTime.Indicator : Wingpanel.Indicator {
     public override void opened () {
         calendar.show_today ();
 
-        Widgets.CalendarModel.get_default ().events_added.connect (update_events_model);
-        Widgets.CalendarModel.get_default ().events_updated.connect (update_events_model);
-        Widgets.CalendarModel.get_default ().events_removed.connect (update_events_model);
+        var event_store = CalendarStore.get_event_store ();
+        event_store.components_added.connect (update_events_model);
+        event_store.components_modified.connect (update_events_model);
+        event_store.components_removed.connect (update_events_model);
     }
 
     public override void closed () {
-        Widgets.CalendarModel.get_default ().events_added.disconnect (update_events_model);
-        Widgets.CalendarModel.get_default ().events_updated.disconnect (update_events_model);
-        Widgets.CalendarModel.get_default ().events_removed.disconnect (update_events_model);
+        var event_store = CalendarStore.get_event_store ();
+        event_store.components_added.disconnect (update_events_model);
+        event_store.components_modified.disconnect (update_events_model);
+        event_store.components_removed.disconnect (update_events_model);
     }
 }
 

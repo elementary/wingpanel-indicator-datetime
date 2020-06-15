@@ -35,7 +35,7 @@ namespace Util {
 
         /* It's mouse scroll ! */
         if (choice == 1 || choice == -1) {
-            DateTime.Widgets.CalendarModel.get_default ().change_month ((int)choice);
+            CalendarStore.get_event_store ().events_change_month ((int)choice);
 
             return true;
         }
@@ -46,14 +46,14 @@ namespace Util {
 
         if (choice > 0.3) {
             reset_timer.begin ();
-            DateTime.Widgets.CalendarModel.get_default ().change_month (1);
+            CalendarStore.get_event_store ().events_change_month (1);
 
             return true;
         }
 
         if (choice < -0.3) {
             reset_timer.begin ();
-            DateTime.Widgets.CalendarModel.get_default ().change_month (-1);
+            CalendarStore.get_event_store ().events_change_month (-1);
 
             return true;
         }

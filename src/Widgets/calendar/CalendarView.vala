@@ -80,9 +80,9 @@ public class DateTime.Widgets.CalendarView : Gtk.Grid {
         attach (box_buttons, 1, 0);
         attach (stack, 0, 1, 2);
 
-        var model = CalendarModel.get_default ();
-        model.notify["data-range"].connect (() => {
-            label.label = model.month_start.format (_("%OB, %Y"));
+        var event_store = CalendarStore.get_event_store ();
+        event_store.notify["events-data-range"].connect (() => {
+            label.label = event_store.events_month_start.format (_("%OB, %Y"));
 
             sync_with_model ();
 
@@ -91,11 +91,11 @@ public class DateTime.Widgets.CalendarView : Gtk.Grid {
         });
 
         left_button.clicked.connect (() => {
-            model.change_month (-1);
+            event_store.events_change_month (-1);
         });
 
         right_button.clicked.connect (() => {
-            model.change_month (1);
+            event_store.events_change_month (1);
         });
 
         center_button.clicked.connect (() => {
@@ -121,12 +121,12 @@ public class DateTime.Widgets.CalendarView : Gtk.Grid {
     }
 
     public void show_today () {
-        var calmodel = CalendarModel.get_default ();
+        var event_store = CalendarStore.get_event_store ();
         var today = Util.strip_time (new GLib.DateTime.now_local ());
         var start = Util.get_start_of_month (today);
         selected_date = today;
-        if (!start.equal (calmodel.month_start)) {
-            calmodel.month_start = start;
+        if (!start.equal (event_store.events_month_start)) {
+            event_store.events_month_start = start;
         }
         sync_with_model ();
 
@@ -154,8 +154,8 @@ public class DateTime.Widgets.CalendarView : Gtk.Grid {
 
     /* Sets the calendar widgets to the date range of the model */
     private void sync_with_model () {
-        var model = CalendarModel.get_default ();
-        if (grid.grid_range != null && (model.data_range.equals (grid.grid_range) || grid.grid_range.first_dt.compare (model.data_range.first_dt) == 0)) {
+        var event_store = CalendarStore.get_event_store ();
+        if (grid.grid_range != null && (event_store.events_data_range.equals (grid.grid_range) || grid.grid_range.first_dt.compare (event_store.events_data_range.first_dt) == 0)) {
             grid.update_today ();
             return; // nothing else to do
         }
@@ -167,8 +167,8 @@ public class DateTime.Widgets.CalendarView : Gtk.Grid {
         big_grid = create_big_grid ();
         stack.add (big_grid);
 
-        grid.set_range (model.data_range, model.month_start);
-        grid.update_weeks (model.data_range.first_dt, model.num_weeks);
+        grid.set_range (event_store.events_data_range, event_store.events_month_start);
+        grid.update_weeks (event_store.events_data_range.first_dt, event_store.events_num_weeks);
 
         if (previous_first != null) {
             if (previous_first.compare (grid.grid_range.first_dt) == -1) {
