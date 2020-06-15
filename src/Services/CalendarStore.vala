@@ -25,10 +25,6 @@ public class CalendarStore : Object {
 	public signal void components_modified (Gee.Collection<ECal.Component> components);
 	public signal void components_removed (Gee.Collection<ECal.Component> components);
 	
-	/*public delegate void ComponentsAddedFunc (Gee.Collection<ECal.Component> components, E.Source source);
-    public delegate void ComponentsModifiedFunc (Gee.Collection<ECal.Component> components);
-    public delegate void ComponentsRemovedFunc (Gee.Collection<ECal.Component> components);*/
-	
 	private ECal.ClientSourceType client_source_type { get; construct; }
 	private E.SourceRegistry registry { get; private set; }
 	private HashTable<string, ECal.Client> source_client;
@@ -140,9 +136,9 @@ public class CalendarStore : Object {
         ECal.ClientView view;
         client.get_view_sync (sexp, out view, null);
 
-        view.objects_added.connect ((objects) => on_objects_added_to_store (source, view, objects));
-        view.objects_modified.connect ((objects) => on_objects_modified_in_store (source, view, objects));
-        view.objects_removed.connect ((objects) => on_objects_removed_from_store (source, view, objects));
+        view.objects_added.connect ((objects) => on_objects_added_to_backend (source, view, objects));
+        view.objects_modified.connect ((objects) => on_objects_modified_in_backend (source, view, objects));
+        view.objects_removed.connect ((objects) => on_objects_removed_from_backend (source, view, objects));
         view.start ();
 
         lock (source_views) {
@@ -165,14 +161,14 @@ public class CalendarStore : Object {
     	var components = new Gee.ArrayList<ECal.Component> ((Gee.EqualDataFunc<ECal.Component>?) Util.calcomponent_equal_func);  // vala-lint=line-length
     	components.add (component);
     	
-    	add_components_to_cache (source, components.read_only_view);
-    	add_component_to_store.begin (source, component, (obj, res) => {
-    		remove_components_from_cache (components.read_only_view, source);
+    	add_components_to_frontend (source, components.read_only_view);
+    	add_component_to_backend.begin (source, component, (obj, res) => {
+    		remove_components_from_frontend (components.read_only_view, source);
     		components.clear ();
     		
     		try {
-    			components.add (add_component_to_store.end (obj, res));
-    			add_components_to_cache (components.read_only_view, source);
+    			components.add (add_component_to_backend.end (obj, res));
+    			add_components_to_frontend (components.read_only_view, source);
     			
     		} catch (Error e) {
     			error_received (e.message);
@@ -185,14 +181,14 @@ public class CalendarStore : Object {
     	var components = new Gee.ArrayList<ECal.Component> ((Gee.EqualDataFunc<ECal.Component>?) Util.calcomponent_equal_func);  // vala-lint=line-length
     	components.add (component);
     	
-    	add_or_modify_components_in_cache (source, components.read_only_view);
-    	modify_component_in_store.begin (source, component, (obj, res) => {
-    		remove_components_from_cache (components.read_only_view, source);
+    	add_or_modify_components_in_frontend (source, components.read_only_view);
+    	modify_component_in_backend.begin (source, component, (obj, res) => {
+    		remove_components_from_frontend (components.read_only_view, source);
     		components.clear ();
     		
     		try {
-    			components.add (modify_component_in_store.end (obj, res));
-    			add_or_modify_components_in_cache (components.read_only_view, source);
+    			components.add (modify_component_in_backend.end (obj, res));
+    			add_or_modify_components_in_frontend (components.read_only_view, source);
     			
     		} catch (Error e) {
     			error_received (e.message);
@@ -205,22 +201,22 @@ public class CalendarStore : Object {
     	var components = new Gee.ArrayList<ECal.Component> ((Gee.EqualDataFunc<ECal.Component>?) Util.calcomponent_equal_func);  // vala-lint=line-length
     	components.add (component);
     	
-    	remove_components_from_cache (source, components.read_only_view);
-    	remove_component_from_store.begin (source, component, (obj, res) => {
+    	remove_components_from_frontend (source, components.read_only_view);
+    	remove_component_from_backend.begin (source, component, (obj, res) => {
     		try {
-    			remove_component_from_store.end (obj, res);
+    			remove_component_from_backend.end (obj, res);
     		
     		} catch (Error e) {
-    			add_components_to_cache (components.read_only_view, source);
+    			add_components_to_frontend (components.read_only_view, source);
     			error_received (e.message);
     			critical (e.message);
     		}
     	});
     }
     
-    /* -- Local Component Cache -- */
+    /* -- Frontend Component Handlers -- */
     
-    private void add_or_modify_components_in_cache (E.Source source, Gee.Collection<ECal.Component> components) {
+    private void add_or_modify_components_in_frontend (E.Source source, Gee.Collection<ECal.Component> components) {
     	var added_components = new Gee.ArrayList<ECal.Component> ((Gee.EqualDataFunc<ECal.Component>?) Util.calcomponent_equal_func);  // vala-lint=line-length
     	var modified_components = new Gee.ArrayList<ECal.Component> ((Gee.EqualDataFunc<ECal.Component>?) Util.calcomponent_equal_func);  // vala-lint=line-length
     	
@@ -254,7 +250,7 @@ public class CalendarStore : Object {
         }
     }
     
-    private void remove_components_from_cache (E.Source source, Gee.Collection<ECal.Component> components) {
+    private void remove_components_from_frontend (E.Source source, Gee.Collection<ECal.Component> components) {
     	Gee.Collection<ECal.Component> all_source_components;
         lock (source_components) {
         	all_source_components = source_components.get (source.dup_uid ());
@@ -270,9 +266,9 @@ public class CalendarStore : Object {
         components_removed (components.read_only_view, source);
     }
     
-    /* -- Component Store -- */
+    /* -- Backend Component Handlers -- */
     
-    private async ECal.Component add_component_to_store (E.Source source, ECal.Component component) throws Error {
+    private async ECal.Component add_component_to_backend (E.Source source, ECal.Component component) throws Error {
     	var added_component = component.clone ();
     
         unowned ICal.Component comp = added_component.get_icalcomponent ();
@@ -295,7 +291,7 @@ public class CalendarStore : Object {
 		return added_component;
     }
     
-    private async ECal.Component modify_component_in_store (E.Source source, ECal.Component component, ECal.ObjModType mod_type) throws Error {
+    private async ECal.Component modify_component_in_backend (E.Source source, ECal.Component component, ECal.ObjModType mod_type) throws Error {
     	var modified_component = component.clone ();
     	
         unowned ICal.Component comp = modified_component.get_icalcomponent ();
@@ -314,7 +310,7 @@ public class CalendarStore : Object {
 		return modified_component;
     }
     
-    private async void remove_component_from_store (E.Source source, ECal.Component component, ECal.ObjModType mod_type) throws Error {
+    private async void remove_component_from_backend (E.Source source, ECal.Component component, ECal.ObjModType mod_type) throws Error {
         unowned ICal.Component comp = component.get_icalcomponent ();
         string uid = comp.get_uid ();
         string? rid = null;
@@ -338,12 +334,12 @@ public class CalendarStore : Object {
     }
     
     
-    /* -- Component Store Callbacks -- */
+    /* -- Backend Event Handlers -- */
     
 #if E_CAL_2_0
-    private void on_objects_added_to_store (E.Source source, SList<ICal.Component> objects) {
+    private void on_objects_added_to_backend (E.Source source, SList<ICal.Component> objects) {
 #else
-    private void on_objects_added_to_store (E.Source source, SList<weak ICal.Component> objects) {
+    private void on_objects_added_to_backend (E.Source source, SList<weak ICal.Component> objects) {
 #endif
         debug (@"Received $(objects.length()) added component(s) for source '%s'", source.dup_display_name ());
         var added_components = new Gee.ArrayList<ECal.Component> ((Gee.EqualDataFunc<ECal.Component>?) Util.calcomponent_equal_func);  // vala-lint=line-length
@@ -368,14 +364,14 @@ public class CalendarStore : Object {
         });
         
         if (!added_components.is_empty) {
-        	add_or_modify_components_in_cache (source, added_components.read_only_view);
+        	add_or_modify_components_in_frontend (source, added_components.read_only_view);
         }
     }
     
 #if E_CAL_2_0
-    private void on_objects_modified_in_store (E.Source source, SList<ICal.Component> objects) {
+    private void on_objects_modified_in_backend (E.Source source, SList<ICal.Component> objects) {
 #else
-    private void on_objects_modified_in_store (E.Source source, SList<weak ICal.Component> objects) {
+    private void on_objects_modified_in_backend (E.Source source, SList<weak ICal.Component> objects) {
 #endif
 		debug (@"Received $(objects.length()) modified component(s) for source '%s'", source.dup_display_name ());
         var modified_components = new Gee.ArrayList<ECal.Component> ((Gee.EqualDataFunc<ECal.Component>?) Util.calcomponent_equal_func);  // vala-lint=line-length
@@ -400,14 +396,14 @@ public class CalendarStore : Object {
         });
 	    
 	    if (!modified_components.is_empty) {
-        	add_or_modify_components_in_cache (source, modified_components.read_only_view);
+        	add_or_modify_components_in_frontend (source, modified_components.read_only_view);
         }
     }
     
 #if E_CAL_2_0
-    private void on_objects_removed_from_store (E.Source source, ECal.Client client, SList<ECal.ComponentId?> cids) {
+    private void on_objects_removed_from_backend (E.Source source, ECal.Client client, SList<ECal.ComponentId?> cids) {
 #else
-    private void on_objects_removed_from_store (E.Source source, ECal.Client client, SList<weak ECal.ComponentId?> cids) {
+    private void on_objects_removed_from_backend (E.Source source, ECal.Client client, SList<weak ECal.ComponentId?> cids) {
 #endif
         debug (@"Received $(cids.length()) removed component(s) for source '%s'", source.dup_display_name ());
         var removed_components = new Gee.ArrayList<ECal.Component> ((Gee.EqualDataFunc<ECal.Component>?) Util.calcomponent_equal_func);  // vala-lint=line-length
@@ -429,7 +425,7 @@ public class CalendarStore : Object {
 	    }
 	    
 	    if (!removed_components.is_empty) {
-        	remove_components_from_cache (source, removed_components.read_only_view);
+        	remove_components_from_frontend (source, removed_components.read_only_view);
         }
     }
     
