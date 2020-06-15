@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: extra\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-05-24 22:27+0000\n"
-"PO-Revision-Date: 2020-01-03 22:07+0000\n"
+"PO-Revision-Date: 2020-06-16 20:11+0000\n"
 "Last-Translator: Jaimie85 <alsemgeest@gmail.com>\n"
 "Language-Team: Dutch <https://l10n.elementary.io/projects/wingpanel/"
 "indicator-datetime-extra/nl/>\n"
@@ -29,7 +29,7 @@ msgstr "De datum en tijd indicator"
 
 #: data/datetime.appdata.xml.in:11
 msgid "Improved performance when switching months"
-msgstr ""
+msgstr "Verbeterde prestaties bij het wisselen van maand"
 
 #: data/datetime.appdata.xml.in:12 data/datetime.appdata.xml.in:19
 #: data/datetime.appdata.xml.in:24 data/datetime.appdata.xml.in:30
