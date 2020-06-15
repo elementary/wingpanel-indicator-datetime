@@ -112,6 +112,21 @@ public class CalendarStore : Object {
 	    }
 	}
 
+	public bool is_source_readonly (E.Source source) {
+	    ECal.Client client;
+        lock (source_client) {
+            client = source_client.get (source.get_uid ());
+        }
+
+        if (client != null) {
+            return client.is_readonly ();
+        } else {
+            critical ("No client was found for source '%s'", source.dup_display_name ());
+        }
+
+        return true;
+	}
+
 	public void trash_source (E.Source source) {
         source_trash.push_tail (source);
         on_source_removed_from_backend (source);
@@ -142,7 +157,10 @@ public class CalendarStore : Object {
      * https://gitlab.gnome.org/GNOME/evolution-data-server/-/blob/master/src/calendar/libedata-cal/e-cal-backend-sexp.c
      **/
     public void add_view (E.Source source, string sexp) throws Error {
-        ECal.Client client = get_client (source);
+        ECal.Client client;
+        lock (source_client) {
+            client = source_client.get (source.get_uid ());
+        }
         debug ("Adding view for source '%s'", source.dup_display_name ());
 
         ECal.ClientView view;
@@ -312,14 +330,6 @@ public class CalendarStore : Object {
         source_removed (source);
     }
 
-    private ECal.Client get_client (E.Source source) throws Error {
-        ECal.Client client;
-        lock (source_client) {
-            client = source_client.get (source.dup_uid ());
-        }
-        return client;
-    }
-
     //--- Private Component Event Handlers ---//
 
     private async ECal.Component add_component_to_backend (E.Source source, ECal.Component component) throws Error {
@@ -396,12 +406,8 @@ public class CalendarStore : Object {
         var added_components = new Gee.ArrayList<ECal.Component> ((Gee.EqualDataFunc<ECal.Component>?) Util.calcomponent_equal_func);  // vala-lint=line-length
 
         ECal.Client client;
-        try {
-            client = get_client (source);
-        } catch (Error e) {
-            error_received (e);
-            critical (e.message);
-            return;
+        lock (source_client) {
+            client = source_client.get (source.get_uid ());
         }
 
         objects.foreach ((ical_comp) => {
@@ -436,12 +442,8 @@ public class CalendarStore : Object {
         var modified_components = new Gee.ArrayList<ECal.Component> ((Gee.EqualDataFunc<ECal.Component>?) Util.calcomponent_equal_func);  // vala-lint=line-length
 
         ECal.Client client;
-        try {
-            client = get_client (source);
-        } catch (Error e) {
-            error_received (e);
-            critical (e.message);
-            return;
+        lock (source_client) {
+            client = source_client.get (source.get_uid ());
         }
 
         objects.foreach ((ical_comp) => {
