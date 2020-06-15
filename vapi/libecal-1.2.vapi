@@ -338,6 +338,8 @@ namespace ECal {
 		public unowned string? get_rid () {
 			return this.rid;
 		}
+		public void set_uid (string uid);
+		public void set_rid (string? rid);
 	}
 	[CCode (cheader_filename = "libecal/libecal.h")]
 	public struct ComponentOrganizer {
