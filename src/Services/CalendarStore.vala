@@ -15,7 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-public class EventStore : Object {
+public class CalendarStore : Object {
 
 	public signal void connecting (E.Source source, Cancellable cancellable);
 	public signal void connected (E.Source source);
@@ -35,22 +35,22 @@ public class EventStore : Object {
 	private HashTable<string, Gee.Collection<ECal.ClientView>> source_views;
 	private HashTable<string, Gee.Collection<ECal.Component>> source_components;
 	
-	private EventStore (ECal.ClientSourceType client_source_type) {
+	private CalendarStore (ECal.ClientSourceType client_source_type) {
 		Object (client_source_type: client_source_type);
 	}
 	
-	private static EventStore? event_store = null;
-	private static EventStore? task_store = null;
+	private static CalendarStore? event_store = null;
+	private static CalendarStore? task_store = null;
 	
-	public static EventStore get_event_store () {
+	public static CalendarStore get_event_store () {
         if (event_store == null)
-            event_store = new EventStore (ECal.ClientSourceType.EVENTS);
+            event_store = new CalendarStore (ECal.ClientSourceType.EVENTS);
         return event_store;
     }
     
-    public static EventStore get_task_store () {
+    public static CalendarStore get_task_store () {
         if (task_store == null)
-            task_store = new EventStore (ECal.ClientSourceType.TASKS);
+            task_store = new CalendarStore (ECal.ClientSourceType.TASKS);
         return task_store;
     }
 	
