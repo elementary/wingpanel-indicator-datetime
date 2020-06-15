@@ -112,6 +112,59 @@ public class CalendarStore : Object {
 	    }
 	}
 
+	public void trash_source (E.Source source) {
+        source_trash.push_tail (source);
+        on_source_removed_from_backend (source);
+        source.set_enabled (false);
+    }
+
+    public void restore_source () {
+        if (source_trash.is_empty ())
+            return;
+
+        var source = source_trash.pop_tail ();
+        source.set_enabled (true);
+        on_source_added_to_backend (source);
+    }
+
+    public void delete_trashed_calendars () {
+        E.Source source = source_trash.pop_tail ();
+        while (source != null) {
+            source.remove.begin (null);
+            source = source_trash.pop_tail ();
+        }
+    }
+
+	/**
+     * We need to pass a valid S-expression as query to guarantee the callback events are fired.
+     *
+     * See `e-cal-backend-sexp.c` of evolution-data-server for available S-expressions:
+     * https://gitlab.gnome.org/GNOME/evolution-data-server/-/blob/master/src/calendar/libedata-cal/e-cal-backend-sexp.c
+     **/
+    public void add_view (E.Source source, string sexp) throws Error {
+        ECal.Client client = get_client (source);
+        debug ("Adding view for source '%s'", source.dup_display_name ());
+
+        ECal.ClientView view;
+        client.get_view_sync (sexp, out view, null);
+
+        view.objects_added.connect ((objects) => on_objects_added_to_backend (source, objects));
+        view.objects_modified.connect ((objects) => on_objects_modified_in_backend (source, objects));
+        view.objects_removed.connect ((objects) => on_objects_removed_from_backend (source, objects));
+        view.start ();
+
+        lock (source_views) {
+            var views = source_views.get (source.dup_uid ());
+
+            if (views == null) {
+                views = new Gee.ArrayList<ECal.ClientView> ((Gee.EqualDataFunc<ECal.ClientView>?) direct_equal);
+            }
+            views.add (view);
+
+            source_views.set (source.dup_uid (), views);
+        }
+    }
+
 	//--- Private Source Handlers --//
 
 	private List<E.Source>? list_sources () {
@@ -205,42 +258,6 @@ public class CalendarStore : Object {
             client = source_client.get (source.dup_uid ());
         }
         return client;
-    }
-
-    /**
-     * We need to pass a valid S-expression as query to guarantee the callback events are fired.
-     *
-     * See `e-cal-backend-sexp.c` of evolution-data-server for available S-expressions:
-     * https://gitlab.gnome.org/GNOME/evolution-data-server/-/blob/master/src/calendar/libedata-cal/e-cal-backend-sexp.c
-     **/
-
-    public ECal.ClientView add_view (
-    	E.Source source,
-    	string sexp
-    ) throws Error {
-        ECal.Client client = get_client (source);
-        debug ("Adding view for source '%s'", source.dup_display_name ());
-
-        ECal.ClientView view;
-        client.get_view_sync (sexp, out view, null);
-
-        view.objects_added.connect ((objects) => on_objects_added_to_backend (source, objects));
-        view.objects_modified.connect ((objects) => on_objects_modified_in_backend (source, objects));
-        view.objects_removed.connect ((objects) => on_objects_removed_from_backend (source, objects));
-        view.start ();
-
-        lock (source_views) {
-            var views = source_views.get (source.dup_uid ());
-
-            if (views == null) {
-                views = new Gee.ArrayList<ECal.ClientView> ((Gee.EqualDataFunc<ECal.ClientView>?) direct_equal);
-            }
-            views.add (view);
-
-            source_views.set (source.dup_uid (), views);
-        }
-
-        return view;
     }
 
     /* -- Component API -- */
