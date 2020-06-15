@@ -234,6 +234,7 @@ public class EventStore : Object {
 	    	
 	    	components.foreach ((component) => {
 	    		if (all_source_components.remove (component)) {
+	    			all_source_components.add (component);
 	    			modified_components.add (component);
 	    		} else {
 	    			all_source_components.add (component);
@@ -249,7 +250,7 @@ public class EventStore : Object {
         }
         
         if (!modified_components.is_empty) {
-        	components_added (added_components.read_only_view, source);
+        	components_modified (modified_components.read_only_view, source);
         }
     }
     
