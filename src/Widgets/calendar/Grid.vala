@@ -40,9 +40,11 @@ namespace DateTime.Widgets {
         private Gtk.Revealer[] week_labels;
 
         private static CalendarStore event_store;
+        private static CalendarStore task_store;
 
         static construct {
             event_store = CalendarStore.get_event_store ();
+            task_store = CalendarStore.get_task_store ();
         }
 
         construct {
@@ -71,12 +73,15 @@ namespace DateTime.Widgets {
             events |= Gdk.EventMask.SCROLL_MASK;
             events |= Gdk.EventMask.SMOOTH_SCROLL_MASK;
 
-            event_store.components_added.connect (add_event_dots);
-            event_store.components_removed.connect (remove_event_dots);
+            event_store.components_added.connect (add_component_dots);
+            event_store.components_removed.connect (remove_component_dots);
+
+            task_store.components_added.connect (add_component_dots);
+            task_store.components_removed.connect (remove_component_dots);
         }
 
-        private void add_event_dots (Gee.Collection<ECal.Component> events, E.Source source) {
-            foreach (var component in events) {
+        private void add_component_dots (Gee.Collection<ECal.Component> components, E.Source source) {
+            foreach (var component in components) {
                 unowned ICal.Component ical = component.get_icalcomponent ();
 
                 var start_time = ical.get_dtstart ().as_timet ();
@@ -84,15 +89,15 @@ namespace DateTime.Widgets {
                 var date_hash = day_hash (date_time);
 
                 if (data.has_key (date_hash)) {
-                    data[date_hash].add_event_dot (source, ical);
+                    data[date_hash].add_component_dot (source, ical, component.get_vtype ());
                 }
             }
 
             show_all ();
         }
 
-        private void remove_event_dots (Gee.Collection<ECal.Component> events, E.Source source) {
-            foreach (var component in events) {
+        private void remove_component_dots (Gee.Collection<ECal.Component> components, E.Source source) {
+            foreach (var component in components) {
                 unowned ICal.Component ical = component.get_icalcomponent ();
 
                 var start_time = ical.get_dtstart ().as_timet ();
@@ -100,8 +105,8 @@ namespace DateTime.Widgets {
                 var date_hash = day_hash (date_time);
 
                 if (data.has_key (date_hash)) {
-                    var event_uid = ical.get_uid ();
-                    data[date_hash].remove_event_dot (event_uid);
+                    var component_uid = ical.get_uid ();
+                    data[date_hash].remove_component_dot (component_uid);
                 }
             }
         }
@@ -117,13 +122,18 @@ namespace DateTime.Widgets {
             day.set_selected (true);
             day.set_state_flags (Gtk.StateFlags.FOCUSED, false);
             selection_changed (selected_date);
+
             var event_store = CalendarStore.get_event_store ();
-            var date_month = selected_date.get_month () - event_store.events_month_start.get_month ();
-            var date_year = selected_date.get_year () - event_store.events_month_start.get_year ();
+            var date_month = selected_date.get_month () - event_store.month_start.get_month ();
+            var date_year = selected_date.get_year () - event_store.month_start.get_year ();
 
             if (date_month != 0 || date_year != 0) {
-                event_store.events_change_month (date_month);
-                event_store.events_change_year (date_year);
+                event_store.change_month (date_month);
+                event_store.change_year (date_year);
+
+                var task_store = CalendarStore.get_task_store ();
+                task_store.change_month (date_month);
+                task_store.change_year (date_year);
             }
         }
 

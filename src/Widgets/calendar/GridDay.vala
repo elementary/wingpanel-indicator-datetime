@@ -31,8 +31,8 @@ public class DateTime.Widgets.GridDay : Gtk.EventBox {
 
     private static Gtk.CssProvider provider;
 
-    private Gee.HashMap<string, Gtk.Widget> event_dots;
-    private Gtk.Grid event_grid;
+    private Gee.HashMap<string, Gtk.Widget> component_dots;
+    private Gtk.Grid component_grid;
     private Gtk.Label label;
     private bool valid_grab = false;
 
@@ -52,14 +52,14 @@ public class DateTime.Widgets.GridDay : Gtk.EventBox {
 
         label = new Gtk.Label (null);
 
-        event_grid = new Gtk.Grid ();
-        event_grid.halign = Gtk.Align.CENTER;
-        event_grid.height_request = 6;
+        component_grid = new Gtk.Grid ();
+        component_grid.halign = Gtk.Align.CENTER;
+        component_grid.height_request = 6;
 
         var grid = new Gtk.Grid ();
         grid.halign = grid.valign = Gtk.Align.CENTER;
         grid.attach (label, 0, 0);
-        grid.attach (event_grid, 0, 1);
+        grid.attach (component_grid, 0, 1);
 
         can_focus = true;
         events |= Gdk.EventMask.BUTTON_PRESS_MASK;
@@ -80,38 +80,46 @@ public class DateTime.Widgets.GridDay : Gtk.EventBox {
             label.label = date.get_day_of_month ().to_string ();
         });
 
-        event_dots = new Gee.HashMap<string, Gtk.Widget> ();
+        component_dots = new Gee.HashMap<string, Gtk.Widget> ();
     }
 
-    public void add_event_dot (E.Source source, ICal.Component ical) {
-        if (event_dots.size >= 3) {
+    public void add_component_dot (E.Source source, ICal.Component ical, ECal.ComponentVType vtype) {
+        if (component_dots.size >= 3) {
             return;
         }
 
-        var event_uid = ical.get_uid ();
-        if (!event_dots.has_key (event_uid)) {
-            var event_dot = new Gtk.Image ();
-            event_dot.gicon = new ThemedIcon ("pager-checked-symbolic");
-            event_dot.pixel_size = 6;
+        var component_uid = ical.get_uid ();
+        if (!component_dots.has_key (component_uid)) {
+            var component_dot = new Gtk.Image ();
+            component_dot.gicon = new ThemedIcon ("pager-checked-symbolic");
+            component_dot.pixel_size = 6;
 
-            unowned Gtk.StyleContext style_context = event_dot.get_style_context ();
+            unowned Gtk.StyleContext style_context = component_dot.get_style_context ();
             style_context.add_class (Granite.STYLE_CLASS_ACCENT);
             style_context.add_provider (provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
 
-            var source_calendar = (E.SourceCalendar?) source.get_extension (E.SOURCE_EXTENSION_CALENDAR);
-            Util.set_event_calendar_color (source_calendar, event_dot);
+            switch (vtype) {
+                case ECal.ComponentVType.TODO:
+                    var source_selectable = (E.SourceSelectable?) source.get_extension (E.SOURCE_EXTENSION_TASK_LIST);
+                    Util.set_source_selectable_color (source_selectable, component_dot);
+                    break;
 
-            event_dots[event_uid] = event_dot;
+                case ECal.ComponentVType.EVENT:
+                    var source_selectable = (E.SourceSelectable?) source.get_extension (E.SOURCE_EXTENSION_CALENDAR);
+                    Util.set_source_selectable_color (source_selectable, component_dot);
+                    break;
+            }
 
-            event_grid.add (event_dot);
+            component_dots[component_uid] = component_dot;
+            component_grid.add (component_dot);
         }
     }
 
-    public void remove_event_dot (string event_uid) {
-        var dot = event_dots[event_uid];
+    public void remove_component_dot (string component_uid) {
+        var dot = component_dots[component_uid];
         if (dot != null) {
             dot.destroy ();
-            event_dots.unset (event_uid);
+            component_dots.unset (component_uid);
         }
     }
 
@@ -137,7 +145,7 @@ public class DateTime.Widgets.GridDay : Gtk.EventBox {
 
     public void sensitive_container (bool sens) {
         label.sensitive = sens;
-        event_grid.sensitive = sens;
+        component_grid.sensitive = sens;
     }
 
     private bool on_button_press (Gdk.EventButton event) {

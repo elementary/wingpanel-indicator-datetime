@@ -35,7 +35,8 @@ namespace Util {
 
         /* It's mouse scroll ! */
         if (choice == 1 || choice == -1) {
-            CalendarStore.get_event_store ().events_change_month ((int)choice);
+            CalendarStore.get_event_store ().change_month ((int)choice);
+            CalendarStore.get_task_store ().change_month ((int)choice);
 
             return true;
         }
@@ -46,14 +47,16 @@ namespace Util {
 
         if (choice > 0.3) {
             reset_timer.begin ();
-            CalendarStore.get_event_store ().events_change_month (1);
+            CalendarStore.get_event_store ().change_month (1);
+            CalendarStore.get_task_store ().change_month (1);
 
             return true;
         }
 
         if (choice < -0.3) {
             reset_timer.begin ();
-            CalendarStore.get_event_store ().events_change_month (-1);
+            CalendarStore.get_event_store ().change_month (-1);
+            CalendarStore.get_task_store ().change_month (-1);
 
             return true;
         }
@@ -120,12 +123,12 @@ namespace Util {
     }
 
     private Gee.HashMap<string, Gtk.CssProvider>? providers;
-    public void set_event_calendar_color (E.SourceCalendar cal, Gtk.Widget widget) {
+    public void set_source_selectable_color (E.SourceSelectable source_selectable, Gtk.Widget widget) {
         if (providers == null) {
             providers = new Gee.HashMap<string, Gtk.CssProvider> ();
         }
 
-        var color = cal.dup_color ();
+        var color = source_selectable.dup_color ();
         if (!providers.has_key (color)) {
             string style = """
                 @define-color colorAccent %s;
@@ -192,8 +195,23 @@ namespace Util {
 
         /* We want to be relative to the local timezone */
         unowned ICal.Component? icomp = comp.get_icalcomponent ();
-        ICal.Time? start_time = icomp.get_dtstart ();
-        ICal.Time? end_time = icomp.get_dtend ();
+        ICal.Time? start_time;
+        ICal.Time? end_time;
+        switch (comp.get_vtype ()) {
+            case ECal.ComponentVType.EVENT:
+                start_time = icomp.get_dtstart ();
+                end_time = icomp.get_dtend ();
+                break;
+
+            case ECal.ComponentVType.TODO:
+                start_time = icomp.get_due ();
+                end_time = icomp.get_due ();
+                break;
+
+            default:
+                return false;
+        }
+
         time_t start_unix = start_time.as_timet_with_zone (system_timezone);
         time_t end_unix = end_time.as_timet_with_zone (system_timezone);
 

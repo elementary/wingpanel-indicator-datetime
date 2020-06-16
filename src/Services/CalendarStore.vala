@@ -83,11 +83,9 @@ public class CalendarStore : Object {
             week_starts_on = (GLib.DateWeekday) (week_start - 1);
         }
 
-        if (source_type == ECal.ClientSourceType.EVENTS) {
-            events_month_start = Util.get_start_of_month (events_get_page ());
-            events_compute_ranges ();
-            notify["events-month-start"].connect (events_on_parameter_changed);
-        }
+        month_start = Util.get_start_of_month (get_page ());
+        compute_ranges ();
+        notify["month-start"].connect (on_parameter_changed);
     }
 
     private async void open () {
@@ -262,10 +260,10 @@ public class CalendarStore : Object {
         });
     }
 
-    //--- Helper Methods To Display Calendar Events --//
+    //--- Helpers to manage scheduled components in a given time range --//
 
-    /* The events_month_start, events_num_weeks, or week_starts_on have been changed */
-    public signal void events_parameters_changed ();
+    /* The month_start, num_weeks, or week_starts_on have been changed */
+    public signal void parameters_changed ();
 
     /* The data_range is the range of dates for which this model is storing
      * data. The month_range is a subset of this range corresponding to the
@@ -277,39 +275,52 @@ public class CalendarStore : Object {
      * changing one of the following properties: month_start, num_weeks, and
      * week_starts_on.
     */
-    public Util.DateRange events_data_range { get; private set; }
-    public Util.DateRange events_month_range { get; private set; }
+    public Util.DateRange data_range { get; private set; }
+    public Util.DateRange month_range { get; private set; }
 
     /* The first day of the month */
-    public GLib.DateTime events_month_start { get; set; }
+    public GLib.DateTime month_start { get; set; }
 
     /* The number of weeks to show */
-    public int events_num_weeks { get; private set; default = 6; }
+    public int num_weeks { get; private set; default = 6; }
 
-    public void events_change_month (int relative) {
-        events_month_start = events_month_start.add_months (relative);
+    public void change_month (int relative) {
+        month_start = month_start.add_months (relative);
     }
 
-    public void events_change_year (int relative) {
-        events_month_start = events_month_start.add_years (relative);
+    public void change_year (int relative) {
+        month_start = month_start.add_years (relative);
     }
 
-    public void events_load_all_sources () {
+    public void load_all_sources () {
         lock (source_client) {
             foreach (var uid in source_client.get_keys ()) {
                 var source = get_source_by_uid (uid);
 
                 if (is_source_enabled (source)) {
-                    events_load_source (source);
+                    load_source (source);
                 }
             }
         }
     }
 
-    private void events_load_source (E.Source source) {
-        var iso_first = ECal.isodate_from_time_t ((time_t) events_data_range.first_dt.to_unix ());
-        var iso_last = ECal.isodate_from_time_t ((time_t) events_data_range.last_dt.add_days (1).to_unix ());
-        var query = @"(occur-in-time-range? (make-time \"$iso_first\") (make-time \"$iso_last\"))";
+    private void load_source (E.Source source) {
+        var iso_first = ECal.isodate_from_time_t ((time_t) data_range.first_dt.to_unix ());
+        var iso_last = ECal.isodate_from_time_t ((time_t) data_range.last_dt.add_days (1).to_unix ());
+
+        string query;
+        switch (source_type) {
+            case ECal.ClientSourceType.EVENTS:
+                query = @"(occur-in-time-range? (make-time \"$iso_first\") (make-time \"$iso_last\"))";
+                break;
+
+            case ECal.ClientSourceType.TASKS:
+                query = @"(AND (NOT is-completed?) (due-in-time-range? (make-time \"$iso_first\") (make-time \"$iso_last\")))";
+                break;
+
+            default:
+                return;
+        }
 
         try {
             add_view (source, query);
@@ -319,31 +330,31 @@ public class CalendarStore : Object {
         }
     }
 
-    private void events_on_parameter_changed () {
-        events_compute_ranges ();
-        events_parameters_changed ();
-        events_load_all_sources ();
+    private void on_parameter_changed () {
+        compute_ranges ();
+        parameters_changed ();
+        load_all_sources ();
     }
 
-    private GLib.DateTime events_get_page () {
-        var events_month_page = state_settings.get_string ("events-month-page");
-        if (events_month_page == null || events_month_page == "") {
+    private GLib.DateTime get_page () {
+        var month_page = state_settings.get_string ("month-page");
+        if (month_page == null || month_page == "") {
             return new GLib.DateTime.now_local ();
         }
 
-        var numbers = events_month_page.split ("-", 2);
+        var numbers = month_page.split ("-", 2);
         var dt = new GLib.DateTime.local (int.parse (numbers[0]), 1, 1, 0, 0, 0);
         dt = dt.add_months (int.parse (numbers[1]) - 1);
         return dt;
     }
 
-    private void events_compute_ranges () {
-        state_settings.set_string ("events-month-page", events_month_start.format ("%Y-%m"));
+    private void compute_ranges () {
+        state_settings.set_string ("month-page", month_start.format ("%Y-%m"));
 
-        var events_month_end = events_month_start.add_full (0, 1, -1);
-        events_month_range = new Util.DateRange (events_month_start, events_month_end);
+        var month_end = month_start.add_full (0, 1, -1);
+        month_range = new Util.DateRange (month_start, month_end);
 
-        int dow = events_month_start.get_day_of_week ();
+        int dow = month_start.get_day_of_week ();
         int wso = (int) week_starts_on;
         int offset = 0;
 
@@ -353,9 +364,9 @@ public class CalendarStore : Object {
             offset = 7 + dow - wso;
         }
 
-        var data_range_first = events_month_start.add_days (-offset);
+        var data_range_first = month_start.add_days (-offset);
 
-        dow = events_month_end.get_day_of_week ();
+        dow = month_end.get_day_of_week ();
         wso = (int) (week_starts_on + 6);
 
         // WSO must be between 1 and 7
@@ -369,12 +380,12 @@ public class CalendarStore : Object {
         else if (wso > dow)
             offset = wso - dow;
 
-        var data_range_last = events_month_end.add_days (offset);
+        var data_range_last = month_end.add_days (offset);
 
-        events_data_range = new Util.DateRange (data_range_first, data_range_last);
-        events_num_weeks = events_data_range.to_list ().size / 7;
+        data_range = new Util.DateRange (data_range_first, data_range_last);
+        num_weeks = data_range.to_list ().size / 7;
 
-        debug (@"Events date ranges: ($data_range_first <= $events_month_start < $events_month_end <= $data_range_last)");  // vala-lint=line-length
+        debug (@"Date ranges: ($data_range_first <= $month_start < $month_end <= $data_range_last)");  // vala-lint=line-length
     }
 
     //--- Private Source Utilities --//
@@ -437,10 +448,8 @@ public class CalendarStore : Object {
 
             Idle.add (() => {
                 source_added (source);
+                load_source (source);
 
-                if (source_type == ECal.ClientSourceType.EVENTS) {
-                    events_load_source (source);
-                }
                 return GLib.Source.REMOVE;
             });
 
@@ -575,10 +584,10 @@ public class CalendarStore : Object {
 
                 if (source_type == ECal.ClientSourceType.EVENTS) {
 #if E_CAL_2_0
-                    client.generate_instances_for_object_sync (ical_comp, (time_t) events_data_range.first_dt.to_unix (), (time_t) events_data_range.last_dt.to_unix (), null, (comp, start, end) => {  // vala-lint=line-length
+                    client.generate_instances_for_object_sync (ical_comp, (time_t) data_range.first_dt.to_unix (), (time_t) data_range.last_dt.to_unix (), null, (comp, start, end) => {  // vala-lint=line-length
                         var ecal_comp = new ECal.Component.from_icalcomponent (comp);
 #else
-                    client.generate_instances_for_object_sync (ical_comp, (time_t) events_data_range.first_dt.to_unix (), (time_t) events_data_range.last_dt.to_unix (), (comp, start, end) => {  // vala-lint=line-length
+                    client.generate_instances_for_object_sync (ical_comp, (time_t) data_range.first_dt.to_unix (), (time_t) data_range.last_dt.to_unix (), (comp, start, end) => {  // vala-lint=line-length
 #endif
                         debug_component (source, comp);
                         source_comps.set (uid, comp);
@@ -590,11 +599,10 @@ public class CalendarStore : Object {
                     client.get_objects_for_uid_sync (ical_comp.get_uid (), out ecal_comps, null);
 
                     ecal_comps.foreach ((ecal_comp) => {
-                        debug_component (source, ecal_comp);
-
                         if (!added_components.contains (ecal_comp)) {
-                            added_components.add (ecal_comp);
+                            debug_component (source, ecal_comp);
                             source_comps.set (uid, ecal_comp);
+                            added_components.add (ecal_comp);
                         }
                     });
                 }

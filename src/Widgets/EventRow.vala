@@ -20,7 +20,8 @@
 public class DateTime.EventRow : Gtk.ListBoxRow {
     public GLib.DateTime date { get; construct; }
     public unowned ICal.Component component { get; construct; }
-    public unowned E.SourceCalendar cal { get; construct; }
+    public ECal.ComponentVType vtype { get; construct; }
+    public unowned E.SourceSelectable source_selectable { get; construct; }
 
     public GLib.DateTime start_time { get; private set; }
     public GLib.DateTime? end_time { get; private set; }
@@ -33,11 +34,23 @@ public class DateTime.EventRow : Gtk.ListBoxRow {
     private Gtk.Image event_image;
     private Gtk.Label time_label;
 
-    public EventRow (GLib.DateTime date, ICal.Component component, E.Source source) {
+    public EventRow (GLib.DateTime date, ICal.Component component, ECal.ComponentVType vtype, E.Source source) {
+        E.SourceSelectable source_selectable;
+        switch (vtype) {
+            case ECal.ComponentVType.TODO:
+                source_selectable = (E.SourceSelectable?) source.get_extension (E.SOURCE_EXTENSION_TASK_LIST);
+                break;
+
+            default:
+                source_selectable = (E.SourceSelectable?) source.get_extension (E.SOURCE_EXTENSION_CALENDAR);
+                break;
+        }
+
         Object (
-            component: component,
             date: date,
-            cal: (E.SourceCalendar?) source.get_extension (E.SOURCE_EXTENSION_CALENDAR)
+            component: component,
+            vtype: vtype,
+            source_selectable: source_selectable
         );
     }
 
@@ -49,15 +62,24 @@ public class DateTime.EventRow : Gtk.ListBoxRow {
     }
 
     construct {
-        start_time = Util.ical_to_date_time (component.get_dtstart ());
-        end_time = Util.ical_to_date_time (component.get_dtend ());
+        switch (vtype) {
+            case ECal.ComponentVType.TODO:
+                start_time = Util.ical_to_date_time (component.get_due ());
+                end_time = Util.ical_to_date_time (component.get_due ());
+                break;
+
+            default:
+                start_time = Util.ical_to_date_time (component.get_dtstart ());
+                end_time = Util.ical_to_date_time (component.get_dtend ());
+                break;
+        }
 
         if (end_time != null && Util.is_the_all_day (start_time, end_time)) {
             is_allday = true;
         }
 
         unowned string icon_name = "office-calendar-symbolic";
-        if (end_time == null) {
+        if (end_time == null || vtype == ECal.ComponentVType.TODO) {
             icon_name = "alarm-symbolic";
         }
 
@@ -102,7 +124,7 @@ public class DateTime.EventRow : Gtk.ListBoxRow {
         add (grid);
 
         set_color ();
-        cal.notify["color"].connect (set_color);
+        source_selectable.notify["color"].connect (set_color);
 
         update_timelabel ();
         time_manager.notify["is-12h"].connect (update_timelabel);
@@ -110,11 +132,16 @@ public class DateTime.EventRow : Gtk.ListBoxRow {
 
     private void update_timelabel () {
         var time_format = Granite.DateTime.get_default_time_format (time_manager.is_12h);
-        time_label.label = "<small>%s – %s</small>".printf (start_time.format (time_format), end_time.format (time_format));
+
+        if (end_time == null || vtype ==  ECal.ComponentVType.TODO) {
+            time_label.label = "<small>%s</small>".printf (start_time.format (time_format));
+        } else if (end_time != null) {
+            time_label.label = "<small>%s – %s</small>".printf (start_time.format (time_format), end_time.format (time_format));
+        }
     }
 
     private void set_color () {
-        Util.set_event_calendar_color (cal, grid);
-        Util.set_event_calendar_color (cal, event_image);
+        Util.set_source_selectable_color (source_selectable, grid);
+        Util.set_source_selectable_color (source_selectable, event_image);
     }
 }
