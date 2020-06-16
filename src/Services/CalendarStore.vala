@@ -204,6 +204,20 @@ public class CalendarStore : Object {
 
     //--- Public Component API ---//
 
+    public bool is_component_created (ECal.Component component) {
+        if (component == null) {
+            return false;
+        }
+#if E_CAL_2_0
+        var created = component.get_created ();
+        return created.is_valid_time ();
+#else
+        ICal.Time created;
+        component.get_created (out created);
+        return !created.is_null_time ();
+#endif
+    }
+
     public void add_component (E.Source source, ECal.Component component) {
         var components = new Gee.ArrayList<ECal.Component> ((Gee.EqualDataFunc<ECal.Component>?) Util.calcomponent_equal_func);  // vala-lint=line-length
         components.add (component);
