@@ -133,7 +133,7 @@ public class DateTime.EventRow : Gtk.ListBoxRow {
     private void update_timelabel () {
         var time_format = Granite.DateTime.get_default_time_format (time_manager.is_12h);
 
-        if (end_time == null || vtype ==  ECal.ComponentVType.TODO) {
+        if (end_time == null || vtype == ECal.ComponentVType.TODO) {
             time_label.label = "<small>%s</small>".printf (start_time.format (time_format));
         } else if (end_time != null) {
             time_label.label = "<small>%s – %s</small>".printf (start_time.format (time_format), end_time.format (time_format));
