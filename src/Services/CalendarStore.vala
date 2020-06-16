@@ -601,11 +601,12 @@ public class CalendarStore : Object {
                     client.generate_instances_for_object_sync (ical_comp, (time_t) data_range.first_dt.to_unix (), (time_t) data_range.last_dt.to_unix (), null, (comp, start, end) => {  // vala-lint=line-length
                         var ecal_comp = new ECal.Component.from_icalcomponent (comp);
 #else
-                    client.generate_instances_for_object_sync (ical_comp, (time_t) data_range.first_dt.to_unix (), (time_t) data_range.last_dt.to_unix (), (comp, start, end) => {  // vala-lint=line-length
+                    client.generate_instances_for_object_sync (ical_comp, (time_t) data_range.first_dt.to_unix (), (time_t) data_range.last_dt.to_unix (), (ecal_comp, start, end) => {  // vala-lint=line-length
 #endif
-                        debug_component (source, comp);
-                        source_comps.set (uid, comp);
-                        added_components.add (comp);
+
+                        debug_component (source, ecal_comp);
+                        source_comps.set (uid, ecal_comp);
+                        added_components.add (ecal_comp);
                         return true;
                     });
 
