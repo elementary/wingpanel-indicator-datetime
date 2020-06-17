@@ -35,8 +35,8 @@ namespace Util {
 
         /* It's mouse scroll ! */
         if (choice == 1 || choice == -1) {
-            CalendarStore.get_event_store ().change_month ((int)choice);
-            CalendarStore.get_task_store ().change_month ((int)choice);
+            Calendar.Store.get_event_store ().change_month ((int)choice);
+            Calendar.Store.get_task_store ().change_month ((int)choice);
 
             return true;
         }
@@ -47,79 +47,21 @@ namespace Util {
 
         if (choice > 0.3) {
             reset_timer.begin ();
-            CalendarStore.get_event_store ().change_month (1);
-            CalendarStore.get_task_store ().change_month (1);
+            Calendar.Store.get_event_store ().change_month (1);
+            Calendar.Store.get_task_store ().change_month (1);
 
             return true;
         }
 
         if (choice < -0.3) {
             reset_timer.begin ();
-            CalendarStore.get_event_store ().change_month (-1);
-            CalendarStore.get_task_store ().change_month (-1);
+            Calendar.Store.get_event_store ().change_month (-1);
+            Calendar.Store.get_task_store ().change_month (-1);
 
             return true;
         }
 
         return false;
-    }
-
-    public GLib.DateTime get_start_of_month (owned GLib.DateTime? date = null) {
-        if (date == null) {
-            date = new GLib.DateTime.now_local ();
-        }
-
-        return new GLib.DateTime.local (date.get_year (), date.get_month (), 1, 0, 0, 0);
-    }
-
-    public GLib.DateTime strip_time (GLib.DateTime datetime) {
-        return datetime.add_full (0, 0, 0, -datetime.get_hour (), -datetime.get_minute (), -datetime.get_second ());
-    }
-
-    /**
-     * Converts the given ICal.Time to a DateTime.
-     */
-    public TimeZone timezone_from_ical (ICal.Time date) {
-        int is_daylight;
-        var interval = date.get_timezone ().get_utc_offset (null, out is_daylight);
-        bool is_positive = interval >= 0;
-        interval = interval.abs ();
-        var hours = (interval / 3600);
-        var minutes = (interval % 3600) / 60;
-        var hour_string = "%s%02d:%02d".printf (is_positive ? "+" : "-", hours, minutes);
-
-        return new TimeZone (hour_string);
-    }
-
-    /**
-     * Converts the given ICal.Time to a DateTime.
-     * XXX : Track next versions of evolution in order to convert ICal.Timezone to GLib.TimeZone with a dedicated function…
-     */
-    public GLib.DateTime ical_to_date_time (ICal.Time date) {
-#if E_CAL_2_0
-        int year, month, day, hour, minute, second;
-        date.get_date (out year, out month, out day);
-        date.get_time (out hour, out minute, out second);
-        return new GLib.DateTime (timezone_from_ical (date), year, month,
-            day, hour, minute, second);
-#else
-        return new GLib.DateTime (timezone_from_ical (date), date.year, date.month,
-            date.day, date.hour, date.minute, date.second);
-#endif
-    }
-
-    /**
-     * Say if an event lasts all day.
-     */
-    public bool is_the_all_day (GLib.DateTime dtstart, GLib.DateTime dtend) {
-        var utc_start = dtstart.to_timezone (new TimeZone.utc ());
-        var timespan = dtend.difference (dtstart);
-
-        if (timespan % GLib.TimeSpan.DAY == 0 && utc_start.get_hour () == 0) {
-            return true;
-        } else {
-            return false;
-        }
     }
 
     private Gee.HashMap<string, Gtk.CssProvider>? providers;
@@ -146,101 +88,6 @@ namespace Util {
 
         unowned Gtk.StyleContext style_context = widget.get_style_context ();
         style_context.add_provider (providers[color], Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
-    }
-
-    /*
-     * Gee Utility Functions
-     */
-
-    /* Computes hash value for E.Source */
-    public uint source_hash_func (E.Source key) {
-        return key.dup_uid (). hash ();
-    }
-
-    /* Returns true if 'a' and 'b' are the same ECal.Component */
-    public bool calcomponent_equal_func (ECal.Component a, ECal.Component b) {
-        return a.get_id ().equal (b.get_id ());
-    }
-
-    public int calcomponent_compare_func (ECal.Component? a, ECal.Component? b) {
-        if (a == null && b != null) {
-            return 1;
-        } else if (b == null && a != null) {
-            return -1;
-        } else if (b == null && a == null) {
-            return 0;
-        }
-
-        var a_id = a.get_id ();
-        var b_id = b.get_id ();
-        int res = GLib.strcmp (a_id.get_uid (), b_id.get_uid ());
-        if (res == 0) {
-            return GLib.strcmp (a_id.get_rid (), b_id.get_rid ());
-        }
-
-        return res;
-    }
-
-    public bool calcomp_is_on_day (ECal.Component comp, GLib.DateTime day) {
-#if E_CAL_2_0
-        unowned ICal.Timezone system_timezone = ECal.util_get_system_timezone ();
-#else
-        unowned ICal.Timezone system_timezone = ECal.Util.get_system_timezone ();
-#endif
-
-        var stripped_time = new GLib.DateTime.local (day.get_year (), day.get_month (), day.get_day_of_month (), 0, 0, 0);
-
-        var selected_date_unix = stripped_time.to_unix ();
-        var selected_date_unix_next = stripped_time.add_days (1).to_unix ();
-
-        /* We want to be relative to the local timezone */
-        unowned ICal.Component? icomp = comp.get_icalcomponent ();
-        ICal.Time? start_time;
-        ICal.Time? end_time;
-        switch (comp.get_vtype ()) {
-            case ECal.ComponentVType.EVENT:
-                start_time = icomp.get_dtstart ();
-                end_time = icomp.get_dtend ();
-                break;
-
-            case ECal.ComponentVType.TODO:
-                start_time = icomp.get_due ();
-                end_time = icomp.get_due ();
-                break;
-
-            default:
-                return false;
-        }
-
-        time_t start_unix = start_time.as_timet_with_zone (system_timezone);
-        time_t end_unix = end_time.as_timet_with_zone (system_timezone);
-
-        /* If the selected date is inside the event */
-        if (start_unix < selected_date_unix && selected_date_unix_next < end_unix) {
-            return true;
-        }
-
-        /* If the event start before the selected date but finished in the selected date */
-        if (start_unix < selected_date_unix && selected_date_unix < end_unix) {
-            return true;
-        }
-
-        /* If the event start after the selected date but finished after the selected date */
-        if (start_unix < selected_date_unix_next && selected_date_unix_next < end_unix) {
-            return true;
-        }
-
-        /* If the event is inside the selected date */
-        if (start_unix < selected_date_unix_next && selected_date_unix < end_unix) {
-            return true;
-        }
-
-        return false;
-    }
-
-    /* Returns true if 'a' and 'b' are the same E.Source */
-    public bool source_equal_func (E.Source a, E.Source b) {
-        return a.dup_uid () == b.dup_uid ();
     }
 
     public async void reset_timer () {

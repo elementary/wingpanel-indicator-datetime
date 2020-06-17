@@ -25,7 +25,7 @@ namespace DateTime.Widgets {
  * Represents the entire date grid as a table.
  */
     public class Grid : Gtk.Grid {
-        public Util.DateRange grid_range { get; private set; }
+        public Calendar.Util.DateRange grid_range { get; private set; }
 
         /*
          * Event emitted when the day is double clicked or the ENTER key is pressed.
@@ -39,12 +39,12 @@ namespace DateTime.Widgets {
         private Gtk.Label[] header_labels;
         private Gtk.Revealer[] week_labels;
 
-        private static CalendarStore event_store;
-        private static CalendarStore task_store;
+        private static Calendar.Store event_store;
+        private static Calendar.Store task_store;
 
         static construct {
-            event_store = CalendarStore.get_event_store ();
-            task_store = CalendarStore.get_task_store ();
+            event_store = Calendar.Store.get_event_store ();
+            task_store = Calendar.Store.get_task_store ();
         }
 
         construct {
@@ -123,7 +123,7 @@ namespace DateTime.Widgets {
             day.set_state_flags (Gtk.StateFlags.FOCUSED, false);
             selection_changed (selected_date);
 
-            var event_store = CalendarStore.get_event_store ();
+            var event_store = Calendar.Store.get_event_store ();
             var date_month = selected_date.get_month () - event_store.month_start.get_month ();
             var date_year = selected_date.get_year () - event_store.month_start.get_year ();
 
@@ -131,7 +131,7 @@ namespace DateTime.Widgets {
                 event_store.change_month (date_month);
                 event_store.change_year (date_year);
 
-                var task_store = CalendarStore.get_task_store ();
+                var task_store = Calendar.Store.get_task_store ();
                 task_store.change_month (date_month);
                 task_store.change_year (date_year);
             }
@@ -156,7 +156,7 @@ namespace DateTime.Widgets {
          * Sets the given range to be displayed in the grid. Note that the number of days
          * must remain the same.
          */
-        public void set_range (Util.DateRange new_range, GLib.DateTime month_start) {
+        public void set_range (Calendar.Util.DateRange new_range, GLib.DateTime month_start) {
             var today = new GLib.DateTime.now_local ();
 
             Gee.List<GLib.DateTime> old_dates;
@@ -176,8 +176,8 @@ namespace DateTime.Widgets {
 
             /* Create new widgets for the new range */
 
-            var date = Util.strip_time (today);
-            date = date.add_days (CalendarStore.get_event_store ().week_starts_on - date.get_day_of_week ());
+            var date = Calendar.Util.date_time_strip_time (today);
+            date = date.add_days (Calendar.Store.get_event_store ().week_starts_on - date.get_day_of_week ());
             foreach (var label in header_labels) {
                 label.label = date.format ("%a");
                 date = date.add_days (1);

@@ -15,7 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-public class CalendarStore : Object {
+public class Calendar.Store : Object {
 
     public signal void error_received (GLib.Error e);
 
@@ -42,24 +42,24 @@ public class CalendarStore : Object {
 #endif
     private static GLib.Settings state_settings;
 
-    private CalendarStore (ECal.ClientSourceType source_type) {
+    private Store (ECal.ClientSourceType source_type) {
         Object (source_type: source_type);
     }
 
-    private static CalendarStore? event_store = null;
-    private static CalendarStore? task_store = null;
+    private static Calendar.Store? event_store = null;
+    private static Calendar.Store? task_store = null;
 
-    public static CalendarStore get_event_store () {
+    public static Calendar.Store get_event_store () {
         if (event_store == null)
-            event_store = new CalendarStore (ECal.ClientSourceType.EVENTS);
+            event_store = new Calendar.Store (ECal.ClientSourceType.EVENTS);
         if (state_settings == null)
             state_settings = new GLib.Settings ("io.elementary.calendar.savedstate");
         return event_store;
     }
 
-    public static CalendarStore get_task_store () {
+    public static Calendar.Store get_task_store () {
         if (task_store == null)
-            task_store = new CalendarStore (ECal.ClientSourceType.TASKS);
+            task_store = new Calendar.Store (ECal.ClientSourceType.TASKS);
         if (state_settings == null)
             state_settings = new GLib.Settings ("io.elementary.tasks.savedstate");
         return task_store;
@@ -83,7 +83,7 @@ public class CalendarStore : Object {
             week_starts_on = (GLib.DateWeekday) (week_start - 1);
         }
 
-        month_start = Util.get_start_of_month (get_page ());
+        month_start = Calendar.Util.date_time_get_start_of_month (get_page ());
         compute_ranges ();
         notify["month-start"].connect (on_parameter_changed);
     }
@@ -223,7 +223,7 @@ public class CalendarStore : Object {
     }
 
     public void add_component (E.Source source, ECal.Component component) {
-        var components = new Gee.ArrayList<ECal.Component> ((Gee.EqualDataFunc<ECal.Component>?) Util.calcomponent_equal_func);  // vala-lint=line-length
+        var components = new Gee.ArrayList<ECal.Component> ((Gee.EqualDataFunc<ECal.Component>?) Calendar.Util.ecalcomponent_equal_func);  // vala-lint=line-length
         components.add (component);
 
         components_added (components.read_only_view, source);
@@ -243,7 +243,7 @@ public class CalendarStore : Object {
     }
 
     public void modify_component (E.Source source, ECal.Component component, ECal.ObjModType mod_type) {
-        var components = new Gee.ArrayList<ECal.Component> ((Gee.EqualDataFunc<ECal.Component>?) Util.calcomponent_equal_func);  // vala-lint=line-length
+        var components = new Gee.ArrayList<ECal.Component> ((Gee.EqualDataFunc<ECal.Component>?) Calendar.Util.ecalcomponent_equal_func);  // vala-lint=line-length
         components.add (component);
 
         components_modified (components.read_only_view, source);
@@ -293,7 +293,7 @@ public class CalendarStore : Object {
     }
 
     public void remove_component (E.Source source, ECal.Component component, ECal.ObjModType mod_type) {
-        var components = new Gee.ArrayList<ECal.Component> ((Gee.EqualDataFunc<ECal.Component>?) Util.calcomponent_equal_func);  // vala-lint=line-length
+        var components = new Gee.ArrayList<ECal.Component> ((Gee.EqualDataFunc<ECal.Component>?) Calendar.Util.ecalcomponent_equal_func);  // vala-lint=line-length
         components.add (component);
 
         components_removed (components.read_only_view, source);
@@ -324,8 +324,8 @@ public class CalendarStore : Object {
      * changing one of the following properties: month_start, num_weeks, and
      * week_starts_on.
     */
-    public Util.DateRange data_range { get; private set; }
-    public Util.DateRange month_range { get; private set; }
+    public Calendar.Util.DateRange data_range { get; private set; }
+    public Calendar.Util.DateRange month_range { get; private set; }
 
     /* The first day of the month */
     public GLib.DateTime month_start { get; set; }
@@ -401,7 +401,7 @@ public class CalendarStore : Object {
         state_settings.set_string ("month-page", month_start.format ("%Y-%m"));
 
         var month_end = month_start.add_full (0, 1, -1);
-        month_range = new Util.DateRange (month_start, month_end);
+        month_range = new Calendar.Util.DateRange (month_start, month_end);
 
         int dow = month_start.get_day_of_week ();
         int wso = (int) week_starts_on;
@@ -431,7 +431,7 @@ public class CalendarStore : Object {
 
         var data_range_last = month_end.add_days (offset);
 
-        data_range = new Util.DateRange (data_range_first, data_range_last);
+        data_range = new Calendar.Util.DateRange (data_range_first, data_range_last);
         num_weeks = data_range.to_list ().size / 7;
 
         debug (@"Date ranges: ($data_range_first <= $month_start < $month_end <= $data_range_last)");  // vala-lint=line-length
@@ -492,7 +492,7 @@ public class CalendarStore : Object {
             // create empty source-component map
             var components = new Gee.TreeMultiMap<string, ECal.Component> (
                 (GLib.CompareDataFunc<string>?) GLib.strcmp,
-                (GLib.CompareDataFunc<ECal.Component>?) Util.calcomponent_compare_func);
+                (GLib.CompareDataFunc<ECal.Component>?) Calendar.Util.ecalcomponent_compare_func);
             source_components.set (source_uid, components);
 
             Idle.add (() => {
@@ -689,7 +689,7 @@ public class CalendarStore : Object {
     private void on_objects_added_to_backend (E.Source source, SList<weak ICal.Component> objects) {
 #endif
         debug (@"Received $(objects.length()) added component(s) for source '%s'", source.dup_display_name ());
-        var added_components = new Gee.ArrayList<ECal.Component> ((Gee.EqualDataFunc<ECal.Component>?) Util.calcomponent_equal_func);  // vala-lint=line-length
+        var added_components = new Gee.ArrayList<ECal.Component> ((Gee.EqualDataFunc<ECal.Component>?) Calendar.Util.ecalcomponent_equal_func);  // vala-lint=line-length
 
         ECal.Client client;
         lock (source_client) {
@@ -745,7 +745,7 @@ public class CalendarStore : Object {
     private void on_objects_modified_in_backend (E.Source source, SList<weak ICal.Component> objects) {
 #endif
         debug (@"Received $(objects.length()) modified component(s) for source '%s'", source.dup_display_name ());
-        var modified_components = new Gee.ArrayList<ECal.Component> ((Gee.EqualDataFunc<ECal.Component>?) Util.calcomponent_equal_func);  // vala-lint=line-length
+        var modified_components = new Gee.ArrayList<ECal.Component> ((Gee.EqualDataFunc<ECal.Component>?) Calendar.Util.ecalcomponent_equal_func);  // vala-lint=line-length
 
         ECal.Client client;
         lock (source_client) {
@@ -781,7 +781,7 @@ public class CalendarStore : Object {
     private void on_objects_removed_from_backend (E.Source source, SList<weak ECal.ComponentId?> cids) {
 #endif
         debug (@"Received $(cids.length()) removed component(s) for source '%s'", source.dup_display_name ());
-        var removed_components = new Gee.ArrayList<ECal.Component> ((Gee.EqualDataFunc<ECal.Component>?) Util.calcomponent_equal_func);  // vala-lint=line-length
+        var removed_components = new Gee.ArrayList<ECal.Component> ((Gee.EqualDataFunc<ECal.Component>?) Calendar.Util.ecalcomponent_equal_func);  // vala-lint=line-length
         var source_comps = source_components.get (source.get_uid ());
 
         cids.foreach ((cid) => {

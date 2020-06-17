@@ -39,8 +39,6 @@ endif
 shared_module(
     meson.project_name(),
     gresource,
-    'src/DateIterator.vala',
-    'src/DateRange.vala',
     'src/Indicator.vala',
     'src/Widgets/EventRow.vala',
     'src/Widgets/PanelLabel.vala',
@@ -48,7 +46,10 @@ shared_module(
     'src/Widgets/calendar/Grid.vala',
     'src/Widgets/calendar/GridDay.vala',
     'src/Widgets/calendar/Util.vala',
-    'src/Services/CalendarStore.vala',
+    'src/Services/Calendar/Store.vala',
+    'src/Services/Calendar/Util.vala',
+    'src/Services/Calendar/Util/DateIterator.vala',
+    'src/Services/Calendar/Util/DateRange.vala',
     'src/Services/TimeManager.vala',
     dependencies: [
         dependency('glib-2.0'),

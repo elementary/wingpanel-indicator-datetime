@@ -186,13 +186,13 @@ public class DateTime.Indicator : Wingpanel.Indicator {
         }
 
         var date = calendar.selected_date;
-        var event_store = CalendarStore.get_event_store ();
-        var task_store = CalendarStore.get_task_store ();
+        var event_store = Calendar.Store.get_event_store ();
+        var task_store = Calendar.Store.get_task_store ();
         var components_on_day = new Gee.TreeMap<string, DateTime.EventRow> ();
 
         event_store.source_components.@foreach ((source_uid, component_map) => {
             foreach (var comp in component_map.get_values ()) {
-                if (Util.calcomp_is_on_day (comp, date)) {
+                if (Calendar.Util.ecalcomponent_is_on_day (comp, date)) {
                     unowned ICal.Component ical = comp.get_icalcomponent ();
                     var comp_uid = ical.get_uid ();
                     if (!components_on_day.has_key (comp_uid)) {
@@ -206,7 +206,7 @@ public class DateTime.Indicator : Wingpanel.Indicator {
 
         task_store.source_components.@foreach ((source_uid, component_map) => {
             foreach (var comp in component_map.get_values ()) {
-                if (Util.calcomp_is_on_day (comp, date)) {
+                if (Calendar.Util.ecalcomponent_is_on_day (comp, date)) {
                     unowned ICal.Component ical = comp.get_icalcomponent ();
                     var comp_uid = ical.get_uid ();
                     if (!components_on_day.has_key (comp_uid)) {
@@ -226,24 +226,24 @@ public class DateTime.Indicator : Wingpanel.Indicator {
     public override void opened () {
         calendar.show_today ();
 
-        var event_store = CalendarStore.get_event_store ();
+        var event_store = Calendar.Store.get_event_store ();
         event_store.components_added.connect (update_components_model);
         event_store.components_modified.connect (update_components_model);
         event_store.components_removed.connect (update_components_model);
 
-        var task_store = CalendarStore.get_task_store ();
+        var task_store = Calendar.Store.get_task_store ();
         task_store.components_added.connect (update_components_model);
         task_store.components_modified.connect (update_components_model);
         task_store.components_removed.connect (update_components_model);
     }
 
     public override void closed () {
-        var event_store = CalendarStore.get_event_store ();
+        var event_store = Calendar.Store.get_event_store ();
         event_store.components_added.disconnect (update_components_model);
         event_store.components_modified.disconnect (update_components_model);
         event_store.components_removed.disconnect (update_components_model);
 
-        var task_store = CalendarStore.get_task_store ();
+        var task_store = Calendar.Store.get_task_store ();
         task_store.components_added.disconnect (update_components_model);
         task_store.components_modified.disconnect (update_components_model);
         task_store.components_removed.disconnect (update_components_model);
