@@ -175,7 +175,7 @@ public class CalendarStore : Object {
      * See `e-cal-backend-sexp.c` of evolution-data-server for available S-expressions:
      * https://gitlab.gnome.org/GNOME/evolution-data-server/-/blob/master/src/calendar/libedata-cal/e-cal-backend-sexp.c
      **/
-    public void add_view (E.Source source, string sexp) throws Error {
+    public void add_source_view (E.Source source, string sexp) throws Error {
         ECal.Client client;
         lock (source_client) {
             client = source_client.get (source.get_uid ());
@@ -218,6 +218,10 @@ public class CalendarStore : Object {
 #endif
     }
 
+    public bool is_component_completed (ECal.Component component) {
+        return component.get_icalcomponent ().get_status () == ICal.PropertyStatus.COMPLETED;
+    }
+
     public void add_component (E.Source source, ECal.Component component) {
         var components = new Gee.ArrayList<ECal.Component> ((Gee.EqualDataFunc<ECal.Component>?) Util.calcomponent_equal_func);  // vala-lint=line-length
         components.add (component);
@@ -255,6 +259,37 @@ public class CalendarStore : Object {
                 critical (e.message);
             }
         });
+    }
+
+    public void set_component_status (ECal.Component component, ICal.PropertyStatus status) {
+        unowned ICal.Component ical_component = component.get_icalcomponent ();
+        ical_component.set_status (status);
+
+        switch (status) {
+            case ICal.PropertyStatus.NONE:
+
+                component.set_percent_complete (0);
+#if E_CAL_2_0
+                component.set_completed (new ICal.Time.null_time ());
+#else
+                var null_time = ICal.Time.null_time ();
+                component.set_completed (ref null_time);
+#endif
+                break;
+
+            case ICal.PropertyStatus.COMPLETED:
+                component.set_percent_complete (100);
+#if E_CAL_2_0
+                component.set_completed (new ICal.Time.today ());
+#else
+                var today_time = ICal.Time.today ();
+                component.set_completed (ref today_time);
+#endif
+                break;
+
+            default:
+                break;
+        }
     }
 
     public void remove_component (E.Source source, ECal.Component component, ECal.ObjModType mod_type) {
@@ -337,7 +372,7 @@ public class CalendarStore : Object {
         }
 
         try {
-            add_view (source, query);
+            add_source_view (source, query);
         } catch (Error e) {
             error_received (e);
             critical ("Error from source '%s': %s", source.dup_display_name (), e.message);
@@ -537,8 +572,8 @@ public class CalendarStore : Object {
     private async ECal.Component modify_component_in_backend (E.Source source, ECal.Component component, ECal.ObjModType mod_type) throws Error {
         var modified_component = component.clone ();
 
-        unowned ICal.Component comp = modified_component.get_icalcomponent ();
-        debug (@"Updating component '$(comp.get_uid())' [mod_type=$(mod_type)]");
+        unowned ICal.Component ical_component = modified_component.get_icalcomponent ();
+        debug (@"Updating component '$(ical_component.get_uid())' [mod_type=$(mod_type)]");
 
         ECal.Client client;
         lock (source_client) {
@@ -546,10 +581,82 @@ public class CalendarStore : Object {
         }
 
 #if E_CAL_2_0
-        yield client.modify_object (comp, mod_type, ECal.OperationFlags.NONE, null);
+        yield client.modify_object (ical_component, mod_type, ECal.OperationFlags.NONE, null);
 #else
-        yield client.modify_object (comp, mod_type, null);
+        yield client.modify_object (ical_component, mod_type, null);
 #endif
+
+        // schedule next occurence if component was completed
+        if (
+            ical_component.get_status () == ICal.PropertyStatus.COMPLETED &&
+            mod_type == ECal.ObjModType.THIS_AND_PRIOR &&
+            component.has_recurrences ()
+        ) {
+#if E_CAL_2_0
+            var duration = new ICal.Duration.null_duration ();
+            duration.set_weeks (520); // roughly 10 years
+            var today = new ICal.Time.today ();
+#else
+            var duration = ICal.Duration.null_duration ();
+            duration.weeks = 520; // roughly 10 years
+            var today = ICal.Time.today ();
+#endif
+            var start = ical_component.get_dtstart ();
+            if (today.compare (start) > 0) {
+                start = today;
+            }
+            var end = start.add (duration);
+
+#if E_CAL_2_0
+            ECal.RecurInstanceCb recur_instance_callback = (instance_comp, instance_start_timet, instance_end_timet, cancellable) => {
+#else
+            ECal.RecurInstanceFn recur_instance_callback = (instance, instance_start_timet, instance_end_timet) => {
+#endif
+
+#if E_CAL_2_0
+                var instance = new ECal.Component ();
+                instance.set_icalcomponent (instance_comp);
+#else
+                unowned ICal.Component instance_comp = instance.get_icalcomponent ();
+#endif
+                if (!instance_comp.get_due ().is_null_time ()) {
+                    instance_comp.set_due (instance_comp.get_dtstart ());
+                }
+
+                instance_comp.set_status (ICal.PropertyStatus.NONE);
+                instance.set_percent_complete (0);
+#if E_CAL_2_0
+                instance.set_completed (new ICal.Time.null_time ());
+#else
+                var null_time = ICal.Time.null_time ();
+                instance.set_completed (ref null_time);
+#endif
+                if (instance.has_alarms ()) {
+                    instance.get_alarm_uids ().@foreach ((alarm_uid) => {
+                        ECal.ComponentAlarmTrigger trigger;
+#if E_CAL_2_0
+                        trigger = new ECal.ComponentAlarmTrigger.relative (ECal.ComponentAlarmTriggerKind.RELATIVE_START, new ICal.Duration.null_duration ());
+#else
+                        trigger = ECal.ComponentAlarmTrigger () {
+                            type = ECal.ComponentAlarmTriggerKind.RELATIVE_START,
+                            rel_duration = ICal.Duration.null_duration ()
+                        };
+#endif
+                        instance.get_alarm (alarm_uid).set_trigger (trigger);
+                    });
+                }
+
+                modify_component_in_backend.begin (source, instance, ECal.ObjModType.THIS_AND_FUTURE);
+                return GLib.Source.REMOVE; // only generate one next occurence
+            };
+
+#if E_CAL_2_0
+            client.generate_instances_for_object_sync (ical_component, start.as_timet (), end.as_timet (), null, recur_instance_callback);
+#else
+            client.generate_instances_for_object_sync (ical_component, start.as_timet (), end.as_timet (), recur_instance_callback);
+#endif
+        }
+
         return modified_component;
     }
 
