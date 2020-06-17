@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: extra\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-05-24 22:27+0000\n"
-"PO-Revision-Date: 2020-06-16 20:11+0000\n"
+"PO-Revision-Date: 2020-06-18 09:11+0000\n"
 "Last-Translator: Jaimie85 <alsemgeest@gmail.com>\n"
 "Language-Team: Dutch <https://l10n.elementary.io/projects/wingpanel/"
 "indicator-datetime-extra/nl/>\n"
@@ -40,14 +40,18 @@ msgstr "Bijgewerkte vertalingen"
 #: data/datetime.appdata.xml.in:17
 msgid "Fix missing event dots in the calendar view"
 msgstr ""
+"Een probleem opgelost met ontbrekende evenement aanduidingen in de kalender "
+"weergave"
 
 #: data/datetime.appdata.xml.in:18
 msgid "Fix event appearance with dark style"
-msgstr ""
+msgstr "Een probleem opgelost met evenement weergave in donkere stijl"
 
 #: data/datetime.appdata.xml.in:29
 msgid "Fix potential crash when loading events with no start or end time"
 msgstr ""
+"Een mogelijke crash verholpen bij het laden van gebeurtenissen zonder start- "
+"of eindtijd"
 
 #: data/datetime.appdata.xml.in:35
 msgid "Redesigned the way upcoming events are displayed"
