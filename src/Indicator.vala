@@ -196,7 +196,7 @@ public class DateTime.Indicator : Wingpanel.Indicator {
                     unowned ICal.Component ical = comp.get_icalcomponent ();
                     var comp_uid = ical.get_uid ();
                     if (!components_on_day.has_key (comp_uid)) {
-                        components_on_day[comp_uid] = new DateTime.EventRow (date, ical, comp.get_vtype (), event_store.get_source_by_uid (source_uid));
+                        components_on_day[comp_uid] = new DateTime.EventRow (date, ical, comp.get_vtype (), event_store.get_source_with_uid (source_uid));
 
                         component_listbox.add (components_on_day[comp_uid]);
                     }
@@ -210,7 +210,7 @@ public class DateTime.Indicator : Wingpanel.Indicator {
                     unowned ICal.Component ical = comp.get_icalcomponent ();
                     var comp_uid = ical.get_uid ();
                     if (!components_on_day.has_key (comp_uid)) {
-                        components_on_day[comp_uid] = new DateTime.EventRow (date, ical, comp.get_vtype (), event_store.get_source_by_uid (source_uid));
+                        components_on_day[comp_uid] = new DateTime.EventRow (date, ical, comp.get_vtype (), event_store.get_source_with_uid (source_uid));
 
                         component_listbox.add (components_on_day[comp_uid]);
                     }
