@@ -11,6 +11,7 @@ You'll need the following dependencies:
 * gobject-introspection
 * libecal1.2-dev
 * libedataserver1.2-dev
+* libedataserverui1.2-dev
 * libical-dev
 * libgranite-dev
 * libwingpanel-2.0-dev
