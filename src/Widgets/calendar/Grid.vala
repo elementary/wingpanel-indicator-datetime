@@ -176,7 +176,7 @@ namespace DateTime.Widgets {
 
             /* Create new widgets for the new range */
 
-            var date = Calendar.Util.date_time_strip_time (today);
+            var date = Calendar.Util.datetime_strip_time (today);
             date = date.add_days (Calendar.Store.get_event_store ().week_starts_on - date.get_day_of_week ());
             foreach (var label in header_labels) {
                 label.label = date.format ("%a");

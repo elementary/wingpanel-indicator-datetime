@@ -64,17 +64,17 @@ public class DateTime.EventRow : Gtk.ListBoxRow {
     construct {
         switch (vtype) {
             case ECal.ComponentVType.TODO:
-                start_time = Calendar.Util.ical_time_to_date_time (component.get_due ());
-                end_time = Calendar.Util.ical_time_to_date_time (component.get_due ());
+                start_time = Calendar.Util.icaltime_to_datetime (component.get_due ());
+                end_time = Calendar.Util.icaltime_to_datetime (component.get_due ());
                 break;
 
             default:
-                start_time = Calendar.Util.ical_time_to_date_time (component.get_dtstart ());
-                end_time = Calendar.Util.ical_time_to_date_time (component.get_dtend ());
+                start_time = Calendar.Util.icaltime_to_datetime (component.get_dtstart ());
+                end_time = Calendar.Util.icaltime_to_datetime (component.get_dtend ());
                 break;
         }
 
-        if (end_time != null && Calendar.Util.date_time_is_all_day (start_time, end_time)) {
+        if (end_time != null && Calendar.Util.datetime_is_all_day (start_time, end_time)) {
             is_allday = true;
         }
 

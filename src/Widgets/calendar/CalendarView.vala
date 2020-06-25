@@ -124,8 +124,8 @@ public class DateTime.Widgets.CalendarView : Gtk.Grid {
         var event_store = Calendar.Store.get_event_store ();
         var task_store = Calendar.Store.get_task_store ();
 
-        var today = Calendar.Util.date_time_strip_time (new GLib.DateTime.now_local ());
-        var start = Calendar.Util.date_time_get_start_of_month (today);
+        var today = Calendar.Util.datetime_strip_time (new GLib.DateTime.now_local ());
+        var start = Calendar.Util.datetime_get_start_of_month (today);
         selected_date = today;
         if (!start.equal (event_store.month_start)) {
             event_store.month_start = start;
