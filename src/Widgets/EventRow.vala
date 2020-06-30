@@ -49,8 +49,21 @@ public class DateTime.EventRow : Gtk.ListBoxRow {
     }
 
     construct {
-        start_time = Util.ical_to_date_time (component.get_dtstart ());
-        end_time = Util.ical_to_date_time (component.get_dtend ());
+        var dt_start = component.get_dtstart ();
+        if (dt_start.is_date ()) {
+            // Don't convert timezone for date with only day info, leave it at midnight UTC
+            start_time = Util.ical_to_date_time (dt_start);
+        } else {
+            start_time = Util.ical_to_date_time (dt_start).to_local ();
+        }
+
+        var dt_end = component.get_dtend ();
+        if (dt_end.is_date ()) {
+            // Don't convert timezone for date with only day info, leave it at midnight UTC
+            end_time = Util.ical_to_date_time (dt_end);
+        } else {
+            end_time = Util.ical_to_date_time (dt_end).to_local ();
+        }
 
         if (end_time != null && Util.is_the_all_day (start_time, end_time)) {
             is_allday = true;
