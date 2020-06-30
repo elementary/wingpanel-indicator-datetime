@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-09-26 16:48-0700\n"
+"POT-Creation-Date: 2020-06-30 19:02+0000\n"
 "PO-Revision-Date: 2017-04-10 18:42+0000\n"
 "Last-Translator: Boris Bongalov <b.bongalov@gmail.com>\n"
 "Language-Team: Bulgarian <https://l10n.elementary.io/projects/wingpanel/"
@@ -31,11 +31,11 @@ msgstr ""
 msgid "Date & Time Settings…"
 msgstr "Настройки на дата и час…"
 
-#: src/Indicator.vala:131
+#: src/Indicator.vala:130
 msgid "During the Day"
 msgstr ""
 
-#: src/Indicator.vala:139
+#: src/Indicator.vala:138
 msgid "All Day"
 msgstr ""
 

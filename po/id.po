@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-09-26 16:48-0700\n"
+"POT-Creation-Date: 2020-06-30 19:02+0000\n"
 "PO-Revision-Date: 2018-09-30 16:23+0000\n"
 "Last-Translator: Eri Hidayat <eriwhidayat@gmail.com>\n"
 "Language-Team: Indonesian <https://weblate.elementary.io/projects/wingpanel/"
@@ -31,11 +31,11 @@ msgstr ""
 msgid "Date & Time Settings…"
 msgstr "Pengaturan Tanggal & Waktu…"
 
-#: src/Indicator.vala:131
+#: src/Indicator.vala:130
 msgid "During the Day"
 msgstr ""
 
-#: src/Indicator.vala:139
+#: src/Indicator.vala:138
 msgid "All Day"
 msgstr ""
 

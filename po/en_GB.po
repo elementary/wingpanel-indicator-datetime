@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-09-26 16:48-0700\n"
+"POT-Creation-Date: 2020-06-30 19:02+0000\n"
 "PO-Revision-Date: 2019-08-29 17:22+0000\n"
 "Last-Translator: Ciarán Ainsworth <ciaranainsworth@posteo.net>\n"
 "Language-Team: English (United Kingdom) <https://l10n.elementary.io/projects/"
@@ -31,11 +31,11 @@ msgstr "No Events on This Day"
 msgid "Date & Time Settings…"
 msgstr "Date & Time Settings…"
 
-#: src/Indicator.vala:131
+#: src/Indicator.vala:130
 msgid "During the Day"
 msgstr "During the Day"
 
-#: src/Indicator.vala:139
+#: src/Indicator.vala:138
 msgid "All Day"
 msgstr "All Day"
 
