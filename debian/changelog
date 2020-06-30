@@ -1,3 +1,14 @@
+wingpanel-indicator-datetime (2.2.5) bionic; urgency=medium
+
+  * Release 2.2.5 (#227)
+  * Update translation files
+  * Update translation files
+  * Update translation template
+  * Update datetime.appdata.xml.in
+  * Fix event times with timezones (#226)
+
+ -- Cody Garver <cody@elementary.io>  Tue, 30 Jun 2020 19:57:20 +0000
+
 wingpanel-indicator-datetime (2.2.4) bionic; urgency=medium
 
   * Release 2.2.4 (#223)
