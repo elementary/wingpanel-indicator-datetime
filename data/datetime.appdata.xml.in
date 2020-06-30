@@ -6,7 +6,7 @@
   <name>Date &amp; Time Indicator</name>
   <summary>The date and time indicator</summary>
   <releases>
-    <release version="2.2.5" date="2020-06-28" urgency="medium">
+    <release version="2.2.5" date="2020-06-30" urgency="medium">
       <description>
         <p>Fix issues with time zones not being recognized</p>
         <p>Updated translations</p>
