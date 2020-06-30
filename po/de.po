@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-09-26 16:48-0700\n"
+"POT-Creation-Date: 2020-06-30 19:02+0000\n"
 "PO-Revision-Date: 2019-12-25 15:17+0000\n"
 "Last-Translator: Jörg Arnold <j.ar@mailbox.org>\n"
 "Language-Team: German <https://l10n.elementary.io/projects/wingpanel/"
@@ -31,11 +31,11 @@ msgstr "Keine Termine an diesem Tag"
 msgid "Date & Time Settings…"
 msgstr "Datums- & Zeiteinstellungen…"
 
-#: src/Indicator.vala:131
+#: src/Indicator.vala:130
 msgid "During the Day"
 msgstr "Im Laufe des Tages"
 
-#: src/Indicator.vala:139
+#: src/Indicator.vala:138
 msgid "All Day"
 msgstr "Ganztägig"
 

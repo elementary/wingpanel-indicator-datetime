@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-09-26 16:48-0700\n"
+"POT-Creation-Date: 2020-06-30 19:02+0000\n"
 "PO-Revision-Date: 2019-08-29 17:22+0000\n"
 "Last-Translator: Moo <hazap@hotmail.com>\n"
 "Language-Team: Lithuanian <https://l10n.elementary.io/projects/wingpanel/"
@@ -33,11 +33,11 @@ msgstr "Šią dieną nėra jokių įvykių"
 msgid "Date & Time Settings…"
 msgstr "Datos ir laiko nustatymai…"
 
-#: src/Indicator.vala:131
+#: src/Indicator.vala:130
 msgid "During the Day"
 msgstr "Dienos metu"
 
-#: src/Indicator.vala:139
+#: src/Indicator.vala:138
 msgid "All Day"
 msgstr "Visą dieną"
 
