@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: extra\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-06-30 19:02+0000\n"
-"PO-Revision-Date: 2020-05-26 11:11+0000\n"
+"PO-Revision-Date: 2020-07-02 02:04+0000\n"
 "Last-Translator: Nathan <bonnemainsnathan@gmail.com>\n"
 "Language-Team: French <https://l10n.elementary.io/projects/wingpanel/"
 "indicator-datetime-extra/fr/>\n"
@@ -28,10 +28,9 @@ msgid "The date and time indicator"
 msgstr "L'indicateur de la date et de l'heure"
 
 #: data/datetime.appdata.xml.in:11
-#, fuzzy
-#| msgid "Fixed issues with large text size"
 msgid "Fix issues with time zones not being recognized"
-msgstr "Correction de problèmes avec des textes de grande taille"
+msgstr ""
+"Correction de problèmes avec les fuseaux horaires qui n'étaient pas reconnus"
 
 #: data/datetime.appdata.xml.in:12 data/datetime.appdata.xml.in:18
 #: data/datetime.appdata.xml.in:25 data/datetime.appdata.xml.in:30
