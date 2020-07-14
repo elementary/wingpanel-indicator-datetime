@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: extra\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-06-30 19:02+0000\n"
-"PO-Revision-Date: 2020-04-06 15:10+0000\n"
+"PO-Revision-Date: 2020-07-16 22:12+0000\n"
 "Last-Translator: Ciarán Ainsworth <ciaranainsworth@posteo.net>\n"
 "Language-Team: English (United Kingdom) <https://l10n.elementary.io/projects/"
 "wingpanel/indicator-datetime-extra/en_GB/>\n"
@@ -28,10 +28,8 @@ msgid "The date and time indicator"
 msgstr "The date and time indicator"
 
 #: data/datetime.appdata.xml.in:11
-#, fuzzy
-#| msgid "Fixed issues with large text size"
 msgid "Fix issues with time zones not being recognized"
-msgstr "Fixed issues with large text size"
+msgstr "Fix issues with time zones not being recognised"
 
 #: data/datetime.appdata.xml.in:12 data/datetime.appdata.xml.in:18
 #: data/datetime.appdata.xml.in:25 data/datetime.appdata.xml.in:30
@@ -41,15 +39,15 @@ msgstr "Updated translations"
 
 #: data/datetime.appdata.xml.in:17
 msgid "Improved performance when switching months"
-msgstr ""
+msgstr "Improved performance when switching months"
 
 #: data/datetime.appdata.xml.in:23
 msgid "Fix missing event dots in the calendar view"
-msgstr ""
+msgstr "Fix missing event dots in the calendar view"
 
 #: data/datetime.appdata.xml.in:24
 msgid "Fix event appearance with dark style"
-msgstr ""
+msgstr "Fix event appearance with dark style"
 
 #: data/datetime.appdata.xml.in:35
 msgid "Fix potential crash when loading events with no start or end time"
