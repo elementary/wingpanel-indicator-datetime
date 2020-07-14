@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-06-30 19:02+0000\n"
+"POT-Creation-Date: 2020-07-14 15:49+0000\n"
 "PO-Revision-Date: 2019-08-29 17:23+0000\n"
 "Last-Translator: Rodrigo Oliveira <rod.oliveira@gmail.com>\n"
 "Language-Team: Portuguese (Brazil) <https://l10n.elementary.io/projects/"
@@ -15,27 +15,19 @@ msgstr ""
 "X-Generator: Weblate 3.7.1\n"
 "X-Launchpad-Export-Date: 2017-02-19 05:58+0000\n"
 
-#: src/Indicator.vala:32
-msgid "Date & Time"
-msgstr "Data & Hora"
-
-#: src/Indicator.vala:33
-msgid "The date and time indicator"
-msgstr "O indicador de data e hora"
-
-#: src/Indicator.vala:58
+#: src/Indicator.vala:56
 msgid "No Events on This Day"
 msgstr "Não há eventos para este dia"
 
-#: src/Indicator.vala:82
+#: src/Indicator.vala:80
 msgid "Date & Time Settings…"
 msgstr "Configurações de Data e Hora…"
 
-#: src/Indicator.vala:130
+#: src/Indicator.vala:128
 msgid "During the Day"
 msgstr "Durante o dia"
 
-#: src/Indicator.vala:138
+#: src/Indicator.vala:136
 msgid "All Day"
 msgstr "Dia inteiro"
 
@@ -55,6 +47,12 @@ msgstr "Não é possível iniciar o Calendário"
 #: src/Widgets/calendar/CalendarView.vala:146
 msgid "The program \"io.elementary.calendar\" may not be installed"
 msgstr "O programa \"io.elementary.calendar\" pode não estar instalado"
+
+#~ msgid "Date & Time"
+#~ msgstr "Data & Hora"
+
+#~ msgid "The date and time indicator"
+#~ msgstr "O indicador de data e hora"
 
 #~ msgid "%OB %Y"
 #~ msgstr "%OB %Y"

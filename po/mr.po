@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-06-30 19:02+0000\n"
+"POT-Creation-Date: 2020-07-14 15:49+0000\n"
 "PO-Revision-Date: 2019-09-07 10:22+0000\n"
 "Last-Translator: Prachi Joshi <josprachi@yahoo.com>\n"
 "Language-Team: Marathi <https://l10n.elementary.io/projects/wingpanel/"
@@ -15,27 +15,19 @@ msgstr ""
 "X-Generator: Weblate 3.7.1\n"
 "X-Launchpad-Export-Date: 2017-02-19 05:57+0000\n"
 
-#: src/Indicator.vala:32
-msgid "Date & Time"
-msgstr "तारीख आणि वेळ"
-
-#: src/Indicator.vala:33
-msgid "The date and time indicator"
-msgstr "तारीख आणि वेळ सूचक"
-
-#: src/Indicator.vala:58
+#: src/Indicator.vala:56
 msgid "No Events on This Day"
 msgstr "या दिवशी कोणतेही कार्यक्रम नाहीत"
 
-#: src/Indicator.vala:82
+#: src/Indicator.vala:80
 msgid "Date & Time Settings…"
 msgstr "तारीख आणि वेळ सेटिंग्ज…"
 
-#: src/Indicator.vala:130
+#: src/Indicator.vala:128
 msgid "During the Day"
 msgstr "दिवसा"
 
-#: src/Indicator.vala:138
+#: src/Indicator.vala:136
 msgid "All Day"
 msgstr "संपूर्ण दिवस"
 
@@ -55,6 +47,12 @@ msgstr "कॅलेंडर लाँच करण्यात अक्षम
 #: src/Widgets/calendar/CalendarView.vala:146
 msgid "The program \"io.elementary.calendar\" may not be installed"
 msgstr "कदाचित प्रोग्राम \"io.elementary.cender\" स्थापित केलेला नसावा"
+
+#~ msgid "Date & Time"
+#~ msgstr "तारीख आणि वेळ"
+
+#~ msgid "The date and time indicator"
+#~ msgstr "तारीख आणि वेळ सूचक"
 
 #~ msgid "%OB %Y"
 #~ msgstr "%OB %Y"

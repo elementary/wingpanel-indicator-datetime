@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-06-30 19:02+0000\n"
+"POT-Creation-Date: 2020-07-14 15:49+0000\n"
 "PO-Revision-Date: 2018-03-20 00:14+0000\n"
 "Last-Translator: Anand Kumar <anand@anandkumar.net>\n"
 "Language-Team: Hindi <https://weblate.elementary.io/projects/wingpanel/"
@@ -15,27 +15,19 @@ msgstr ""
 "X-Generator: Weblate 2.18\n"
 "X-Launchpad-Export-Date: 2017-02-19 05:57+0000\n"
 
-#: src/Indicator.vala:32
-msgid "Date & Time"
-msgstr "दिनांक एवं समय"
-
-#: src/Indicator.vala:33
-msgid "The date and time indicator"
-msgstr "दिनांक एवं समय सूचक"
-
-#: src/Indicator.vala:58
+#: src/Indicator.vala:56
 msgid "No Events on This Day"
 msgstr ""
 
-#: src/Indicator.vala:82
+#: src/Indicator.vala:80
 msgid "Date & Time Settings…"
 msgstr "दिनांक एवं समय सेटिंग्स"
 
-#: src/Indicator.vala:130
+#: src/Indicator.vala:128
 msgid "During the Day"
 msgstr ""
 
-#: src/Indicator.vala:138
+#: src/Indicator.vala:136
 msgid "All Day"
 msgstr ""
 
@@ -55,3 +47,9 @@ msgstr ""
 #: src/Widgets/calendar/CalendarView.vala:146
 msgid "The program \"io.elementary.calendar\" may not be installed"
 msgstr ""
+
+#~ msgid "Date & Time"
+#~ msgstr "दिनांक एवं समय"
+
+#~ msgid "The date and time indicator"
+#~ msgstr "दिनांक एवं समय सूचक"

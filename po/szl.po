@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-06-30 19:02+0000\n"
+"POT-Creation-Date: 2020-07-14 15:49+0000\n"
 "PO-Revision-Date: 2020-02-23 00:08+0000\n"
 "Last-Translator: gkkulik <g.kulik@o2.pl>\n"
 "Language-Team: Silesian <https://l10n.elementary.io/projects/wingpanel/"
@@ -14,27 +14,19 @@ msgstr ""
 "|| n%100>=20) ? 1 : 2;\n"
 "X-Generator: Weblate 3.9.1\n"
 
-#: src/Indicator.vala:32
-msgid "Date & Time"
-msgstr "Data i czas"
-
-#: src/Indicator.vala:33
-msgid "The date and time indicator"
-msgstr "Skaźnik daty i godziny"
-
-#: src/Indicator.vala:58
+#: src/Indicator.vala:56
 msgid "No Events on This Day"
 msgstr "Żodnych zdarzyń w tyn dziyń"
 
-#: src/Indicator.vala:82
+#: src/Indicator.vala:80
 msgid "Date & Time Settings…"
 msgstr "Sztelōnki daty i godziny…"
 
-#: src/Indicator.vala:130
+#: src/Indicator.vala:128
 msgid "During the Day"
 msgstr "W czasie dnia"
 
-#: src/Indicator.vala:138
+#: src/Indicator.vala:136
 msgid "All Day"
 msgstr "Cołki dziyń"
 
@@ -54,3 +46,9 @@ msgstr "Niy idzie ôtworzić Kalyndorza"
 #: src/Widgets/calendar/CalendarView.vala:146
 msgid "The program \"io.elementary.calendar\" may not be installed"
 msgstr "Program „io.elementary.calendar” może niy być zainstalowany"
+
+#~ msgid "Date & Time"
+#~ msgstr "Data i czas"
+
+#~ msgid "The date and time indicator"
+#~ msgstr "Skaźnik daty i godziny"
