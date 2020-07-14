@@ -28,9 +28,7 @@ public class DateTime.Indicator : Wingpanel.Indicator {
 
     public Indicator () {
         Object (
-            code_name: Wingpanel.Indicator.DATETIME,
-            display_name: _("Date & Time"),
-            description: _("The date and time indicator")
+            code_name: Wingpanel.Indicator.DATETIME
         );
     }
 
