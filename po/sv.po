@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-09-26 16:48-0700\n"
+"POT-Creation-Date: 2020-07-14 15:49+0000\n"
 "PO-Revision-Date: 2018-10-19 18:06+0000\n"
 "Last-Translator: Fredrik B <frbo9002@gmail.com>\n"
 "Language-Team: Swedish <https://weblate.elementary.io/projects/wingpanel/"
@@ -15,27 +15,19 @@ msgstr ""
 "X-Generator: Weblate 3.0.1\n"
 "X-Launchpad-Export-Date: 2017-02-19 05:57+0000\n"
 
-#: src/Indicator.vala:32
-msgid "Date & Time"
-msgstr "Datum & tid"
-
-#: src/Indicator.vala:33
-msgid "The date and time indicator"
-msgstr "Datum- och tidsindikatorn"
-
-#: src/Indicator.vala:58
+#: src/Indicator.vala:56
 msgid "No Events on This Day"
 msgstr ""
 
-#: src/Indicator.vala:82
+#: src/Indicator.vala:80
 msgid "Date & Time Settings…"
 msgstr "Datum- och tidsinställningar…"
 
-#: src/Indicator.vala:131
+#: src/Indicator.vala:128
 msgid "During the Day"
 msgstr ""
 
-#: src/Indicator.vala:139
+#: src/Indicator.vala:136
 msgid "All Day"
 msgstr ""
 
@@ -55,6 +47,12 @@ msgstr ""
 #: src/Widgets/calendar/CalendarView.vala:146
 msgid "The program \"io.elementary.calendar\" may not be installed"
 msgstr ""
+
+#~ msgid "Date & Time"
+#~ msgstr "Datum & tid"
+
+#~ msgid "The date and time indicator"
+#~ msgstr "Datum- och tidsindikatorn"
 
 #~ msgid "%OB %Y"
 #~ msgstr "%OB %Y"

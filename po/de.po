@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-09-26 16:48-0700\n"
+"POT-Creation-Date: 2020-07-14 15:49+0000\n"
 "PO-Revision-Date: 2019-12-25 15:17+0000\n"
 "Last-Translator: Jörg Arnold <j.ar@mailbox.org>\n"
 "Language-Team: German <https://l10n.elementary.io/projects/wingpanel/"
@@ -15,27 +15,19 @@ msgstr ""
 "X-Generator: Weblate 3.9.1\n"
 "X-Launchpad-Export-Date: 2017-02-19 05:57+0000\n"
 
-#: src/Indicator.vala:32
-msgid "Date & Time"
-msgstr "Datum & Uhrzeit"
-
-#: src/Indicator.vala:33
-msgid "The date and time indicator"
-msgstr "Der Datums- und Zeitindikator"
-
-#: src/Indicator.vala:58
+#: src/Indicator.vala:56
 msgid "No Events on This Day"
 msgstr "Keine Termine an diesem Tag"
 
-#: src/Indicator.vala:82
+#: src/Indicator.vala:80
 msgid "Date & Time Settings…"
 msgstr "Datums- & Zeiteinstellungen…"
 
-#: src/Indicator.vala:131
+#: src/Indicator.vala:128
 msgid "During the Day"
 msgstr "Im Laufe des Tages"
 
-#: src/Indicator.vala:139
+#: src/Indicator.vala:136
 msgid "All Day"
 msgstr "Ganztägig"
 
@@ -56,6 +48,12 @@ msgstr "Starten des Kalenders nicht möglich"
 msgid "The program \"io.elementary.calendar\" may not be installed"
 msgstr ""
 "Das Programm \"io.elementary.calendar\" ist möglicherweise nicht installiert"
+
+#~ msgid "Date & Time"
+#~ msgstr "Datum & Uhrzeit"
+
+#~ msgid "The date and time indicator"
+#~ msgstr "Der Datums- und Zeitindikator"
 
 #~ msgid "%OB %Y"
 #~ msgstr "%OB %Y"

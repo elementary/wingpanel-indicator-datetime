@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-09-26 16:48-0700\n"
+"POT-Creation-Date: 2020-07-14 15:49+0000\n"
 "PO-Revision-Date: 2019-08-29 17:22+0000\n"
 "Last-Translator: Moo <hazap@hotmail.com>\n"
 "Language-Team: Lithuanian <https://l10n.elementary.io/projects/wingpanel/"
@@ -17,27 +17,19 @@ msgstr ""
 "X-Generator: Weblate 3.7.1\n"
 "X-Launchpad-Export-Date: 2017-02-19 05:57+0000\n"
 
-#: src/Indicator.vala:32
-msgid "Date & Time"
-msgstr "Data ir laikas"
-
-#: src/Indicator.vala:33
-msgid "The date and time indicator"
-msgstr "Datos ir laiko indikatorius"
-
-#: src/Indicator.vala:58
+#: src/Indicator.vala:56
 msgid "No Events on This Day"
 msgstr "Šią dieną nėra jokių įvykių"
 
-#: src/Indicator.vala:82
+#: src/Indicator.vala:80
 msgid "Date & Time Settings…"
 msgstr "Datos ir laiko nustatymai…"
 
-#: src/Indicator.vala:131
+#: src/Indicator.vala:128
 msgid "During the Day"
 msgstr "Dienos metu"
 
-#: src/Indicator.vala:139
+#: src/Indicator.vala:136
 msgid "All Day"
 msgstr "Visą dieną"
 
@@ -57,6 +49,12 @@ msgstr "Nepavyko paleisti kalendorių"
 #: src/Widgets/calendar/CalendarView.vala:146
 msgid "The program \"io.elementary.calendar\" may not be installed"
 msgstr "Gali būti, kad programa \"io.elementary.calendar\" nėra įdiegta"
+
+#~ msgid "Date & Time"
+#~ msgstr "Data ir laikas"
+
+#~ msgid "The date and time indicator"
+#~ msgstr "Datos ir laiko indikatorius"
 
 #~ msgid "%OB %Y"
 #~ msgstr "%Y %OB"

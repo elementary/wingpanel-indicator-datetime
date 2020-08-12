@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: extra\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-05-24 22:27+0000\n"
+"POT-Creation-Date: 2020-06-30 19:02+0000\n"
 "PO-Revision-Date: 2020-05-31 16:11+0000\n"
 "Last-Translator: Prachi Joshi <josprachi@yahoo.com>\n"
 "Language-Team: Marathi <https://l10n.elementary.io/projects/wingpanel/"
@@ -28,51 +28,57 @@ msgid "The date and time indicator"
 msgstr "तारीख आणि वेळ सूचक"
 
 #: data/datetime.appdata.xml.in:11
-msgid "Improved performance when switching months"
-msgstr "महिने स्विच करताना सुधारित कार्यप्रदर्शन"
+#, fuzzy
+#| msgid "Fixed issues with large text size"
+msgid "Fix issues with time zones not being recognized"
+msgstr "मोठ्या मजकूर आकारासंबंधी निराकरण केलेल्या समस्या"
 
-#: data/datetime.appdata.xml.in:12 data/datetime.appdata.xml.in:19
-#: data/datetime.appdata.xml.in:24 data/datetime.appdata.xml.in:30
-#: data/datetime.appdata.xml.in:41
+#: data/datetime.appdata.xml.in:12 data/datetime.appdata.xml.in:18
+#: data/datetime.appdata.xml.in:25 data/datetime.appdata.xml.in:30
+#: data/datetime.appdata.xml.in:36 data/datetime.appdata.xml.in:47
 msgid "Updated translations"
 msgstr "अद्ययावत भाषांतर"
 
 #: data/datetime.appdata.xml.in:17
+msgid "Improved performance when switching months"
+msgstr "महिने स्विच करताना सुधारित कार्यप्रदर्शन"
+
+#: data/datetime.appdata.xml.in:23
 msgid "Fix missing event dots in the calendar view"
 msgstr "कॅलेंडर दृश्यात गहाळ इव्हेंट डॉट्सचे निराकरण करा"
 
-#: data/datetime.appdata.xml.in:18
+#: data/datetime.appdata.xml.in:24
 msgid "Fix event appearance with dark style"
 msgstr "गडद शैलीसह इव्हेंट दिसण्याशी संबंधित समस्यांचे निराकरण करा"
 
-#: data/datetime.appdata.xml.in:29
+#: data/datetime.appdata.xml.in:35
 msgid "Fix potential crash when loading events with no start or end time"
 msgstr "प्रारंभ किंवा समाप्तीच्या वेळेसह इव्हेंट लोड करताना संभाव्य क्रॅशचे निराकरण करा"
 
-#: data/datetime.appdata.xml.in:35
+#: data/datetime.appdata.xml.in:41
 msgid "Redesigned the way upcoming events are displayed"
 msgstr "आगामी कार्यक्रम प्रदर्शित होण्याच्या मार्गाने पुन्हा डिझाइन केले"
 
-#: data/datetime.appdata.xml.in:36
+#: data/datetime.appdata.xml.in:42
 msgid "Fixed issues with large text size"
 msgstr "मोठ्या मजकूर आकारासंबंधी निराकरण केलेल्या समस्या"
 
-#: data/datetime.appdata.xml.in:37
+#: data/datetime.appdata.xml.in:43
 msgid "Show dots on days with events"
 msgstr "कार्यक्रम असलेल्या दिवसांवर ठिपके दर्शवा"
 
-#: data/datetime.appdata.xml.in:38
+#: data/datetime.appdata.xml.in:44
 msgid "Better handling of recurring events"
 msgstr "आवर्ती इव्हेंट्सची चांगली हाताळणी"
 
-#: data/datetime.appdata.xml.in:39
+#: data/datetime.appdata.xml.in:45
 msgid "Performance improvements"
 msgstr "कामगिरी सुधारणा"
 
-#: data/datetime.appdata.xml.in:40
+#: data/datetime.appdata.xml.in:46
 msgid "Display an error dialog if Calendar fails to open"
 msgstr "कॅलेंडर उघडण्यात अयशस्वी झाल्यास त्रुटी संवाद प्रदर्शित करा"
 
-#: data/datetime.appdata.xml.in:50
+#: data/datetime.appdata.xml.in:56
 msgid "elementary, Inc."
 msgstr "एलिमेंटरी, Inc."

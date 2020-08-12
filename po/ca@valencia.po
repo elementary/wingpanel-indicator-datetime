@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: datetime-indicator\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-09-26 16:48-0700\n"
+"POT-Creation-Date: 2020-07-14 15:49+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -16,27 +16,19 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: src/Indicator.vala:32
-msgid "Date & Time"
-msgstr ""
-
-#: src/Indicator.vala:33
-msgid "The date and time indicator"
-msgstr ""
-
-#: src/Indicator.vala:58
+#: src/Indicator.vala:56
 msgid "No Events on This Day"
 msgstr ""
 
-#: src/Indicator.vala:82
+#: src/Indicator.vala:80
 msgid "Date & Time Settings…"
 msgstr ""
 
-#: src/Indicator.vala:131
+#: src/Indicator.vala:128
 msgid "During the Day"
 msgstr ""
 
-#: src/Indicator.vala:139
+#: src/Indicator.vala:136
 msgid "All Day"
 msgstr ""
 

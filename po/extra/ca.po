@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: extra\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-05-24 22:27+0000\n"
-"PO-Revision-Date: 2020-05-26 11:11+0000\n"
+"POT-Creation-Date: 2020-06-30 19:02+0000\n"
+"PO-Revision-Date: 2020-07-02 02:04+0000\n"
 "Last-Translator: David M <rbndavid@gmail.com>\n"
 "Language-Team: Catalan <https://l10n.elementary.io/projects/wingpanel/"
 "indicator-datetime-extra/ca/>\n"
@@ -28,54 +28,58 @@ msgid "The date and time indicator"
 msgstr "Indicador de la data i l'hora"
 
 #: data/datetime.appdata.xml.in:11
-msgid "Improved performance when switching months"
-msgstr "Rendiment millorat en canviar els mesos"
+msgid "Fix issues with time zones not being recognized"
+msgstr "Correcció de problemes de reconeixement de zones horàries"
 
-#: data/datetime.appdata.xml.in:12 data/datetime.appdata.xml.in:19
-#: data/datetime.appdata.xml.in:24 data/datetime.appdata.xml.in:30
-#: data/datetime.appdata.xml.in:41
+#: data/datetime.appdata.xml.in:12 data/datetime.appdata.xml.in:18
+#: data/datetime.appdata.xml.in:25 data/datetime.appdata.xml.in:30
+#: data/datetime.appdata.xml.in:36 data/datetime.appdata.xml.in:47
 msgid "Updated translations"
 msgstr "Traduccions actualitzades"
 
 #: data/datetime.appdata.xml.in:17
+msgid "Improved performance when switching months"
+msgstr "Rendiment millorat en canviar els mesos"
+
+#: data/datetime.appdata.xml.in:23
 msgid "Fix missing event dots in the calendar view"
 msgstr ""
 "Correcció dels punts d'esdeveniment que falten a la vista del calendari"
 
-#: data/datetime.appdata.xml.in:18
+#: data/datetime.appdata.xml.in:24
 msgid "Fix event appearance with dark style"
 msgstr "Correcció de l'aparença de l'esdeveniment amb el tema fosc"
 
-#: data/datetime.appdata.xml.in:29
+#: data/datetime.appdata.xml.in:35
 msgid "Fix potential crash when loading events with no start or end time"
 msgstr ""
 "Correcció de la fallada potencial quan es carreguen esdeveniments sense hora "
 "d'inici o de final"
 
-#: data/datetime.appdata.xml.in:35
+#: data/datetime.appdata.xml.in:41
 msgid "Redesigned the way upcoming events are displayed"
 msgstr "Redisseny de la visualització dels esdeveniments futurs"
 
-#: data/datetime.appdata.xml.in:36
+#: data/datetime.appdata.xml.in:42
 msgid "Fixed issues with large text size"
 msgstr "Correcció de la mida grossa del text"
 
-#: data/datetime.appdata.xml.in:37
+#: data/datetime.appdata.xml.in:43
 msgid "Show dots on days with events"
 msgstr "Es mostren punts als dies amb esdeveniments."
 
-#: data/datetime.appdata.xml.in:38
+#: data/datetime.appdata.xml.in:44
 msgid "Better handling of recurring events"
 msgstr "Millor gestió dels esdeveniments recurrents."
 
-#: data/datetime.appdata.xml.in:39
+#: data/datetime.appdata.xml.in:45
 msgid "Performance improvements"
 msgstr "Millores de rendiment"
 
-#: data/datetime.appdata.xml.in:40
+#: data/datetime.appdata.xml.in:46
 msgid "Display an error dialog if Calendar fails to open"
 msgstr "Es mostra un diàleg d'error si el calendari no es pot obrir."
 
-#: data/datetime.appdata.xml.in:50
+#: data/datetime.appdata.xml.in:56
 msgid "elementary, Inc."
 msgstr "elementary, Inc."

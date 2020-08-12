@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wingpanel-indicator-datetime\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-09-26 16:48-0700\n"
+"POT-Creation-Date: 2020-07-14 15:49+0000\n"
 "PO-Revision-Date: 2017-05-04 20:02+0000\n"
 "Last-Translator: Rokar <rokartv10@gmail.com>\n"
 "Language-Team: ku (generated) <https://l10n.elementary.io/projects/wingpanel/"
@@ -20,27 +20,19 @@ msgstr ""
 "X-Generator: Weblate 2.13-dev\n"
 "X-Launchpad-Export-Date: 2017-02-19 05:57+0000\n"
 
-#: src/Indicator.vala:32
-msgid "Date & Time"
-msgstr "Roj & Dem"
-
-#: src/Indicator.vala:33
-msgid "The date and time indicator"
-msgstr "nîşane Roj û Dem"
-
-#: src/Indicator.vala:58
+#: src/Indicator.vala:56
 msgid "No Events on This Day"
 msgstr ""
 
-#: src/Indicator.vala:82
+#: src/Indicator.vala:80
 msgid "Date & Time Settings…"
 msgstr "mîhengê Roj & Dem…"
 
-#: src/Indicator.vala:131
+#: src/Indicator.vala:128
 msgid "During the Day"
 msgstr ""
 
-#: src/Indicator.vala:139
+#: src/Indicator.vala:136
 msgid "All Day"
 msgstr ""
 
@@ -60,6 +52,12 @@ msgstr ""
 #: src/Widgets/calendar/CalendarView.vala:146
 msgid "The program \"io.elementary.calendar\" may not be installed"
 msgstr ""
+
+#~ msgid "Date & Time"
+#~ msgstr "Roj & Dem"
+
+#~ msgid "The date and time indicator"
+#~ msgstr "nîşane Roj û Dem"
 
 #, fuzzy
 #~ msgid "%OB %Y"

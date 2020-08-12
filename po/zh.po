@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-09-26 16:48-0700\n"
+"POT-Creation-Date: 2020-07-14 15:49+0000\n"
 "PO-Revision-Date: 2018-10-29 02:01+0000\n"
 "Last-Translator: colindemian <colindemian@outlook.com>\n"
 "Language-Team: Chinese <https://weblate.elementary.io/projects/wingpanel/"
@@ -13,27 +13,19 @@ msgstr ""
 "Plural-Forms: nplurals=1; plural=0;\n"
 "X-Generator: Weblate 3.0.1\n"
 
-#: src/Indicator.vala:32
-msgid "Date & Time"
-msgstr "时间和日期"
-
-#: src/Indicator.vala:33
-msgid "The date and time indicator"
-msgstr "时间和日期指示器"
-
-#: src/Indicator.vala:58
+#: src/Indicator.vala:56
 msgid "No Events on This Day"
 msgstr ""
 
-#: src/Indicator.vala:82
+#: src/Indicator.vala:80
 msgid "Date & Time Settings…"
 msgstr "时间和日期设置…"
 
-#: src/Indicator.vala:131
+#: src/Indicator.vala:128
 msgid "During the Day"
 msgstr ""
 
-#: src/Indicator.vala:139
+#: src/Indicator.vala:136
 msgid "All Day"
 msgstr ""
 
@@ -53,6 +45,12 @@ msgstr ""
 #: src/Widgets/calendar/CalendarView.vala:146
 msgid "The program \"io.elementary.calendar\" may not be installed"
 msgstr ""
+
+#~ msgid "Date & Time"
+#~ msgstr "时间和日期"
+
+#~ msgid "The date and time indicator"
+#~ msgstr "时间和日期指示器"
 
 #~ msgid "%OB %Y"
 #~ msgstr "%b%d日 %A"

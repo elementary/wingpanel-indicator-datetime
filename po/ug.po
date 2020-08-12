@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wingpanel-indicator-datetime\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-09-26 16:48-0700\n"
+"POT-Creation-Date: 2020-07-14 15:49+0000\n"
 "PO-Revision-Date: 2016-12-10 06:46+0000\n"
 "Last-Translator: ablimet <Unknown>\n"
 "Language-Team: Uyghur <ug@li.org>\n"
@@ -18,27 +18,19 @@ msgstr ""
 "X-Launchpad-Export-Date: 2017-02-19 05:57+0000\n"
 "X-Generator: Launchpad (build 18326)\n"
 
-#: src/Indicator.vala:32
-msgid "Date & Time"
-msgstr "چېسلا ۋە ۋاقىت"
-
-#: src/Indicator.vala:33
-msgid "The date and time indicator"
-msgstr "چېسلا ۋە ۋاقىت كۆرسەتكۈچى"
-
-#: src/Indicator.vala:58
+#: src/Indicator.vala:56
 msgid "No Events on This Day"
 msgstr ""
 
-#: src/Indicator.vala:82
+#: src/Indicator.vala:80
 msgid "Date & Time Settings…"
 msgstr "چېسلا ۋە ۋاقىت تەڭشەكلىرى…"
 
-#: src/Indicator.vala:131
+#: src/Indicator.vala:128
 msgid "During the Day"
 msgstr ""
 
-#: src/Indicator.vala:139
+#: src/Indicator.vala:136
 msgid "All Day"
 msgstr ""
 
@@ -58,6 +50,12 @@ msgstr ""
 #: src/Widgets/calendar/CalendarView.vala:146
 msgid "The program \"io.elementary.calendar\" may not be installed"
 msgstr ""
+
+#~ msgid "Date & Time"
+#~ msgstr "چېسلا ۋە ۋاقىت"
+
+#~ msgid "The date and time indicator"
+#~ msgstr "چېسلا ۋە ۋاقىت كۆرسەتكۈچى"
 
 #, fuzzy
 #~ msgid "%OB %Y"

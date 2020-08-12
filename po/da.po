@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-09-26 16:48-0700\n"
+"POT-Creation-Date: 2020-07-14 15:49+0000\n"
 "PO-Revision-Date: 2020-05-26 11:11+0000\n"
 "Last-Translator: Rantyrant <diseasemonger@gmail.com>\n"
 "Language-Team: Danish <https://l10n.elementary.io/projects/wingpanel/"
@@ -15,27 +15,19 @@ msgstr ""
 "X-Generator: Weblate 3.9.1\n"
 "X-Launchpad-Export-Date: 2017-02-19 05:57+0000\n"
 
-#: src/Indicator.vala:32
-msgid "Date & Time"
-msgstr "Dato og klokkeslæt"
-
-#: src/Indicator.vala:33
-msgid "The date and time indicator"
-msgstr "Indikatoren for dato og klokkeslæt"
-
-#: src/Indicator.vala:58
+#: src/Indicator.vala:56
 msgid "No Events on This Day"
 msgstr "Ingen Begivenheder på Denne Dag"
 
-#: src/Indicator.vala:82
+#: src/Indicator.vala:80
 msgid "Date & Time Settings…"
 msgstr "Indstillinger for dato og klokkeslæt…"
 
-#: src/Indicator.vala:131
+#: src/Indicator.vala:128
 msgid "During the Day"
 msgstr "I Løbet af Dagen"
 
-#: src/Indicator.vala:139
+#: src/Indicator.vala:136
 msgid "All Day"
 msgstr "Hele Dagen"
 
@@ -55,6 +47,12 @@ msgstr "Ude Af Stand til At Åbne Kalender"
 #: src/Widgets/calendar/CalendarView.vala:146
 msgid "The program \"io.elementary.calendar\" may not be installed"
 msgstr "Programmet  \"io.elementary.calendar\" er måske ikke installeret"
+
+#~ msgid "Date & Time"
+#~ msgstr "Dato og klokkeslæt"
+
+#~ msgid "The date and time indicator"
+#~ msgstr "Indikatoren for dato og klokkeslæt"
 
 #~ msgid "%OB %Y"
 #~ msgstr "%OB %Y"
