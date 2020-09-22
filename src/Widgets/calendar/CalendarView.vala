@@ -103,14 +103,11 @@ public class DateTime.Widgets.CalendarView : Gtk.Grid {
         attach (box_buttons, 1, 0);
         attach (carousel, 0, 1, 2);
 
-
         left_button.clicked.connect (() => {
-           // calmodel.change_month (-1);
             carousel.switch_child ((int) carousel.get_position () + -1, carousel.get_animation_duration ());
         });
 
         right_button.clicked.connect (() => {
-            //calmodel.change_month (1);
             carousel.switch_child ((int) carousel.get_position () + 1, carousel.get_animation_duration ());
         });
 
@@ -141,7 +138,7 @@ public class DateTime.Widgets.CalendarView : Gtk.Grid {
             selected_date = null;
             selection_changed (selected_date);
             
-            /* creates new Grids, when the Hdy.Carousel is on it's first/ last page*/
+            /* creates a new Grid, when the Hdy.Carousel is on it's first/last page*/
             if (index + 1 == (int) carousel.get_n_pages ()) {
                 calmodel.change_month (1);
                 var grid = create_grid ();
@@ -176,7 +173,7 @@ public class DateTime.Widgets.CalendarView : Gtk.Grid {
             selected_date = date;
             selection_changed (date);
         });
-        
+
         return grid;
     }
 
