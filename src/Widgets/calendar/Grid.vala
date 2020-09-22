@@ -68,8 +68,8 @@ namespace DateTime.Widgets {
             DateTime.Indicator.settings.bind ("show-weeks", week_sep_revealer, "reveal-child", GLib.SettingsBindFlags.DEFAULT);
 
             data = new Gee.HashMap<uint, GridDay> ();
-            events |= Gdk.EventMask.SCROLL_MASK;
-            events |= Gdk.EventMask.SMOOTH_SCROLL_MASK;
+           // events |= Gdk.EventMask.SCROLL_MASK;
+           // events |= Gdk.EventMask.SMOOTH_SCROLL_MASK;
 
             calendar_model.events_added.connect (add_event_dots);
             calendar_model.events_removed.connect (remove_event_dots);
@@ -117,14 +117,7 @@ namespace DateTime.Widgets {
             day.set_selected (true);
             day.set_state_flags (Gtk.StateFlags.FOCUSED, false);
             selection_changed (selected_date);
-            var calmodel = CalendarModel.get_default ();
-            var date_month = selected_date.get_month () - calmodel.month_start.get_month ();
-            var date_year = selected_date.get_year () - calmodel.month_start.get_year ();
 
-            if (date_month != 0 || date_year != 0) {
-                calmodel.change_month (date_month);
-                calmodel.change_year (date_year);
-            }
         }
 
         public void set_focus_to_today () {
@@ -189,7 +182,7 @@ namespace DateTime.Widgets {
                     /* Still update_day to get the color of etc. right */
                     day = update_day (new GridDay (new_date), new_date, today, month_start);
                     day.on_event_add.connect ((date) => on_event_add (date));
-                    day.scroll_event.connect ((event) => { scroll_event (event); return false; });
+                    //day.scroll_event.connect ((event) => { scroll_event (event); return false; });
                     day.focus_in_event.connect ((event) => {
                         on_day_focus_in (day);
 

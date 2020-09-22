@@ -57,6 +57,7 @@ shared_module(
         dependency('gtk+-3.0'),
         libecal_dep,
         dependency('libedataserver-1.2'),
+        dependency('libhandy-1'),
         libical_dep,
         wingpanel_dep,
     ],
