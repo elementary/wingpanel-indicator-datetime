@@ -64,7 +64,6 @@ public class DateTime.Widgets.GridDay : Gtk.EventBox {
         can_focus = true;
         events |= Gdk.EventMask.BUTTON_PRESS_MASK;
         events |= Gdk.EventMask.KEY_PRESS_MASK;
-        events |= Gdk.EventMask.SMOOTH_SCROLL_MASK;
         set_size_request (35, 35);
         halign = Gtk.Align.CENTER;
         hexpand = true;
@@ -74,7 +73,6 @@ public class DateTime.Widgets.GridDay : Gtk.EventBox {
         // Signals and handlers
         button_press_event.connect (on_button_press);
         key_press_event.connect (on_key_press);
-        scroll_event.connect ((event) => {return Util.on_scroll_event (event);});
 
         notify["date"].connect (() => {
             label.label = date.get_day_of_month ().to_string ();
