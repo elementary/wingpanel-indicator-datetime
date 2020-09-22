@@ -104,7 +104,7 @@ public class DateTime.Widgets.CalendarView : Gtk.Grid {
         attach (carousel, 0, 1, 2);
 
         left_button.clicked.connect (() => {
-            carousel.switch_child ((int) carousel.get_position () + -1, carousel.get_animation_duration ());
+            carousel.switch_child ((int) carousel.get_position () - 1, carousel.get_animation_duration ());
         });
 
         right_button.clicked.connect (() => {
@@ -159,7 +159,7 @@ public class DateTime.Widgets.CalendarView : Gtk.Grid {
         });
     }
 
-    private Grid create_grid () {
+    private DateTime.Widgets.Grid create_grid () {
         var grid = new DateTime.Widgets.Grid ();
         grid.show_all ();
 
@@ -186,8 +186,8 @@ public class DateTime.Widgets.CalendarView : Gtk.Grid {
             carousel.switch_child (position, carousel.get_animation_duration ());
         } else {
             /*reset Carousel if center_child != the grid of the month of today*/
-            carousel.set_no_show_all (true);
-            foreach (Gtk.Widget grid in carousel.get_children ()) {
+            carousel.no_show_all = true;
+            foreach (unowned Gtk.Widget grid in carousel.get_children ()) {
                 carousel.remove (grid);
             }
 
@@ -213,7 +213,7 @@ public class DateTime.Widgets.CalendarView : Gtk.Grid {
             carousel.add (right_grid);
             carousel.scroll_to (center_grid);
             label.label = calmodel.month_start.format (_("%OB, %Y"));
-            carousel.set_no_show_all (false);
+            carousel.no_show_all = false;
         }
     }
 
