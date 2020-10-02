@@ -37,48 +37,50 @@ namespace Util {
      * Gets the timezone of the given TimeType as a GLib.TimeZone.
      */
     public TimeZone timezone_from_ical (ICal.Time date) {
-        // Special case: return default UTC time zone for all-day events
+        // Special case: dates are floating, so return local time zone
         if (date.is_date ()) {
-            debug ("Given date is 'DATE' type, not 'DATE_TIME': Using timezone UTC");
-            return new GLib.TimeZone.utc ();
+            return new GLib.TimeZone.local ();
+        }
+
+        var tzid = date.get_tzid ();
+        if (tzid == null) {
+            // In libical, null tzid means floating time
+            assert (date.get_timezone () == null);
+            return new GLib.TimeZone.local ();
         }
 
         // Otherwise, get timezone from ICal
-        unowned ICal.Timezone? timezone = null;
-        var tzid = date.get_tzid ();
         // First, try using the tzid property
         if (tzid != null) {
             /* Standard city names are usable directly by GLib, so we can bypass
-            * the ICal scaffolding completely and just return a new
-            * GLib.TimeZone here. This method also preserves all the timezone
-            * information, like going in/out of daylight savings, which parsing
-            * from UTC offset does not.
-            * Note, this can't recover from failure, since GLib.TimeZone
-            * constructor doesn't communicate failure information. This block
-            * will always return a GLib.TimeZone, which will be UTC if parsing
-            * fails for some reason.
-            */
+             * the ICal scaffolding completely and just return a new
+             * GLib.TimeZone here. This method also preserves all the timezone
+             * information, like going in/out of daylight savings, which parsing
+             * from UTC offset does not.
+             * Note, this can't recover from failure, since GLib.TimeZone
+             * constructor doesn't communicate failure information. This block
+             * will always return a GLib.TimeZone, which will be UTC if parsing
+             * fails for some reason.
+             */
             var prefix = "/freeassociation.sourceforge.net/";
             if (tzid.has_prefix (prefix)) {
                 // TZID has prefix "/freeassociation.sourceforge.net/",
                 // indicating a libical TZID.
                 return new GLib.TimeZone (tzid.offset (prefix.length));
             } else {
-                // TZID does not have libical prefix, indicating an Olson
+                // TZID does not have libical prefix, potentially indicating an Olson
                 // standard city name.
                 return new GLib.TimeZone (tzid);
             }
         }
-
         // If tzid fails, try ICal.Time.get_timezone ()
+        unowned ICal.Timezone? timezone = null;
         if (timezone == null && date.get_timezone () != null) {
             timezone = date.get_timezone ();
         }
-
-        // If nothing else works (timezone is still null), default to UTC
+        // If timezone is still null), it's floating: set to local time
         if (timezone == null) {
-            debug ("Date has no timezone info: defaulting to UTC");
-            return new GLib.TimeZone.utc ();
+            return new GLib.TimeZone.local ();
         }
 
         // Get UTC offset and format for GLib.TimeZone constructor
