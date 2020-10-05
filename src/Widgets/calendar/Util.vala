@@ -135,7 +135,7 @@ namespace Util {
         var color = cal.dup_color ();
         if (!providers.has_key (color)) {
             string style = """
-                @define-color colorAccent %s;
+                @define-color accent_color %s;
             """.printf (color);
 
             try {
