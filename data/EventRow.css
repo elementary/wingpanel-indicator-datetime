@@ -1,12 +1,12 @@
 .event {
-    background: mix(@accent_color, shade (#fff, 0.96), 0.8);
+    background: @selected_bg_color;
     border-radius: 3px;
     padding: 6px;
 }
 
-.event,
+.event label,
 .event image {
-    color: shade(@accent_color, 0.65);
+    color: @selected_fg_color;
 }
 
 .event .title {

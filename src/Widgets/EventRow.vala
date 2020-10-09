@@ -31,6 +31,7 @@ public class DateTime.EventRow : Gtk.ListBoxRow {
 
     private Gtk.Grid grid;
     private Gtk.Image event_image;
+    private Gtk.Label name_label;
     private Gtk.Label time_label;
 
     public EventRow (GLib.DateTime date, ICal.Component component, E.Source source) {
@@ -80,7 +81,7 @@ public class DateTime.EventRow : Gtk.ListBoxRow {
         unowned Gtk.StyleContext event_image_context = event_image.get_style_context ();
         event_image_context.add_provider (css_provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
 
-        var name_label = new Gtk.Label (component.get_summary ());
+        name_label = new Gtk.Label (component.get_summary ());
         name_label.hexpand = true;
         name_label.ellipsize = Pango.EllipsizeMode.END;
         name_label.lines = 3;
@@ -129,5 +130,7 @@ public class DateTime.EventRow : Gtk.ListBoxRow {
     private void set_color () {
         Util.set_event_calendar_color (cal, grid);
         Util.set_event_calendar_color (cal, event_image);
+        Util.set_event_calendar_color (cal, name_label);
+        Util.set_event_calendar_color (cal, time_label);
     }
 }
