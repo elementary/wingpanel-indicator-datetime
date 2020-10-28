@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-07-14 15:49+0000\n"
-"PO-Revision-Date: 2019-10-04 03:23+0000\n"
+"PO-Revision-Date: 2020-10-29 11:15+0000\n"
 "Last-Translator: colindemian <colindemian@outlook.com>\n"
 "Language-Team: Chinese (Simplified) <https://l10n.elementary.io/projects/"
 "wingpanel/wingpanel-indicator-datetime/zh_Hans/>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 3.7.1\n"
+"X-Generator: Weblate 3.9.1\n"
 "X-Launchpad-Export-Date: 2017-02-19 05:58+0000\n"
 
 #: src/Indicator.vala:56
@@ -34,7 +34,7 @@ msgstr "全天"
 #: src/Widgets/calendar/CalendarView.vala:33
 #: src/Widgets/calendar/CalendarView.vala:85
 msgid "%OB, %Y"
-msgstr ""
+msgstr "%Y年%m月"
 
 #: src/Widgets/calendar/CalendarView.vala:48
 msgid "Go to today's date"
