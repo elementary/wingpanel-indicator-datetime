@@ -220,6 +220,7 @@ public class DateTime.Indicator : Wingpanel.Indicator {
         Widgets.CalendarModel.get_default ().events_added.disconnect (update_events_model);
         Widgets.CalendarModel.get_default ().events_updated.disconnect (update_events_model);
         Widgets.CalendarModel.get_default ().events_removed.disconnect (update_events_model);
+        calendar.clear ();
     }
 }
 

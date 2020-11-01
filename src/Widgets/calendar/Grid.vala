@@ -115,7 +115,12 @@ namespace DateTime.Widgets {
             day.set_selected (true);
             day.set_state_flags (Gtk.StateFlags.FOCUSED, false);
             selection_changed (selected_date);
+        }
 
+        public void remove_day_focus_in () {
+            if (selected_gridday != null) {
+                selected_gridday.set_selected (false);
+            }
         }
 
         public void set_focus_to_today () {
@@ -127,7 +132,10 @@ namespace DateTime.Widgets {
                 var date = dates[i];
                 GridDay? day = data[day_hash (date)];
                 if (day != null && day.name == "today") {
-                    day.grab_focus_force ();
+                    if (selected_gridday != day) {
+                        day.grab_focus_force ();
+                    }
+                day.set_selected (true);
                     return;
                 }
             }
@@ -180,7 +188,7 @@ namespace DateTime.Widgets {
                     /* Still update_day to get the color of etc. right */
                     day = update_day (new GridDay (new_date), new_date, today, month_start);
                     day.on_event_add.connect ((date) => on_event_add (date));
-                    day.focus_in_event.connect ((event) => {
+                    day.focus_grabbed.connect (() => {
                         on_day_focus_in (day);
 
                         return false;
