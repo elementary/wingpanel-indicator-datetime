@@ -151,7 +151,6 @@ public class DateTime.Widgets.CalendarView : Gtk.Grid {
                 calmodel.change_month (-1);
                 var grid = create_grid ();
                 grid.set_range (calmodel.data_range, calmodel.month_start);
-                grid.set_range (calmodel.data_range, calmodel.month_start);
                 grid.update_weeks (calmodel.data_range.first_dt, calmodel.num_weeks);
                 carousel.prepend (grid);
                 gridlist.prepend (grid);
@@ -160,7 +159,6 @@ public class DateTime.Widgets.CalendarView : Gtk.Grid {
             }
             label.label = calmodel.month_start.format (_("%OB, %Y"));
         });
-
         show_today ();
     }
 
@@ -204,58 +202,47 @@ public class DateTime.Widgets.CalendarView : Gtk.Grid {
     }
 
     private void set_carousel_grids () {
-            rel_postion = 0;
-            position = 1;
-            start_month = Util.get_start_of_month ();
-            calmodel.month_start = start_month;
+        rel_postion = 0;
+        position = 1;
+        start_month = Util.get_start_of_month ();
+        calmodel.month_start = start_month;
 
-            center_grid = create_grid ();
-            center_grid.set_range (calmodel.data_range, calmodel.month_start);
-            center_grid.update_weeks (calmodel.data_range.first_dt, calmodel.num_weeks);
+        center_grid = create_grid ();
+        center_grid.set_range (calmodel.data_range, calmodel.month_start);
+        center_grid.update_weeks (calmodel.data_range.first_dt, calmodel.num_weeks);
 
-            calmodel.change_month (-1);
-            left_grid = create_grid ();
-            left_grid.set_range (calmodel.data_range, calmodel.month_start);
-            left_grid.update_weeks (calmodel.data_range.first_dt, calmodel.num_weeks);
+        calmodel.change_month (-1);
+        left_grid = create_grid ();
+        left_grid.set_range (calmodel.data_range, calmodel.month_start);
+        left_grid.update_weeks (calmodel.data_range.first_dt, calmodel.num_weeks);
 
-            calmodel.change_month (2);
-            right_grid = create_grid ();
-            right_grid.set_range (calmodel.data_range, calmodel.month_start);
-            right_grid.update_weeks (calmodel.data_range.first_dt, calmodel.num_weeks);
-            calmodel.change_month (-1);
+        calmodel.change_month (2);
+        right_grid = create_grid ();
+        right_grid.set_range (calmodel.data_range, calmodel.month_start);
+        right_grid.update_weeks (calmodel.data_range.first_dt, calmodel.num_weeks);
+        calmodel.change_month (-1);
 
-            carousel.add (left_grid);
-            carousel.add (center_grid);
-            carousel.add (right_grid);
+        carousel.add (left_grid);
+        carousel.add (center_grid);
+        carousel.add (right_grid);
 
-            gridlist.append (left_grid);
-            gridlist.append (center_grid);
-            gridlist.append (right_grid);
+        gridlist.append (left_grid);
+        gridlist.append (center_grid);
+        gridlist.append (right_grid);
 
-            carousel.scroll_to (center_grid);
-            label.label = calmodel.month_start.format (_("%OB, %Y"));
-            current_grid = center_grid;
+        carousel.scroll_to (center_grid);
+        label.label = calmodel.month_start.format (_("%OB, %Y"));
+        current_grid = center_grid;
     }
 
     public void clear () {
-
-           foreach (unowned Gtk.Widget grid in carousel.get_children ()) {
-                carousel.remove (grid);
-                gridlist.remove ((DateTime.Widgets.Grid) grid);
-                grid.destroy ();
-            }
-            //calmodel.source_events.remove_all ();       /* foreach (unowned Grid grid in gridlist) {
-          /*  if ((grid != right_grid && grid != center_grid && grid != left_grid)) {
-                carousel.remove (grid);
-                gridlist.remove (grid);
-                grid.destroy ();
-            }
+        foreach (unowned Gtk.Widget grid in carousel.get_children ()) {
+            carousel.remove (grid);
+            gridlist.remove ((DateTime.Widgets.Grid) grid);
+            grid.destroy ();
         }
-        calmodel.change_month (-rel_postion);
-        carousel.switch_child (position, carousel.get_animation_duration ());
-        rel_postion = 0;
-        position = 1;*/
     }
+
     // TODO: As far as maya supports it use the Dbus Activation feature to run the calendar-app.
     public void show_date_in_maya (GLib.DateTime date) {
         var command = "io.elementary.calendar --show-day %s".printf (date.format ("%F"));
