@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-07-14 15:49+0000\n"
-"PO-Revision-Date: 2020-10-29 11:15+0000\n"
+"PO-Revision-Date: 2020-11-12 02:15+0000\n"
 "Last-Translator: colindemian <colindemian@outlook.com>\n"
 "Language-Team: Chinese (Simplified) <https://l10n.elementary.io/projects/"
 "wingpanel/wingpanel-indicator-datetime/zh_Hans/>\n"
@@ -38,7 +38,7 @@ msgstr "%Y年%m月"
 
 #: src/Widgets/calendar/CalendarView.vala:48
 msgid "Go to today's date"
-msgstr "跳转至今天"
+msgstr "今天"
 
 #: src/Widgets/calendar/CalendarView.vala:145
 msgid "Unable To Launch Calendar"
