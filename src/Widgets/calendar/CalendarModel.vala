@@ -48,6 +48,9 @@ namespace DateTime.Widgets {
 
         private static CalendarModel? calendar_model = null;
 
+        // Accessing the locale settings
+        public Settings locale_settings;
+
         public static CalendarModel get_default () {
             lock (calendar_model) {
                 if (calendar_model == null) {
@@ -61,13 +64,22 @@ namespace DateTime.Widgets {
         construct {
             open.begin ();
 
+            // Accessing the locale settings
+            locale_settings = new Settings ("io.elementary.switchboard.locale");
+
             source_client = new HashTable<string, ECal.Client> (str_hash, str_equal);
             source_events = new HashTable<E.Source, Gee.TreeMultiMap<string, ECal.Component> > (Util.source_hash_func, Util.source_equal_func);
             source_view = new HashTable<string, ECal.ClientView> (str_hash, str_equal);
 
             int week_start = Posix.NLTime.FIRST_WEEKDAY.to_string ().data[0];
+            int week_start_user_pref = locale_settings.get_int ("first-day") + 1;
             if (week_start >= 1 && week_start <= 7) {
-                week_starts_on = (GLib.DateWeekday) (week_start - 1);
+                if (week_start_user_pref == week_start) {
+                    week_starts_on = (GLib.DateWeekday) (week_start - 1);
+                } else {
+                    print ("User Preference for week start: %i\nSystem Preference for week start: %i\n", week_start_user_pref, week_start);
+                    week_starts_on = (GLib.DateWeekday) (week_start_user_pref - 1);
+                }
             }
 
             month_start = Util.get_start_of_month ();
