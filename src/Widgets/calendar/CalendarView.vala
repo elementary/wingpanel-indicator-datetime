@@ -87,11 +87,11 @@ public class DateTime.Widgets.CalendarView : Gtk.Grid {
             }
             center_grid.set_range (calmodel.data_range, calmodel.month_start);
             center_grid.update_weeks (calmodel.data_range.first_dt, calmodel.num_weeks);
-    
+
             calmodel.change_month (-1);
             left_grid.set_range (calmodel.data_range, calmodel.month_start);
             left_grid.update_weeks (calmodel.data_range.first_dt, calmodel.num_weeks);
-    
+
             calmodel.change_month (2);
             right_grid.set_range (calmodel.data_range, calmodel.month_start);
             right_grid.update_weeks (calmodel.data_range.first_dt, calmodel.num_weeks);

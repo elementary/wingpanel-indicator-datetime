@@ -163,15 +163,15 @@ namespace DateTime.Widgets {
             }
 
             var glib_offset = week_1stday - 1;
-    
+
             // Get the start of week
             int week_start_posix = Posix.NLTime.FIRST_WEEKDAY.to_string ().data[0];
-    
+
             var week_start = week_start_posix + glib_offset;
             if (week_start == 0) { // Sunday special case
                 week_start = 7;
             }
-    
+
             // Accessing the locale settings
             int week_start_user_pref = locale_settings.get_int ("first-day") + 1;
             if (week_start >= 1 && week_start <= 7) {
@@ -181,7 +181,7 @@ namespace DateTime.Widgets {
                     week_start = week_start_user_pref + glib_offset;
                 }
             }
-    
+
             return (GLib.DateWeekday) week_start;
         }
 
