@@ -69,14 +69,14 @@ namespace DateTime.Widgets {
             this.week_starts_on = get_week_start ();
             month_start = Util.get_start_of_month ();
             compute_ranges ();
-            
+
             source_client = new HashTable<string, ECal.Client> (str_hash, str_equal);
             source_events = new HashTable<E.Source, Gee.TreeMultiMap<string, ECal.Component> > (Util.source_hash_func, Util.source_equal_func);
             source_view = new HashTable<string, ECal.ClientView> (str_hash, str_equal);
 
             notify["month-start"].connect (on_parameter_changed);
             open.begin ();
-            
+
             locale_settings.changed.connect (() => {
                 change_month (1);
                 this.week_starts_on = get_week_start ();
