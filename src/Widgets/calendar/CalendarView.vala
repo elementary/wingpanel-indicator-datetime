@@ -79,6 +79,31 @@ public class DateTime.Widgets.CalendarView : Gtk.Grid {
         right_grid.update_weeks (calmodel.data_range.first_dt, calmodel.num_weeks);
         calmodel.change_month (-1);
 
+        CalendarModel.get_default ().locale_settings.changed.connect (() => {
+            // If First Day setting changes, reset every grid.
+            carousel.no_show_all = true;
+            foreach (unowned Gtk.Widget grid in carousel.get_children ()) {
+                carousel.remove (grid);
+            }
+            center_grid.set_range (calmodel.data_range, calmodel.month_start);
+            center_grid.update_weeks (calmodel.data_range.first_dt, calmodel.num_weeks);
+    
+            calmodel.change_month (-1);
+            left_grid.set_range (calmodel.data_range, calmodel.month_start);
+            left_grid.update_weeks (calmodel.data_range.first_dt, calmodel.num_weeks);
+    
+            calmodel.change_month (2);
+            right_grid.set_range (calmodel.data_range, calmodel.month_start);
+            right_grid.update_weeks (calmodel.data_range.first_dt, calmodel.num_weeks);
+            calmodel.change_month (-1);
+
+            carousel.add (left_grid);
+            carousel.add (center_grid);
+            carousel.add (right_grid);
+            carousel.scroll_to (center_grid);
+            carousel.no_show_all = false;
+        });
+
         carousel = new Hdy.Carousel () {
             interactive = true,
             expand = true,

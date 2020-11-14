@@ -47,7 +47,7 @@ namespace DateTime.Widgets {
         private HashTable<string, ECal.ClientView> source_view;
 
         private static CalendarModel? calendar_model = null;
-        private static GLib.Settings? locale_settings = null;
+        public static GLib.Settings? locale_settings = null;
 
         public static CalendarModel get_default () {
             lock (calendar_model) {
@@ -78,26 +78,8 @@ namespace DateTime.Widgets {
             open.begin ();
 
             locale_settings.changed.connect (() => {
-                change_month (1);
                 this.week_starts_on = get_week_start ();
-                compute_ranges ();
-                change_month (-1);
             });
-        }
-
-        private GLib.DateWeekday get_week_start () {
-            int week_start = Posix.NLTime.FIRST_WEEKDAY.to_string ().data[0];
-            var week_start_user_pref = locale_settings.get_int ("first-day") + 1;
-            if (week_start >= 1 && week_start <= 7) {
-                if (week_start_user_pref == week_start) {
-                    week_starts_on = (GLib.DateWeekday) (week_start - 1);
-                } else {
-                    print ("User Preference for week start: %i\nSystem Preference for week start: %i\n", week_start_user_pref, week_start);
-                    week_starts_on = (GLib.DateWeekday) (week_start_user_pref - 1);
-                }
-            }
-
-            return week_starts_on;
         }
 
         private async void open () {
@@ -168,6 +150,40 @@ namespace DateTime.Widgets {
         }
 
         /* --- Helper Methods ---// */
+        // Method synced with Calendar app (Maya)
+        private GLib.DateWeekday get_week_start () {
+            uint week_day1 = (uint) Posix.NLTime.WEEK_1STDAY.to_string ();
+            var week_1stday = 0; // Default to 0 if unrecognized data
+            if (week_day1 == 19971130) { // Sunday
+                week_1stday = 0;
+            } else if (week_day1 == 19971201) { // Monday
+                week_1stday = 1;
+            } else {
+                warning ("Unknown value of _NL_TIME_WEEK_1STDAY: %u", week_day1);
+            }
+
+            var glib_offset = week_1stday - 1;
+    
+            // Get the start of week
+            int week_start_posix = Posix.NLTime.FIRST_WEEKDAY.to_string ().data[0];
+    
+            var week_start = week_start_posix + glib_offset;
+            if (week_start == 0) { // Sunday special case
+                week_start = 7;
+            }
+    
+            // Accessing the locale settings
+            int week_start_user_pref = locale_settings.get_int ("first-day") + 1;
+            if (week_start >= 1 && week_start <= 7) {
+                if (week_start_user_pref == week_start_posix) {
+                    week_start = week_start_posix + glib_offset;
+                } else {
+                    week_start = week_start_user_pref + glib_offset;
+                }
+            }
+    
+            return (GLib.DateWeekday) week_start;
+        }
 
         private void compute_ranges () {
             var month_end = month_start.add_full (0, 1, -1);
