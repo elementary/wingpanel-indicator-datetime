@@ -47,9 +47,7 @@ namespace DateTime.Widgets {
         private HashTable<string, ECal.ClientView> source_view;
 
         private static CalendarModel? calendar_model = null;
-
-        // Accessing the locale settings
-        public Settings locale_settings;
+        private static GLib.Settings? locale_settings = null;
 
         public static CalendarModel get_default () {
             lock (calendar_model) {
@@ -61,18 +59,35 @@ namespace DateTime.Widgets {
             return calendar_model;
         }
 
+        static construct {
+            if (SettingsSchemaSource.get_default ().lookup ("io.elementary.switchboard.locale", true) != null) {
+                locale_settings = new Settings ("io.elementary.switchboard.locale");
+            }
+        }
+
         construct {
-            open.begin ();
-
-            // Accessing the locale settings
-            locale_settings = new Settings ("io.elementary.switchboard.locale");
-
+            this.week_starts_on = get_week_start ();
+            month_start = Util.get_start_of_month ();
+            compute_ranges ();
+            
             source_client = new HashTable<string, ECal.Client> (str_hash, str_equal);
             source_events = new HashTable<E.Source, Gee.TreeMultiMap<string, ECal.Component> > (Util.source_hash_func, Util.source_equal_func);
             source_view = new HashTable<string, ECal.ClientView> (str_hash, str_equal);
 
+            notify["month-start"].connect (on_parameter_changed);
+            open.begin ();
+            
+            locale_settings.changed.connect (() => {
+                change_month (1);
+                this.week_starts_on = get_week_start ();
+                compute_ranges ();
+                change_month (-1);
+            });
+        }
+
+        private GLib.DateWeekday get_week_start () {
             int week_start = Posix.NLTime.FIRST_WEEKDAY.to_string ().data[0];
-            int week_start_user_pref = locale_settings.get_int ("first-day") + 1;
+            var week_start_user_pref = locale_settings.get_int ("first-day") + 1;
             if (week_start >= 1 && week_start <= 7) {
                 if (week_start_user_pref == week_start) {
                     week_starts_on = (GLib.DateWeekday) (week_start - 1);
@@ -82,9 +97,7 @@ namespace DateTime.Widgets {
                 }
             }
 
-            month_start = Util.get_start_of_month ();
-            compute_ranges ();
-            notify["month-start"].connect (on_parameter_changed);
+            return week_starts_on;
         }
 
         private async void open () {
