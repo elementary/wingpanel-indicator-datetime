@@ -79,7 +79,11 @@ public class DateTime.Widgets.CalendarView : Gtk.Grid {
         right_grid.update_weeks (calmodel.data_range.first_dt, calmodel.num_weeks);
         calmodel.change_month (-1);
 
-        carousel = new Hdy.Carousel ();
+        carousel = new Hdy.Carousel () {
+            interactive = true,
+            expand = true,
+            spacing = 15
+        };
 
         CalendarModel.get_default ().locale_settings.changed.connect (() => {
             // If First Day setting changes, reset every grid.
@@ -105,12 +109,6 @@ public class DateTime.Widgets.CalendarView : Gtk.Grid {
             carousel.scroll_to (center_grid);
             carousel.no_show_all = false;
         });
-
-        carousel = new Hdy.Carousel () {
-            interactive = true,
-            expand = true,
-            spacing = 15
-        };
 
         carousel.add (left_grid);
         carousel.add (center_grid);
