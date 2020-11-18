@@ -58,7 +58,7 @@ namespace DateTime.Widgets {
             return calendar_model;
         }
 
-        construct {
+        public CalendarModel calendar_model (GLib.DateTime date) {
             open.begin ();
 
             source_client = new HashTable<string, ECal.Client> (str_hash, str_equal);
@@ -132,14 +132,6 @@ namespace DateTime.Widgets {
             var events = source_events.get (source).get_values ().read_only_view;
             events_removed (source, events);
             source_events.remove (source);
-        }
-
-        public void change_month (int relative) {
-            month_start = month_start.add_months (relative);
-        }
-
-        public void change_year (int relative) {
-            month_start = month_start.add_years (relative);
         }
 
         /* --- Helper Methods ---// */

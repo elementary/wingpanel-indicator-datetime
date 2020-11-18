@@ -41,11 +41,8 @@ namespace DateTime.Widgets {
 
         private static Widgets.CalendarModel calendar_model;
 
-        static construct {
-            calendar_model = Widgets.CalendarModel.get_default ();
-        }
-
         construct {
+            calendar_model = new Widgets.CalendarModel ();
             header_labels = new Gtk.Label[7];
             for (int c = 0; c < 7; c++) {
                 header_labels[c] = new Gtk.Label (null);

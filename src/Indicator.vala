@@ -49,9 +49,6 @@ public class DateTime.Indicator : Wingpanel.Indicator {
     }
 
     public override Gtk.Widget? get_widget () {
-
-        Hdy.init ();
-
         if (main_grid == null) {
             calendar = new Widgets.CalendarView ();
             calendar.margin_bottom = 6;
