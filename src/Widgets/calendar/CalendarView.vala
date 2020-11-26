@@ -106,7 +106,6 @@ public class DateTime.Widgets.CalendarView : Gtk.Grid {
         });
 
         carousel.page_changed.connect ((index) => {
-            page_changed = true;
             if (position > index) {
                 rel_postion--;
                 position--;
@@ -151,8 +150,10 @@ public class DateTime.Widgets.CalendarView : Gtk.Grid {
                 rel_postion++;
             }
             label.label = current_calmodel.month_start.format (_("%OB, %Y"));
+            page_changed = true;
         });
     }
+
     private void events_changed_sig () {
         events_changed ();
     }
@@ -162,17 +163,21 @@ public class DateTime.Widgets.CalendarView : Gtk.Grid {
 
         grid.show_all ();
 
-        grid.on_event_add.connect ((date) => {
-            show_date_in_maya (date);
-            day_double_click ();
-        });
+        grid.on_event_add.connect (on_event_add_callback);
 
-        grid.selection_changed.connect ((date) => {
-            selected_date = date;
-            selection_changed (date);
-        });
+        grid.selection_changed.connect (selection_changed_callback);
 
         return grid;
+    }
+    
+    private void on_event_add_callback (GLib.DateTime date) {
+            show_date_in_maya (date);
+            day_double_click ();
+    }
+    
+    private void selection_changed_callback (GLib.DateTime date) {
+            selected_date = date;
+            selection_changed (date);
     }
 
     public void show_today () {
@@ -228,8 +233,8 @@ public class DateTime.Widgets.CalendarView : Gtk.Grid {
     public void clear () {
         foreach (unowned Gtk.Widget grid in carousel.get_children ()) {
             carousel.remove (grid);
-           // ((DateTime.Widgets.Grid) grid).on_event_add.disconnect ();
-            //grid.selection_changed.disconnect ();
+            ((DateTime.Widgets.Grid) grid).on_event_add.disconnect (on_event_add_callback);
+            ((DateTime.Widgets.Grid) grid).selection_changed.disconnect (selection_changed_callback);
             ((DateTime.Widgets.Grid) grid).foreach ((day_grid) => ((DateTime.Widgets.Grid) grid).remove (day_grid));
             grid.destroy ();
         }
