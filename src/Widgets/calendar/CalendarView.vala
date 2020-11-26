@@ -133,7 +133,6 @@ public class DateTime.Widgets.CalendarView : Gtk.Grid {
             selected_date = null;
             current_grid.events_changed.disconnect (events_changed_sig);
             current_grid = (DateTime.Widgets.Grid) carousel.get_children ().nth_data (index);
-            print("test");
             current_calmodel = current_grid.calmodel;
             current_grid.events_changed.connect (events_changed_sig);
             selection_changed (selected_date);
@@ -205,10 +204,8 @@ public class DateTime.Widgets.CalendarView : Gtk.Grid {
 
         center_grid = create_grid ();
         rel_postion = -1;
-                print (center_grid.calmodel.month_start.format (_("%OB, %Y")));
         left_grid = create_grid ();
         rel_postion = 1;
-                        print (center_grid.calmodel.month_start.format (_("%OB, %Y")));
         right_grid = create_grid ();
         rel_postion = 0;
 
@@ -224,7 +221,6 @@ public class DateTime.Widgets.CalendarView : Gtk.Grid {
         current_calmodel = center_grid.calmodel;
         current_grid.events_changed.connect (events_changed_sig);
         label.label = center_grid.calmodel.month_start.format (_("%OB, %Y"));
-        print(label.label);
 
         carousel.show_all ();
     }
