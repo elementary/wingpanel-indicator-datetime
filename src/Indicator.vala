@@ -161,7 +161,7 @@ public class DateTime.Indicator : Wingpanel.Indicator {
         return 0;
     }
 
-    private void update_events_model (E.Source source, Gee.Collection<ECal.Component> events) {
+    private void update_events_model () {
         idle_update_events ();
     }
 
@@ -185,7 +185,7 @@ public class DateTime.Indicator : Wingpanel.Indicator {
 
         var date = calendar.selected_date;
 
-        var model = Widgets.CalendarModel.get_default ();
+        var model = calendar.current_calmodel;
 
         var events_on_day = new Gee.TreeMap<string, DateTime.EventRow> ();
 
@@ -210,16 +210,11 @@ public class DateTime.Indicator : Wingpanel.Indicator {
 
     public override void opened () {
         calendar.show_today ();
-
-        Widgets.CalendarModel.get_default ().events_added.connect (update_events_model);
-        Widgets.CalendarModel.get_default ().events_updated.connect (update_events_model);
-        Widgets.CalendarModel.get_default ().events_removed.connect (update_events_model);
+        calendar.events_changed.connect (update_events_model);
     }
 
     public override void closed () {
-        Widgets.CalendarModel.get_default ().events_added.disconnect (update_events_model);
-        Widgets.CalendarModel.get_default ().events_updated.disconnect (update_events_model);
-        Widgets.CalendarModel.get_default ().events_removed.disconnect (update_events_model);
+        calendar.events_changed.disconnect (update_events_model);
         calendar.clear ();
     }
 }

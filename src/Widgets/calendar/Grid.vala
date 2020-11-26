@@ -34,15 +34,17 @@ namespace DateTime.Widgets {
 
         public signal void selection_changed (GLib.DateTime new_date);
 
+        public signal void events_changed ();
+
         private Gee.HashMap<uint, GridDay> data;
         private GridDay selected_gridday;
         private Gtk.Label[] header_labels;
         private Gtk.Revealer[] week_labels;
 
-        private static Widgets.CalendarModel calendar_model;
+        public Widgets.CalendarModel calmodel {get; private set;}
 
-        construct {
-            calendar_model = new Widgets.CalendarModel ();
+        public Grid (GLib.DateTime datetime) {
+            calmodel = new Widgets.CalendarModel (Util.get_start_of_month (datetime));
             header_labels = new Gtk.Label[7];
             for (int c = 0; c < 7; c++) {
                 header_labels[c] = new Gtk.Label (null);
@@ -66,8 +68,14 @@ namespace DateTime.Widgets {
 
             data = new Gee.HashMap<uint, GridDay> ();
 
-            calendar_model.events_added.connect (add_event_dots);
-            calendar_model.events_removed.connect (remove_event_dots);
+            calmodel.events_added.connect (add_event_dots);
+            calmodel.events_removed.connect (remove_event_dots);
+
+            calmodel.events_added.connect (() => (events_changed ()));
+            calmodel.events_removed.connect (() => (events_changed ()));
+            calmodel.events_updated.connect (() => (events_changed ()));
+
+            set_range ();
         }
 
         private void add_event_dots (E.Source source, Gee.Collection<ECal.Component> events) {
@@ -142,7 +150,7 @@ namespace DateTime.Widgets {
          * Sets the given range to be displayed in the grid. Note that the number of days
          * must remain the same.
          */
-        public void set_range (Util.DateRange new_range, GLib.DateTime month_start) {
+        private void set_range () {
             var today = new GLib.DateTime.now_local ();
 
             Gee.List<GLib.DateTime> old_dates;
@@ -153,7 +161,7 @@ namespace DateTime.Widgets {
                 old_dates = grid_range.to_list ();
             }
 
-            var new_dates = new_range.to_list ();
+            var new_dates = calmodel.data_range.to_list ();
 
             var data_new = new Gee.HashMap<uint, GridDay> ();
 
@@ -163,7 +171,7 @@ namespace DateTime.Widgets {
             /* Create new widgets for the new range */
 
             var date = Util.strip_time (today);
-            date = date.add_days (CalendarModel.get_default ().week_starts_on - date.get_day_of_week ());
+            date = date.add_days (calmodel.week_starts_on - date.get_day_of_week ());
             foreach (var label in header_labels) {
                 label.label = date.format ("%a");
                 date = date.add_days (1);
@@ -180,10 +188,10 @@ namespace DateTime.Widgets {
                     /* A widget already exists for this date, just change it */
 
                     var old_date = old_dates[i];
-                    day = update_day (data[day_hash (old_date)], new_date, today, month_start);
+                    day = update_day (data[day_hash (old_date)], new_date, today, calmodel.month_start);
                 } else {
                     /* Still update_day to get the color of etc. right */
-                    day = update_day (new GridDay (new_date), new_date, today, month_start);
+                    day = update_day (new GridDay (new_date), new_date, today,calmodel.month_start);
                     day.on_event_add.connect ((date) => on_event_add (date));
                     day.focus_grabbed.connect (() => {
                         on_day_focus_in (day);
@@ -213,7 +221,7 @@ namespace DateTime.Widgets {
             data.clear ();
             data.set_all (data_new);
 
-            grid_range = new_range;
+            grid_range = calmodel.data_range;
         }
 
         /**
