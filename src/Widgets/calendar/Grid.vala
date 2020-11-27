@@ -191,7 +191,7 @@ namespace DateTime.Widgets {
                     day = update_day (data[day_hash (old_date)], new_date, today, calmodel.month_start);
                 } else {
                     /* Still update_day to get the color of etc. right */
-                    day = update_day (new GridDay (new_date), new_date, today,calmodel.month_start);
+                    day = update_day (new GridDay (new_date), new_date, today, calmodel.month_start);
                     day.on_event_add.connect ((date) => on_event_add (date));
                     day.focus_grabbed.connect (() => {
                         on_day_focus_in (day);
