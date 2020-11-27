@@ -73,7 +73,6 @@ namespace DateTime.Widgets {
                     E.SourceCalendar cal = (E.SourceCalendar)source.get_extension (E.SOURCE_EXTENSION_CALENDAR);
                     if (cal.selected == true && source.enabled == true) {
                         add_source_async.begin (source);
-                        add_source_async.begin (source);
                     }
                 });
 
