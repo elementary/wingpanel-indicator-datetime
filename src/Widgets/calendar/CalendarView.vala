@@ -121,9 +121,8 @@ public class DateTime.Widgets.CalendarView : Gtk.Grid {
                 current_calmodel = center_grid.calmodel;
                 label.label = current_calmodel.month_start.format (_("%OB, %Y"));
                 current_grid.events_changed.connect (events_changed_sig);
-                selected_date = null;
-                current_grid.set_focus_to_today ();
                 selection_changed (selected_date);
+                current_grid.set_focus_to_today ();
                 return;
             } else {
                 return;
@@ -169,12 +168,12 @@ public class DateTime.Widgets.CalendarView : Gtk.Grid {
 
         return grid;
     }
-    
+
     private void on_event_add_callback (GLib.DateTime date) {
             show_date_in_maya (date);
             day_double_click ();
     }
-    
+
     private void selection_changed_callback (GLib.DateTime date) {
             selected_date = date;
             selection_changed (date);
