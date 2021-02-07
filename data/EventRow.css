@@ -7,6 +7,7 @@
 .event label,
 .event image {
     color: @selected_fg_color;
+    -gtk-icon-palette: error @selected_fg_color, success @selected_fg_color, warning @selected_fg_color;
 }
 
 .event .title {

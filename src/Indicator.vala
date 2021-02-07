@@ -53,6 +53,12 @@ public class DateTime.Indicator : Wingpanel.Indicator {
             calendar = new Widgets.CalendarView ();
             calendar.margin_bottom = 6;
 
+            var weather_row = new WeatherRow () {
+                margin = 6,
+                margin_top = 0,
+                margin_bottom = 9
+            };
+
             var placeholder_label = new Gtk.Label (_("No Events on This Day"));
             placeholder_label.wrap = true;
             placeholder_label.wrap_mode = Pango.WrapMode.WORD;
@@ -72,8 +78,10 @@ public class DateTime.Indicator : Wingpanel.Indicator {
             event_listbox.set_placeholder (placeholder_label);
             event_listbox.set_sort_func (sort_function);
 
-            var scrolled_window = new Gtk.ScrolledWindow (null, null);
-            scrolled_window.hscrollbar_policy = Gtk.PolicyType.NEVER;
+            var scrolled_window = new Gtk.ScrolledWindow (null, null) {
+                hscrollbar_policy = Gtk.PolicyType.NEVER,
+                vexpand = true
+            };
             scrolled_window.add (event_listbox);
 
             var settings_button = new Gtk.ModelButton ();
@@ -81,14 +89,16 @@ public class DateTime.Indicator : Wingpanel.Indicator {
 
             main_grid = new Gtk.Grid ();
             main_grid.margin_top = 12;
-            main_grid.attach (calendar, 0, 0);
-            main_grid.attach (scrolled_window, 1, 0);
+            main_grid.attach (calendar, 0, 0, 1, 2);
+            main_grid.attach (weather_row, 1, 0);
+            main_grid.attach (scrolled_window, 1, 1);
             main_grid.attach (new Wingpanel.Widgets.Separator (), 0, 2, 2);
             main_grid.attach (settings_button, 0, 3, 2);
 
             var size_group = new Gtk.SizeGroup (Gtk.SizeGroupMode.HORIZONTAL);
             size_group.add_widget (calendar);
             size_group.add_widget (event_listbox);
+            size_group.add_widget (weather_row);
 
             calendar.day_double_click.connect (() => {
                 close ();
