@@ -13,7 +13,7 @@ You'll need the following dependencies:
 * libedataserver1.2-dev
 * libical-dev
 * libgranite-dev
-* libwingpanel-2.0-dev
+* libwingpanel-dev
 * meson
 * valac >= 0.40.3
 
