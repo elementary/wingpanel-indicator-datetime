@@ -27,7 +27,7 @@ namespace DateTime.Widgets {
         public Util.DateRange data_range { get; private set; }
 
         /* The first day of the month */
-        public GLib.DateTime month_start { get; set; }
+        public GLib.DateTime month_start { get; private set; }
 
         /* The number of weeks to show in this model */
         public int num_weeks { get; private set; default = 6; }
@@ -46,21 +46,10 @@ namespace DateTime.Widgets {
         private HashTable<string, ECal.Client> source_client;
         private HashTable<string, ECal.ClientView> source_view;
 
-        private static CalendarModel? calendar_model = null;
+        public CalendarModel (GLib.DateTime date) {
+            month_start = date;
 
-        public static CalendarModel get_default () {
-            lock (calendar_model) {
-                if (calendar_model == null) {
-                    calendar_model = new CalendarModel ();
-                }
-            }
-
-            return calendar_model;
-        }
-
-        construct {
             open.begin ();
-
             source_client = new HashTable<string, ECal.Client> (str_hash, str_equal);
             source_events = new HashTable<E.Source, Gee.TreeMultiMap<string, ECal.Component> > (Util.source_hash_func, Util.source_equal_func);
             source_view = new HashTable<string, ECal.ClientView> (str_hash, str_equal);
@@ -69,10 +58,8 @@ namespace DateTime.Widgets {
             if (week_start >= 1 && week_start <= 7) {
                 week_starts_on = (GLib.DateWeekday) (week_start - 1);
             }
-
-            month_start = Util.get_start_of_month ();
             compute_ranges ();
-            notify["month-start"].connect (on_parameter_changed);
+            load_all_sources ();
         }
 
         private async void open () {
@@ -132,14 +119,6 @@ namespace DateTime.Widgets {
             var events = source_events.get (source).get_values ().read_only_view;
             events_removed (source, events);
             source_events.remove (source);
-        }
-
-        public void change_month (int relative) {
-            month_start = month_start.add_months (relative);
-        }
-
-        public void change_year (int relative) {
-            month_start = month_start.add_years (relative);
         }
 
         /* --- Helper Methods ---// */
@@ -239,12 +218,6 @@ namespace DateTime.Widgets {
         private void debug_event (E.Source source, ECal.Component event) {
             unowned ICal.Component comp = event.get_icalcomponent ();
             debug (@"Event ['$(comp.get_summary())', $(source.dup_display_name()), $(comp.get_uid()))]");
-        }
-
-        /* --- Signal Handlers ---// */
-        private void on_parameter_changed () {
-            compute_ranges ();
-            load_all_sources ();
         }
 
         private ECal.ClientView on_client_view_received (AsyncResult results, E.Source source, ECal.Client client) {

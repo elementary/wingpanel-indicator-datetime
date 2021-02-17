@@ -26,6 +26,7 @@ public class DateTime.Widgets.GridDay : Gtk.EventBox {
      * Event emitted when the day is double clicked or the ENTER key is pressed.
      */
     public signal void on_event_add (GLib.DateTime date);
+    public signal bool focus_grabbed ();
 
     public GLib.DateTime date { get; construct set; }
 
@@ -79,6 +80,8 @@ public class DateTime.Widgets.GridDay : Gtk.EventBox {
             label.label = date.get_day_of_month ().to_string ();
         });
 
+        focus_in_event.connect (() => focus_grabbed ());
+
         event_dots = new Gee.HashMap<string, Gtk.Widget> ();
     }
 
@@ -129,7 +132,7 @@ public class DateTime.Widgets.GridDay : Gtk.EventBox {
 
     public override void grab_focus () {
         if (valid_grab) {
-            base.grab_focus ();
+            focus_grabbed ();
             valid_grab = false;
         }
     }
