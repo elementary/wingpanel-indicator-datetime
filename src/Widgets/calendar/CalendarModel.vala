@@ -55,12 +55,12 @@ namespace DateTime.Widgets {
                     calendar_model = new HashTable<ECal.ClientSourceType, CalendarModel> (direct_hash, direct_equal);
                 }
 
-                if (!calendar_model.contains(source_type)) {
-                    calendar_model.@set(source_type, new CalendarModel (source_type));
+                if (!calendar_model.contains (source_type)) {
+                    calendar_model.@set (source_type, new CalendarModel (source_type));
                 }
             }
 
-            return calendar_model.@get(source_type);
+            return calendar_model.@get (source_type);
         }
 
         public CalendarModel (ECal.ClientSourceType source_type) {
