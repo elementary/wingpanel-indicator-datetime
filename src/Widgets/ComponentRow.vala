@@ -134,7 +134,11 @@ public class DateTime.ComponentRow : Gtk.ListBoxRow {
 
     private void update_timelabel () {
         var time_format = Granite.DateTime.get_default_time_format (time_manager.is_12h);
-        time_label.label = "<small>%s – %s</small>".printf (start_time.format (time_format), end_time.format (time_format));
+        if (source_selectable is E.SourceTaskList) {
+            time_label.label = "<small>%s</small>".printf (start_time.format (time_format));
+        } else {
+            time_label.label = "<small>%s – %s</small>".printf (start_time.format (time_format), end_time.format (time_format));
+        }
     }
 
     private void set_color () {

@@ -93,16 +93,16 @@ namespace DateTime.Widgets {
                 // Add sources
                 if (source_type == ECal.ClientSourceType.TASKS) {
                     registry.list_sources (E.SOURCE_EXTENSION_TASK_LIST).foreach ((source) => {
-                        E.SourceCalendar cal = (E.SourceCalendar)source.get_extension (E.SOURCE_EXTENSION_TASK_LIST);
-                        if (cal.selected == true && source.enabled == true) {
+                        E.SourceTaskList list = (E.SourceTaskList)source.get_extension (E.SOURCE_EXTENSION_TASK_LIST);
+                        if (list.selected == true && source.enabled == true) {
                             add_source_async.begin (source);
                         }
                     });
 
                 } else {
                     registry.list_sources (E.SOURCE_EXTENSION_CALENDAR).foreach ((source) => {
-                        E.SourceTaskList list = (E.SourceTaskList)source.get_extension (E.SOURCE_EXTENSION_CALENDAR);
-                        if (list.selected == true && source.enabled == true) {
+                        E.SourceCalendar cal = (E.SourceCalendar)source.get_extension (E.SOURCE_EXTENSION_CALENDAR);
+                        if (cal.selected == true && source.enabled == true) {
                             add_source_async.begin (source);
                         }
                     });
