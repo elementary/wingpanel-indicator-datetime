@@ -45,17 +45,26 @@ namespace DateTime.Widgets {
         private E.SourceRegistry registry { get; private set; }
         private HashTable<string, ECal.Client> source_client;
         private HashTable<string, ECal.ClientView> source_view;
+        public ECal.ClientSourceType source_type { get; construct; }
 
-        private static CalendarModel? calendar_model = null;
+        private static HashTable<ECal.ClientSourceType, CalendarModel> calendar_model;
 
-        public static CalendarModel get_default () {
+        public static CalendarModel get_default (ECal.ClientSourceType source_type) {
             lock (calendar_model) {
                 if (calendar_model == null) {
-                    calendar_model = new CalendarModel ();
+                    calendar_model = new HashTable<ECal.ClientSourceType, CalendarModel> (direct_hash, direct_equal);
+                }
+
+                if (!calendar_model.contains(source_type)) {
+                    calendar_model.@set(source_type, new CalendarModel (source_type));
                 }
             }
 
-            return calendar_model;
+            return calendar_model.@get(source_type);
+        }
+
+        public CalendarModel (ECal.ClientSourceType source_type) {
+            Object (source_type: source_type);
         }
 
         construct {
@@ -223,7 +232,7 @@ namespace DateTime.Widgets {
         private async void add_source_async (E.Source source) {
             debug ("Adding source '%s'", source.dup_display_name ());
             try {
-                var client = (ECal.Client) ECal.Client.connect_sync (source, ECal.ClientSourceType.EVENTS, -1, null);
+                var client = (ECal.Client) ECal.Client.connect_sync (source, source_type, -1, null);
                 source_client.insert (source.dup_uid (), client);
             } catch (Error e) {
                 critical (e.message);

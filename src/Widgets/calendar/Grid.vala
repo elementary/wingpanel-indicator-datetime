@@ -39,10 +39,10 @@ namespace DateTime.Widgets {
         private Gtk.Label[] header_labels;
         private Gtk.Revealer[] week_labels;
 
-        private static Widgets.CalendarModel calendar_model;
+        private static Widgets.CalendarModel events_model;
 
         static construct {
-            calendar_model = Widgets.CalendarModel.get_default ();
+            events_model = Widgets.CalendarModel.get_default (ECal.ClientSourceType.EVENTS);
         }
 
         construct {
@@ -69,8 +69,8 @@ namespace DateTime.Widgets {
 
             data = new Gee.HashMap<uint, GridDay> ();
 
-            calendar_model.events_added.connect (add_event_dots);
-            calendar_model.events_removed.connect (remove_event_dots);
+            events_model.events_added.connect (add_event_dots);
+            events_model.events_removed.connect (remove_event_dots);
         }
 
         private void add_event_dots (E.Source source, Gee.Collection<ECal.Component> events) {
@@ -158,7 +158,7 @@ namespace DateTime.Widgets {
             /* Create new widgets for the new range */
 
             var date = Util.strip_time (today);
-            date = date.add_days (CalendarModel.get_default ().week_starts_on - date.get_day_of_week ());
+            date = date.add_days (events_model.week_starts_on - date.get_day_of_week ());
             foreach (var label in header_labels) {
                 label.label = date.format ("%a");
                 date = date.add_days (1);
