@@ -127,12 +127,12 @@ namespace Util {
     }
 
     private Gee.HashMap<string, Gtk.CssProvider>? providers;
-    public void set_event_calendar_color (E.SourceCalendar cal, Gtk.Widget widget) {
+    public void set_component_calendar_color (E.SourceSelectable selectable, Gtk.Widget widget) {
         if (providers == null) {
             providers = new Gee.HashMap<string, Gtk.CssProvider> ();
         }
 
-        var color = cal.dup_color ();
+        var color = selectable.dup_color ();
         if (!providers.has_key (color)) {
             string style = """
                 @define-color accent_color %s;

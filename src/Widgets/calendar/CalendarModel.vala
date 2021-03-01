@@ -91,12 +91,22 @@ namespace DateTime.Widgets {
                 registry.source_added.connect ((source) => add_source_async.begin (source));
 
                 // Add sources
-                registry.list_sources (E.SOURCE_EXTENSION_CALENDAR).foreach ((source) => {
-                    E.SourceCalendar cal = (E.SourceCalendar)source.get_extension (E.SOURCE_EXTENSION_CALENDAR);
-                    if (cal.selected == true && source.enabled == true) {
-                        add_source_async.begin (source);
-                    }
-                });
+                if (source_type == ECal.ClientSourceType.TASKS) {
+                    registry.list_sources (E.SOURCE_EXTENSION_TASK_LIST).foreach ((source) => {
+                        E.SourceCalendar cal = (E.SourceCalendar)source.get_extension (E.SOURCE_EXTENSION_TASK_LIST);
+                        if (cal.selected == true && source.enabled == true) {
+                            add_source_async.begin (source);
+                        }
+                    });
+
+                } else {
+                    registry.list_sources (E.SOURCE_EXTENSION_CALENDAR).foreach ((source) => {
+                        E.SourceTaskList list = (E.SourceTaskList)source.get_extension (E.SOURCE_EXTENSION_CALENDAR);
+                        if (list.selected == true && source.enabled == true) {
+                            add_source_async.begin (source);
+                        }
+                    });
+                }
 
                 load_all_sources ();
             } catch (GLib.Error error) {
@@ -108,10 +118,20 @@ namespace DateTime.Widgets {
             lock (source_client) {
                 foreach (var id in source_client.get_keys ()) {
                     var source = registry.ref_source (id);
-                    E.SourceCalendar cal = (E.SourceCalendar)source.get_extension (E.SOURCE_EXTENSION_CALENDAR);
 
-                    if (cal.selected == true && source.enabled == true) {
-                        load_source (source);
+                    if (source_type == ECal.ClientSourceType.TASKS) {
+                        E.SourceTaskList list = (E.SourceTaskList)source.get_extension (E.SOURCE_EXTENSION_TASK_LIST);
+
+                        if (list.selected == true && source.enabled == true) {
+                            load_source (source);
+                        }
+
+                    } else {
+                        E.SourceCalendar cal = (E.SourceCalendar)source.get_extension (E.SOURCE_EXTENSION_CALENDAR);
+
+                        if (cal.selected == true && source.enabled == true) {
+                            load_source (source);
+                        }
                     }
                 }
             }
@@ -202,7 +222,11 @@ namespace DateTime.Widgets {
             /* query client view */
             var iso_first = ECal.isodate_from_time_t ((time_t)data_range.first_dt.to_unix ());
             var iso_last = ECal.isodate_from_time_t ((time_t)data_range.last_dt.add_days (1).to_unix ());
+
             var query = @"(occur-in-time-range? (make-time \"$iso_first\") (make-time \"$iso_last\"))";
+            if (source_type == ECal.ClientSourceType.TASKS) {
+                query = @"AND (NOT is-completed?) (due-in-time-range? (make-time \"$iso_first\") (make-time \"$iso_last\"))";
+            }
 
             ECal.Client client;
             lock (source_client) {
@@ -230,6 +254,11 @@ namespace DateTime.Widgets {
         }
 
         private async void add_source_async (E.Source source) {
+            if (source_type == ECal.ClientSourceType.TASKS && !source.has_extension (E.SOURCE_EXTENSION_TASK_LIST) ||
+                source_type == ECal.ClientSourceType.EVENTS && !source.has_extension (E.SOURCE_EXTENSION_CALENDAR)) {
+                return;
+            }
+
             debug ("Adding source '%s'", source.dup_display_name ());
             try {
                 var client = (ECal.Client) ECal.Client.connect_sync (source, source_type, -1, null);
