@@ -69,8 +69,8 @@ namespace DateTime.Widgets {
 
             data = new Gee.HashMap<uint, GridDay> ();
 
-            events_model.events_added.connect (add_event_dots);
-            events_model.events_removed.connect (remove_event_dots);
+            events_model.components_added.connect (add_event_dots);
+            events_model.components_removed.connect (remove_event_dots);
         }
 
         private void add_event_dots (E.Source source, Gee.Collection<ECal.Component> events) {
