@@ -3,15 +3,17 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-07-14 15:49+0000\n"
-"PO-Revision-Date: 2016-06-09 17:34+0000\n"
-"Last-Translator: Bhanuka Mahanama <bhanuka.14@cse.mrt.ac.lk>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"PO-Revision-Date: 2021-03-04 05:40+0000\n"
+"Last-Translator: Thisara Kasun <thisara07.dazz@gmail.com>\n"
+"Language-Team: Sinhala <https://l10n.elementary.io/projects/wingpanel/"
+"wingpanel-indicator-datetime/si/>\n"
+"Language: si\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n > 1;\n"
+"X-Generator: Weblate 4.4.2\n"
 "X-Launchpad-Export-Date: 2017-02-19 05:57+0000\n"
-"X-Generator: Launchpad (build 18326)\n"
 
 #: src/Indicator.vala:56
 msgid "No Events on This Day"
@@ -32,11 +34,11 @@ msgstr ""
 #: src/Widgets/calendar/CalendarView.vala:33
 #: src/Widgets/calendar/CalendarView.vala:85
 msgid "%OB, %Y"
-msgstr ""
+msgstr "%Y, %OB"
 
 #: src/Widgets/calendar/CalendarView.vala:48
 msgid "Go to today's date"
-msgstr ""
+msgstr "අද දිනට යන්න"
 
 #: src/Widgets/calendar/CalendarView.vala:145
 msgid "Unable To Launch Calendar"
