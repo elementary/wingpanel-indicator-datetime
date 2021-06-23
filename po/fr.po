@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-07-14 15:49+0000\n"
+"POT-Creation-Date: 2021-06-23 18:02+0000\n"
 "PO-Revision-Date: 2019-08-29 17:22+0000\n"
 "Last-Translator: Corentin Noël <corentin@elementary.io>\n"
 "Language-Team: French <https://l10n.elementary.io/projects/wingpanel/"
@@ -16,7 +16,9 @@ msgstr ""
 "X-Launchpad-Export-Date: 2017-02-19 05:57+0000\n"
 
 #: src/Indicator.vala:56
-msgid "No Events on This Day"
+#, fuzzy
+#| msgid "No Events on This Day"
+msgid "No events this day"
 msgstr "Aucun événement en ce jour"
 
 #: src/Indicator.vala:80
@@ -31,20 +33,22 @@ msgstr "Pendant la journée"
 msgid "All Day"
 msgstr "Toute la journée"
 
-#: src/Widgets/calendar/CalendarView.vala:33
-#: src/Widgets/calendar/CalendarView.vala:85
+#: src/Widgets/calendar/CalendarView.vala:38
+#: src/Widgets/calendar/CalendarView.vala:132
+#: src/Widgets/calendar/CalendarView.vala:161
+#: src/Widgets/calendar/CalendarView.vala:218
 msgid "%OB, %Y"
 msgstr "%OB %Y"
 
-#: src/Widgets/calendar/CalendarView.vala:48
+#: src/Widgets/calendar/CalendarView.vala:54
 msgid "Go to today's date"
 msgstr "Aller à aujourd'hui"
 
-#: src/Widgets/calendar/CalendarView.vala:145
+#: src/Widgets/calendar/CalendarView.vala:232
 msgid "Unable To Launch Calendar"
 msgstr "Impossible de lancer Calendrier"
 
-#: src/Widgets/calendar/CalendarView.vala:146
+#: src/Widgets/calendar/CalendarView.vala:233
 msgid "The program \"io.elementary.calendar\" may not be installed"
 msgstr "Le programme « io.elementary.calendar » peut ne pas être installé"
 
