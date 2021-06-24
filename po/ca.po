@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-06-23 18:02+0000\n"
-"PO-Revision-Date: 2019-08-29 17:22+0000\n"
+"PO-Revision-Date: 2021-06-24 12:02+0000\n"
 "Last-Translator: David M <rbndavid@gmail.com>\n"
 "Language-Team: Catalan <https://l10n.elementary.io/projects/wingpanel/"
 "wingpanel-indicator-datetime/ca/>\n"
@@ -12,14 +12,12 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 3.7.1\n"
+"X-Generator: Weblate 4.4.2\n"
 "X-Launchpad-Export-Date: 2017-02-19 05:57+0000\n"
 
 #: src/Indicator.vala:56
-#, fuzzy
-#| msgid "No Events on This Day"
 msgid "No events this day"
-msgstr "Aquest dia no té esdeveniments"
+msgstr "Dia sense esdeveniments"
 
 #: src/Indicator.vala:80
 msgid "Date & Time Settings…"
