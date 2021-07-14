@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: extra\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-06-23 18:02+0000\n"
+"POT-Creation-Date: 2021-07-14 20:37+0000\n"
 "PO-Revision-Date: 2021-04-05 00:38+0000\n"
 "Last-Translator: DartDeaDia <jorydit@gmail.com>\n"
 "Language-Team: Russian <https://l10n.elementary.io/projects/wingpanel/"
@@ -29,57 +29,66 @@ msgid "The date and time indicator"
 msgstr "Индикатор даты и времени"
 
 #: data/datetime.appdata.xml.in:12
-msgid "Fix issues with time zones not being recognized"
-msgstr "Устранение проблем с нераспознанием часовых поясов"
+msgid "Add multitouch gestures"
+msgstr ""
 
-#: data/datetime.appdata.xml.in:13 data/datetime.appdata.xml.in:19
-#: data/datetime.appdata.xml.in:26 data/datetime.appdata.xml.in:31
-#: data/datetime.appdata.xml.in:37 data/datetime.appdata.xml.in:48
+#: data/datetime.appdata.xml.in:13
+msgid "Improve time zone handling"
+msgstr ""
+
+#: data/datetime.appdata.xml.in:14 data/datetime.appdata.xml.in:20
+#: data/datetime.appdata.xml.in:26 data/datetime.appdata.xml.in:33
+#: data/datetime.appdata.xml.in:38 data/datetime.appdata.xml.in:44
+#: data/datetime.appdata.xml.in:55
 msgid "Updated translations"
 msgstr "Обновлены переводы"
 
-#: data/datetime.appdata.xml.in:18
+#: data/datetime.appdata.xml.in:19
+msgid "Fix issues with time zones not being recognized"
+msgstr "Устранение проблем с нераспознанием часовых поясов"
+
+#: data/datetime.appdata.xml.in:25
 msgid "Improved performance when switching months"
 msgstr "Повышена производительность при переключении месяцев"
 
-#: data/datetime.appdata.xml.in:24
+#: data/datetime.appdata.xml.in:31
 msgid "Fix missing event dots in the calendar view"
 msgstr "Исправлено ошибку отсутствия точек событий в окне календаря"
 
-#: data/datetime.appdata.xml.in:25
+#: data/datetime.appdata.xml.in:32
 msgid "Fix event appearance with dark style"
 msgstr "Исправлен внешний вид события с тёмным стилем"
 
-#: data/datetime.appdata.xml.in:36
+#: data/datetime.appdata.xml.in:43
 msgid "Fix potential crash when loading events with no start or end time"
 msgstr ""
 "Устранение потенциального сбоя при загрузке событий без времени начала и "
 "окончания"
 
-#: data/datetime.appdata.xml.in:42
+#: data/datetime.appdata.xml.in:49
 msgid "Redesigned the way upcoming events are displayed"
 msgstr "Переработан способ отображения будущих событий"
 
-#: data/datetime.appdata.xml.in:43
+#: data/datetime.appdata.xml.in:50
 msgid "Fixed issues with large text size"
 msgstr "Исправлены проблемы с большим размером текста"
 
-#: data/datetime.appdata.xml.in:44
+#: data/datetime.appdata.xml.in:51
 msgid "Show dots on days with events"
 msgstr "Отображение точек на днях с событиями"
 
-#: data/datetime.appdata.xml.in:45
+#: data/datetime.appdata.xml.in:52
 msgid "Better handling of recurring events"
 msgstr "Улучшена работа с повторяющимися событиями"
 
-#: data/datetime.appdata.xml.in:46
+#: data/datetime.appdata.xml.in:53
 msgid "Performance improvements"
 msgstr "Улучшения производительности"
 
-#: data/datetime.appdata.xml.in:47
+#: data/datetime.appdata.xml.in:54
 msgid "Display an error dialog if Calendar fails to open"
 msgstr "Отображение диалогового окна ошибки, если Календарь не открывается"
 
-#: data/datetime.appdata.xml.in:57
+#: data/datetime.appdata.xml.in:64
 msgid "elementary, Inc."
 msgstr "elementary, Inc."

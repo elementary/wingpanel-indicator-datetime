@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: extra\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-06-23 18:02+0000\n"
+"POT-Creation-Date: 2021-07-14 20:37+0000\n"
 "PO-Revision-Date: 2020-07-16 22:12+0000\n"
 "Last-Translator: Sinan Decron <intenfinitia@gmail.com>\n"
 "Language-Team: Turkish <https://l10n.elementary.io/projects/wingpanel/"
@@ -28,57 +28,66 @@ msgid "The date and time indicator"
 msgstr "Tarih ve saat göstergesi"
 
 #: data/datetime.appdata.xml.in:12
-msgid "Fix issues with time zones not being recognized"
-msgstr "Saat dilimlerinin tanınmaması ile ilgili sorunlar giderildi"
+msgid "Add multitouch gestures"
+msgstr ""
 
-#: data/datetime.appdata.xml.in:13 data/datetime.appdata.xml.in:19
-#: data/datetime.appdata.xml.in:26 data/datetime.appdata.xml.in:31
-#: data/datetime.appdata.xml.in:37 data/datetime.appdata.xml.in:48
+#: data/datetime.appdata.xml.in:13
+msgid "Improve time zone handling"
+msgstr ""
+
+#: data/datetime.appdata.xml.in:14 data/datetime.appdata.xml.in:20
+#: data/datetime.appdata.xml.in:26 data/datetime.appdata.xml.in:33
+#: data/datetime.appdata.xml.in:38 data/datetime.appdata.xml.in:44
+#: data/datetime.appdata.xml.in:55
 msgid "Updated translations"
 msgstr "Çeviriler güncellendi"
 
-#: data/datetime.appdata.xml.in:18
+#: data/datetime.appdata.xml.in:19
+msgid "Fix issues with time zones not being recognized"
+msgstr "Saat dilimlerinin tanınmaması ile ilgili sorunlar giderildi"
+
+#: data/datetime.appdata.xml.in:25
 msgid "Improved performance when switching months"
 msgstr "Ayları değiştirirken performans iyileştirildi"
 
-#: data/datetime.appdata.xml.in:24
+#: data/datetime.appdata.xml.in:31
 msgid "Fix missing event dots in the calendar view"
 msgstr "Takvim görünümündeki eksik olan etkinlik noktaları düzeltildi"
 
-#: data/datetime.appdata.xml.in:25
+#: data/datetime.appdata.xml.in:32
 msgid "Fix event appearance with dark style"
 msgstr "Koyu renk temadaki etkinlik görünümünü düzeltildi"
 
-#: data/datetime.appdata.xml.in:36
+#: data/datetime.appdata.xml.in:43
 msgid "Fix potential crash when loading events with no start or end time"
 msgstr ""
 "Başlangıç veya bitiş zamanı olmayan etkinlikleri yüklerken olası çökme "
 "düzeltildi"
 
-#: data/datetime.appdata.xml.in:42
+#: data/datetime.appdata.xml.in:49
 msgid "Redesigned the way upcoming events are displayed"
 msgstr "Yaklaşan etkinliklerin görüntülenme biçimi yeniden tasarlandı"
 
-#: data/datetime.appdata.xml.in:43
+#: data/datetime.appdata.xml.in:50
 msgid "Fixed issues with large text size"
 msgstr "Büyük metin boyutuyla ilgili sorunlar giderildi"
 
-#: data/datetime.appdata.xml.in:44
+#: data/datetime.appdata.xml.in:51
 msgid "Show dots on days with events"
 msgstr "Etkinlik olan günlerde nokta göster"
 
-#: data/datetime.appdata.xml.in:45
+#: data/datetime.appdata.xml.in:52
 msgid "Better handling of recurring events"
 msgstr "Tekrarlanan etkinliklerin yönetimi iyileştirildi"
 
-#: data/datetime.appdata.xml.in:46
+#: data/datetime.appdata.xml.in:53
 msgid "Performance improvements"
 msgstr "Performans iyileştirmeleri"
 
-#: data/datetime.appdata.xml.in:47
+#: data/datetime.appdata.xml.in:54
 msgid "Display an error dialog if Calendar fails to open"
 msgstr "Takvim açılamıyorsa bir hata iletişim kutusu görüntüle"
 
-#: data/datetime.appdata.xml.in:57
+#: data/datetime.appdata.xml.in:64
 msgid "elementary, Inc."
 msgstr "elementary, Inc."
