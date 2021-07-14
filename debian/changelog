@@ -1,3 +1,27 @@
+wingpanel-indicator-datetime (2.3.0) bionic; urgency=medium
+
+  * Release 2.3.0 (#266)
+  * Update translation files
+  * Update translation template
+  * Spelling: No events this day, Could not (#258)
+  * CalendarView: Add accent color to month label (#262)
+  * Define log domain (#261)
+  * Fixed an issue where focus style was not reset to today (#251)
+  * Update names of libwingpanel (#249)
+  * LINGUAS: sort, remove en_US
+  * PanelLabel: Use tabular numbers font feature to display the time
+    (#246)
+  * AppData: Add icon name (#239)
+  * EventRow: Rely on stylesheet for colors (#236)
+  * Rewrite styles for Greenfield (#222)
+  * Calculate TimeZone according to Calendar (#233)
+  * Release: set to Odin
+  * CalendarView: Use Hdy.Carousel (#232)
+  * Indicator: Remove deprecated display_name and description (#229)
+  * Prevent loading DateTime outside session (#228)
+
+ -- Cody Garver <cody@elementary.io>  Wed, 14 Jul 2021 20:36:29 +0000
+
 wingpanel-indicator-datetime (2.2.5) bionic; urgency=medium
 
   * Release 2.2.5 (#227)
