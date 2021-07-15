@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: extra\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-07-14 20:37+0000\n"
-"PO-Revision-Date: 2020-07-02 02:04+0000\n"
+"PO-Revision-Date: 2021-07-15 18:28+0000\n"
 "Last-Translator: David M <rbndavid@gmail.com>\n"
 "Language-Team: Catalan <https://l10n.elementary.io/projects/wingpanel/"
 "indicator-datetime-extra/ca/>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 3.9.1\n"
+"X-Generator: Weblate 4.4.2\n"
 
 #: data/datetime.appdata.xml.in:6
 msgid "Date &amp; Time Indicator"
@@ -29,11 +29,11 @@ msgstr "Indicador de la data i l'hora"
 
 #: data/datetime.appdata.xml.in:12
 msgid "Add multitouch gestures"
-msgstr ""
+msgstr "Afegeix gests multitàctils"
 
 #: data/datetime.appdata.xml.in:13
 msgid "Improve time zone handling"
-msgstr ""
+msgstr "Millora de la gestió de la zona horària"
 
 #: data/datetime.appdata.xml.in:14 data/datetime.appdata.xml.in:20
 #: data/datetime.appdata.xml.in:26 data/datetime.appdata.xml.in:33
