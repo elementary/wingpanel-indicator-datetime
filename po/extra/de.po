@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: extra\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-07-14 20:37+0000\n"
-"PO-Revision-Date: 2019-12-26 01:08+0000\n"
-"Last-Translator: Jörg Arnold <j.ar@mailbox.org>\n"
+"PO-Revision-Date: 2021-07-21 03:37+0000\n"
+"Last-Translator: supaeasy <ismo+github@wolffson.ch>\n"
 "Language-Team: German <https://l10n.elementary.io/projects/wingpanel/"
 "indicator-datetime-extra/de/>\n"
 "Language: de\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 3.9.1\n"
+"X-Generator: Weblate 4.4.2\n"
 
 #: data/datetime.appdata.xml.in:6
 msgid "Date &amp; Time Indicator"
@@ -25,15 +25,15 @@ msgstr ""
 
 #: data/datetime.appdata.xml.in:7
 msgid "The date and time indicator"
-msgstr ""
+msgstr "Die Datums- und Zeitanzeige"
 
 #: data/datetime.appdata.xml.in:12
 msgid "Add multitouch gestures"
-msgstr ""
+msgstr "Multitouch-Gesten hinzufügen"
 
 #: data/datetime.appdata.xml.in:13
 msgid "Improve time zone handling"
-msgstr ""
+msgstr "Verbesserter Umgang mit Zeitzonen"
 
 #: data/datetime.appdata.xml.in:14 data/datetime.appdata.xml.in:20
 #: data/datetime.appdata.xml.in:26 data/datetime.appdata.xml.in:33
@@ -44,39 +44,43 @@ msgstr "Aktualisierte Übersetzungen"
 
 #: data/datetime.appdata.xml.in:19
 msgid "Fix issues with time zones not being recognized"
-msgstr ""
+msgstr "Behebt einen Fehler, bei dem Zeitzonen nicht korrekt erkannt wurden"
 
 #: data/datetime.appdata.xml.in:25
 msgid "Improved performance when switching months"
-msgstr ""
+msgstr "Verbesserte Leistung beim Wechsel zwischen Monaten"
 
 #: data/datetime.appdata.xml.in:31
 msgid "Fix missing event dots in the calendar view"
 msgstr ""
+"Behebt ein Problem mit fehlenden Ereignis-Punkten in der Kalenderansicht"
 
 #: data/datetime.appdata.xml.in:32
 msgid "Fix event appearance with dark style"
 msgstr ""
+"Behebt ein Problem mit der Darstellung von Ereignissen mit dem dunklen Stil"
 
 #: data/datetime.appdata.xml.in:43
 msgid "Fix potential crash when loading events with no start or end time"
 msgstr ""
+"Behebt einen potenziellen Absturz beim Laden von Ereignissen ohne Start- "
+"oder Endzeit"
 
 #: data/datetime.appdata.xml.in:49
 msgid "Redesigned the way upcoming events are displayed"
-msgstr ""
+msgstr "Neugestaltung der Art, wie kommende Ereignisse angezeigt werden"
 
 #: data/datetime.appdata.xml.in:50
 msgid "Fixed issues with large text size"
-msgstr ""
+msgstr "Behebt ein Problem mit großen Schriftgrößen"
 
 #: data/datetime.appdata.xml.in:51
 msgid "Show dots on days with events"
-msgstr ""
+msgstr "Zeige Punkte an Tagen mit Ereignissen"
 
 #: data/datetime.appdata.xml.in:52
 msgid "Better handling of recurring events"
-msgstr ""
+msgstr "Verbesserter Umgang mit wiederkehrenden Ereignissen"
 
 #: data/datetime.appdata.xml.in:53
 msgid "Performance improvements"
@@ -84,7 +88,7 @@ msgstr "Leistungsverbesserungen"
 
 #: data/datetime.appdata.xml.in:54
 msgid "Display an error dialog if Calendar fails to open"
-msgstr ""
+msgstr "Zeige einen Fehlerdialog, wenn Kalender nicht geöffnet werden kann"
 
 #: data/datetime.appdata.xml.in:64
 msgid "elementary, Inc."
