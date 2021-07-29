@@ -203,7 +203,7 @@ namespace Util {
         ICal.Time? due_time = icomp.get_due ();
         ICal.Time? end_time = icomp.get_dtend ();
 
-        if (due_time != null &&!due_time.is_null_time ()) {
+        if (due_time != null && !due_time.is_null_time ()) {
             // RFC 2445 Section 4.8.2.3: The property DUE
             // can only be specified in a "VTODO" calendar
             // component. Therefore we are dealing with a
