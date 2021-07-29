@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-07-14 15:49+0000\n"
-"PO-Revision-Date: 2021-03-05 00:17+0000\n"
+"POT-Creation-Date: 2021-07-14 20:37+0000\n"
+"PO-Revision-Date: 2021-06-28 11:31+0000\n"
 "Last-Translator: DartDeaDia <jorydit@gmail.com>\n"
 "Language-Team: Russian <https://l10n.elementary.io/projects/wingpanel/"
 "wingpanel-indicator-datetime/ru/>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "X-Launchpad-Export-Date: 2017-02-19 05:57+0000\n"
 
 #: src/Indicator.vala:56
-msgid "No Events on This Day"
+msgid "No events this day"
 msgstr "Нет событий на этот день"
 
 #: src/Indicator.vala:80
@@ -32,20 +32,22 @@ msgstr "В течении дня"
 msgid "All Day"
 msgstr "Весь день"
 
-#: src/Widgets/calendar/CalendarView.vala:33
-#: src/Widgets/calendar/CalendarView.vala:85
+#: src/Widgets/calendar/CalendarView.vala:38
+#: src/Widgets/calendar/CalendarView.vala:132
+#: src/Widgets/calendar/CalendarView.vala:161
+#: src/Widgets/calendar/CalendarView.vala:218
 msgid "%OB, %Y"
 msgstr "%OB, %Y"
 
-#: src/Widgets/calendar/CalendarView.vala:48
+#: src/Widgets/calendar/CalendarView.vala:54
 msgid "Go to today's date"
 msgstr "Перейти к сегодняшней дате"
 
-#: src/Widgets/calendar/CalendarView.vala:145
+#: src/Widgets/calendar/CalendarView.vala:232
 msgid "Unable To Launch Calendar"
 msgstr "Не удалось запустить календарь"
 
-#: src/Widgets/calendar/CalendarView.vala:146
+#: src/Widgets/calendar/CalendarView.vala:233
 msgid "The program \"io.elementary.calendar\" may not be installed"
 msgstr "Возможно, программа «io.elementary.calendar» не установлена"
 
