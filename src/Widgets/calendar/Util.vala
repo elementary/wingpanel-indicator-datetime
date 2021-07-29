@@ -200,7 +200,21 @@ namespace Util {
         /* We want to be relative to the local timezone */
         unowned ICal.Component? icomp = comp.get_icalcomponent ();
         ICal.Time? start_time = icomp.get_dtstart ();
+        ICal.Time? due_time = icomp.get_due ();
         ICal.Time? end_time = icomp.get_dtend ();
+
+        if (due_time != null &&!due_time.is_null_time ()) {
+            // RFC 2445 Section 4.8.2.3: The property DUE
+            // can only be specified in a "VTODO" calendar
+            // component. Therefore we are dealing with a
+            // task here:
+            end_time = due_time;
+
+            if (start_time == null || start_time.is_null_time ()) {
+                start_time = due_time;
+            }
+        }
+
         time_t start_unix = start_time.as_timet_with_zone (system_timezone);
         time_t end_unix = end_time.as_timet_with_zone (system_timezone);
 

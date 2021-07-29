@@ -65,7 +65,7 @@ public class DateTime.Widgets.CalendarView : Gtk.Grid {
         box_buttons.add (right_button);
 
         events_model = CalendarModel.get_default (ECal.ClientSourceType.EVENTS);
-        tasks_model = CalendarModel.get_default (ECal.ClientSourceType.EVENTS);
+        tasks_model = CalendarModel.get_default (ECal.ClientSourceType.TASKS);
         start_month = Util.get_start_of_month ();
 
         start_month_grid = create_grid ();
