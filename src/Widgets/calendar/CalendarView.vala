@@ -44,7 +44,8 @@ public class DateTime.Widgets.CalendarView : Gtk.Grid {
         var provider = new Gtk.CssProvider ();
         provider.load_from_resource ("/io/elementary/desktop/wingpanel/datetime/ControlHeader.css");
 
-        var label_style_context = label.get_style_context ();
+        unowned var label_style_context = label.get_style_context ();
+        label_style_context.add_class (Granite.STYLE_CLASS_ACCENT);
         label_style_context.add_class ("header-label");
         label_style_context.add_provider (provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
 

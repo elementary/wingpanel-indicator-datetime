@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-07-14 15:49+0000\n"
+"POT-Creation-Date: 2021-07-14 20:37+0000\n"
 "PO-Revision-Date: 2020-11-09 09:15+0000\n"
 "Last-Translator: Mejans <farga@mejans.fr>\n"
 "Language-Team: Occitan <https://l10n.elementary.io/projects/wingpanel/"
@@ -14,7 +14,9 @@ msgstr ""
 "X-Generator: Weblate 3.9.1\n"
 
 #: src/Indicator.vala:56
-msgid "No Events on This Day"
+#, fuzzy
+#| msgid "No Events on This Day"
+msgid "No events this day"
 msgstr "Cap d’eveniment aqueste jorn"
 
 #: src/Indicator.vala:80
@@ -29,19 +31,21 @@ msgstr "Pendent la jornada"
 msgid "All Day"
 msgstr "Tot lo jorn"
 
-#: src/Widgets/calendar/CalendarView.vala:33
-#: src/Widgets/calendar/CalendarView.vala:85
+#: src/Widgets/calendar/CalendarView.vala:38
+#: src/Widgets/calendar/CalendarView.vala:132
+#: src/Widgets/calendar/CalendarView.vala:161
+#: src/Widgets/calendar/CalendarView.vala:218
 msgid "%OB, %Y"
 msgstr "%OB %Y"
 
-#: src/Widgets/calendar/CalendarView.vala:48
+#: src/Widgets/calendar/CalendarView.vala:54
 msgid "Go to today's date"
 msgstr "Anar cap a uèi"
 
-#: src/Widgets/calendar/CalendarView.vala:145
+#: src/Widgets/calendar/CalendarView.vala:232
 msgid "Unable To Launch Calendar"
 msgstr "Dubertura impossibla del calendari"
 
-#: src/Widgets/calendar/CalendarView.vala:146
+#: src/Widgets/calendar/CalendarView.vala:233
 msgid "The program \"io.elementary.calendar\" may not be installed"
 msgstr ""

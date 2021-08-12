@@ -53,7 +53,7 @@ public class DateTime.Indicator : Wingpanel.Indicator {
             calendar = new Widgets.CalendarView ();
             calendar.margin_bottom = 6;
 
-            var placeholder_label = new Gtk.Label (_("No Events on This Day"));
+            var placeholder_label = new Gtk.Label (_("No events this day"));
             placeholder_label.wrap = true;
             placeholder_label.wrap_mode = Pango.WrapMode.WORD;
             placeholder_label.margin_start = 12;
@@ -107,7 +107,7 @@ public class DateTime.Indicator : Wingpanel.Indicator {
                 try {
                     AppInfo.launch_default_for_uri ("settings://time", null);
                 } catch (Error e) {
-                    warning ("Failed to open time and date settings: %s", e.message);
+                    warning ("Could not open time and date settings: %s", e.message);
                 }
             });
         }
