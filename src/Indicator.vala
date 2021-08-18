@@ -33,6 +33,9 @@ public class DateTime.Indicator : Wingpanel.Indicator {
     }
 
     static construct {
+        GLib.Intl.bindtextdomain (GETTEXT_PACKAGE, LOCALEDIR);
+        GLib.Intl.bind_textdomain_codeset (GETTEXT_PACKAGE, "UTF-8");
+
         settings = new GLib.Settings ("io.elementary.desktop.wingpanel.datetime");
     }
 
