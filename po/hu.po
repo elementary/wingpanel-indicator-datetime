@@ -4,7 +4,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-07-14 20:37+0000\n"
 "PO-Revision-Date: 2021-08-26 10:15+0000\n"
-"Last-Translator: TomiOhl <ohlslager.tom@gmail.com>\n"
+"Last-Translator: zoli111 <acszoltan111@gmail.com>\n"
 "Language-Team: Hungarian <https://l10n.elementary.io/projects/wingpanel/"
 "wingpanel-indicator-datetime/hu/>\n"
 "Language: hu\n"
@@ -44,7 +44,7 @@ msgstr "Ugrás a mai dátumra"
 
 #: src/Widgets/calendar/CalendarView.vala:232
 msgid "Unable To Launch Calendar"
-msgstr "Naptár indítása sikertelen"
+msgstr "Nem sikerült elindítani a Naptárat"
 
 #: src/Widgets/calendar/CalendarView.vala:233
 msgid "The program \"io.elementary.calendar\" may not be installed"
