@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-07-14 20:37+0000\n"
-"PO-Revision-Date: 2019-08-29 17:22+0000\n"
-"Last-Translator: nasserbinlaboun <nasser1990com@gmail.com>\n"
+"PO-Revision-Date: 2021-08-27 11:29+0000\n"
+"Last-Translator: Muhammad Al-Jayyousi <m7md.j99@protonmail.com>\n"
 "Language-Team: Arabic <https://l10n.elementary.io/projects/wingpanel/"
 "wingpanel-indicator-datetime/ar/>\n"
 "Language: ar\n"
@@ -13,18 +13,16 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
 "&& n%100<=10 ? 3 : n%100>=11 ? 4 : 5;\n"
-"X-Generator: Weblate 3.7.1\n"
+"X-Generator: Weblate 4.4.2\n"
 "X-Launchpad-Export-Date: 2017-02-19 05:57+0000\n"
 
 #: src/Indicator.vala:56
-#, fuzzy
-#| msgid "No Events on This Day"
 msgid "No events this day"
 msgstr "لا يوجد أحداث في هذا اليوم"
 
 #: src/Indicator.vala:80
 msgid "Date & Time Settings…"
-msgstr "إعدادات التاريخ و الوقت…"
+msgstr "إعدادات التاريخ والوقت…"
 
 #: src/Indicator.vala:128
 msgid "During the Day"
@@ -39,19 +37,19 @@ msgstr "طوال اليوم"
 #: src/Widgets/calendar/CalendarView.vala:161
 #: src/Widgets/calendar/CalendarView.vala:218
 msgid "%OB, %Y"
-msgstr ""
+msgstr "%OB, %Y"
 
 #: src/Widgets/calendar/CalendarView.vala:54
 msgid "Go to today's date"
-msgstr "الذهاب إلى تاريخ اليوم"
+msgstr "اذهب إلى تاريخ اليوم"
 
 #: src/Widgets/calendar/CalendarView.vala:232
 msgid "Unable To Launch Calendar"
-msgstr "غير قادر على بدء التقويم"
+msgstr "غير قادر على فتح التقويم"
 
 #: src/Widgets/calendar/CalendarView.vala:233
 msgid "The program \"io.elementary.calendar\" may not be installed"
-msgstr "البرنامج \"io.elementary.calendar\" قد لا يكون مثبتا"
+msgstr "البرنامج \"io.elementary.calendar\" قد لا يكون مثبتاً"
 
 #~ msgid "Date & Time"
 #~ msgstr "التاريخ و الوقت"

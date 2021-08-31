@@ -3,19 +3,21 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-07-14 20:37+0000\n"
-"PO-Revision-Date: 2016-07-17 20:58+0000\n"
-"Last-Translator: Igor Štefanko <istefanko@gmail.com>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"PO-Revision-Date: 2021-08-20 01:13+0000\n"
+"Last-Translator: JohnDumpling <john_dumpling@protonmail.com>\n"
+"Language-Team: Slovak <https://l10n.elementary.io/projects/wingpanel/"
+"wingpanel-indicator-datetime/sk/>\n"
+"Language: sk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
+"X-Generator: Weblate 4.4.2\n"
 "X-Launchpad-Export-Date: 2017-02-19 05:57+0000\n"
-"X-Generator: Launchpad (build 18326)\n"
 
 #: src/Indicator.vala:56
 msgid "No events this day"
-msgstr ""
+msgstr "Dnes žiadne udalosti"
 
 #: src/Indicator.vala:80
 msgid "Date & Time Settings…"
@@ -23,30 +25,30 @@ msgstr "Nastavenia dátumu a času…"
 
 #: src/Indicator.vala:128
 msgid "During the Day"
-msgstr ""
+msgstr "V priebehu dňa"
 
 #: src/Indicator.vala:136
 msgid "All Day"
-msgstr ""
+msgstr "Celý deň"
 
 #: src/Widgets/calendar/CalendarView.vala:38
 #: src/Widgets/calendar/CalendarView.vala:132
 #: src/Widgets/calendar/CalendarView.vala:161
 #: src/Widgets/calendar/CalendarView.vala:218
 msgid "%OB, %Y"
-msgstr ""
+msgstr "%OB, %Y"
 
 #: src/Widgets/calendar/CalendarView.vala:54
 msgid "Go to today's date"
-msgstr ""
+msgstr "Prejsť na dnešný dátum"
 
 #: src/Widgets/calendar/CalendarView.vala:232
 msgid "Unable To Launch Calendar"
-msgstr ""
+msgstr "Kalendár sa nepodarilo spustiť"
 
 #: src/Widgets/calendar/CalendarView.vala:233
 msgid "The program \"io.elementary.calendar\" may not be installed"
-msgstr ""
+msgstr "Je možné, že program „io.elementary.calendar“ nie je nainštalovaný"
 
 #~ msgid "Date & Time"
 #~ msgstr "Dátum a čas"
