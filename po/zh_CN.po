@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-07-14 20:37+0000\n"
-"PO-Revision-Date: 2020-11-12 02:15+0000\n"
+"PO-Revision-Date: 2021-09-07 13:50+0000\n"
 "Last-Translator: colindemian <colindemian@outlook.com>\n"
 "Language-Team: Chinese (Simplified) <https://l10n.elementary.io/projects/"
 "wingpanel/wingpanel-indicator-datetime/zh_Hans/>\n"
@@ -12,14 +12,12 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 3.9.1\n"
+"X-Generator: Weblate 4.4.2\n"
 "X-Launchpad-Export-Date: 2017-02-19 05:58+0000\n"
 
 #: src/Indicator.vala:56
-#, fuzzy
-#| msgid "No Events on This Day"
 msgid "No events this day"
-msgstr "该日期内无活动"
+msgstr "此日无活动"
 
 #: src/Indicator.vala:80
 msgid "Date & Time Settings…"
