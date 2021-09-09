@@ -22,9 +22,12 @@ gresource = gnome.compile_resources(
     source_dir: 'data'
 )
 
+c_args = [
+  '-DGWEATHER_I_KNOW_THIS_IS_UNSTABLE',
+]
+
 wingpanel_dep = dependency('wingpanel')
 wingpanel_indicatorsdir = wingpanel_dep.get_pkgconfig_variable('indicatorsdir', define_variable: ['libdir', libdir])
-
 
 libecal_dep = dependency('libecal-2.0', required: false)
 if libecal_dep.found()
@@ -55,12 +58,14 @@ shared_module(
     'src/Indicator.vala',
     'src/Widgets/EventRow.vala',
     'src/Widgets/PanelLabel.vala',
+    'src/Widgets/WeatherRow.vala',
     'src/Widgets/calendar/CalendarModel.vala',
     'src/Widgets/calendar/CalendarView.vala',
     'src/Widgets/calendar/Grid.vala',
     'src/Widgets/calendar/GridDay.vala',
     'src/Widgets/calendar/Util.vala',
     'src/Services/TimeManager.vala',
+    c_args: c_args,
     dependencies: [
         dependency('glib-2.0'),
         dependency('gobject-2.0'),
@@ -69,6 +74,8 @@ shared_module(
         libecal_dep,
         dependency('libedataserver-1.2'),
         dependency('libhandy-1'),
+        dependency('libgeoclue-2.0'),
+        dependency('gweather-3.0'),
         libical_dep,
         wingpanel_dep,
     ],
