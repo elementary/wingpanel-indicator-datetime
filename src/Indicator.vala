@@ -33,6 +33,9 @@ public class DateTime.Indicator : Wingpanel.Indicator {
     }
 
     static construct {
+        GLib.Intl.bindtextdomain (GETTEXT_PACKAGE, LOCALEDIR);
+        GLib.Intl.bind_textdomain_codeset (GETTEXT_PACKAGE, "UTF-8");
+
         settings = new GLib.Settings ("io.elementary.desktop.wingpanel.datetime");
     }
 
@@ -59,7 +62,7 @@ public class DateTime.Indicator : Wingpanel.Indicator {
                 margin_bottom = 9
             };
 
-            var placeholder_label = new Gtk.Label (_("No Events on This Day"));
+            var placeholder_label = new Gtk.Label (_("No events this day"));
             placeholder_label.wrap = true;
             placeholder_label.wrap_mode = Pango.WrapMode.WORD;
             placeholder_label.margin_start = 12;
@@ -117,7 +120,7 @@ public class DateTime.Indicator : Wingpanel.Indicator {
                 try {
                     AppInfo.launch_default_for_uri ("settings://time", null);
                 } catch (Error e) {
-                    warning ("Failed to open time and date settings: %s", e.message);
+                    warning ("Could not open time and date settings: %s", e.message);
                 }
             });
         }

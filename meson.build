@@ -1,7 +1,7 @@
 project(
     'datetime',
     'vala', 'c',
-    version: '2.2.5'
+    version: '2.3.0'
 )
 
 i18n = import('i18n')
@@ -14,6 +14,7 @@ libdir = join_paths(prefix, get_option('libdir'))
 
 add_global_arguments('-DGETTEXT_PACKAGE="@0@"'.format(gettext_name), language:'c')
 add_project_arguments(['--vapidir', join_paths(meson.current_source_dir(), 'vapi')], language: 'vala')
+add_project_arguments('-DG_LOG_DOMAIN="io.elementary.wingpanel.datetime"', language:'c')
 
 gresource = gnome.compile_resources(
     'gresource',
@@ -25,9 +26,8 @@ c_args = [
   '-DGWEATHER_I_KNOW_THIS_IS_UNSTABLE',
 ]
 
-wingpanel_dep = dependency('wingpanel-2.0')
+wingpanel_dep = dependency('wingpanel')
 wingpanel_indicatorsdir = wingpanel_dep.get_pkgconfig_variable('indicatorsdir', define_variable: ['libdir', libdir])
-
 
 libecal_dep = dependency('libecal-2.0', required: false)
 if libecal_dep.found()
@@ -40,9 +40,19 @@ else
     add_project_arguments('--vapidir', join_paths(meson.current_source_dir(), 'vapi'), language: 'vala')
 endif
 
+config_data = configuration_data()
+config_data.set_quoted('LOCALEDIR', join_paths(get_option('prefix'), get_option('localedir')))
+config_data.set_quoted('GETTEXT_PACKAGE', meson.project_name() + '-indicator')
+config_file = configure_file(
+    input: 'src/Config.vala.in',
+    output: '@BASENAME@',
+    configuration: config_data
+)
+
 shared_module(
     meson.project_name(),
     gresource,
+    config_file,
     'src/DateIterator.vala',
     'src/DateRange.vala',
     'src/Indicator.vala',
