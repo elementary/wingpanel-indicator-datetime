@@ -20,6 +20,9 @@
 [DBus (name = "org.freedesktop.login1.Manager")]
 interface Manager : Object {
     public signal void prepare_for_sleep (bool sleeping);
+    public signal void user_new (string uid, ObjectPath object_path);
+    public signal void seat_new (string seat_id, ObjectPath object_path);
+    public signal void session_new (string session_id, ObjectPath object_path);
 }
 
 [DBus (name = "io.elementary.pantheon.AccountsService")]
@@ -66,10 +69,20 @@ public class DateTime.Services.TimeManager : Gtk.Calendar {
             manager = Bus.get_proxy_sync (BusType.SYSTEM, "org.freedesktop.login1", "/org/freedesktop/login1");
             manager.prepare_for_sleep.connect ((sleeping) => {
                 if (!sleeping) {
-                    update_current_time ();
-                    minute_changed ();
-                    add_timeout ();
+                    reset ();
                 }
+            });
+
+            manager.user_new.connect (() => {
+                reset ();
+            });
+
+            manager.seat_new.connect (() => {
+                reset ();
+            });
+
+            manager.session_new.connect (() => {
+                reset ();
             });
         } catch (Error e) {
             warning (e.message);
@@ -117,6 +130,12 @@ public class DateTime.Services.TimeManager : Gtk.Calendar {
     private void on_unwatch (DBusConnection conn) {
         // Stop updating the time display quicker
         add_timeout (false);
+    }
+
+    private void reset () {
+        update_current_time ();
+        minute_changed ();
+        add_timeout ();
     }
 
     private void add_timeout (bool update_fast = false) {
