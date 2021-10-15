@@ -88,7 +88,7 @@ public class DateTime.Indicator : Wingpanel.Indicator {
             main_grid.attach (scrolled_window, 1, 0);
             var sep = new Gtk.Separator (Gtk.Orientation.HORIZONTAL) {
                 margin_bottom = 3,
-                margin_top = 3,
+                margin_top = 3
             };
             main_grid.attach (sep, 0, 2, 2);
             main_grid.attach (settings_button, 0, 3, 2);
