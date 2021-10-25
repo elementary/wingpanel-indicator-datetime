@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-07-14 20:37+0000\n"
+"POT-Creation-Date: 2021-10-25 19:39+0000\n"
 "PO-Revision-Date: 2018-07-26 17:26+0000\n"
 "Last-Translator: Jung-Kyu Park <bagjunggyu@gmail.com>\n"
 "Language-Team: Korean <https://weblate.elementary.io/projects/wingpanel/"
@@ -15,19 +15,19 @@ msgstr ""
 "X-Generator: Weblate 3.0.1\n"
 "X-Launchpad-Export-Date: 2017-02-19 05:57+0000\n"
 
-#: src/Indicator.vala:56
+#: src/Indicator.vala:59
 msgid "No events this day"
 msgstr ""
 
-#: src/Indicator.vala:80
+#: src/Indicator.vala:83
 msgid "Date & Time Settings…"
 msgstr "날짜와 시간 설정…"
 
-#: src/Indicator.vala:128
+#: src/Indicator.vala:136
 msgid "During the Day"
 msgstr ""
 
-#: src/Indicator.vala:136
+#: src/Indicator.vala:144
 msgid "All Day"
 msgstr ""
 
