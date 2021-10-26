@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: extra\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-10-25 19:39+0000\n"
+"POT-Creation-Date: 2021-10-26 21:41+0000\n"
 "PO-Revision-Date: 2021-10-26 00:09+0000\n"
 "Last-Translator: Ryo Nakano <ryonakaknock3@gmail.com>\n"
 "Language-Team: Japanese <https://l10n.elementary.io/projects/wingpanel/"
@@ -28,70 +28,82 @@ msgid "The date and time indicator"
 msgstr "日付と時刻のインジケーター"
 
 #: data/datetime.appdata.xml.in:12
+msgid "Fixes:"
+msgstr ""
+
+#: data/datetime.appdata.xml.in:14
+msgid "Fix disappearing dates when changing between dark and light styles"
+msgstr ""
+
+#: data/datetime.appdata.xml.in:15
 msgid "Fix potential memory leak"
 msgstr "メモリーリークの可能性がある不具合を修正"
 
-#: data/datetime.appdata.xml.in:13 data/datetime.appdata.xml.in:20
-#: data/datetime.appdata.xml.in:26 data/datetime.appdata.xml.in:32
-#: data/datetime.appdata.xml.in:39 data/datetime.appdata.xml.in:44
-#: data/datetime.appdata.xml.in:50 data/datetime.appdata.xml.in:61
+#: data/datetime.appdata.xml.in:17
+msgid "Improvements:"
+msgstr ""
+
+#: data/datetime.appdata.xml.in:19 data/datetime.appdata.xml.in:27
+#: data/datetime.appdata.xml.in:33 data/datetime.appdata.xml.in:39
+#: data/datetime.appdata.xml.in:46 data/datetime.appdata.xml.in:51
+#: data/datetime.appdata.xml.in:57 data/datetime.appdata.xml.in:68
 msgid "Updated translations"
 msgstr "翻訳の更新"
 
-#: data/datetime.appdata.xml.in:18
+#: data/datetime.appdata.xml.in:25
 msgid "Add multitouch gestures"
 msgstr "マルチタッチジェスチャーを追加"
 
-#: data/datetime.appdata.xml.in:19
+#: data/datetime.appdata.xml.in:26
 msgid "Improve time zone handling"
 msgstr "タイムゾーンの処理を改善"
 
-#: data/datetime.appdata.xml.in:25
+#: data/datetime.appdata.xml.in:32
 msgid "Fix issues with time zones not being recognized"
 msgstr "タイムゾーンを認識しない不具合を修正"
 
-#: data/datetime.appdata.xml.in:31
+#: data/datetime.appdata.xml.in:38
 msgid "Improved performance when switching months"
 msgstr "表示する月の切り替え時のパフォーマンスを改善"
 
-#: data/datetime.appdata.xml.in:37
+#: data/datetime.appdata.xml.in:44
 msgid "Fix missing event dots in the calendar view"
 msgstr "カレンダー表示で予定を示す点が表示されなくなった不具合を修正"
 
-#: data/datetime.appdata.xml.in:38
+#: data/datetime.appdata.xml.in:45
 msgid "Fix event appearance with dark style"
 msgstr "ダークスタイルで予定が見にくくなる不具合を修正"
 
-#: data/datetime.appdata.xml.in:49
+#: data/datetime.appdata.xml.in:56
 msgid "Fix potential crash when loading events with no start or end time"
 msgstr ""
 "開始時刻または終了時刻が指定されていない予定を読み込んだ際に、アプリがクラッ"
 "シュすることがある不具合を修正"
 
-#: data/datetime.appdata.xml.in:55
+#: data/datetime.appdata.xml.in:62
 msgid "Redesigned the way upcoming events are displayed"
 msgstr "直近の予定の表示方法のデザインを変更"
 
-#: data/datetime.appdata.xml.in:56
+#: data/datetime.appdata.xml.in:63
 msgid "Fixed issues with large text size"
 msgstr "大きいテキストサイズで生じる不具合を修正"
 
-#: data/datetime.appdata.xml.in:57
+#: data/datetime.appdata.xml.in:64
 msgid "Show dots on days with events"
 msgstr "予定のある日に点を表示"
 
-#: data/datetime.appdata.xml.in:58
+#: data/datetime.appdata.xml.in:65
 msgid "Better handling of recurring events"
 msgstr "定期的に行われる予定の管理の改善"
 
-#: data/datetime.appdata.xml.in:59
+#: data/datetime.appdata.xml.in:66
 msgid "Performance improvements"
 msgstr "パフォーマンスの改善"
 
-#: data/datetime.appdata.xml.in:60
+#: data/datetime.appdata.xml.in:67
 msgid "Display an error dialog if Calendar fails to open"
 msgstr "カレンダーアプリの起動に失敗した際にエラーダイアログを表示"
 
-#: data/datetime.appdata.xml.in:70
+#: data/datetime.appdata.xml.in:77
 msgid "elementary, Inc."
 msgstr "elementary, Inc."

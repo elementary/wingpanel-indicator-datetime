@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: extra\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-10-25 19:39+0000\n"
+"POT-Creation-Date: 2021-10-26 21:41+0000\n"
 "PO-Revision-Date: 2020-05-26 21:35+0000\n"
 "Last-Translator: Rantyrant <diseasemonger@gmail.com>\n"
 "Language-Team: Danish <https://l10n.elementary.io/projects/wingpanel/"
@@ -28,72 +28,84 @@ msgid "The date and time indicator"
 msgstr "Dato og klokkeslæt-indikator"
 
 #: data/datetime.appdata.xml.in:12
+msgid "Fixes:"
+msgstr ""
+
+#: data/datetime.appdata.xml.in:14
+msgid "Fix disappearing dates when changing between dark and light styles"
+msgstr ""
+
+#: data/datetime.appdata.xml.in:15
 msgid "Fix potential memory leak"
 msgstr ""
 
-#: data/datetime.appdata.xml.in:13 data/datetime.appdata.xml.in:20
-#: data/datetime.appdata.xml.in:26 data/datetime.appdata.xml.in:32
-#: data/datetime.appdata.xml.in:39 data/datetime.appdata.xml.in:44
-#: data/datetime.appdata.xml.in:50 data/datetime.appdata.xml.in:61
+#: data/datetime.appdata.xml.in:17
+msgid "Improvements:"
+msgstr ""
+
+#: data/datetime.appdata.xml.in:19 data/datetime.appdata.xml.in:27
+#: data/datetime.appdata.xml.in:33 data/datetime.appdata.xml.in:39
+#: data/datetime.appdata.xml.in:46 data/datetime.appdata.xml.in:51
+#: data/datetime.appdata.xml.in:57 data/datetime.appdata.xml.in:68
 msgid "Updated translations"
 msgstr "Opdaterede oversættelser"
 
-#: data/datetime.appdata.xml.in:18
+#: data/datetime.appdata.xml.in:25
 msgid "Add multitouch gestures"
 msgstr ""
 
-#: data/datetime.appdata.xml.in:19
+#: data/datetime.appdata.xml.in:26
 msgid "Improve time zone handling"
 msgstr ""
 
-#: data/datetime.appdata.xml.in:25
+#: data/datetime.appdata.xml.in:32
 #, fuzzy
 #| msgid "Fixed issues with large text size"
 msgid "Fix issues with time zones not being recognized"
 msgstr "Rettede problemer med stor tekststørrelse"
 
-#: data/datetime.appdata.xml.in:31
+#: data/datetime.appdata.xml.in:38
 msgid "Improved performance when switching months"
 msgstr "Forbedret ydelse, når der skiftes måneder"
 
-#: data/datetime.appdata.xml.in:37
+#: data/datetime.appdata.xml.in:44
 msgid "Fix missing event dots in the calendar view"
 msgstr "Ret manglende hændelsespunkter i kalendervisningen"
 
-#: data/datetime.appdata.xml.in:38
+#: data/datetime.appdata.xml.in:45
 msgid "Fix event appearance with dark style"
 msgstr "Ret begivenhedsudseende med mørk stil"
 
-#: data/datetime.appdata.xml.in:49
+#: data/datetime.appdata.xml.in:56
 msgid "Fix potential crash when loading events with no start or end time"
 msgstr ""
 "Ret potentielt nedbrud, når der indlæses begivenheder uden start- eller "
 "sluttid"
 
-#: data/datetime.appdata.xml.in:55
+#: data/datetime.appdata.xml.in:62
 msgid "Redesigned the way upcoming events are displayed"
 msgstr "Omdesignet hvorpå kommende begivenheder vises"
 
-#: data/datetime.appdata.xml.in:56
+#: data/datetime.appdata.xml.in:63
 msgid "Fixed issues with large text size"
 msgstr "Rettede problemer med stor tekststørrelse"
 
-#: data/datetime.appdata.xml.in:57
+#: data/datetime.appdata.xml.in:64
 msgid "Show dots on days with events"
 msgstr "Vis prikker på dage med begivenheder"
 
-#: data/datetime.appdata.xml.in:58
+#: data/datetime.appdata.xml.in:65
 msgid "Better handling of recurring events"
 msgstr "Bedre håndtering af tilbagevendende begivenheder"
 
-#: data/datetime.appdata.xml.in:59
+#: data/datetime.appdata.xml.in:66
 msgid "Performance improvements"
 msgstr "Ydelsesforbedringer"
 
-#: data/datetime.appdata.xml.in:60
+#: data/datetime.appdata.xml.in:67
 msgid "Display an error dialog if Calendar fails to open"
 msgstr "Vis en fejldialog, hvis Kalender ikke kan åbnes"
 
-#: data/datetime.appdata.xml.in:70
+#: data/datetime.appdata.xml.in:77
 msgid "elementary, Inc."
 msgstr "elementary, Inc."

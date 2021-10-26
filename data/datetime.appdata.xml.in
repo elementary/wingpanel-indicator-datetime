@@ -11,6 +11,7 @@
       <description>
         <p>Fixes:</p>
         <ul>
+          <li>Update current day when opening</li>
           <li>Fix disappearing dates when changing between dark and light styles</li>
           <li>Fix potential memory leak</li>
         </ul>
