@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: extra\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-10-25 19:39+0000\n"
-"PO-Revision-Date: 2021-08-12 17:52+0000\n"
+"PO-Revision-Date: 2021-10-26 19:19+0000\n"
 "Last-Translator: Nathan <bonnemainsnathan@gmail.com>\n"
 "Language-Team: French <https://l10n.elementary.io/projects/wingpanel/"
 "indicator-datetime-extra/fr/>\n"
@@ -29,7 +29,7 @@ msgstr "L'indicateur de la date et de l'heure"
 
 #: data/datetime.appdata.xml.in:12
 msgid "Fix potential memory leak"
-msgstr ""
+msgstr "Correction d'une fuite de mémoire potentielle"
 
 #: data/datetime.appdata.xml.in:13 data/datetime.appdata.xml.in:20
 #: data/datetime.appdata.xml.in:26 data/datetime.appdata.xml.in:32
