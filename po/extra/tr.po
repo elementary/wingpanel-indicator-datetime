@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: extra\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-10-26 21:41+0000\n"
+"POT-Creation-Date: 2021-10-26 22:32+0000\n"
 "PO-Revision-Date: 2021-07-15 18:28+0000\n"
 "Last-Translator: Özgür Baskin <queeup@zoho.com>\n"
 "Language-Team: Turkish <https://l10n.elementary.io/projects/wingpanel/"
@@ -32,78 +32,82 @@ msgid "Fixes:"
 msgstr ""
 
 #: data/datetime.appdata.xml.in:14
-msgid "Fix disappearing dates when changing between dark and light styles"
+msgid "Update current day when opening"
 msgstr ""
 
 #: data/datetime.appdata.xml.in:15
+msgid "Fix disappearing dates when changing between dark and light styles"
+msgstr ""
+
+#: data/datetime.appdata.xml.in:16
 msgid "Fix potential memory leak"
 msgstr ""
 
-#: data/datetime.appdata.xml.in:17
+#: data/datetime.appdata.xml.in:18
 msgid "Improvements:"
 msgstr ""
 
-#: data/datetime.appdata.xml.in:19 data/datetime.appdata.xml.in:27
-#: data/datetime.appdata.xml.in:33 data/datetime.appdata.xml.in:39
-#: data/datetime.appdata.xml.in:46 data/datetime.appdata.xml.in:51
-#: data/datetime.appdata.xml.in:57 data/datetime.appdata.xml.in:68
+#: data/datetime.appdata.xml.in:20 data/datetime.appdata.xml.in:28
+#: data/datetime.appdata.xml.in:34 data/datetime.appdata.xml.in:40
+#: data/datetime.appdata.xml.in:47 data/datetime.appdata.xml.in:52
+#: data/datetime.appdata.xml.in:58 data/datetime.appdata.xml.in:69
 msgid "Updated translations"
 msgstr "Çeviriler güncellendi"
 
-#: data/datetime.appdata.xml.in:25
+#: data/datetime.appdata.xml.in:26
 msgid "Add multitouch gestures"
 msgstr "Çok noktalı dokunma hareketleri eklendi"
 
-#: data/datetime.appdata.xml.in:26
+#: data/datetime.appdata.xml.in:27
 msgid "Improve time zone handling"
 msgstr "Saat dilimi yönetimi geliştirildi"
 
-#: data/datetime.appdata.xml.in:32
+#: data/datetime.appdata.xml.in:33
 msgid "Fix issues with time zones not being recognized"
 msgstr "Saat dilimlerinin tanınmaması ile ilgili sorunlar giderildi"
 
-#: data/datetime.appdata.xml.in:38
+#: data/datetime.appdata.xml.in:39
 msgid "Improved performance when switching months"
 msgstr "Ayları değiştirirken performans iyileştirildi"
 
-#: data/datetime.appdata.xml.in:44
+#: data/datetime.appdata.xml.in:45
 msgid "Fix missing event dots in the calendar view"
 msgstr "Takvim görünümündeki eksik olan etkinlik noktaları düzeltildi"
 
-#: data/datetime.appdata.xml.in:45
+#: data/datetime.appdata.xml.in:46
 msgid "Fix event appearance with dark style"
 msgstr "Koyu renk temadaki etkinlik görünümünü düzeltildi"
 
-#: data/datetime.appdata.xml.in:56
+#: data/datetime.appdata.xml.in:57
 msgid "Fix potential crash when loading events with no start or end time"
 msgstr ""
 "Başlangıç veya bitiş zamanı olmayan etkinlikleri yüklerken olası çökme "
 "düzeltildi"
 
-#: data/datetime.appdata.xml.in:62
+#: data/datetime.appdata.xml.in:63
 msgid "Redesigned the way upcoming events are displayed"
 msgstr "Yaklaşan etkinliklerin görüntülenme biçimi yeniden tasarlandı"
 
-#: data/datetime.appdata.xml.in:63
+#: data/datetime.appdata.xml.in:64
 msgid "Fixed issues with large text size"
 msgstr "Büyük metin boyutuyla ilgili sorunlar giderildi"
 
-#: data/datetime.appdata.xml.in:64
+#: data/datetime.appdata.xml.in:65
 msgid "Show dots on days with events"
 msgstr "Etkinlik olan günlerde nokta göster"
 
-#: data/datetime.appdata.xml.in:65
+#: data/datetime.appdata.xml.in:66
 msgid "Better handling of recurring events"
 msgstr "Tekrarlanan etkinliklerin yönetimi iyileştirildi"
 
-#: data/datetime.appdata.xml.in:66
+#: data/datetime.appdata.xml.in:67
 msgid "Performance improvements"
 msgstr "Performans iyileştirmeleri"
 
-#: data/datetime.appdata.xml.in:67
+#: data/datetime.appdata.xml.in:68
 msgid "Display an error dialog if Calendar fails to open"
 msgstr "Takvim açılamıyorsa bir hata iletişim kutusu görüntüle"
 
-#: data/datetime.appdata.xml.in:77
+#: data/datetime.appdata.xml.in:78
 msgid "elementary, Inc."
 msgstr "elementary, Inc."
