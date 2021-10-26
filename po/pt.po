@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-07-14 20:37+0000\n"
+"POT-Creation-Date: 2021-10-25 19:39+0000\n"
 "PO-Revision-Date: 2021-06-24 00:23+0000\n"
 "Last-Translator: Hugo Carvalho <hugokarvalho@hotmail.com>\n"
 "Language-Team: Portuguese <https://l10n.elementary.io/projects/wingpanel/"
@@ -15,19 +15,19 @@ msgstr ""
 "X-Generator: Weblate 4.4.2\n"
 "X-Launchpad-Export-Date: 2017-02-19 05:57+0000\n"
 
-#: src/Indicator.vala:56
+#: src/Indicator.vala:59
 msgid "No events this day"
 msgstr "Sem eventos neste dia"
 
-#: src/Indicator.vala:80
+#: src/Indicator.vala:83
 msgid "Date & Time Settings…"
 msgstr "Definições de Data e Hora…"
 
-#: src/Indicator.vala:128
+#: src/Indicator.vala:136
 msgid "During the Day"
 msgstr "Durante o dia"
 
-#: src/Indicator.vala:136
+#: src/Indicator.vala:144
 msgid "All Day"
 msgstr "Todo o dia"
 

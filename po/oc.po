@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-07-14 20:37+0000\n"
+"POT-Creation-Date: 2021-10-25 19:39+0000\n"
 "PO-Revision-Date: 2020-11-09 09:15+0000\n"
 "Last-Translator: Mejans <farga@mejans.fr>\n"
 "Language-Team: Occitan <https://l10n.elementary.io/projects/wingpanel/"
@@ -13,21 +13,21 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
 "X-Generator: Weblate 3.9.1\n"
 
-#: src/Indicator.vala:56
+#: src/Indicator.vala:59
 #, fuzzy
 #| msgid "No Events on This Day"
 msgid "No events this day"
 msgstr "Cap d’eveniment aqueste jorn"
 
-#: src/Indicator.vala:80
+#: src/Indicator.vala:83
 msgid "Date & Time Settings…"
 msgstr "Paramètres de data e d’ora…"
 
-#: src/Indicator.vala:128
+#: src/Indicator.vala:136
 msgid "During the Day"
 msgstr "Pendent la jornada"
 
-#: src/Indicator.vala:136
+#: src/Indicator.vala:144
 msgid "All Day"
 msgstr "Tot lo jorn"
 
