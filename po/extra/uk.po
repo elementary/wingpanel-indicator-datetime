@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: extra\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-10-26 22:32+0000\n"
-"PO-Revision-Date: 2021-10-26 00:09+0000\n"
+"PO-Revision-Date: 2021-10-27 04:30+0000\n"
 "Last-Translator: Ihor Hordiichuk <igor_ck@outlook.com>\n"
 "Language-Team: Ukrainian <https://l10n.elementary.io/projects/wingpanel/"
 "indicator-datetime-extra/uk/>\n"
@@ -30,15 +30,15 @@ msgstr "Індикатор дати і часу"
 
 #: data/datetime.appdata.xml.in:12
 msgid "Fixes:"
-msgstr ""
+msgstr "Виправлення:"
 
 #: data/datetime.appdata.xml.in:14
 msgid "Update current day when opening"
-msgstr ""
+msgstr "Оновлення поточного дня при відкритті"
 
 #: data/datetime.appdata.xml.in:15
 msgid "Fix disappearing dates when changing between dark and light styles"
-msgstr ""
+msgstr "Виправлено зникнення дат при переході між темним і світлим стилями"
 
 #: data/datetime.appdata.xml.in:16
 msgid "Fix potential memory leak"
@@ -46,7 +46,7 @@ msgstr "Виправлено можливий витік пам'яті"
 
 #: data/datetime.appdata.xml.in:18
 msgid "Improvements:"
-msgstr ""
+msgstr "Удосконалення:"
 
 #: data/datetime.appdata.xml.in:20 data/datetime.appdata.xml.in:28
 #: data/datetime.appdata.xml.in:34 data/datetime.appdata.xml.in:40
