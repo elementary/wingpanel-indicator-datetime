@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: extra\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-10-26 21:41+0000\n"
-"PO-Revision-Date: 2021-10-26 00:09+0000\n"
+"POT-Creation-Date: 2021-10-26 22:32+0000\n"
+"PO-Revision-Date: 2021-10-27 04:30+0000\n"
 "Last-Translator: Ihor Hordiichuk <igor_ck@outlook.com>\n"
 "Language-Team: Ukrainian <https://l10n.elementary.io/projects/wingpanel/"
 "indicator-datetime-extra/uk/>\n"
@@ -30,81 +30,85 @@ msgstr "Індикатор дати і часу"
 
 #: data/datetime.appdata.xml.in:12
 msgid "Fixes:"
-msgstr ""
+msgstr "Виправлення:"
 
 #: data/datetime.appdata.xml.in:14
-msgid "Fix disappearing dates when changing between dark and light styles"
-msgstr ""
+msgid "Update current day when opening"
+msgstr "Оновлення поточного дня при відкритті"
 
 #: data/datetime.appdata.xml.in:15
+msgid "Fix disappearing dates when changing between dark and light styles"
+msgstr "Виправлено зникнення дат при переході між темним і світлим стилями"
+
+#: data/datetime.appdata.xml.in:16
 msgid "Fix potential memory leak"
 msgstr "Виправлено можливий витік пам'яті"
 
-#: data/datetime.appdata.xml.in:17
+#: data/datetime.appdata.xml.in:18
 msgid "Improvements:"
-msgstr ""
+msgstr "Удосконалення:"
 
-#: data/datetime.appdata.xml.in:19 data/datetime.appdata.xml.in:27
-#: data/datetime.appdata.xml.in:33 data/datetime.appdata.xml.in:39
-#: data/datetime.appdata.xml.in:46 data/datetime.appdata.xml.in:51
-#: data/datetime.appdata.xml.in:57 data/datetime.appdata.xml.in:68
+#: data/datetime.appdata.xml.in:20 data/datetime.appdata.xml.in:28
+#: data/datetime.appdata.xml.in:34 data/datetime.appdata.xml.in:40
+#: data/datetime.appdata.xml.in:47 data/datetime.appdata.xml.in:52
+#: data/datetime.appdata.xml.in:58 data/datetime.appdata.xml.in:69
 msgid "Updated translations"
 msgstr "Оновлено переклади"
 
-#: data/datetime.appdata.xml.in:25
+#: data/datetime.appdata.xml.in:26
 msgid "Add multitouch gestures"
 msgstr "Додано жести"
 
-#: data/datetime.appdata.xml.in:26
+#: data/datetime.appdata.xml.in:27
 msgid "Improve time zone handling"
 msgstr "Вдосконалено обробку часових поясів"
 
-#: data/datetime.appdata.xml.in:32
+#: data/datetime.appdata.xml.in:33
 msgid "Fix issues with time zones not being recognized"
 msgstr "Усунено ваду не розпізнавання часових поясів"
 
-#: data/datetime.appdata.xml.in:38
+#: data/datetime.appdata.xml.in:39
 msgid "Improved performance when switching months"
 msgstr "Поліпшено плавність гортання місяців"
 
-#: data/datetime.appdata.xml.in:44
+#: data/datetime.appdata.xml.in:45
 msgid "Fix missing event dots in the calendar view"
 msgstr "Виправлено ваду відсутності крапок подій у вікні календаря"
 
-#: data/datetime.appdata.xml.in:45
+#: data/datetime.appdata.xml.in:46
 msgid "Fix event appearance with dark style"
 msgstr "Виправлено зовнішній вигляд події з темним стилем"
 
-#: data/datetime.appdata.xml.in:56
+#: data/datetime.appdata.xml.in:57
 msgid "Fix potential crash when loading events with no start or end time"
 msgstr ""
 "Усунено можливість збоїв під час завантаження подій без часу початку чи "
 "закінчення"
 
-#: data/datetime.appdata.xml.in:62
+#: data/datetime.appdata.xml.in:63
 msgid "Redesigned the way upcoming events are displayed"
 msgstr "Перероблено спосіб показу майбутніх подій"
 
-#: data/datetime.appdata.xml.in:63
+#: data/datetime.appdata.xml.in:64
 msgid "Fixed issues with large text size"
 msgstr "Виправлено проблеми з великим розміром тексту"
 
-#: data/datetime.appdata.xml.in:64
+#: data/datetime.appdata.xml.in:65
 msgid "Show dots on days with events"
 msgstr "Підсвічування днів із подіями крапками"
 
-#: data/datetime.appdata.xml.in:65
+#: data/datetime.appdata.xml.in:66
 msgid "Better handling of recurring events"
 msgstr "Поліпшено роботу з повторюваними подіями"
 
-#: data/datetime.appdata.xml.in:66
+#: data/datetime.appdata.xml.in:67
 msgid "Performance improvements"
 msgstr "Поліпшення швидкодії"
 
-#: data/datetime.appdata.xml.in:67
+#: data/datetime.appdata.xml.in:68
 msgid "Display an error dialog if Calendar fails to open"
 msgstr "Показ діалогового вікна помилки, якщо не вдалося відкрити календар"
 
-#: data/datetime.appdata.xml.in:77
+#: data/datetime.appdata.xml.in:78
 msgid "elementary, Inc."
 msgstr "elementary, Inc."
