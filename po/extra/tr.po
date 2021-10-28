@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: extra\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-10-26 22:32+0000\n"
-"PO-Revision-Date: 2021-07-15 18:28+0000\n"
+"PO-Revision-Date: 2021-10-28 11:26+0000\n"
 "Last-Translator: Özgür Baskin <queeup@zoho.com>\n"
 "Language-Team: Turkish <https://l10n.elementary.io/projects/wingpanel/"
 "indicator-datetime-extra/tr/>\n"
@@ -29,23 +29,23 @@ msgstr "Tarih ve saat göstergesi"
 
 #: data/datetime.appdata.xml.in:12
 msgid "Fixes:"
-msgstr ""
+msgstr "Düzeltmeler:"
 
 #: data/datetime.appdata.xml.in:14
 msgid "Update current day when opening"
-msgstr ""
+msgstr " "
 
 #: data/datetime.appdata.xml.in:15
 msgid "Fix disappearing dates when changing between dark and light styles"
-msgstr ""
+msgstr " "
 
 #: data/datetime.appdata.xml.in:16
 msgid "Fix potential memory leak"
-msgstr ""
+msgstr " "
 
 #: data/datetime.appdata.xml.in:18
 msgid "Improvements:"
-msgstr ""
+msgstr "İyileştirmeler:"
 
 #: data/datetime.appdata.xml.in:20 data/datetime.appdata.xml.in:28
 #: data/datetime.appdata.xml.in:34 data/datetime.appdata.xml.in:40
