@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: extra\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-10-26 22:32+0000\n"
-"PO-Revision-Date: 2021-10-26 00:09+0000\n"
+"PO-Revision-Date: 2021-10-29 21:33+0000\n"
 "Last-Translator: Ryo Nakano <ryonakaknock3@gmail.com>\n"
 "Language-Team: Japanese <https://l10n.elementary.io/projects/wingpanel/"
 "indicator-datetime-extra/ja/>\n"
@@ -29,15 +29,15 @@ msgstr "日付と時刻のインジケーター"
 
 #: data/datetime.appdata.xml.in:12
 msgid "Fixes:"
-msgstr ""
+msgstr "修正点:"
 
 #: data/datetime.appdata.xml.in:14
 msgid "Update current day when opening"
-msgstr ""
+msgstr "ポップオーバーを開いた際に“今日”の日付を更新するようにするように修正"
 
 #: data/datetime.appdata.xml.in:15
 msgid "Fix disappearing dates when changing between dark and light styles"
-msgstr ""
+msgstr "スタイルをダークやライトに切り替えると日付が消える不具合を修正"
 
 #: data/datetime.appdata.xml.in:16
 msgid "Fix potential memory leak"
@@ -45,7 +45,7 @@ msgstr "メモリーリークの可能性がある不具合を修正"
 
 #: data/datetime.appdata.xml.in:18
 msgid "Improvements:"
-msgstr ""
+msgstr "改善点:"
 
 #: data/datetime.appdata.xml.in:20 data/datetime.appdata.xml.in:28
 #: data/datetime.appdata.xml.in:34 data/datetime.appdata.xml.in:40
