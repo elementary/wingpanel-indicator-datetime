@@ -216,7 +216,11 @@ public class DateTime.Widgets.CalendarView : Gtk.Grid {
             carousel.add (right_grid);
             carousel.scroll_to (start_month_grid);
             label.label = calmodel.month_start.format (_("%OB, %Y"));
+
+            position = 1;
+            rel_postion = 0;
         }
+
         carousel.no_show_all = false;
     }
 
