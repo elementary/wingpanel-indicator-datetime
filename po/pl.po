@@ -3,9 +3,9 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-10-26 22:32+0000\n"
-"PO-Revision-Date: 2018-07-26 17:04+0000\n"
-"Last-Translator: Piotr Strebski <strebski@gmail.com>\n"
-"Language-Team: Polish <https://weblate.elementary.io/projects/wingpanel/"
+"PO-Revision-Date: 2021-11-02 09:17+0000\n"
+"Last-Translator: DarkKnightComes <darkknightcomes@gmail.com>\n"
+"Language-Team: Polish <https://l10n.elementary.io/projects/wingpanel/"
 "wingpanel-indicator-datetime/pl/>\n"
 "Language: pl\n"
 "MIME-Version: 1.0\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
 "|| n%100>=20) ? 1 : 2;\n"
-"X-Generator: Weblate 3.0.1\n"
+"X-Generator: Weblate 4.4.2\n"
 "X-Launchpad-Export-Date: 2017-02-19 05:57+0000\n"
 
 #: src/Indicator.vala:59
@@ -26,7 +26,7 @@ msgstr "Ustawienia daty i czasu…"
 
 #: src/Indicator.vala:136
 msgid "During the Day"
-msgstr ""
+msgstr "W trakcie dnia"
 
 #: src/Indicator.vala:144
 msgid "All Day"
@@ -37,7 +37,7 @@ msgstr ""
 #: src/Widgets/calendar/CalendarView.vala:161
 #: src/Widgets/calendar/CalendarView.vala:218
 msgid "%OB, %Y"
-msgstr ""
+msgstr "%OB, %Y"
 
 #: src/Widgets/calendar/CalendarView.vala:54
 msgid "Go to today's date"
@@ -49,7 +49,7 @@ msgstr ""
 
 #: src/Widgets/calendar/CalendarView.vala:233
 msgid "The program \"io.elementary.calendar\" may not be installed"
-msgstr ""
+msgstr "Program \"io.elementary.calendar\" może nie być zainstalowany"
 
 #~ msgid "Date & Time"
 #~ msgstr "Data i czas"
