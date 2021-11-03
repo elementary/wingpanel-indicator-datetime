@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: extra\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-10-26 22:32+0000\n"
-"PO-Revision-Date: 2021-09-27 14:35+0000\n"
+"PO-Revision-Date: 2021-11-03 07:02+0000\n"
 "Last-Translator: Marcin Serwin <marcin.serwin0@protonmail.com>\n"
 "Language-Team: Polish <https://l10n.elementary.io/projects/wingpanel/"
 "indicator-datetime-extra/pl/>\n"
@@ -46,14 +46,14 @@ msgstr ""
 
 #: data/datetime.appdata.xml.in:18
 msgid "Improvements:"
-msgstr ""
+msgstr "Ulepszenia:"
 
 #: data/datetime.appdata.xml.in:20 data/datetime.appdata.xml.in:28
 #: data/datetime.appdata.xml.in:34 data/datetime.appdata.xml.in:40
 #: data/datetime.appdata.xml.in:47 data/datetime.appdata.xml.in:52
 #: data/datetime.appdata.xml.in:58 data/datetime.appdata.xml.in:69
 msgid "Updated translations"
-msgstr ""
+msgstr "Zaktualizowano tłumaczenia"
 
 #: data/datetime.appdata.xml.in:26
 msgid "Add multitouch gestures"
@@ -101,7 +101,7 @@ msgstr ""
 
 #: data/datetime.appdata.xml.in:67
 msgid "Performance improvements"
-msgstr ""
+msgstr "Ulepszenie wydajności"
 
 #: data/datetime.appdata.xml.in:68
 msgid "Display an error dialog if Calendar fails to open"
