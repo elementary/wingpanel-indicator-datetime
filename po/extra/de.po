@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: extra\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-10-26 22:32+0000\n"
-"PO-Revision-Date: 2021-07-21 14:13+0000\n"
+"PO-Revision-Date: 2021-11-05 08:31+0000\n"
 "Last-Translator: supaeasy <ismo+github@wolffson.ch>\n"
 "Language-Team: German <https://l10n.elementary.io/projects/wingpanel/"
 "indicator-datetime-extra/de/>\n"
@@ -29,23 +29,25 @@ msgstr "Die Datums- und Zeitanzeige"
 
 #: data/datetime.appdata.xml.in:12
 msgid "Fixes:"
-msgstr ""
+msgstr "Fehlerbehebungen:"
 
 #: data/datetime.appdata.xml.in:14
 msgid "Update current day when opening"
-msgstr ""
+msgstr "Datum beim Öffnen aktualisieren"
 
 #: data/datetime.appdata.xml.in:15
 msgid "Fix disappearing dates when changing between dark and light styles"
 msgstr ""
+"Behebt einen Fehler, der dazu führte, dass Datumsangaben beim Wechsel "
+"zwischen hellem und dunklen Stil verschwanden"
 
 #: data/datetime.appdata.xml.in:16
 msgid "Fix potential memory leak"
-msgstr ""
+msgstr "Mögliches Speicherleck behoben"
 
 #: data/datetime.appdata.xml.in:18
 msgid "Improvements:"
-msgstr ""
+msgstr "Verbesserungen:"
 
 #: data/datetime.appdata.xml.in:20 data/datetime.appdata.xml.in:28
 #: data/datetime.appdata.xml.in:34 data/datetime.appdata.xml.in:40
