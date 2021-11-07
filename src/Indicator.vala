@@ -107,8 +107,12 @@ public class DateTime.Indicator : Wingpanel.Indicator {
             });
 
             component_listbox.row_activated.connect ((row) => {
-                calendar.show_date_in_maya (((DateTime.ComponentRow) row).date);
-                close ();
+                var component_row = (DateTime.ComponentRow) row;
+
+                if (!(component_row.source_selectable is E.SourceTaskList)) {
+                    calendar.show_date_in_maya (((DateTime.ComponentRow) row).date);
+                    close ();
+                }
             });
 
             settings_button.clicked.connect (() => {
