@@ -232,8 +232,6 @@ public class DateTime.Indicator : Wingpanel.Indicator {
     }
 
     public override void opened () {
-        calendar.show_today ();
-
         var events_model = Widgets.CalendarModel.get_default (ECal.ClientSourceType.EVENTS);
         var tasks_model = Widgets.CalendarModel.get_default (ECal.ClientSourceType.TASKS);
 
@@ -245,6 +243,8 @@ public class DateTime.Indicator : Wingpanel.Indicator {
 
         events_model.components_removed.connect (update_components_model);
         tasks_model.components_removed.connect (update_components_model);
+
+        calendar.refresh ();
     }
 
     public override void closed () {

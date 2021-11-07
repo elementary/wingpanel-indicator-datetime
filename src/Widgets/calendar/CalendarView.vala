@@ -191,12 +191,12 @@ public class DateTime.Widgets.CalendarView : Gtk.Grid {
         return grid;
     }
 
-    public void show_today () {
+    private void show_today (bool refresh = false) {
         showtoday = true;
         var today = Util.strip_time (new GLib.DateTime.now_local ());
         var start = Util.get_start_of_month (today);
         selected_date = today;
-        if (start.equal (start_month)) {
+        if (start.equal (start_month) && !refresh) {
             position -= rel_postion;
             carousel.switch_child (position, carousel.get_animation_duration ());
         } else {
@@ -232,8 +232,12 @@ public class DateTime.Widgets.CalendarView : Gtk.Grid {
             carousel.add (right_grid);
             carousel.scroll_to (start_month_grid);
             label.label = events_model.month_start.format (_("%OB, %Y"));
-            carousel.no_show_all = false;
+
+            position = 1;
+            rel_postion = 0;
         }
+
+        carousel.no_show_all = false;
     }
 
     // TODO: As far as maya supports it use the Dbus Activation feature to run the calendar-app.
@@ -253,5 +257,9 @@ public class DateTime.Widgets.CalendarView : Gtk.Grid {
             dialog.run ();
             dialog.destroy ();
         }
+    }
+
+    public void refresh () {
+        show_today (true);
     }
 }

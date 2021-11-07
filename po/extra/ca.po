@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: extra\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-10-25 19:39+0000\n"
-"PO-Revision-Date: 2021-07-15 18:28+0000\n"
+"POT-Creation-Date: 2021-10-26 22:32+0000\n"
+"PO-Revision-Date: 2021-10-31 13:43+0000\n"
 "Last-Translator: David M <rbndavid@gmail.com>\n"
 "Language-Team: Catalan <https://l10n.elementary.io/projects/wingpanel/"
 "indicator-datetime-extra/ca/>\n"
@@ -28,71 +28,89 @@ msgid "The date and time indicator"
 msgstr "Indicador de la data i l'hora"
 
 #: data/datetime.appdata.xml.in:12
-msgid "Fix potential memory leak"
-msgstr ""
+msgid "Fixes:"
+msgstr "Correccions:"
 
-#: data/datetime.appdata.xml.in:13 data/datetime.appdata.xml.in:20
-#: data/datetime.appdata.xml.in:26 data/datetime.appdata.xml.in:32
-#: data/datetime.appdata.xml.in:39 data/datetime.appdata.xml.in:44
-#: data/datetime.appdata.xml.in:50 data/datetime.appdata.xml.in:61
+#: data/datetime.appdata.xml.in:14
+msgid "Update current day when opening"
+msgstr "Actualitza el dia actual en obrir."
+
+#: data/datetime.appdata.xml.in:15
+msgid "Fix disappearing dates when changing between dark and light styles"
+msgstr ""
+"Correcció de les dates que desapareixen quan es canvia entre estils foscos i "
+"clars"
+
+#: data/datetime.appdata.xml.in:16
+msgid "Fix potential memory leak"
+msgstr "Correcció de la possible fuita de memòria"
+
+#: data/datetime.appdata.xml.in:18
+msgid "Improvements:"
+msgstr "Millores:"
+
+#: data/datetime.appdata.xml.in:20 data/datetime.appdata.xml.in:28
+#: data/datetime.appdata.xml.in:34 data/datetime.appdata.xml.in:40
+#: data/datetime.appdata.xml.in:47 data/datetime.appdata.xml.in:52
+#: data/datetime.appdata.xml.in:58 data/datetime.appdata.xml.in:69
 msgid "Updated translations"
 msgstr "Traduccions actualitzades"
 
-#: data/datetime.appdata.xml.in:18
+#: data/datetime.appdata.xml.in:26
 msgid "Add multitouch gestures"
 msgstr "Afegeix gests multitàctils"
 
-#: data/datetime.appdata.xml.in:19
+#: data/datetime.appdata.xml.in:27
 msgid "Improve time zone handling"
 msgstr "Millora de la gestió de la zona horària"
 
-#: data/datetime.appdata.xml.in:25
+#: data/datetime.appdata.xml.in:33
 msgid "Fix issues with time zones not being recognized"
 msgstr "Correcció de problemes de reconeixement de zones horàries"
 
-#: data/datetime.appdata.xml.in:31
+#: data/datetime.appdata.xml.in:39
 msgid "Improved performance when switching months"
 msgstr "Rendiment millorat en canviar els mesos"
 
-#: data/datetime.appdata.xml.in:37
+#: data/datetime.appdata.xml.in:45
 msgid "Fix missing event dots in the calendar view"
 msgstr ""
 "Correcció dels punts d'esdeveniment que falten a la vista del calendari"
 
-#: data/datetime.appdata.xml.in:38
+#: data/datetime.appdata.xml.in:46
 msgid "Fix event appearance with dark style"
 msgstr "Correcció de l'aparença de l'esdeveniment amb el tema fosc"
 
-#: data/datetime.appdata.xml.in:49
+#: data/datetime.appdata.xml.in:57
 msgid "Fix potential crash when loading events with no start or end time"
 msgstr ""
 "Correcció de la fallada potencial quan es carreguen esdeveniments sense hora "
 "d'inici o de final"
 
-#: data/datetime.appdata.xml.in:55
+#: data/datetime.appdata.xml.in:63
 msgid "Redesigned the way upcoming events are displayed"
 msgstr "Redisseny de la visualització dels esdeveniments futurs"
 
-#: data/datetime.appdata.xml.in:56
+#: data/datetime.appdata.xml.in:64
 msgid "Fixed issues with large text size"
 msgstr "Correcció de la mida grossa del text"
 
-#: data/datetime.appdata.xml.in:57
+#: data/datetime.appdata.xml.in:65
 msgid "Show dots on days with events"
 msgstr "Es mostren punts als dies amb esdeveniments."
 
-#: data/datetime.appdata.xml.in:58
+#: data/datetime.appdata.xml.in:66
 msgid "Better handling of recurring events"
 msgstr "Millor gestió dels esdeveniments recurrents."
 
-#: data/datetime.appdata.xml.in:59
+#: data/datetime.appdata.xml.in:67
 msgid "Performance improvements"
 msgstr "Millores de rendiment"
 
-#: data/datetime.appdata.xml.in:60
+#: data/datetime.appdata.xml.in:68
 msgid "Display an error dialog if Calendar fails to open"
 msgstr "Es mostra un diàleg d'error si el calendari no es pot obrir."
 
-#: data/datetime.appdata.xml.in:70
+#: data/datetime.appdata.xml.in:78
 msgid "elementary, Inc."
 msgstr "elementary, Inc."
