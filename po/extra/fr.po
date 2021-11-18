@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: extra\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-10-26 22:32+0000\n"
+"POT-Creation-Date: 2021-11-18 20:05+0000\n"
 "PO-Revision-Date: 2021-10-27 10:20+0000\n"
 "Last-Translator: Nathan <bonnemainsnathan@gmail.com>\n"
 "Language-Team: French <https://l10n.elementary.io/projects/wingpanel/"
@@ -27,92 +27,93 @@ msgstr "Indicateur de la date et de l'heure"
 msgid "The date and time indicator"
 msgstr "L'indicateur de la date et de l'heure"
 
-#: data/datetime.appdata.xml.in:12
+#: data/datetime.appdata.xml.in:12 data/datetime.appdata.xml.in:25
 msgid "Fixes:"
 msgstr "Corrections :"
 
-#: data/datetime.appdata.xml.in:14
+#: data/datetime.appdata.xml.in:14 data/datetime.appdata.xml.in:27
 msgid "Update current day when opening"
 msgstr "Mise à jour vers le jour courant lors de l'ouverture"
 
-#: data/datetime.appdata.xml.in:15
+#: data/datetime.appdata.xml.in:15 data/datetime.appdata.xml.in:29
+msgid "Fix potential memory leak"
+msgstr "Correction d'une fuite de mémoire potentielle"
+
+#: data/datetime.appdata.xml.in:17 data/datetime.appdata.xml.in:31
+msgid "Improvements:"
+msgstr "Améliorations :"
+
+#: data/datetime.appdata.xml.in:19 data/datetime.appdata.xml.in:33
+#: data/datetime.appdata.xml.in:41 data/datetime.appdata.xml.in:47
+#: data/datetime.appdata.xml.in:53 data/datetime.appdata.xml.in:60
+#: data/datetime.appdata.xml.in:65 data/datetime.appdata.xml.in:71
+#: data/datetime.appdata.xml.in:82
+msgid "Updated translations"
+msgstr "Mise à jour des traductions"
+
+#: data/datetime.appdata.xml.in:28
 msgid "Fix disappearing dates when changing between dark and light styles"
 msgstr ""
 "Correction des dates qui disparaissaient lors du passage entre le thème "
 "sombre et le thème clair"
 
-#: data/datetime.appdata.xml.in:16
-msgid "Fix potential memory leak"
-msgstr "Correction d'une fuite de mémoire potentielle"
-
-#: data/datetime.appdata.xml.in:18
-msgid "Improvements:"
-msgstr "Améliorations :"
-
-#: data/datetime.appdata.xml.in:20 data/datetime.appdata.xml.in:28
-#: data/datetime.appdata.xml.in:34 data/datetime.appdata.xml.in:40
-#: data/datetime.appdata.xml.in:47 data/datetime.appdata.xml.in:52
-#: data/datetime.appdata.xml.in:58 data/datetime.appdata.xml.in:69
-msgid "Updated translations"
-msgstr "Mise à jour des traductions"
-
-#: data/datetime.appdata.xml.in:26
+#: data/datetime.appdata.xml.in:39
 msgid "Add multitouch gestures"
 msgstr "Ajout du multi-touch"
 
-#: data/datetime.appdata.xml.in:27
+#: data/datetime.appdata.xml.in:40
 msgid "Improve time zone handling"
 msgstr "Amélioration de la gestion du fuseau horaire"
 
-#: data/datetime.appdata.xml.in:33
+#: data/datetime.appdata.xml.in:46
 msgid "Fix issues with time zones not being recognized"
 msgstr ""
 "Correction de problèmes avec les fuseaux horaires qui n'étaient pas reconnus"
 
-#: data/datetime.appdata.xml.in:39
+#: data/datetime.appdata.xml.in:52
 msgid "Improved performance when switching months"
 msgstr "Amélioration des performances lors du passage d'un mois à un autre"
 
-#: data/datetime.appdata.xml.in:45
+#: data/datetime.appdata.xml.in:58
 msgid "Fix missing event dots in the calendar view"
 msgstr "Corrections des points d'évènement manquants dans la vue calendrier"
 
-#: data/datetime.appdata.xml.in:46
+#: data/datetime.appdata.xml.in:59
 msgid "Fix event appearance with dark style"
 msgstr "Correction de l'apparence des évènements avec le thème sombre"
 
-#: data/datetime.appdata.xml.in:57
+#: data/datetime.appdata.xml.in:70
 msgid "Fix potential crash when loading events with no start or end time"
 msgstr ""
 "Correction d'un plantage potentiel lors du chargement d'évènements sans date "
 "de début ou de fin"
 
-#: data/datetime.appdata.xml.in:63
+#: data/datetime.appdata.xml.in:76
 msgid "Redesigned the way upcoming events are displayed"
 msgstr "Refonte de la façon dont les évènements à venir sont affichés"
 
-#: data/datetime.appdata.xml.in:64
+#: data/datetime.appdata.xml.in:77
 msgid "Fixed issues with large text size"
 msgstr "Correction de problèmes avec des textes de grande taille"
 
-#: data/datetime.appdata.xml.in:65
+#: data/datetime.appdata.xml.in:78
 msgid "Show dots on days with events"
 msgstr "Affichage de points sur les jours avec des évènements"
 
-#: data/datetime.appdata.xml.in:66
+#: data/datetime.appdata.xml.in:79
 msgid "Better handling of recurring events"
 msgstr "Meilleure gestion des évènements réguliers"
 
-#: data/datetime.appdata.xml.in:67
+#: data/datetime.appdata.xml.in:80
 msgid "Performance improvements"
 msgstr "Améliorations des performances"
 
-#: data/datetime.appdata.xml.in:68
+#: data/datetime.appdata.xml.in:81
 msgid "Display an error dialog if Calendar fails to open"
 msgstr ""
 "Affichage d'une boîte de dialogue d'erreur si l'application Calendrier ne "
 "s'ouvre pas"
 
-#: data/datetime.appdata.xml.in:78
+#: data/datetime.appdata.xml.in:91
 msgid "elementary, Inc."
 msgstr "elementary, Inc."

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: extra\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-10-26 22:32+0000\n"
+"POT-Creation-Date: 2021-11-18 20:05+0000\n"
 "PO-Revision-Date: 2021-10-27 10:20+0000\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: Hebrew <https://l10n.elementary.io/projects/wingpanel/"
@@ -27,85 +27,86 @@ msgstr "מחוון תאריך ושעה"
 msgid "The date and time indicator"
 msgstr "מחוון התאריך והשעה"
 
-#: data/datetime.appdata.xml.in:12
+#: data/datetime.appdata.xml.in:12 data/datetime.appdata.xml.in:25
 msgid "Fixes:"
 msgstr "תיקונים:"
 
-#: data/datetime.appdata.xml.in:14
+#: data/datetime.appdata.xml.in:14 data/datetime.appdata.xml.in:27
 msgid "Update current day when opening"
 msgstr "עדכון היום הנוכחי בעת הפתיחה"
 
-#: data/datetime.appdata.xml.in:15
-msgid "Fix disappearing dates when changing between dark and light styles"
-msgstr "תוקנו התאריכים שנעלמים בעת החלפה בין הסגנון הכהה לבהיר ולהיפך"
-
-#: data/datetime.appdata.xml.in:16
+#: data/datetime.appdata.xml.in:15 data/datetime.appdata.xml.in:29
 msgid "Fix potential memory leak"
 msgstr "תיקון דליפת זיכרון אפשרית"
 
-#: data/datetime.appdata.xml.in:18
+#: data/datetime.appdata.xml.in:17 data/datetime.appdata.xml.in:31
 msgid "Improvements:"
 msgstr "שיפורים:"
 
-#: data/datetime.appdata.xml.in:20 data/datetime.appdata.xml.in:28
-#: data/datetime.appdata.xml.in:34 data/datetime.appdata.xml.in:40
-#: data/datetime.appdata.xml.in:47 data/datetime.appdata.xml.in:52
-#: data/datetime.appdata.xml.in:58 data/datetime.appdata.xml.in:69
+#: data/datetime.appdata.xml.in:19 data/datetime.appdata.xml.in:33
+#: data/datetime.appdata.xml.in:41 data/datetime.appdata.xml.in:47
+#: data/datetime.appdata.xml.in:53 data/datetime.appdata.xml.in:60
+#: data/datetime.appdata.xml.in:65 data/datetime.appdata.xml.in:71
+#: data/datetime.appdata.xml.in:82
 msgid "Updated translations"
 msgstr "התרגומים עודכנו"
 
-#: data/datetime.appdata.xml.in:26
+#: data/datetime.appdata.xml.in:28
+msgid "Fix disappearing dates when changing between dark and light styles"
+msgstr "תוקנו התאריכים שנעלמים בעת החלפה בין הסגנון הכהה לבהיר ולהיפך"
+
+#: data/datetime.appdata.xml.in:39
 msgid "Add multitouch gestures"
 msgstr "נוספה תמיכה במחוות מגע במספר נקודות"
 
-#: data/datetime.appdata.xml.in:27
+#: data/datetime.appdata.xml.in:40
 msgid "Improve time zone handling"
 msgstr "השתפרה התמיכה באזורי זמן"
 
-#: data/datetime.appdata.xml.in:33
+#: data/datetime.appdata.xml.in:46
 msgid "Fix issues with time zones not being recognized"
 msgstr "תוקנו תקלות עם בעיות זיהוי אזור זמן"
 
-#: data/datetime.appdata.xml.in:39
+#: data/datetime.appdata.xml.in:52
 msgid "Improved performance when switching months"
 msgstr "שופרו הביצועים בהחלפת ירחים"
 
-#: data/datetime.appdata.xml.in:45
+#: data/datetime.appdata.xml.in:58
 msgid "Fix missing event dots in the calendar view"
 msgstr "תיקון נקודות אירועים חסרות בתצוגת לוח השנה"
 
-#: data/datetime.appdata.xml.in:46
+#: data/datetime.appdata.xml.in:59
 msgid "Fix event appearance with dark style"
 msgstr "תיקון הופעת אירועים במצב חשוך"
 
-#: data/datetime.appdata.xml.in:57
+#: data/datetime.appdata.xml.in:70
 msgid "Fix potential crash when loading events with no start or end time"
 msgstr "תיקון קריסה אפשרית בעת טעינת אירועים ללא מועד התחלה או סיום"
 
-#: data/datetime.appdata.xml.in:63
+#: data/datetime.appdata.xml.in:76
 msgid "Redesigned the way upcoming events are displayed"
 msgstr "הדרך באה אירועים קרבים מופיעים עוצבה מחדש"
 
-#: data/datetime.appdata.xml.in:64
+#: data/datetime.appdata.xml.in:77
 msgid "Fixed issues with large text size"
 msgstr "תוקנו תקלות עם גודל גופן גדול"
 
-#: data/datetime.appdata.xml.in:65
+#: data/datetime.appdata.xml.in:78
 msgid "Show dots on days with events"
 msgstr "מוצגות נקודות בימים עם אירועים"
 
-#: data/datetime.appdata.xml.in:66
+#: data/datetime.appdata.xml.in:79
 msgid "Better handling of recurring events"
 msgstr "טיפול משופר באירועים מחזוריים"
 
-#: data/datetime.appdata.xml.in:67
+#: data/datetime.appdata.xml.in:80
 msgid "Performance improvements"
 msgstr "שיפורי ביצועים"
 
-#: data/datetime.appdata.xml.in:68
+#: data/datetime.appdata.xml.in:81
 msgid "Display an error dialog if Calendar fails to open"
 msgstr "הצגת תיבת שגיאה אם פתיחת לוח השנה נכשלת"
 
-#: data/datetime.appdata.xml.in:78
+#: data/datetime.appdata.xml.in:91
 msgid "elementary, Inc."
 msgstr "elementary בע״מ"
