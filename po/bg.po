@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-10-26 22:32+0000\n"
+"POT-Creation-Date: 2021-11-18 20:05+0000\n"
 "PO-Revision-Date: 2017-04-10 18:42+0000\n"
 "Last-Translator: Boris Bongalov <b.bongalov@gmail.com>\n"
 "Language-Team: Bulgarian <https://l10n.elementary.io/projects/wingpanel/"
@@ -42,11 +42,11 @@ msgstr ""
 msgid "Go to today's date"
 msgstr ""
 
-#: src/Widgets/calendar/CalendarView.vala:232
+#: src/Widgets/calendar/CalendarView.vala:236
 msgid "Unable To Launch Calendar"
 msgstr ""
 
-#: src/Widgets/calendar/CalendarView.vala:233
+#: src/Widgets/calendar/CalendarView.vala:237
 msgid "The program \"io.elementary.calendar\" may not be installed"
 msgstr ""
 
