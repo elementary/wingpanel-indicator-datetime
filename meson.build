@@ -53,7 +53,7 @@ shared_module(
     'src/DateIterator.vala',
     'src/DateRange.vala',
     'src/Indicator.vala',
-    'src/Widgets/EventRow.vala',
+    'src/Widgets/ComponentRow.vala',
     'src/Widgets/PanelLabel.vala',
     'src/Widgets/calendar/CalendarModel.vala',
     'src/Widgets/calendar/CalendarView.vala',
