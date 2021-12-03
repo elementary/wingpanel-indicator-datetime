@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: extra\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-18 20:05+0000\n"
-"PO-Revision-Date: 2021-08-20 01:13+0000\n"
+"POT-Creation-Date: 2021-12-03 18:47+0000\n"
+"PO-Revision-Date: 2021-11-30 20:22+0000\n"
 "Last-Translator: JohnDumpling <john_dumpling@protonmail.com>\n"
 "Language-Team: Slovak <https://l10n.elementary.io/projects/wingpanel/"
 "indicator-datetime-extra/sk/>\n"
@@ -29,19 +29,19 @@ msgstr "Indikátor dátumu a času"
 
 #: data/datetime.appdata.xml.in:12 data/datetime.appdata.xml.in:25
 msgid "Fixes:"
-msgstr ""
+msgstr "Opravy:"
 
 #: data/datetime.appdata.xml.in:14 data/datetime.appdata.xml.in:27
 msgid "Update current day when opening"
-msgstr ""
+msgstr "Aktualizovať aktuálny deň pri otvorení"
 
 #: data/datetime.appdata.xml.in:15 data/datetime.appdata.xml.in:29
 msgid "Fix potential memory leak"
-msgstr ""
+msgstr "Opravený potenciálny únik pamäte"
 
 #: data/datetime.appdata.xml.in:17 data/datetime.appdata.xml.in:31
 msgid "Improvements:"
-msgstr ""
+msgstr "Vylepšenia:"
 
 #: data/datetime.appdata.xml.in:19 data/datetime.appdata.xml.in:33
 #: data/datetime.appdata.xml.in:41 data/datetime.appdata.xml.in:47
@@ -53,7 +53,7 @@ msgstr "Aktualizované preklady"
 
 #: data/datetime.appdata.xml.in:28
 msgid "Fix disappearing dates when changing between dark and light styles"
-msgstr ""
+msgstr "Opravené miznúce dátumy po zmene medzi tmavým a svetlým štýlom"
 
 #: data/datetime.appdata.xml.in:39
 msgid "Add multitouch gestures"

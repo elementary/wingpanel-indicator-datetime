@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-18 20:05+0000\n"
+"POT-Creation-Date: 2021-12-03 18:47+0000\n"
 "PO-Revision-Date: 2019-09-07 10:22+0000\n"
 "Last-Translator: Daniel <riesp@protonmail.com>\n"
 "Language-Team: Galician <https://l10n.elementary.io/projects/wingpanel/"
@@ -25,30 +25,42 @@ msgstr "Non hai eventos neste día"
 msgid "Date & Time Settings…"
 msgstr "Configuración de data e hora …"
 
-#: src/Indicator.vala:136
+#: src/Indicator.vala:121
+#, fuzzy
+#| msgid "Unable To Launch Calendar"
+msgid "Unable To launch Tasks"
+msgstr "Non se pode iniciar o calendario"
+
+#: src/Indicator.vala:122
+#, fuzzy
+#| msgid "The program \"io.elementary.calendar\" may not be installed"
+msgid "The program \"io.elementary.tasks\" may not be installed"
+msgstr "O programa \"io. elementary. calendar\" pode non estar instalado"
+
+#: src/Indicator.vala:155
 msgid "During the Day"
 msgstr "Durante o día"
 
-#: src/Indicator.vala:144
+#: src/Indicator.vala:163
 msgid "All Day"
 msgstr "Todo o día"
 
-#: src/Widgets/calendar/CalendarView.vala:38
-#: src/Widgets/calendar/CalendarView.vala:132
-#: src/Widgets/calendar/CalendarView.vala:161
-#: src/Widgets/calendar/CalendarView.vala:218
+#: src/Widgets/calendar/CalendarView.vala:39
+#: src/Widgets/calendar/CalendarView.vala:138
+#: src/Widgets/calendar/CalendarView.vala:173
+#: src/Widgets/calendar/CalendarView.vala:234
 msgid "%OB, %Y"
 msgstr "%OB, %Y"
 
-#: src/Widgets/calendar/CalendarView.vala:54
+#: src/Widgets/calendar/CalendarView.vala:55
 msgid "Go to today's date"
 msgstr "Ir á data de hoxe"
 
-#: src/Widgets/calendar/CalendarView.vala:236
+#: src/Widgets/calendar/CalendarView.vala:252
 msgid "Unable To Launch Calendar"
 msgstr "Non se pode iniciar o calendario"
 
-#: src/Widgets/calendar/CalendarView.vala:237
+#: src/Widgets/calendar/CalendarView.vala:253
 msgid "The program \"io.elementary.calendar\" may not be installed"
 msgstr "O programa \"io. elementary. calendar\" pode non estar instalado"
 

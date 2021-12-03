@@ -28,7 +28,8 @@ public class DateTime.Widgets.CalendarView : Gtk.Grid {
     private Hdy.Carousel carousel;
     private uint position;
     private int rel_postion;
-    private CalendarModel calmodel;
+    private CalendarModel events_model;
+    private CalendarModel tasks_model;
     private GLib.DateTime start_month;
     private DateTime.Widgets.Grid start_month_grid;
     private Gtk.Label label;
@@ -63,23 +64,27 @@ public class DateTime.Widgets.CalendarView : Gtk.Grid {
         box_buttons.add (center_button);
         box_buttons.add (right_button);
 
-        calmodel = CalendarModel.get_default ();
+        events_model = CalendarModel.get_default (ECal.ClientSourceType.EVENTS);
+        tasks_model = CalendarModel.get_default (ECal.ClientSourceType.TASKS);
         start_month = Util.get_start_of_month ();
 
         start_month_grid = create_grid ();
-        start_month_grid.set_range (calmodel.data_range, calmodel.month_start);
-        start_month_grid.update_weeks (calmodel.data_range.first_dt, calmodel.num_weeks);
+        start_month_grid.set_range (events_model.data_range, events_model.month_start);
+        start_month_grid.update_weeks (events_model.data_range.first_dt, events_model.num_weeks);
 
-        calmodel.change_month (-1);
+        events_model.change_month (-1);
+        tasks_model.change_month (-1);
         var left_grid = create_grid ();
-        left_grid.set_range (calmodel.data_range, calmodel.month_start);
-        left_grid.update_weeks (calmodel.data_range.first_dt, calmodel.num_weeks);
+        left_grid.set_range (events_model.data_range, events_model.month_start);
+        left_grid.update_weeks (events_model.data_range.first_dt, events_model.num_weeks);
 
-        calmodel.change_month (2);
+        events_model.change_month (2);
+        tasks_model.change_month (2);
         var right_grid = create_grid ();
-        right_grid.set_range (calmodel.data_range, calmodel.month_start);
-        right_grid.update_weeks (calmodel.data_range.first_dt, calmodel.num_weeks);
-        calmodel.change_month (-1);
+        right_grid.set_range (events_model.data_range, events_model.month_start);
+        right_grid.update_weeks (events_model.data_range.first_dt, events_model.num_weeks);
+        events_model.change_month (-1);
+        tasks_model.change_month (-1);
 
         carousel = new Hdy.Carousel () {
             interactive = true,
@@ -118,7 +123,8 @@ public class DateTime.Widgets.CalendarView : Gtk.Grid {
         });
 
         carousel.page_changed.connect ((index) => {
-            calmodel.change_month (-rel_postion);
+            events_model.change_month (-rel_postion);
+            tasks_model.change_month (-rel_postion);
             if (position > index) {
                 rel_postion--;
                 position--;
@@ -129,36 +135,42 @@ public class DateTime.Widgets.CalendarView : Gtk.Grid {
                 showtoday = false;
                 rel_postion = 0;
                 position = (int) carousel.get_position ();
-                label.label = calmodel.month_start.format (_("%OB, %Y"));
+                label.label = events_model.month_start.format (_("%OB, %Y"));
                 start_month_grid.set_focus_to_today ();
                 return;
             } else {
-                calmodel.change_month (rel_postion);
+                events_model.change_month (rel_postion);
+                tasks_model.change_month (rel_postion);
                 return;
             }
-            calmodel.change_month (rel_postion);
+            events_model.change_month (rel_postion);
+            tasks_model.change_month (rel_postion);
             selected_date = null;
             selection_changed (selected_date);
 
             /* creates a new Grid, when the Hdy.Carousel is on it's first/last page*/
             if (index + 1 == (int) carousel.get_n_pages ()) {
-                calmodel.change_month (1);
+                events_model.change_month (1);
+                tasks_model.change_month (1);
                 var grid = create_grid ();
-                grid.set_range (calmodel.data_range, calmodel.month_start);
-                grid.update_weeks (calmodel.data_range.first_dt, calmodel.num_weeks);
+                grid.set_range (events_model.data_range, events_model.month_start);
+                grid.update_weeks (events_model.data_range.first_dt, events_model.num_weeks);
                 carousel.add (grid);
-                calmodel.change_month (-1);
+                events_model.change_month (-1);
+                tasks_model.change_month (-1);
 
             } else if (index == 0) {
-                calmodel.change_month (-1);
+                events_model.change_month (-1);
+                tasks_model.change_month (-1);
                 var grid = create_grid ();
-                grid.set_range (calmodel.data_range, calmodel.month_start);
-                grid.update_weeks (calmodel.data_range.first_dt, calmodel.num_weeks);
+                grid.set_range (events_model.data_range, events_model.month_start);
+                grid.update_weeks (events_model.data_range.first_dt, events_model.num_weeks);
                 carousel.prepend (grid);
-                calmodel.change_month (1);
+                events_model.change_month (1);
+                tasks_model.change_month (1);
                 position++;
             }
-            label.label = calmodel.month_start.format (_("%OB, %Y"));
+            label.label = events_model.month_start.format (_("%OB, %Y"));
         });
     }
 
@@ -195,27 +207,31 @@ public class DateTime.Widgets.CalendarView : Gtk.Grid {
             }
 
             start_month = Util.get_start_of_month ();
-            calmodel.month_start = start_month;
+            events_model.month_start = start_month;
+            tasks_model.month_start = start_month;
             start_month_grid = create_grid ();
-            start_month_grid.set_range (calmodel.data_range, calmodel.month_start);
-            start_month_grid.update_weeks (calmodel.data_range.first_dt, calmodel.num_weeks);
+            start_month_grid.set_range (events_model.data_range, events_model.month_start);
+            start_month_grid.update_weeks (events_model.data_range.first_dt, events_model.num_weeks);
 
-            calmodel.change_month (-1);
+            events_model.change_month (-1);
+            tasks_model.change_month (-1);
             var left_grid = create_grid ();
-            left_grid.set_range (calmodel.data_range, calmodel.month_start);
-            left_grid.update_weeks (calmodel.data_range.first_dt, calmodel.num_weeks);
+            left_grid.set_range (events_model.data_range, events_model.month_start);
+            left_grid.update_weeks (events_model.data_range.first_dt, events_model.num_weeks);
 
-            calmodel.change_month (2);
+            events_model.change_month (2);
+            tasks_model.change_month (2);
             var right_grid = create_grid ();
-            right_grid.set_range (calmodel.data_range, calmodel.month_start);
-            right_grid.update_weeks (calmodel.data_range.first_dt, calmodel.num_weeks);
-            calmodel.change_month (-1);
+            right_grid.set_range (events_model.data_range, events_model.month_start);
+            right_grid.update_weeks (events_model.data_range.first_dt, events_model.num_weeks);
+            events_model.change_month (-1);
+            tasks_model.change_month (-1);
 
             carousel.add (left_grid);
             carousel.add (start_month_grid);
             carousel.add (right_grid);
             carousel.scroll_to (start_month_grid);
-            label.label = calmodel.month_start.format (_("%OB, %Y"));
+            label.label = events_model.month_start.format (_("%OB, %Y"));
 
             position = 1;
             rel_postion = 0;

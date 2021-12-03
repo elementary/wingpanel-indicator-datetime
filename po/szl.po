@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-18 20:05+0000\n"
+"POT-Creation-Date: 2021-12-03 18:47+0000\n"
 "PO-Revision-Date: 2020-02-23 00:08+0000\n"
 "Last-Translator: gkkulik <g.kulik@o2.pl>\n"
 "Language-Team: Silesian <https://l10n.elementary.io/projects/wingpanel/"
@@ -24,30 +24,42 @@ msgstr "Żodnych zdarzyń w tyn dziyń"
 msgid "Date & Time Settings…"
 msgstr "Sztelōnki daty i godziny…"
 
-#: src/Indicator.vala:136
+#: src/Indicator.vala:121
+#, fuzzy
+#| msgid "Unable To Launch Calendar"
+msgid "Unable To launch Tasks"
+msgstr "Niy idzie ôtworzić Kalyndorza"
+
+#: src/Indicator.vala:122
+#, fuzzy
+#| msgid "The program \"io.elementary.calendar\" may not be installed"
+msgid "The program \"io.elementary.tasks\" may not be installed"
+msgstr "Program „io.elementary.calendar” może niy być zainstalowany"
+
+#: src/Indicator.vala:155
 msgid "During the Day"
 msgstr "W czasie dnia"
 
-#: src/Indicator.vala:144
+#: src/Indicator.vala:163
 msgid "All Day"
 msgstr "Cołki dziyń"
 
-#: src/Widgets/calendar/CalendarView.vala:38
-#: src/Widgets/calendar/CalendarView.vala:132
-#: src/Widgets/calendar/CalendarView.vala:161
-#: src/Widgets/calendar/CalendarView.vala:218
+#: src/Widgets/calendar/CalendarView.vala:39
+#: src/Widgets/calendar/CalendarView.vala:138
+#: src/Widgets/calendar/CalendarView.vala:173
+#: src/Widgets/calendar/CalendarView.vala:234
 msgid "%OB, %Y"
 msgstr "%OB, %Y"
 
-#: src/Widgets/calendar/CalendarView.vala:54
+#: src/Widgets/calendar/CalendarView.vala:55
 msgid "Go to today's date"
 msgstr "Przejdź do dzisiyjszego dnia"
 
-#: src/Widgets/calendar/CalendarView.vala:236
+#: src/Widgets/calendar/CalendarView.vala:252
 msgid "Unable To Launch Calendar"
 msgstr "Niy idzie ôtworzić Kalyndorza"
 
-#: src/Widgets/calendar/CalendarView.vala:237
+#: src/Widgets/calendar/CalendarView.vala:253
 msgid "The program \"io.elementary.calendar\" may not be installed"
 msgstr "Program „io.elementary.calendar” może niy być zainstalowany"
 

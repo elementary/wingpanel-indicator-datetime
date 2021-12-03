@@ -17,10 +17,10 @@
  * Boston, MA 02110-1301 USA.
  */
 
-public class DateTime.EventRow : Gtk.ListBoxRow {
+public class DateTime.ComponentRow : Gtk.ListBoxRow {
     public GLib.DateTime date { get; construct; }
     public unowned ICal.Component component { get; construct; }
-    public unowned E.SourceCalendar cal { get; construct; }
+    public unowned E.SourceSelectable source_selectable { get; construct; }
 
     public GLib.DateTime start_time { get; private set; }
     public GLib.DateTime? end_time { get; private set; }
@@ -30,15 +30,23 @@ public class DateTime.EventRow : Gtk.ListBoxRow {
     private static Gtk.CssProvider css_provider;
 
     private Gtk.Grid grid;
-    private Gtk.Image event_image;
+    private Gtk.Image component_image;
     private Gtk.Label name_label;
     private Gtk.Label time_label;
 
-    public EventRow (GLib.DateTime date, ICal.Component component, E.Source source) {
+    public ComponentRow (GLib.DateTime date, ICal.Component component, E.Source source) {
+        unowned E.SourceSelectable? source_selectable = null;
+
+        if (source.has_extension (E.SOURCE_EXTENSION_TASK_LIST)) {
+            source_selectable = (E.SourceSelectable?) source.get_extension (E.SOURCE_EXTENSION_TASK_LIST);
+        } else {
+            source_selectable = (E.SourceSelectable?) source.get_extension (E.SOURCE_EXTENSION_CALENDAR);
+        }
+
         Object (
             component: component,
             date: date,
-            cal: (E.SourceCalendar?) source.get_extension (E.SOURCE_EXTENSION_CALENDAR)
+            source_selectable: source_selectable
         );
     }
 
@@ -58,28 +66,32 @@ public class DateTime.EventRow : Gtk.ListBoxRow {
             start_time = Util.ical_to_date_time (dt_start).to_local ();
         }
 
-        var dt_end = component.get_dtend ();
-        if (dt_end.is_date ()) {
-            // Don't convert timezone for date with only day info, leave it at midnight UTC
-            end_time = Util.ical_to_date_time (dt_end);
-        } else {
-            end_time = Util.ical_to_date_time (dt_end).to_local ();
-        }
+        if (!(source_selectable is E.SourceTaskList)) {
+            var dt_end = component.get_dtend ();
+            if (dt_end.is_date ()) {
+                // Don't convert timezone for date with only day info, leave it at midnight UTC
+                end_time = Util.ical_to_date_time (dt_end);
+            } else {
+                end_time = Util.ical_to_date_time (dt_end).to_local ();
+            }
 
-        if (end_time != null && Util.is_the_all_day (start_time, end_time)) {
-            is_allday = true;
+            if (end_time != null && Util.is_the_all_day (start_time, end_time)) {
+                is_allday = true;
+            }
         }
 
         unowned string icon_name = "office-calendar-symbolic";
-        if (end_time == null) {
+        if (source_selectable is E.SourceTaskList) {
+            icon_name = "office-task-symbolic";
+        } else if (end_time == null) {
             icon_name = "alarm-symbolic";
         }
 
-        event_image = new Gtk.Image.from_icon_name (icon_name, Gtk.IconSize.MENU);
-        event_image.valign = Gtk.Align.START;
+        component_image = new Gtk.Image.from_icon_name (icon_name, Gtk.IconSize.MENU);
+        component_image.valign = Gtk.Align.START;
 
-        unowned Gtk.StyleContext event_image_context = event_image.get_style_context ();
-        event_image_context.add_provider (css_provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
+        unowned Gtk.StyleContext component_image_context = component_image.get_style_context ();
+        component_image_context.add_provider (css_provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
 
         name_label = new Gtk.Label (component.get_summary ());
         name_label.hexpand = true;
@@ -103,7 +115,7 @@ public class DateTime.EventRow : Gtk.ListBoxRow {
         grid.column_spacing = 6;
         grid.margin = 3;
         grid.margin_start = grid.margin_end = 6;
-        grid.attach (event_image, 0, 0);
+        grid.attach (component_image, 0, 0);
         grid.attach (name_label, 1, 0);
         if (!is_allday) {
             grid.attach (time_label, 1, 1);
@@ -116,7 +128,7 @@ public class DateTime.EventRow : Gtk.ListBoxRow {
         add (grid);
 
         set_color ();
-        cal.notify["color"].connect (set_color);
+        source_selectable.notify["color"].connect (set_color);
 
         update_timelabel ();
         time_manager.notify["is-12h"].connect (update_timelabel);
@@ -124,13 +136,17 @@ public class DateTime.EventRow : Gtk.ListBoxRow {
 
     private void update_timelabel () {
         var time_format = Granite.DateTime.get_default_time_format (time_manager.is_12h);
-        time_label.label = "<small>%s – %s</small>".printf (start_time.format (time_format), end_time.format (time_format));
+        if (source_selectable is E.SourceTaskList) {
+            time_label.label = "<small>Due by %s</small>".printf (start_time.format (time_format));
+        } else {
+            time_label.label = "<small>%s – %s</small>".printf (start_time.format (time_format), end_time.format (time_format));
+        }
     }
 
     private void set_color () {
-        Util.set_event_calendar_color (cal, grid);
-        Util.set_event_calendar_color (cal, event_image);
-        Util.set_event_calendar_color (cal, name_label);
-        Util.set_event_calendar_color (cal, time_label);
+        Util.set_component_calendar_color (source_selectable, grid);
+        Util.set_component_calendar_color (source_selectable, component_image);
+        Util.set_component_calendar_color (source_selectable, name_label);
+        Util.set_component_calendar_color (source_selectable, time_label);
     }
 }
