@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-12-03 18:47+0000\n"
-"PO-Revision-Date: 2021-06-23 20:10+0000\n"
+"PO-Revision-Date: 2021-12-03 22:02+0000\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: Hebrew <https://l10n.elementary.io/projects/wingpanel/"
 "wingpanel-indicator-datetime/he/>\n"
@@ -25,16 +25,12 @@ msgid "Date & Time Settings…"
 msgstr "הגדרות תאריך ושעה…"
 
 #: src/Indicator.vala:121
-#, fuzzy
-#| msgid "Unable To Launch Calendar"
 msgid "Unable To launch Tasks"
-msgstr "לא ניתן לטעון את לוח השנה"
+msgstr "לא ניתן לטעון משימות"
 
 #: src/Indicator.vala:122
-#, fuzzy
-#| msgid "The program \"io.elementary.calendar\" may not be installed"
 msgid "The program \"io.elementary.tasks\" may not be installed"
-msgstr "יתכן כי התכנית „io.elementary.calendar” לא מותקנת"
+msgstr "יתכן כי התכנית „io.elementary.tasks” לא מותקנת"
 
 #: src/Indicator.vala:155
 msgid "During the Day"
