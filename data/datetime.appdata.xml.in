@@ -7,6 +7,18 @@
   <summary>The date and time indicator</summary>
   <icon type="stock">preferences-system-time</icon>
   <releases>
+    <release version="2.4.0" date="2021-12-03" urgency="medium">
+      <description>
+        <p>New Features:</p>
+        <ul>
+          <li>Open Calendar on middle-click</li>
+        </ul>
+        <p>Improvements:</p>
+        <ul>
+          <li>Updated translations</li>
+        </ul>
+      </description>
+    </release>
     <release version="2.3.2" date="2021-11-18" urgency="medium">
       <description>
         <p>Fixes:</p>
