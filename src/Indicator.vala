@@ -109,8 +109,23 @@ public class DateTime.Indicator : Wingpanel.Indicator {
             component_listbox.row_activated.connect ((row) => {
                 var component_row = (DateTime.ComponentRow) row;
 
-                if (!(component_row.source_selectable is E.SourceTaskList)) {
+                if (component_row.source_selectable is E.SourceCalendar) {
                     calendar.show_date_in_maya (((DateTime.ComponentRow) row).date);
+                    close ();
+                } else if (component_row.source_selectable is E.SourceTaskList) {
+                    var appinfo = new DesktopAppInfo ("io.elementary.tasks.desktop");
+                    try {
+                        appinfo.launch (null, null);
+                    } catch (Error e) {
+                        var dialog = new Granite.MessageDialog.with_image_from_icon_name (
+                            _("Unable To launch Tasks"),
+                            _("The program \"io.elementary.tasks\" may not be installed"),
+                            "dialog-error"
+                        );
+                        dialog.show_error_details (e.message);
+                        dialog.run ();
+                        dialog.destroy ();
+                    }
                     close ();
                 }
             });
