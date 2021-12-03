@@ -43,6 +43,10 @@ public class DateTime.Indicator : Wingpanel.Indicator {
         visible = true;
     }
 
+    ~Indicator () {
+        ICal.Object.free_global_objects ();
+    }
+
     public override Gtk.Widget get_display_widget () {
         if (panel_label == null) {
             panel_label = new Widgets.PanelLabel ();
