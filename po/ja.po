@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-12-03 18:47+0000\n"
-"PO-Revision-Date: 2021-06-24 12:02+0000\n"
+"PO-Revision-Date: 2021-12-04 04:35+0000\n"
 "Last-Translator: Ryo Nakano <ryonakaknock3@gmail.com>\n"
 "Language-Team: Japanese <https://l10n.elementary.io/projects/wingpanel/"
 "wingpanel-indicator-datetime/ja/>\n"
@@ -24,18 +24,12 @@ msgid "Date & Time Settings…"
 msgstr "日付と時刻の設定…"
 
 #: src/Indicator.vala:121
-#, fuzzy
-#| msgid "Unable To Launch Calendar"
 msgid "Unable To launch Tasks"
-msgstr "カレンダーを起動できません"
+msgstr "“タスク”を起動できません"
 
 #: src/Indicator.vala:122
-#, fuzzy
-#| msgid "The program \"io.elementary.calendar\" may not be installed"
 msgid "The program \"io.elementary.tasks\" may not be installed"
-msgstr ""
-"プログラム \"io.elementary.calendar\" がインストールされていない可能性があり"
-"ます"
+msgstr "プログラム \"io.elementary.tasks\" がインストールされていない可能性があります"
 
 #: src/Indicator.vala:155
 msgid "During the Day"
@@ -58,7 +52,7 @@ msgstr "今日の日付に移動"
 
 #: src/Widgets/calendar/CalendarView.vala:252
 msgid "Unable To Launch Calendar"
-msgstr "カレンダーを起動できません"
+msgstr "“カレンダー”を起動できません"
 
 #: src/Widgets/calendar/CalendarView.vala:253
 msgid "The program \"io.elementary.calendar\" may not be installed"
