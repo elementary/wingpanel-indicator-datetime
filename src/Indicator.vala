@@ -45,7 +45,9 @@ public class DateTime.Indicator : Wingpanel.Indicator {
 
     public override Gtk.Widget get_display_widget () {
         if (panel_label == null) {
-            panel_label = new Widgets.PanelLabel ();
+            panel_label = new Widgets.PanelLabel () {
+                tooltip_markup = Granite.TOOLTIP_SECONDARY_TEXT_MARKUP.printf (_("Middle-click to open Calendar"))
+            };
 
             panel_label.button_press_event.connect ((e) => {
                 if (e.button == Gdk.BUTTON_MIDDLE) {
