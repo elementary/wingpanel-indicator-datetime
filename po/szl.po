@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-12-03 18:47+0000\n"
+"POT-Creation-Date: 2021-12-08 20:35+0000\n"
 "PO-Revision-Date: 2020-02-23 00:08+0000\n"
 "Last-Translator: gkkulik <g.kulik@o2.pl>\n"
 "Language-Team: Silesian <https://l10n.elementary.io/projects/wingpanel/"
@@ -14,33 +14,45 @@ msgstr ""
 "|| n%100>=20) ? 1 : 2;\n"
 "X-Generator: Weblate 3.9.1\n"
 
-#: src/Indicator.vala:59
+#: src/Indicator.vala:53
+msgid "Middle-click to open Calendar"
+msgstr ""
+
+#: src/Indicator.vala:64 src/Widgets/calendar/CalendarView.vala:252
+msgid "Unable To Launch Calendar"
+msgstr "Niy idzie ôtworzić Kalyndorza"
+
+#: src/Indicator.vala:65 src/Widgets/calendar/CalendarView.vala:253
+msgid "The program \"io.elementary.calendar\" may not be installed"
+msgstr "Program „io.elementary.calendar” może niy być zainstalowany"
+
+#: src/Indicator.vala:87
 #, fuzzy
 #| msgid "No Events on This Day"
 msgid "No events this day"
 msgstr "Żodnych zdarzyń w tyn dziyń"
 
-#: src/Indicator.vala:83
+#: src/Indicator.vala:111
 msgid "Date & Time Settings…"
 msgstr "Sztelōnki daty i godziny…"
 
-#: src/Indicator.vala:121
+#: src/Indicator.vala:149
 #, fuzzy
 #| msgid "Unable To Launch Calendar"
 msgid "Unable To launch Tasks"
 msgstr "Niy idzie ôtworzić Kalyndorza"
 
-#: src/Indicator.vala:122
+#: src/Indicator.vala:150
 #, fuzzy
 #| msgid "The program \"io.elementary.calendar\" may not be installed"
 msgid "The program \"io.elementary.tasks\" may not be installed"
 msgstr "Program „io.elementary.calendar” może niy być zainstalowany"
 
-#: src/Indicator.vala:155
+#: src/Indicator.vala:183
 msgid "During the Day"
 msgstr "W czasie dnia"
 
-#: src/Indicator.vala:163
+#: src/Indicator.vala:191
 msgid "All Day"
 msgstr "Cołki dziyń"
 
@@ -54,14 +66,6 @@ msgstr "%OB, %Y"
 #: src/Widgets/calendar/CalendarView.vala:55
 msgid "Go to today's date"
 msgstr "Przejdź do dzisiyjszego dnia"
-
-#: src/Widgets/calendar/CalendarView.vala:252
-msgid "Unable To Launch Calendar"
-msgstr "Niy idzie ôtworzić Kalyndorza"
-
-#: src/Widgets/calendar/CalendarView.vala:253
-msgid "The program \"io.elementary.calendar\" may not be installed"
-msgstr "Program „io.elementary.calendar” może niy być zainstalowany"
 
 #~ msgid "Date & Time"
 #~ msgstr "Data i czas"

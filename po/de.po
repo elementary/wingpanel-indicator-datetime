@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-12-03 18:47+0000\n"
+"POT-Creation-Date: 2021-12-08 20:35+0000\n"
 "PO-Revision-Date: 2021-12-04 14:24+0000\n"
 "Last-Translator: Uwe S <saabisto@gmx.de>\n"
 "Language-Team: German <https://l10n.elementary.io/projects/wingpanel/"
@@ -15,27 +15,41 @@ msgstr ""
 "X-Generator: Weblate 4.4.2\n"
 "X-Launchpad-Export-Date: 2017-02-19 05:57+0000\n"
 
-#: src/Indicator.vala:59
+#: src/Indicator.vala:53
+msgid "Middle-click to open Calendar"
+msgstr ""
+
+#: src/Indicator.vala:64 src/Widgets/calendar/CalendarView.vala:252
+msgid "Unable To Launch Calendar"
+msgstr "Starten des Kalenders nicht möglich"
+
+#: src/Indicator.vala:65 src/Widgets/calendar/CalendarView.vala:253
+msgid "The program \"io.elementary.calendar\" may not be installed"
+msgstr ""
+"Das Programm »io.elementary.calendar« ist möglicherweise nicht installiert"
+
+#: src/Indicator.vala:87
 msgid "No events this day"
 msgstr "Keine Termine an diesem Tag"
 
-#: src/Indicator.vala:83
+#: src/Indicator.vala:111
 msgid "Date & Time Settings…"
 msgstr "Datums- & Zeiteinstellungen …"
 
-#: src/Indicator.vala:121
+#: src/Indicator.vala:149
 msgid "Unable To launch Tasks"
 msgstr "Starten von Aufgaben nicht möglich"
 
-#: src/Indicator.vala:122
+#: src/Indicator.vala:150
 msgid "The program \"io.elementary.tasks\" may not be installed"
-msgstr "Das Programm »io.elementary.tasks« ist möglicherweise nicht installiert"
+msgstr ""
+"Das Programm »io.elementary.tasks« ist möglicherweise nicht installiert"
 
-#: src/Indicator.vala:155
+#: src/Indicator.vala:183
 msgid "During the Day"
 msgstr "Im Laufe des Tages"
 
-#: src/Indicator.vala:163
+#: src/Indicator.vala:191
 msgid "All Day"
 msgstr "Ganztägig"
 
@@ -49,15 +63,6 @@ msgstr "%OB %Y"
 #: src/Widgets/calendar/CalendarView.vala:55
 msgid "Go to today's date"
 msgstr "Zum heutigen Datum wechseln"
-
-#: src/Widgets/calendar/CalendarView.vala:252
-msgid "Unable To Launch Calendar"
-msgstr "Starten des Kalenders nicht möglich"
-
-#: src/Widgets/calendar/CalendarView.vala:253
-msgid "The program \"io.elementary.calendar\" may not be installed"
-msgstr ""
-"Das Programm »io.elementary.calendar« ist möglicherweise nicht installiert"
 
 #~ msgid "Date & Time"
 #~ msgstr "Datum & Uhrzeit"
