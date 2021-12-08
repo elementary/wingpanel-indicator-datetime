@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: extra\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-12-08 20:35+0000\n"
+"POT-Creation-Date: 2021-12-08 20:36+0000\n"
 "PO-Revision-Date: 2020-05-26 21:35+0000\n"
 "Last-Translator: Rantyrant <diseasemonger@gmail.com>\n"
 "Language-Team: Danish <https://l10n.elementary.io/projects/wingpanel/"
@@ -35,91 +35,95 @@ msgstr ""
 msgid "Open Calendar on middle-click"
 msgstr ""
 
-#: data/datetime.appdata.xml.in:16 data/datetime.appdata.xml.in:29
-#: data/datetime.appdata.xml.in:43
+#: data/datetime.appdata.xml.in:15
+msgid "Show due Tasks for the selected day"
+msgstr ""
+
+#: data/datetime.appdata.xml.in:17 data/datetime.appdata.xml.in:31
+#: data/datetime.appdata.xml.in:45
 msgid "Improvements:"
 msgstr ""
 
-#: data/datetime.appdata.xml.in:18 data/datetime.appdata.xml.in:31
-#: data/datetime.appdata.xml.in:45 data/datetime.appdata.xml.in:53
-#: data/datetime.appdata.xml.in:59 data/datetime.appdata.xml.in:65
-#: data/datetime.appdata.xml.in:72 data/datetime.appdata.xml.in:77
-#: data/datetime.appdata.xml.in:83 data/datetime.appdata.xml.in:94
+#: data/datetime.appdata.xml.in:19 data/datetime.appdata.xml.in:94
+msgid "Performance improvements"
+msgstr "Ydelsesforbedringer"
+
+#: data/datetime.appdata.xml.in:20 data/datetime.appdata.xml.in:33
+#: data/datetime.appdata.xml.in:47 data/datetime.appdata.xml.in:55
+#: data/datetime.appdata.xml.in:61 data/datetime.appdata.xml.in:67
+#: data/datetime.appdata.xml.in:74 data/datetime.appdata.xml.in:79
+#: data/datetime.appdata.xml.in:85 data/datetime.appdata.xml.in:96
 msgid "Updated translations"
 msgstr "Opdaterede oversættelser"
 
-#: data/datetime.appdata.xml.in:24 data/datetime.appdata.xml.in:37
+#: data/datetime.appdata.xml.in:26 data/datetime.appdata.xml.in:39
 msgid "Fixes:"
 msgstr ""
 
-#: data/datetime.appdata.xml.in:26 data/datetime.appdata.xml.in:39
+#: data/datetime.appdata.xml.in:28 data/datetime.appdata.xml.in:41
 msgid "Update current day when opening"
 msgstr ""
 
-#: data/datetime.appdata.xml.in:27 data/datetime.appdata.xml.in:41
+#: data/datetime.appdata.xml.in:29 data/datetime.appdata.xml.in:43
 msgid "Fix potential memory leak"
 msgstr ""
 
-#: data/datetime.appdata.xml.in:40
+#: data/datetime.appdata.xml.in:42
 msgid "Fix disappearing dates when changing between dark and light styles"
 msgstr ""
 
-#: data/datetime.appdata.xml.in:51
+#: data/datetime.appdata.xml.in:53
 msgid "Add multitouch gestures"
 msgstr ""
 
-#: data/datetime.appdata.xml.in:52
+#: data/datetime.appdata.xml.in:54
 msgid "Improve time zone handling"
 msgstr ""
 
-#: data/datetime.appdata.xml.in:58
+#: data/datetime.appdata.xml.in:60
 #, fuzzy
 #| msgid "Fixed issues with large text size"
 msgid "Fix issues with time zones not being recognized"
 msgstr "Rettede problemer med stor tekststørrelse"
 
-#: data/datetime.appdata.xml.in:64
+#: data/datetime.appdata.xml.in:66
 msgid "Improved performance when switching months"
 msgstr "Forbedret ydelse, når der skiftes måneder"
 
-#: data/datetime.appdata.xml.in:70
+#: data/datetime.appdata.xml.in:72
 msgid "Fix missing event dots in the calendar view"
 msgstr "Ret manglende hændelsespunkter i kalendervisningen"
 
-#: data/datetime.appdata.xml.in:71
+#: data/datetime.appdata.xml.in:73
 msgid "Fix event appearance with dark style"
 msgstr "Ret begivenhedsudseende med mørk stil"
 
-#: data/datetime.appdata.xml.in:82
+#: data/datetime.appdata.xml.in:84
 msgid "Fix potential crash when loading events with no start or end time"
 msgstr ""
 "Ret potentielt nedbrud, når der indlæses begivenheder uden start- eller "
 "sluttid"
 
-#: data/datetime.appdata.xml.in:88
+#: data/datetime.appdata.xml.in:90
 msgid "Redesigned the way upcoming events are displayed"
 msgstr "Omdesignet hvorpå kommende begivenheder vises"
 
-#: data/datetime.appdata.xml.in:89
+#: data/datetime.appdata.xml.in:91
 msgid "Fixed issues with large text size"
 msgstr "Rettede problemer med stor tekststørrelse"
 
-#: data/datetime.appdata.xml.in:90
+#: data/datetime.appdata.xml.in:92
 msgid "Show dots on days with events"
 msgstr "Vis prikker på dage med begivenheder"
 
-#: data/datetime.appdata.xml.in:91
+#: data/datetime.appdata.xml.in:93
 msgid "Better handling of recurring events"
 msgstr "Bedre håndtering af tilbagevendende begivenheder"
 
-#: data/datetime.appdata.xml.in:92
-msgid "Performance improvements"
-msgstr "Ydelsesforbedringer"
-
-#: data/datetime.appdata.xml.in:93
+#: data/datetime.appdata.xml.in:95
 msgid "Display an error dialog if Calendar fails to open"
 msgstr "Vis en fejldialog, hvis Kalender ikke kan åbnes"
 
-#: data/datetime.appdata.xml.in:103
+#: data/datetime.appdata.xml.in:105
 msgid "elementary, Inc."
 msgstr "elementary, Inc."
