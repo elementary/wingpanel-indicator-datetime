@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-18 20:05+0000\n"
+"POT-Creation-Date: 2021-12-03 18:47+0000\n"
 "PO-Revision-Date: 2021-07-02 00:12+0000\n"
 "Last-Translator: Allan Nordhøy <epost@anotheragency.no>\n"
 "Language-Team: Norwegian Bokmål <https://l10n.elementary.io/projects/"
@@ -23,31 +23,43 @@ msgstr "Ingen begivenheter denne dagen"
 msgid "Date & Time Settings…"
 msgstr "Innstillinger for dato og tid …"
 
-#: src/Indicator.vala:136
+#: src/Indicator.vala:121
+#, fuzzy
+#| msgid "Unable To Launch Calendar"
+msgid "Unable To launch Tasks"
+msgstr "Kunne ikke kjøre kalender"
+
+#: src/Indicator.vala:122
+#, fuzzy
+#| msgid "The program \"io.elementary.calendar\" may not be installed"
+msgid "The program \"io.elementary.tasks\" may not be installed"
+msgstr "Programmet «io.elementary.calendar» er kanskje ikke installert"
+
+#: src/Indicator.vala:155
 msgid "During the Day"
 msgstr "I løpet av dagen"
 
-#: src/Indicator.vala:144
+#: src/Indicator.vala:163
 msgid "All Day"
 msgstr "Hele dagen"
 
-#: src/Widgets/calendar/CalendarView.vala:38
-#: src/Widgets/calendar/CalendarView.vala:132
-#: src/Widgets/calendar/CalendarView.vala:161
-#: src/Widgets/calendar/CalendarView.vala:218
+#: src/Widgets/calendar/CalendarView.vala:39
+#: src/Widgets/calendar/CalendarView.vala:138
+#: src/Widgets/calendar/CalendarView.vala:173
+#: src/Widgets/calendar/CalendarView.vala:234
 #, fuzzy
 msgid "%OB, %Y"
 msgstr "%OB, %Y"
 
-#: src/Widgets/calendar/CalendarView.vala:54
+#: src/Widgets/calendar/CalendarView.vala:55
 msgid "Go to today's date"
 msgstr "Gå til dags dato"
 
-#: src/Widgets/calendar/CalendarView.vala:236
+#: src/Widgets/calendar/CalendarView.vala:252
 msgid "Unable To Launch Calendar"
 msgstr "Kunne ikke kjøre kalender"
 
-#: src/Widgets/calendar/CalendarView.vala:237
+#: src/Widgets/calendar/CalendarView.vala:253
 msgid "The program \"io.elementary.calendar\" may not be installed"
 msgstr "Programmet «io.elementary.calendar» er kanskje ikke installert"
 
