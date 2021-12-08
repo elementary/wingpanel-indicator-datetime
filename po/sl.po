@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-10-26 22:32+0000\n"
+"POT-Creation-Date: 2021-12-03 18:47+0000\n"
 "PO-Revision-Date: 2020-03-01 20:09+0000\n"
 "Last-Translator: Jernej Virag <jernej@virag.si>\n"
 "Language-Team: Slovenian <https://l10n.elementary.io/projects/wingpanel/"
@@ -26,30 +26,42 @@ msgstr "Na ta dan ni dogodkov"
 msgid "Date & Time Settings…"
 msgstr "Nastavitve datuma in časa …"
 
-#: src/Indicator.vala:136
+#: src/Indicator.vala:121
+#, fuzzy
+#| msgid "Unable To Launch Calendar"
+msgid "Unable To launch Tasks"
+msgstr "Ni bilo mogoče pognati aplikacije Koledar"
+
+#: src/Indicator.vala:122
+#, fuzzy
+#| msgid "The program \"io.elementary.calendar\" may not be installed"
+msgid "The program \"io.elementary.tasks\" may not be installed"
+msgstr "Aplikacija \"io.elementary.calendar\" verjetno ni nameščena"
+
+#: src/Indicator.vala:155
 msgid "During the Day"
 msgstr "Med dnevom"
 
-#: src/Indicator.vala:144
+#: src/Indicator.vala:163
 msgid "All Day"
 msgstr "Cel dan"
 
-#: src/Widgets/calendar/CalendarView.vala:38
-#: src/Widgets/calendar/CalendarView.vala:132
-#: src/Widgets/calendar/CalendarView.vala:161
-#: src/Widgets/calendar/CalendarView.vala:218
+#: src/Widgets/calendar/CalendarView.vala:39
+#: src/Widgets/calendar/CalendarView.vala:138
+#: src/Widgets/calendar/CalendarView.vala:173
+#: src/Widgets/calendar/CalendarView.vala:234
 msgid "%OB, %Y"
 msgstr ""
 
-#: src/Widgets/calendar/CalendarView.vala:54
+#: src/Widgets/calendar/CalendarView.vala:55
 msgid "Go to today's date"
 msgstr "Pojdi na današnji datum"
 
-#: src/Widgets/calendar/CalendarView.vala:232
+#: src/Widgets/calendar/CalendarView.vala:252
 msgid "Unable To Launch Calendar"
 msgstr "Ni bilo mogoče pognati aplikacije Koledar"
 
-#: src/Widgets/calendar/CalendarView.vala:233
+#: src/Widgets/calendar/CalendarView.vala:253
 msgid "The program \"io.elementary.calendar\" may not be installed"
 msgstr "Aplikacija \"io.elementary.calendar\" verjetno ni nameščena"
 

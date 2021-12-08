@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-10-26 22:32+0000\n"
-"PO-Revision-Date: 2021-06-23 20:10+0000\n"
+"POT-Creation-Date: 2021-12-03 18:47+0000\n"
+"PO-Revision-Date: 2021-12-03 22:02+0000\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: Hebrew <https://l10n.elementary.io/projects/wingpanel/"
 "wingpanel-indicator-datetime/he/>\n"
@@ -24,30 +24,38 @@ msgstr "אין אירועים ביום הזה"
 msgid "Date & Time Settings…"
 msgstr "הגדרות תאריך ושעה…"
 
-#: src/Indicator.vala:136
+#: src/Indicator.vala:121
+msgid "Unable To launch Tasks"
+msgstr "לא ניתן לטעון משימות"
+
+#: src/Indicator.vala:122
+msgid "The program \"io.elementary.tasks\" may not be installed"
+msgstr "יתכן כי התכנית „io.elementary.tasks” לא מותקנת"
+
+#: src/Indicator.vala:155
 msgid "During the Day"
 msgstr "במהלך היום"
 
-#: src/Indicator.vala:144
+#: src/Indicator.vala:163
 msgid "All Day"
 msgstr "כל היום"
 
-#: src/Widgets/calendar/CalendarView.vala:38
-#: src/Widgets/calendar/CalendarView.vala:132
-#: src/Widgets/calendar/CalendarView.vala:161
-#: src/Widgets/calendar/CalendarView.vala:218
+#: src/Widgets/calendar/CalendarView.vala:39
+#: src/Widgets/calendar/CalendarView.vala:138
+#: src/Widgets/calendar/CalendarView.vala:173
+#: src/Widgets/calendar/CalendarView.vala:234
 msgid "%OB, %Y"
 msgstr "%OB, %Y"
 
-#: src/Widgets/calendar/CalendarView.vala:54
+#: src/Widgets/calendar/CalendarView.vala:55
 msgid "Go to today's date"
 msgstr "מעבר לתאריך של היום"
 
-#: src/Widgets/calendar/CalendarView.vala:232
+#: src/Widgets/calendar/CalendarView.vala:252
 msgid "Unable To Launch Calendar"
 msgstr "לא ניתן לטעון את לוח השנה"
 
-#: src/Widgets/calendar/CalendarView.vala:233
+#: src/Widgets/calendar/CalendarView.vala:253
 msgid "The program \"io.elementary.calendar\" may not be installed"
 msgstr "יתכן כי התכנית „io.elementary.calendar” לא מותקנת"
 

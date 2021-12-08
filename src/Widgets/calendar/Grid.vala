@@ -39,10 +39,12 @@ namespace DateTime.Widgets {
         private Gtk.Label[] header_labels;
         private Gtk.Revealer[] week_labels;
 
-        private static Widgets.CalendarModel calendar_model;
+        private static Widgets.CalendarModel events_model;
+        private static Widgets.CalendarModel tasks_model;
 
         static construct {
-            calendar_model = Widgets.CalendarModel.get_default ();
+            events_model = Widgets.CalendarModel.get_default (ECal.ClientSourceType.EVENTS);
+            tasks_model = Widgets.CalendarModel.get_default (ECal.ClientSourceType.TASKS);
         }
 
         construct {
@@ -69,12 +71,15 @@ namespace DateTime.Widgets {
 
             data = new Gee.HashMap<uint, GridDay> ();
 
-            calendar_model.events_added.connect (add_event_dots);
-            calendar_model.events_removed.connect (remove_event_dots);
+            events_model.components_added.connect (add_component_dots);
+            tasks_model.components_added.connect (add_component_dots);
+
+            events_model.components_removed.connect (remove_component_dots);
+            tasks_model.components_removed.connect (remove_component_dots);
         }
 
-        private void add_event_dots (E.Source source, Gee.Collection<ECal.Component> events) {
-            foreach (var component in events) {
+        private void add_component_dots (E.Source source, Gee.Collection<ECal.Component> components) {
+            foreach (var component in components) {
                 unowned ICal.Component ical = component.get_icalcomponent ();
 
                 var start_time = ical.get_dtstart ().as_timet ();
@@ -82,15 +87,15 @@ namespace DateTime.Widgets {
                 var date_hash = day_hash (date_time);
 
                 if (data.has_key (date_hash)) {
-                    data[date_hash].add_event_dot (source, ical);
+                    data[date_hash].add_component_dot (source, ical);
                 }
             }
 
             show_all ();
         }
 
-        private void remove_event_dots (E.Source source, Gee.Collection<ECal.Component> events) {
-            foreach (var component in events) {
+        private void remove_component_dots (E.Source source, Gee.Collection<ECal.Component> components) {
+            foreach (var component in components) {
                 unowned ICal.Component ical = component.get_icalcomponent ();
 
                 var start_time = ical.get_dtstart ().as_timet ();
@@ -98,8 +103,8 @@ namespace DateTime.Widgets {
                 var date_hash = day_hash (date_time);
 
                 if (data.has_key (date_hash)) {
-                    var event_uid = ical.get_uid ();
-                    data[date_hash].remove_event_dot (event_uid);
+                    var component_uid = ical.get_uid ();
+                    data[date_hash].remove_component_dot (component_uid);
                 }
             }
         }
@@ -158,7 +163,7 @@ namespace DateTime.Widgets {
             /* Create new widgets for the new range */
 
             var date = Util.strip_time (today);
-            date = date.add_days (CalendarModel.get_default ().week_starts_on - date.get_day_of_week ());
+            date = date.add_days (events_model.week_starts_on - date.get_day_of_week ());
             foreach (var label in header_labels) {
                 label.label = date.format ("%a");
                 date = date.add_days (1);
