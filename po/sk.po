@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-12-03 18:47+0000\n"
+"POT-Creation-Date: 2021-12-08 20:36+0000\n"
 "PO-Revision-Date: 2021-08-20 01:13+0000\n"
 "Last-Translator: JohnDumpling <john_dumpling@protonmail.com>\n"
 "Language-Team: Slovak <https://l10n.elementary.io/projects/wingpanel/"
@@ -15,31 +15,43 @@ msgstr ""
 "X-Generator: Weblate 4.4.2\n"
 "X-Launchpad-Export-Date: 2017-02-19 05:57+0000\n"
 
-#: src/Indicator.vala:59
+#: src/Indicator.vala:53
+msgid "Middle-click to open Calendar"
+msgstr ""
+
+#: src/Indicator.vala:64 src/Widgets/calendar/CalendarView.vala:252
+msgid "Unable To Launch Calendar"
+msgstr "Kalendár sa nepodarilo spustiť"
+
+#: src/Indicator.vala:65 src/Widgets/calendar/CalendarView.vala:253
+msgid "The program \"io.elementary.calendar\" may not be installed"
+msgstr "Je možné, že program „io.elementary.calendar“ nie je nainštalovaný"
+
+#: src/Indicator.vala:87
 msgid "No events this day"
 msgstr "Dnes žiadne udalosti"
 
-#: src/Indicator.vala:83
+#: src/Indicator.vala:111
 msgid "Date & Time Settings…"
 msgstr "Nastavenia dátumu a času…"
 
-#: src/Indicator.vala:121
+#: src/Indicator.vala:149
 #, fuzzy
 #| msgid "Unable To Launch Calendar"
 msgid "Unable To launch Tasks"
 msgstr "Kalendár sa nepodarilo spustiť"
 
-#: src/Indicator.vala:122
+#: src/Indicator.vala:150
 #, fuzzy
 #| msgid "The program \"io.elementary.calendar\" may not be installed"
 msgid "The program \"io.elementary.tasks\" may not be installed"
 msgstr "Je možné, že program „io.elementary.calendar“ nie je nainštalovaný"
 
-#: src/Indicator.vala:155
+#: src/Indicator.vala:183
 msgid "During the Day"
 msgstr "V priebehu dňa"
 
-#: src/Indicator.vala:163
+#: src/Indicator.vala:191
 msgid "All Day"
 msgstr "Celý deň"
 
@@ -53,14 +65,6 @@ msgstr "%OB, %Y"
 #: src/Widgets/calendar/CalendarView.vala:55
 msgid "Go to today's date"
 msgstr "Prejsť na dnešný dátum"
-
-#: src/Widgets/calendar/CalendarView.vala:252
-msgid "Unable To Launch Calendar"
-msgstr "Kalendár sa nepodarilo spustiť"
-
-#: src/Widgets/calendar/CalendarView.vala:253
-msgid "The program \"io.elementary.calendar\" may not be installed"
-msgstr "Je možné, že program „io.elementary.calendar“ nie je nainštalovaný"
 
 #~ msgid "Date & Time"
 #~ msgstr "Dátum a čas"
