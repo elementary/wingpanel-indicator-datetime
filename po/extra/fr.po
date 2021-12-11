@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: extra\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-12-11 05:33+0000\n"
-"PO-Revision-Date: 2021-12-10 12:54+0000\n"
+"PO-Revision-Date: 2021-12-11 16:46+0000\n"
 "Last-Translator: Nathan <bonnemainsnathan@gmail.com>\n"
 "Language-Team: French <https://l10n.elementary.io/projects/wingpanel/"
 "indicator-datetime-extra/fr/>\n"
@@ -28,8 +28,6 @@ msgid "The date and time indicator"
 msgstr "L'indicateur de la date et de l'heure"
 
 #: data/datetime.appdata.xml.in:12
-#, fuzzy
-#| msgid "New Features:"
 msgid "New features:"
 msgstr "Nouvelles fonctionnalités :"
 
