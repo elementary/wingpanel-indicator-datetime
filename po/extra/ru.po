@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: extra\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-12-08 20:36+0000\n"
-"PO-Revision-Date: 2021-10-30 16:10+0000\n"
+"PO-Revision-Date: 2021-12-10 12:54+0000\n"
 "Last-Translator: DartDeaDia <dartdeadia@protonmail.com>\n"
 "Language-Team: Russian <https://l10n.elementary.io/projects/wingpanel/"
 "indicator-datetime-extra/ru/>\n"
@@ -30,15 +30,15 @@ msgstr "Индикатор даты и времени"
 
 #: data/datetime.appdata.xml.in:12
 msgid "New Features:"
-msgstr ""
+msgstr "Новые возможности:"
 
 #: data/datetime.appdata.xml.in:14
 msgid "Open Calendar on middle-click"
-msgstr ""
+msgstr "Открытие календаря средней кнопкой мыши"
 
 #: data/datetime.appdata.xml.in:15
 msgid "Show due Tasks for the selected day"
-msgstr ""
+msgstr "Показать задачи для выбранного дня"
 
 #: data/datetime.appdata.xml.in:17 data/datetime.appdata.xml.in:31
 #: data/datetime.appdata.xml.in:45
