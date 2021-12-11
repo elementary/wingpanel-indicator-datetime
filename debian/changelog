@@ -1,3 +1,20 @@
+wingpanel-indicator-datetime (2.4.0) bionic; urgency=medium
+
+  * Release 2.4.0 (#288)
+  * meson: require granite >= 6.0.0 (#296)
+  * Update translation files
+  * Update translation template
+  * Indicator: open Calendar on middle-click (#294)
+  * Free libical cache before exiting the application (#287)
+  * Update POTFILES
+  * ComponentRow: Add "due by" for tasks (#291)
+  * Indicator: launch Tasks when clicking rows (#292)
+  * Display tasks in Wingpanel (#252)
+  * Reset position and relative position after rebuilding carousel
+    (#284)
+
+ -- Cody Garver <cody@elementary.io>  Sat, 11 Dec 2021 05:33:56 +0000
+
 wingpanel-indicator-datetime (2.3.1) bionic; urgency=medium
 
   * Release 2.3.1 (#282)
