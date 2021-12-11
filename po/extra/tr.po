@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: extra\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-12-11 05:33+0000\n"
-"PO-Revision-Date: 2021-10-28 11:26+0000\n"
+"PO-Revision-Date: 2021-12-11 18:36+0000\n"
 "Last-Translator: Özgür Baskin <queeup@zoho.com>\n"
 "Language-Team: Turkish <https://l10n.elementary.io/projects/wingpanel/"
 "indicator-datetime-extra/tr/>\n"
@@ -29,7 +29,7 @@ msgstr "Tarih ve saat göstergesi"
 
 #: data/datetime.appdata.xml.in:12
 msgid "New features:"
-msgstr ""
+msgstr "Yeni özellikler:"
 
 #: data/datetime.appdata.xml.in:14
 msgid "Open Calendar on middle-click"
