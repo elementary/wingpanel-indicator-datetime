@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-12-11 05:33+0000\n"
-"PO-Revision-Date: 2021-06-24 12:02+0000\n"
+"PO-Revision-Date: 2021-12-11 21:01+0000\n"
 "Last-Translator: Özgür Baskin <queeup@zoho.com>\n"
 "Language-Team: Turkish <https://l10n.elementary.io/projects/wingpanel/"
 "wingpanel-indicator-datetime/tr/>\n"
@@ -17,7 +17,7 @@ msgstr ""
 
 #: src/Indicator.vala:53
 msgid "Middle-click to open Calendar"
-msgstr ""
+msgstr "Takvimi açmak için orta tıklatın"
 
 #: src/Indicator.vala:64 src/Widgets/calendar/CalendarView.vala:252
 msgid "Unable To Launch Calendar"
@@ -36,16 +36,12 @@ msgid "Date & Time Settings…"
 msgstr "Tarih ve Saat Ayarları…"
 
 #: src/Indicator.vala:149
-#, fuzzy
-#| msgid "Unable To Launch Calendar"
 msgid "Unable To launch Tasks"
-msgstr "Takvim Başlatılamadı"
+msgstr "Görevler başlatılamıyor"
 
 #: src/Indicator.vala:150
-#, fuzzy
-#| msgid "The program \"io.elementary.calendar\" may not be installed"
 msgid "The program \"io.elementary.tasks\" may not be installed"
-msgstr "\"io.elementary.calendar\" programı yüklenmemiş olabilir"
+msgstr "\"io.elementary.tasks\" programı yüklenmemiş olabilir"
 
 #: src/Indicator.vala:183
 msgid "During the Day"
