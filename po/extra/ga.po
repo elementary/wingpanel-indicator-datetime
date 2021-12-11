@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: extra\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-12-08 20:36+0000\n"
+"POT-Creation-Date: 2021-12-11 05:33+0000\n"
 "PO-Revision-Date: 2019-10-31 09:08-0700\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -26,7 +26,7 @@ msgid "The date and time indicator"
 msgstr ""
 
 #: data/datetime.appdata.xml.in:12
-msgid "New Features:"
+msgid "New features:"
 msgstr ""
 
 #: data/datetime.appdata.xml.in:14
@@ -38,86 +38,85 @@ msgid "Show due Tasks for the selected day"
 msgstr ""
 
 #: data/datetime.appdata.xml.in:17 data/datetime.appdata.xml.in:31
-#: data/datetime.appdata.xml.in:45
-msgid "Improvements:"
-msgstr ""
-
-#: data/datetime.appdata.xml.in:19 data/datetime.appdata.xml.in:94
-msgid "Performance improvements"
-msgstr ""
-
-#: data/datetime.appdata.xml.in:20 data/datetime.appdata.xml.in:33
-#: data/datetime.appdata.xml.in:47 data/datetime.appdata.xml.in:55
-#: data/datetime.appdata.xml.in:61 data/datetime.appdata.xml.in:67
-#: data/datetime.appdata.xml.in:74 data/datetime.appdata.xml.in:79
-#: data/datetime.appdata.xml.in:85 data/datetime.appdata.xml.in:96
-msgid "Updated translations"
-msgstr ""
-
-#: data/datetime.appdata.xml.in:26 data/datetime.appdata.xml.in:39
 msgid "Fixes:"
 msgstr ""
 
-#: data/datetime.appdata.xml.in:28 data/datetime.appdata.xml.in:41
+#: data/datetime.appdata.xml.in:19 data/datetime.appdata.xml.in:33
 msgid "Update current day when opening"
 msgstr ""
 
-#: data/datetime.appdata.xml.in:29 data/datetime.appdata.xml.in:43
+#: data/datetime.appdata.xml.in:20 data/datetime.appdata.xml.in:35
 msgid "Fix potential memory leak"
 msgstr ""
 
-#: data/datetime.appdata.xml.in:42
+#: data/datetime.appdata.xml.in:22 data/datetime.appdata.xml.in:37
+msgid "Improvements:"
+msgstr ""
+
+#: data/datetime.appdata.xml.in:24 data/datetime.appdata.xml.in:86
+msgid "Performance improvements"
+msgstr ""
+
+#: data/datetime.appdata.xml.in:25 data/datetime.appdata.xml.in:39
+#: data/datetime.appdata.xml.in:47 data/datetime.appdata.xml.in:53
+#: data/datetime.appdata.xml.in:59 data/datetime.appdata.xml.in:66
+#: data/datetime.appdata.xml.in:71 data/datetime.appdata.xml.in:77
+#: data/datetime.appdata.xml.in:88
+msgid "Updated translations"
+msgstr ""
+
+#: data/datetime.appdata.xml.in:34
 msgid "Fix disappearing dates when changing between dark and light styles"
 msgstr ""
 
-#: data/datetime.appdata.xml.in:53
+#: data/datetime.appdata.xml.in:45
 msgid "Add multitouch gestures"
 msgstr ""
 
-#: data/datetime.appdata.xml.in:54
+#: data/datetime.appdata.xml.in:46
 msgid "Improve time zone handling"
 msgstr ""
 
-#: data/datetime.appdata.xml.in:60
+#: data/datetime.appdata.xml.in:52
 msgid "Fix issues with time zones not being recognized"
 msgstr ""
 
-#: data/datetime.appdata.xml.in:66
+#: data/datetime.appdata.xml.in:58
 msgid "Improved performance when switching months"
 msgstr ""
 
-#: data/datetime.appdata.xml.in:72
+#: data/datetime.appdata.xml.in:64
 msgid "Fix missing event dots in the calendar view"
 msgstr ""
 
-#: data/datetime.appdata.xml.in:73
+#: data/datetime.appdata.xml.in:65
 msgid "Fix event appearance with dark style"
 msgstr ""
 
-#: data/datetime.appdata.xml.in:84
+#: data/datetime.appdata.xml.in:76
 msgid "Fix potential crash when loading events with no start or end time"
 msgstr ""
 
-#: data/datetime.appdata.xml.in:90
+#: data/datetime.appdata.xml.in:82
 msgid "Redesigned the way upcoming events are displayed"
 msgstr ""
 
-#: data/datetime.appdata.xml.in:91
+#: data/datetime.appdata.xml.in:83
 msgid "Fixed issues with large text size"
 msgstr ""
 
-#: data/datetime.appdata.xml.in:92
+#: data/datetime.appdata.xml.in:84
 msgid "Show dots on days with events"
 msgstr ""
 
-#: data/datetime.appdata.xml.in:93
+#: data/datetime.appdata.xml.in:85
 msgid "Better handling of recurring events"
 msgstr ""
 
-#: data/datetime.appdata.xml.in:95
+#: data/datetime.appdata.xml.in:87
 msgid "Display an error dialog if Calendar fails to open"
 msgstr ""
 
-#: data/datetime.appdata.xml.in:105
+#: data/datetime.appdata.xml.in:97
 msgid "elementary, Inc."
 msgstr ""
