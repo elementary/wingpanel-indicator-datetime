@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: extra\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-12-11 05:33+0000\n"
-"PO-Revision-Date: 2021-07-15 18:28+0000\n"
+"PO-Revision-Date: 2021-12-13 14:45+0000\n"
 "Last-Translator: Hugo Carvalho <hugokarvalho@hotmail.com>\n"
 "Language-Team: Portuguese <https://l10n.elementary.io/projects/wingpanel/"
 "indicator-datetime-extra/pt/>\n"
@@ -53,7 +53,7 @@ msgstr ""
 
 #: data/datetime.appdata.xml.in:22 data/datetime.appdata.xml.in:37
 msgid "Improvements:"
-msgstr ""
+msgstr "Melhorias:"
 
 #: data/datetime.appdata.xml.in:24 data/datetime.appdata.xml.in:86
 msgid "Performance improvements"
