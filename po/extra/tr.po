@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: extra\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-12-11 05:33+0000\n"
-"PO-Revision-Date: 2021-12-11 21:01+0000\n"
+"PO-Revision-Date: 2021-12-13 20:43+0000\n"
 "Last-Translator: Özgür Baskin <queeup@zoho.com>\n"
 "Language-Team: Turkish <https://l10n.elementary.io/projects/wingpanel/"
 "indicator-datetime-extra/tr/>\n"
@@ -33,11 +33,11 @@ msgstr "Yeni özellikler:"
 
 #: data/datetime.appdata.xml.in:14
 msgid "Open Calendar on middle-click"
-msgstr " "
+msgstr ""
 
 #: data/datetime.appdata.xml.in:15
 msgid "Show due Tasks for the selected day"
-msgstr " "
+msgstr ""
 
 #: data/datetime.appdata.xml.in:17 data/datetime.appdata.xml.in:31
 msgid "Fixes:"
@@ -45,11 +45,11 @@ msgstr "Düzeltmeler:"
 
 #: data/datetime.appdata.xml.in:19 data/datetime.appdata.xml.in:33
 msgid "Update current day when opening"
-msgstr " "
+msgstr ""
 
 #: data/datetime.appdata.xml.in:20 data/datetime.appdata.xml.in:35
 msgid "Fix potential memory leak"
-msgstr " "
+msgstr ""
 
 #: data/datetime.appdata.xml.in:22 data/datetime.appdata.xml.in:37
 msgid "Improvements:"
@@ -69,7 +69,7 @@ msgstr "Çeviriler güncellendi"
 
 #: data/datetime.appdata.xml.in:34
 msgid "Fix disappearing dates when changing between dark and light styles"
-msgstr " "
+msgstr ""
 
 #: data/datetime.appdata.xml.in:45
 msgid "Add multitouch gestures"
