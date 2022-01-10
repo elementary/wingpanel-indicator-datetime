@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: extra\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-12-11 05:33+0000\n"
-"PO-Revision-Date: 2022-01-10 01:06+0000\n"
+"PO-Revision-Date: 2022-01-10 17:06+0000\n"
 "Last-Translator: p-bo <pavel.borecki@gmail.com>\n"
 "Language-Team: Czech <https://l10n.elementary.io/projects/wingpanel/"
 "indicator-datetime-extra/cs/>\n"
@@ -29,27 +29,27 @@ msgstr "Indikátor data a času"
 
 #: data/datetime.appdata.xml.in:12
 msgid "New features:"
-msgstr ""
+msgstr "Nové funkce:"
 
 #: data/datetime.appdata.xml.in:14
 msgid "Open Calendar on middle-click"
-msgstr ""
+msgstr "Otevírání kalendáře prostředním tlačítkem"
 
 #: data/datetime.appdata.xml.in:15
 msgid "Show due Tasks for the selected day"
-msgstr ""
+msgstr "Zobrazovány úkoly s termínem pro vybraný den"
 
 #: data/datetime.appdata.xml.in:17 data/datetime.appdata.xml.in:31
 msgid "Fixes:"
-msgstr ""
+msgstr "Opravy:"
 
 #: data/datetime.appdata.xml.in:19 data/datetime.appdata.xml.in:33
 msgid "Update current day when opening"
-msgstr ""
+msgstr "Při otevírání je stávající den aktualizován"
 
 #: data/datetime.appdata.xml.in:20 data/datetime.appdata.xml.in:35
 msgid "Fix potential memory leak"
-msgstr ""
+msgstr "Opraven potenciální únik paměti"
 
 #: data/datetime.appdata.xml.in:22 data/datetime.appdata.xml.in:37
 msgid "Improvements:"
@@ -69,15 +69,15 @@ msgstr "Aktualizovány překlady"
 
 #: data/datetime.appdata.xml.in:34
 msgid "Fix disappearing dates when changing between dark and light styles"
-msgstr ""
+msgstr "Opravena mizející datumy při změně mezi tmavými a světlými vzhledy"
 
 #: data/datetime.appdata.xml.in:45
 msgid "Add multitouch gestures"
-msgstr ""
+msgstr "Přidání vícedotykových gest"
 
 #: data/datetime.appdata.xml.in:46
 msgid "Improve time zone handling"
-msgstr ""
+msgstr "Vylepšeno nakládání s časovými pásmy"
 
 #: data/datetime.appdata.xml.in:52
 msgid "Fix issues with time zones not being recognized"
