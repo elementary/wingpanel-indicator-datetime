@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-12-11 05:33+0000\n"
-"PO-Revision-Date: 2020-01-03 22:07+0000\n"
-"Last-Translator: Jaimie85 <alsemgeest@gmail.com>\n"
+"PO-Revision-Date: 2022-01-13 21:09+0000\n"
+"Last-Translator: Dennis ten Hoove <dennistenhoove@protonmail.com>\n"
 "Language-Team: Dutch <https://l10n.elementary.io/projects/wingpanel/"
 "wingpanel-indicator-datetime/nl/>\n"
 "Language: nl\n"
@@ -12,12 +12,12 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 3.9.1\n"
+"X-Generator: Weblate 4.4.2\n"
 "X-Launchpad-Export-Date: 2017-02-19 05:57+0000\n"
 
 #: src/Indicator.vala:53
 msgid "Middle-click to open Calendar"
-msgstr ""
+msgstr "Middelklik om te Kalender te openen"
 
 #: src/Indicator.vala:64 src/Widgets/calendar/CalendarView.vala:252
 msgid "Unable To Launch Calendar"
@@ -29,27 +29,20 @@ msgstr ""
 "Het programma \"io.elementary.calendar\" is mogelijk niet geïnstalleerd"
 
 #: src/Indicator.vala:87
-#, fuzzy
-#| msgid "No Events on This Day"
 msgid "No events this day"
-msgstr "Geen gebeurtenissen op deze dag"
+msgstr "Er zijn geen gebeurtenissen op deze dag"
 
 #: src/Indicator.vala:111
 msgid "Date & Time Settings…"
 msgstr "Datum- en tijdsinstellingen…"
 
 #: src/Indicator.vala:149
-#, fuzzy
-#| msgid "Unable To Launch Calendar"
 msgid "Unable To launch Tasks"
-msgstr "Calendar opstarten mislukt"
+msgstr "Kon Taken niet opstarten"
 
 #: src/Indicator.vala:150
-#, fuzzy
-#| msgid "The program \"io.elementary.calendar\" may not be installed"
 msgid "The program \"io.elementary.tasks\" may not be installed"
-msgstr ""
-"Het programma \"io.elementary.calendar\" is mogelijk niet geïnstalleerd"
+msgstr "Het programma \"io.elementary.tasks\" is mogelijk niet geïnstalleerd"
 
 #: src/Indicator.vala:183
 msgid "During the Day"
