@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-12-11 05:33+0000\n"
-"PO-Revision-Date: 2021-12-04 10:54+0000\n"
+"PO-Revision-Date: 2022-01-15 11:57+0000\n"
 "Last-Translator: Yuchen Deng <loaden@gmail.com>\n"
 "Language-Team: Chinese (Simplified) <https://l10n.elementary.io/projects/"
 "wingpanel/wingpanel-indicator-datetime/zh_Hans/>\n"
@@ -17,7 +17,7 @@ msgstr ""
 
 #: src/Indicator.vala:53
 msgid "Middle-click to open Calendar"
-msgstr ""
+msgstr "中键打开日历"
 
 #: src/Indicator.vala:64 src/Widgets/calendar/CalendarView.vala:252
 msgid "Unable To Launch Calendar"
