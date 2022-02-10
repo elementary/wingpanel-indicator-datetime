@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: extra\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-12-11 05:33+0000\n"
-"PO-Revision-Date: 2021-11-30 20:22+0000\n"
+"PO-Revision-Date: 2022-02-05 20:44+0000\n"
 "Last-Translator: JohnDumpling <john_dumpling@protonmail.com>\n"
 "Language-Team: Slovak <https://l10n.elementary.io/projects/wingpanel/"
 "indicator-datetime-extra/sk/>\n"
@@ -29,15 +29,15 @@ msgstr "Indikátor dátumu a času"
 
 #: data/datetime.appdata.xml.in:12
 msgid "New features:"
-msgstr ""
+msgstr "Nové funkcie:"
 
 #: data/datetime.appdata.xml.in:14
 msgid "Open Calendar on middle-click"
-msgstr ""
+msgstr "Otvorte Kalendár stlačením stredného tlačidla myši"
 
 #: data/datetime.appdata.xml.in:15
 msgid "Show due Tasks for the selected day"
-msgstr ""
+msgstr "Zobrazovať Úlohy s termínom rovnakým ako práve vybraný deň"
 
 #: data/datetime.appdata.xml.in:17 data/datetime.appdata.xml.in:31
 msgid "Fixes:"

@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-12-11 05:33+0000\n"
-"PO-Revision-Date: 2021-08-20 01:13+0000\n"
+"PO-Revision-Date: 2022-02-05 20:44+0000\n"
 "Last-Translator: JohnDumpling <john_dumpling@protonmail.com>\n"
 "Language-Team: Slovak <https://l10n.elementary.io/projects/wingpanel/"
 "wingpanel-indicator-datetime/sk/>\n"
@@ -17,7 +17,7 @@ msgstr ""
 
 #: src/Indicator.vala:53
 msgid "Middle-click to open Calendar"
-msgstr ""
+msgstr "Stlačením stredného tlačidla myši otvoríte Kalendár"
 
 #: src/Indicator.vala:64 src/Widgets/calendar/CalendarView.vala:252
 msgid "Unable To Launch Calendar"
@@ -36,16 +36,12 @@ msgid "Date & Time Settings…"
 msgstr "Nastavenia dátumu a času…"
 
 #: src/Indicator.vala:149
-#, fuzzy
-#| msgid "Unable To Launch Calendar"
 msgid "Unable To launch Tasks"
-msgstr "Kalendár sa nepodarilo spustiť"
+msgstr "Úlohy sa nepodarilo spustiť"
 
 #: src/Indicator.vala:150
-#, fuzzy
-#| msgid "The program \"io.elementary.calendar\" may not be installed"
 msgid "The program \"io.elementary.tasks\" may not be installed"
-msgstr "Je možné, že program „io.elementary.calendar“ nie je nainštalovaný"
+msgstr "Je možné, že program „io.elementary.tasks“ nie je nainštalovaný"
 
 #: src/Indicator.vala:183
 msgid "During the Day"
