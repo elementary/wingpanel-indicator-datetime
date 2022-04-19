@@ -35,28 +35,38 @@ namespace DateTime.Widgets {
         /* The start of week, ie. Monday=1 or Sunday=7 */
         public GLib.DateWeekday week_starts_on { get; set; }
 
-        public HashTable<E.Source, Gee.TreeMultiMap<string, ECal.Component>> source_events { get; private set; }
+        public HashTable<E.Source, Gee.TreeMultiMap<string, ECal.Component>> source_components { get; private set; }
 
         /* Notifies when events are added, updated, or removed */
-        public signal void events_added (E.Source source, Gee.Collection<ECal.Component> events);
-        public signal void events_updated (E.Source source, Gee.Collection<ECal.Component> events);
-        public signal void events_removed (E.Source source, Gee.Collection<ECal.Component> events);
+        public signal void components_added (E.Source source, Gee.Collection<ECal.Component> components);
+        public signal void components_updated (E.Source source, Gee.Collection<ECal.Component> components);
+        public signal void components_removed (E.Source source, Gee.Collection<ECal.Component> components);
 
         private E.SourceRegistry registry { get; private set; }
         private HashTable<string, ECal.Client> source_client;
         private HashTable<string, ECal.ClientView> source_view;
+        public ECal.ClientSourceType source_type { get; construct; }
 
         private static CalendarModel? calendar_model = null;
         public static GLib.Settings? locale_settings = null;
+        private static HashTable<ECal.ClientSourceType, CalendarModel> calendar_model;
 
-        public static CalendarModel get_default () {
+        public static CalendarModel get_default (ECal.ClientSourceType source_type) {
             lock (calendar_model) {
                 if (calendar_model == null) {
-                    calendar_model = new CalendarModel ();
+                    calendar_model = new HashTable<ECal.ClientSourceType, CalendarModel> (direct_hash, direct_equal);
+                }
+
+                if (!calendar_model.contains (source_type)) {
+                    calendar_model.@set (source_type, new CalendarModel (source_type));
                 }
             }
 
-            return calendar_model;
+            return calendar_model.@get (source_type);
+        }
+
+        public CalendarModel (ECal.ClientSourceType source_type) {
+            Object (source_type: source_type);
         }
 
         static construct {
@@ -71,7 +81,7 @@ namespace DateTime.Widgets {
             compute_ranges ();
 
             source_client = new HashTable<string, ECal.Client> (str_hash, str_equal);
-            source_events = new HashTable<E.Source, Gee.TreeMultiMap<string, ECal.Component> > (Util.source_hash_func, Util.source_equal_func);
+            source_components = new HashTable<E.Source, Gee.TreeMultiMap<string, ECal.Component> > (Util.source_hash_func, Util.source_equal_func);
             source_view = new HashTable<string, ECal.ClientView> (str_hash, str_equal);
 
             notify["month-start"].connect (on_parameter_changed);
@@ -89,12 +99,22 @@ namespace DateTime.Widgets {
                 registry.source_added.connect ((source) => add_source_async.begin (source));
 
                 // Add sources
-                registry.list_sources (E.SOURCE_EXTENSION_CALENDAR).foreach ((source) => {
-                    E.SourceCalendar cal = (E.SourceCalendar)source.get_extension (E.SOURCE_EXTENSION_CALENDAR);
-                    if (cal.selected == true && source.enabled == true) {
-                        add_source_async.begin (source);
-                    }
-                });
+                if (source_type == ECal.ClientSourceType.TASKS) {
+                    registry.list_sources (E.SOURCE_EXTENSION_TASK_LIST).foreach ((source) => {
+                        E.SourceTaskList list = (E.SourceTaskList)source.get_extension (E.SOURCE_EXTENSION_TASK_LIST);
+                        if (list.selected == true && source.enabled == true) {
+                            add_source_async.begin (source);
+                        }
+                    });
+
+                } else {
+                    registry.list_sources (E.SOURCE_EXTENSION_CALENDAR).foreach ((source) => {
+                        E.SourceCalendar cal = (E.SourceCalendar)source.get_extension (E.SOURCE_EXTENSION_CALENDAR);
+                        if (cal.selected == true && source.enabled == true) {
+                            add_source_async.begin (source);
+                        }
+                    });
+                }
 
                 load_all_sources ();
             } catch (GLib.Error error) {
@@ -106,10 +126,20 @@ namespace DateTime.Widgets {
             lock (source_client) {
                 foreach (var id in source_client.get_keys ()) {
                     var source = registry.ref_source (id);
-                    E.SourceCalendar cal = (E.SourceCalendar)source.get_extension (E.SOURCE_EXTENSION_CALENDAR);
 
-                    if (cal.selected == true && source.enabled == true) {
-                        load_source (source);
+                    if (source_type == ECal.ClientSourceType.TASKS) {
+                        E.SourceTaskList list = (E.SourceTaskList)source.get_extension (E.SOURCE_EXTENSION_TASK_LIST);
+
+                        if (list.selected == true && source.enabled == true) {
+                            load_source (source);
+                        }
+
+                    } else {
+                        E.SourceCalendar cal = (E.SourceCalendar)source.get_extension (E.SOURCE_EXTENSION_CALENDAR);
+
+                        if (cal.selected == true && source.enabled == true) {
+                            load_source (source);
+                        }
                     }
                 }
             }
@@ -136,9 +166,9 @@ namespace DateTime.Widgets {
                 source_client.remove (uid);
             }
 
-            var events = source_events.get (source).get_values ().read_only_view;
-            events_removed (source, events);
-            source_events.remove (source);
+            var components = source_components.get (source).get_values ().read_only_view;
+            components_removed (source, components);
+            source_components.remove (source);
         }
 
         public void change_month (int relative) {
@@ -225,16 +255,20 @@ namespace DateTime.Widgets {
         }
 
         private void load_source (E.Source source) {
-            /* create empty source-event map */
-            var events = new Gee.TreeMultiMap<string, ECal.Component> (
+            /* create empty source-component map */
+            var components = new Gee.TreeMultiMap<string, ECal.Component> (
                 (GLib.CompareDataFunc<ECal.Component>?) GLib.strcmp,
                 (GLib.CompareDataFunc<ECal.Component>?) Util.calcomponent_compare_func
             );
-            source_events.set (source, events);
+            source_components.set (source, components);
             /* query client view */
             var iso_first = ECal.isodate_from_time_t ((time_t)data_range.first_dt.to_unix ());
             var iso_last = ECal.isodate_from_time_t ((time_t)data_range.last_dt.add_days (1).to_unix ());
+
             var query = @"(occur-in-time-range? (make-time \"$iso_first\") (make-time \"$iso_last\"))";
+            if (source_type == ECal.ClientSourceType.TASKS) {
+                query = @"AND (NOT is-completed?) (due-in-time-range? (make-time \"$iso_first\") (make-time \"$iso_last\"))";
+            }
 
             ECal.Client client;
             lock (source_client) {
@@ -262,9 +296,14 @@ namespace DateTime.Widgets {
         }
 
         private async void add_source_async (E.Source source) {
+            if (source_type == ECal.ClientSourceType.TASKS && !source.has_extension (E.SOURCE_EXTENSION_TASK_LIST) ||
+                source_type == ECal.ClientSourceType.EVENTS && !source.has_extension (E.SOURCE_EXTENSION_CALENDAR)) {
+                return;
+            }
+
             debug ("Adding source '%s'", source.dup_display_name ());
             try {
-                var client = (ECal.Client) ECal.Client.connect_sync (source, ECal.ClientSourceType.EVENTS, -1, null);
+                var client = (ECal.Client) ECal.Client.connect_sync (source, source_type, -1, null);
                 source_client.insert (source.dup_uid (), client);
             } catch (Error e) {
                 critical (e.message);
@@ -277,9 +316,9 @@ namespace DateTime.Widgets {
             });
         }
 
-        private void debug_event (E.Source source, ECal.Component event) {
-            unowned ICal.Component comp = event.get_icalcomponent ();
-            debug (@"Event ['$(comp.get_summary())', $(source.dup_display_name()), $(comp.get_uid()))]");
+        private void debug_component (E.Source source, ECal.Component component) {
+            unowned ICal.Component comp = component.get_icalcomponent ();
+            debug (@"Component ['$(comp.get_summary())', $(source.dup_display_name()), $(comp.get_uid()))]");
         }
 
         /* --- Signal Handlers ---// */
@@ -306,25 +345,25 @@ namespace DateTime.Widgets {
 #else
         private void on_objects_added (E.Source source, ECal.Client client, SList<weak ICal.Component> objects) {
 #endif
-            debug (@"Received $(objects.length()) added event(s) for source '%s'", source.dup_display_name ());
-            var events = source_events.get (source);
-            var added_events = new Gee.ArrayList<ECal.Component> ((Gee.EqualDataFunc<ECal.Component>?) Util.calcomponent_equal_func);
+            debug (@"Received $(objects.length()) added component(s) for source '%s'", source.dup_display_name ());
+            var components = source_components.get (source);
+            var added_components = new Gee.ArrayList<ECal.Component> ((Gee.EqualDataFunc<ECal.Component>?) Util.calcomponent_equal_func);
             objects.foreach ((comp) => {
                 unowned string uid = comp.get_uid ();
 #if E_CAL_2_0
                 client.generate_instances_for_object_sync (comp, (time_t) data_range.first_dt.to_unix (), (time_t) data_range.last_dt.to_unix (), null, (comp, start, end) => {
-                    var event = new ECal.Component.from_icalcomponent (comp);
+                    var component = new ECal.Component.from_icalcomponent (comp);
 #else
-                client.generate_instances_for_object_sync (comp, (time_t) data_range.first_dt.to_unix (), (time_t) data_range.last_dt.to_unix (), (event, start, end) => {
+                client.generate_instances_for_object_sync (comp, (time_t) data_range.first_dt.to_unix (), (time_t) data_range.last_dt.to_unix (), (component, start, end) => {
 #endif
-                    debug_event (source, event);
-                    events.set (uid, event);
-                    added_events.add (event);
+                    debug_component (source, component);
+                    components.set (uid, component);
+                    added_components.add (component);
                     return true;
                 });
             });
 
-            events_added (source, added_events.read_only_view);
+            components_added (source, added_components.read_only_view);
         }
 
 #if E_CAL_2_0
@@ -332,19 +371,19 @@ namespace DateTime.Widgets {
 #else
         private void on_objects_modified (E.Source source, ECal.Client client, SList<weak ICal.Component> objects) {
 #endif
-            debug (@"Received $(objects.length()) modified event(s) for source '%s'", source.dup_display_name ());
-            var updated_events = new Gee.ArrayList<ECal.Component> ((Gee.EqualDataFunc<ECal.Component>?) Util.calcomponent_equal_func);
+            debug (@"Received $(objects.length()) modified component(s) for source '%s'", source.dup_display_name ());
+            var updated_components = new Gee.ArrayList<ECal.Component> ((Gee.EqualDataFunc<ECal.Component>?) Util.calcomponent_equal_func);
 
             objects.foreach ((comp) => {
                 unowned string uid = comp.get_uid ();
-                var events = source_events.get (source).get (uid);
-                updated_events.add_all (events);
-                foreach (var event in events) {
-                    debug_event (source, event);
+                var components = source_components.get (source).get (uid);
+                updated_components.add_all (components);
+                foreach (var component in components) {
+                    debug_component (source, component);
                 }
             });
 
-            events_updated (source, updated_events.read_only_view);
+            components_updated (source, updated_components.read_only_view);
         }
 
 #if E_CAL_2_0
@@ -352,23 +391,23 @@ namespace DateTime.Widgets {
 #else
         private void on_objects_removed (E.Source source, ECal.Client client, SList<weak ECal.ComponentId?> cids) {
 #endif
-            debug (@"Received $(cids.length()) removed event(s) for source '%s'", source.dup_display_name ());
-            var events = source_events.get (source);
-            var removed_events = new Gee.ArrayList<ECal.Component> ((Gee.EqualDataFunc<ECal.Component>?) Util.calcomponent_equal_func);
+            debug (@"Received $(cids.length()) removed component(s) for source '%s'", source.dup_display_name ());
+            var components = source_components.get (source);
+            var removed_components = new Gee.ArrayList<ECal.Component> ((Gee.EqualDataFunc<ECal.Component>?) Util.calcomponent_equal_func);
 
             cids.foreach ((cid) => {
                 if (cid == null) {
                     return;
                 }
 
-                var comps = events.get (cid.get_uid ());
-                foreach (ECal.Component event in comps) {
-                    removed_events.add (event);
-                    debug_event (source, event);
+                var comps = components.get (cid.get_uid ());
+                foreach (ECal.Component component in comps) {
+                    removed_components.add (component);
+                    debug_component (source, component);
                 }
             });
 
-            events_removed (source, removed_events.read_only_view);
+            components_removed (source, removed_components.read_only_view);
         }
     }
 }

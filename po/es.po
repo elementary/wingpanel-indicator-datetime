@@ -2,9 +2,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-07-14 15:49+0000\n"
-"PO-Revision-Date: 2019-09-09 13:22+0000\n"
-"Last-Translator: Adolfo Jayme Barrientos <fitojb@ubuntu.com>\n"
+"POT-Creation-Date: 2021-12-11 05:33+0000\n"
+"PO-Revision-Date: 2021-06-24 12:02+0000\n"
+"Last-Translator: Alvaro <alvaroaraoz_92@hotmail.com>\n"
 "Language-Team: Spanish <https://l10n.elementary.io/projects/wingpanel/"
 "wingpanel-indicator-datetime/es/>\n"
 "Language: es\n"
@@ -12,41 +12,59 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 3.7.1\n"
+"X-Generator: Weblate 4.4.2\n"
 "X-Launchpad-Export-Date: 2017-02-19 05:57+0000\n"
 
-#: src/Indicator.vala:56
-msgid "No Events on This Day"
-msgstr "No hay eventos en este día"
+#: src/Indicator.vala:53
+msgid "Middle-click to open Calendar"
+msgstr ""
 
-#: src/Indicator.vala:80
-msgid "Date & Time Settings…"
-msgstr "Configuración de fecha y hora…"
-
-#: src/Indicator.vala:128
-msgid "During the Day"
-msgstr "Durante el día"
-
-#: src/Indicator.vala:136
-msgid "All Day"
-msgstr "Todo el día"
-
-#: src/Widgets/calendar/CalendarView.vala:33
-#: src/Widgets/calendar/CalendarView.vala:85
-msgid "%OB, %Y"
-msgstr "%OB, %Y"
-
-#: src/Widgets/calendar/CalendarView.vala:48
-msgid "Go to today's date"
-msgstr "Ir al día de hoy"
-
-#: src/Widgets/calendar/CalendarView.vala:145
+#: src/Indicator.vala:64 src/Widgets/calendar/CalendarView.vala:252
 msgid "Unable To Launch Calendar"
 msgstr "No se puede iniciar Calendario"
 
-#: src/Widgets/calendar/CalendarView.vala:146
+#: src/Indicator.vala:65 src/Widgets/calendar/CalendarView.vala:253
 msgid "The program \"io.elementary.calendar\" may not be installed"
 msgstr "Es posible que el programa «io.elementary.calendar» no esté instalado"
+
+#: src/Indicator.vala:87
+msgid "No events this day"
+msgstr "No hay eventos este día"
+
+#: src/Indicator.vala:111
+msgid "Date & Time Settings…"
+msgstr "Configuración de fecha y hora…"
+
+#: src/Indicator.vala:149
+#, fuzzy
+#| msgid "Unable To Launch Calendar"
+msgid "Unable To launch Tasks"
+msgstr "No se puede iniciar Calendario"
+
+#: src/Indicator.vala:150
+#, fuzzy
+#| msgid "The program \"io.elementary.calendar\" may not be installed"
+msgid "The program \"io.elementary.tasks\" may not be installed"
+msgstr "Es posible que el programa «io.elementary.calendar» no esté instalado"
+
+#: src/Indicator.vala:183
+msgid "During the Day"
+msgstr "Durante el día"
+
+#: src/Indicator.vala:191
+msgid "All Day"
+msgstr "Todo el día"
+
+#: src/Widgets/calendar/CalendarView.vala:39
+#: src/Widgets/calendar/CalendarView.vala:138
+#: src/Widgets/calendar/CalendarView.vala:173
+#: src/Widgets/calendar/CalendarView.vala:234
+msgid "%OB, %Y"
+msgstr "%OB, %Y"
+
+#: src/Widgets/calendar/CalendarView.vala:55
+msgid "Go to today's date"
+msgstr "Ir al día de hoy"
 
 #~ msgid "Date & Time"
 #~ msgstr "Fecha y hora"

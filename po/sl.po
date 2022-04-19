@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-07-14 15:49+0000\n"
+"POT-Creation-Date: 2021-12-11 05:33+0000\n"
 "PO-Revision-Date: 2020-03-01 20:09+0000\n"
 "Last-Translator: Jernej Virag <jernej@virag.si>\n"
 "Language-Team: Slovenian <https://l10n.elementary.io/projects/wingpanel/"
@@ -16,38 +16,58 @@ msgstr ""
 "X-Generator: Weblate 3.9.1\n"
 "X-Launchpad-Export-Date: 2017-02-19 05:57+0000\n"
 
-#: src/Indicator.vala:56
-msgid "No Events on This Day"
-msgstr "Na ta dan ni dogodkov"
-
-#: src/Indicator.vala:80
-msgid "Date & Time Settings…"
-msgstr "Nastavitve datuma in časa …"
-
-#: src/Indicator.vala:128
-msgid "During the Day"
-msgstr "Med dnevom"
-
-#: src/Indicator.vala:136
-msgid "All Day"
-msgstr "Cel dan"
-
-#: src/Widgets/calendar/CalendarView.vala:33
-#: src/Widgets/calendar/CalendarView.vala:85
-msgid "%OB, %Y"
+#: src/Indicator.vala:53
+msgid "Middle-click to open Calendar"
 msgstr ""
 
-#: src/Widgets/calendar/CalendarView.vala:48
-msgid "Go to today's date"
-msgstr "Pojdi na današnji datum"
-
-#: src/Widgets/calendar/CalendarView.vala:145
+#: src/Indicator.vala:64 src/Widgets/calendar/CalendarView.vala:252
 msgid "Unable To Launch Calendar"
 msgstr "Ni bilo mogoče pognati aplikacije Koledar"
 
-#: src/Widgets/calendar/CalendarView.vala:146
+#: src/Indicator.vala:65 src/Widgets/calendar/CalendarView.vala:253
 msgid "The program \"io.elementary.calendar\" may not be installed"
 msgstr "Aplikacija \"io.elementary.calendar\" verjetno ni nameščena"
+
+#: src/Indicator.vala:87
+#, fuzzy
+#| msgid "No Events on This Day"
+msgid "No events this day"
+msgstr "Na ta dan ni dogodkov"
+
+#: src/Indicator.vala:111
+msgid "Date & Time Settings…"
+msgstr "Nastavitve datuma in časa …"
+
+#: src/Indicator.vala:149
+#, fuzzy
+#| msgid "Unable To Launch Calendar"
+msgid "Unable To launch Tasks"
+msgstr "Ni bilo mogoče pognati aplikacije Koledar"
+
+#: src/Indicator.vala:150
+#, fuzzy
+#| msgid "The program \"io.elementary.calendar\" may not be installed"
+msgid "The program \"io.elementary.tasks\" may not be installed"
+msgstr "Aplikacija \"io.elementary.calendar\" verjetno ni nameščena"
+
+#: src/Indicator.vala:183
+msgid "During the Day"
+msgstr "Med dnevom"
+
+#: src/Indicator.vala:191
+msgid "All Day"
+msgstr "Cel dan"
+
+#: src/Widgets/calendar/CalendarView.vala:39
+#: src/Widgets/calendar/CalendarView.vala:138
+#: src/Widgets/calendar/CalendarView.vala:173
+#: src/Widgets/calendar/CalendarView.vala:234
+msgid "%OB, %Y"
+msgstr ""
+
+#: src/Widgets/calendar/CalendarView.vala:55
+msgid "Go to today's date"
+msgstr "Pojdi na današnji datum"
 
 #~ msgid "Date & Time"
 #~ msgstr "Datum in čas"

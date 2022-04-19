@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: extra\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-06-30 19:02+0000\n"
-"PO-Revision-Date: 2020-08-25 06:13+0000\n"
+"POT-Creation-Date: 2021-12-11 05:33+0000\n"
+"PO-Revision-Date: 2022-01-10 17:06+0000\n"
 "Last-Translator: p-bo <pavel.borecki@gmail.com>\n"
 "Language-Team: Czech <https://l10n.elementary.io/projects/wingpanel/"
 "indicator-datetime-extra/cs/>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
-"X-Generator: Weblate 3.9.1\n"
+"X-Generator: Weblate 4.4.2\n"
 
 #: data/datetime.appdata.xml.in:6
 msgid "Date &amp; Time Indicator"
@@ -27,58 +27,100 @@ msgstr "Indikátor data a času"
 msgid "The date and time indicator"
 msgstr "Indikátor data a času"
 
-#: data/datetime.appdata.xml.in:11
-msgid "Fix issues with time zones not being recognized"
-msgstr "Opraveny problémy s nerozpoznáváním časových pásem"
+#: data/datetime.appdata.xml.in:12
+msgid "New features:"
+msgstr "Nové funkce:"
 
-#: data/datetime.appdata.xml.in:12 data/datetime.appdata.xml.in:18
-#: data/datetime.appdata.xml.in:25 data/datetime.appdata.xml.in:30
-#: data/datetime.appdata.xml.in:36 data/datetime.appdata.xml.in:47
+#: data/datetime.appdata.xml.in:14
+msgid "Open Calendar on middle-click"
+msgstr "Otevírání kalendáře prostředním tlačítkem"
+
+#: data/datetime.appdata.xml.in:15
+msgid "Show due Tasks for the selected day"
+msgstr "Zobrazovány úkoly s termínem pro vybraný den"
+
+#: data/datetime.appdata.xml.in:17 data/datetime.appdata.xml.in:31
+msgid "Fixes:"
+msgstr "Opravy:"
+
+#: data/datetime.appdata.xml.in:19 data/datetime.appdata.xml.in:33
+msgid "Update current day when opening"
+msgstr "Při otevírání je stávající den aktualizován"
+
+#: data/datetime.appdata.xml.in:20 data/datetime.appdata.xml.in:35
+msgid "Fix potential memory leak"
+msgstr "Opraven potenciální únik paměti"
+
+#: data/datetime.appdata.xml.in:22 data/datetime.appdata.xml.in:37
+msgid "Improvements:"
+msgstr "Vylepšení:"
+
+#: data/datetime.appdata.xml.in:24 data/datetime.appdata.xml.in:86
+msgid "Performance improvements"
+msgstr "Vylepšení výkonu"
+
+#: data/datetime.appdata.xml.in:25 data/datetime.appdata.xml.in:39
+#: data/datetime.appdata.xml.in:47 data/datetime.appdata.xml.in:53
+#: data/datetime.appdata.xml.in:59 data/datetime.appdata.xml.in:66
+#: data/datetime.appdata.xml.in:71 data/datetime.appdata.xml.in:77
+#: data/datetime.appdata.xml.in:88
 msgid "Updated translations"
 msgstr "Aktualizovány překlady"
 
-#: data/datetime.appdata.xml.in:17
+#: data/datetime.appdata.xml.in:34
+msgid "Fix disappearing dates when changing between dark and light styles"
+msgstr "Opravena mizející datumy při změně mezi tmavými a světlými vzhledy"
+
+#: data/datetime.appdata.xml.in:45
+msgid "Add multitouch gestures"
+msgstr "Přidání vícedotykových gest"
+
+#: data/datetime.appdata.xml.in:46
+msgid "Improve time zone handling"
+msgstr "Vylepšeno nakládání s časovými pásmy"
+
+#: data/datetime.appdata.xml.in:52
+msgid "Fix issues with time zones not being recognized"
+msgstr "Opraveny problémy s nerozpoznáváním časových pásem"
+
+#: data/datetime.appdata.xml.in:58
 msgid "Improved performance when switching months"
 msgstr "Rychlejší přepínání měsíců"
 
-#: data/datetime.appdata.xml.in:23
+#: data/datetime.appdata.xml.in:64
 msgid "Fix missing event dots in the calendar view"
 msgstr "Oprava chybějících teček událostí ve zobrazení kalendáře"
 
-#: data/datetime.appdata.xml.in:24
+#: data/datetime.appdata.xml.in:65
 msgid "Fix event appearance with dark style"
 msgstr "Opraven vzhled události pro tmavý styl"
 
-#: data/datetime.appdata.xml.in:35
+#: data/datetime.appdata.xml.in:76
 msgid "Fix potential crash when loading events with no start or end time"
 msgstr ""
 "Opraven potenciální pád při načítání událostí s nezadaným časem začátku či "
 "konce"
 
-#: data/datetime.appdata.xml.in:41
+#: data/datetime.appdata.xml.in:82
 msgid "Redesigned the way upcoming events are displayed"
 msgstr "Předělán způsob zobrazování nadcházejících událostí"
 
-#: data/datetime.appdata.xml.in:42
+#: data/datetime.appdata.xml.in:83
 msgid "Fixed issues with large text size"
 msgstr "Opraveny problémy s velikostí rozsáhlého textu"
 
-#: data/datetime.appdata.xml.in:43
+#: data/datetime.appdata.xml.in:84
 msgid "Show dots on days with events"
 msgstr "Zobrazovány tečky u dnů s událostmi"
 
-#: data/datetime.appdata.xml.in:44
+#: data/datetime.appdata.xml.in:85
 msgid "Better handling of recurring events"
 msgstr "Lepší zacházení s opakujícími se událostmi"
 
-#: data/datetime.appdata.xml.in:45
-msgid "Performance improvements"
-msgstr "Vylepšení odezvy"
-
-#: data/datetime.appdata.xml.in:46
+#: data/datetime.appdata.xml.in:87
 msgid "Display an error dialog if Calendar fails to open"
 msgstr "Zobrazení chybového hlášení pokud se kalendář nepodaří otevřít"
 
-#: data/datetime.appdata.xml.in:56
+#: data/datetime.appdata.xml.in:97
 msgid "elementary, Inc."
 msgstr "elementary, Inc."

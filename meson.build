@@ -1,7 +1,7 @@
 project(
     'datetime',
     'vala', 'c',
-    version: '2.2.5'
+    version: '2.4.0'
 )
 
 i18n = import('i18n')
@@ -14,6 +14,7 @@ libdir = join_paths(prefix, get_option('libdir'))
 
 add_global_arguments('-DGETTEXT_PACKAGE="@0@"'.format(gettext_name), language:'c')
 add_project_arguments(['--vapidir', join_paths(meson.current_source_dir(), 'vapi')], language: 'vala')
+add_project_arguments('-DG_LOG_DOMAIN="io.elementary.wingpanel.datetime"', language:'c')
 
 gresource = gnome.compile_resources(
     'gresource',
@@ -36,13 +37,23 @@ else
     add_project_arguments('--vapidir', join_paths(meson.current_source_dir(), 'vapi'), language: 'vala')
 endif
 
+config_data = configuration_data()
+config_data.set_quoted('LOCALEDIR', join_paths(get_option('prefix'), get_option('localedir')))
+config_data.set_quoted('GETTEXT_PACKAGE', meson.project_name() + '-indicator')
+config_file = configure_file(
+    input: 'src/Config.vala.in',
+    output: '@BASENAME@',
+    configuration: config_data
+)
+
 shared_module(
     meson.project_name(),
     gresource,
+    config_file,
     'src/DateIterator.vala',
     'src/DateRange.vala',
     'src/Indicator.vala',
-    'src/Widgets/EventRow.vala',
+    'src/Widgets/ComponentRow.vala',
     'src/Widgets/PanelLabel.vala',
     'src/Widgets/calendar/CalendarModel.vala',
     'src/Widgets/calendar/CalendarView.vala',
@@ -53,7 +64,7 @@ shared_module(
     dependencies: [
         dependency('glib-2.0'),
         dependency('gobject-2.0'),
-        dependency('granite'),
+        dependency('granite', version: '>=6.0.0'),
         dependency('gtk+-3.0'),
         libecal_dep,
         dependency('libedataserver-1.2'),

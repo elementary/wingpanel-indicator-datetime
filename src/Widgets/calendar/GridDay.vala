@@ -31,7 +31,7 @@ public class DateTime.Widgets.GridDay : Gtk.EventBox {
 
     private static Gtk.CssProvider provider;
 
-    private Gee.HashMap<string, Gtk.Widget> event_dots;
+    private Gee.HashMap<string, Gtk.Widget> component_dots;
     private Gtk.Grid event_grid;
     private Gtk.Label label;
     private bool valid_grab = false;
@@ -79,16 +79,16 @@ public class DateTime.Widgets.GridDay : Gtk.EventBox {
             label.label = date.get_day_of_month ().to_string ();
         });
 
-        event_dots = new Gee.HashMap<string, Gtk.Widget> ();
+        component_dots = new Gee.HashMap<string, Gtk.Widget> ();
     }
 
-    public void add_event_dot (E.Source source, ICal.Component ical) {
-        if (event_dots.size >= 3) {
+    public void add_component_dot (E.Source source, ICal.Component ical) {
+        if (component_dots.size >= 3) {
             return;
         }
 
-        var event_uid = ical.get_uid ();
-        if (!event_dots.has_key (event_uid)) {
+        var component_uid = ical.get_uid ();
+        if (!component_dots.has_key (component_uid)) {
             var event_dot = new Gtk.Image ();
             event_dot.gicon = new ThemedIcon ("pager-checked-symbolic");
             event_dot.pixel_size = 6;
@@ -97,20 +97,25 @@ public class DateTime.Widgets.GridDay : Gtk.EventBox {
             style_context.add_class (Granite.STYLE_CLASS_ACCENT);
             style_context.add_provider (provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
 
-            var source_calendar = (E.SourceCalendar?) source.get_extension (E.SOURCE_EXTENSION_CALENDAR);
-            Util.set_event_calendar_color (source_calendar, event_dot);
+            unowned E.SourceSelectable? source_selectable = null;
+            if (source.has_extension (E.SOURCE_EXTENSION_TASK_LIST)) {
+                source_selectable = (E.SourceSelectable?) source.get_extension (E.SOURCE_EXTENSION_TASK_LIST);
+            } else {
+                source_selectable = (E.SourceSelectable?) source.get_extension (E.SOURCE_EXTENSION_CALENDAR);
+            }
+            Util.set_component_calendar_color (source_selectable, event_dot);
 
-            event_dots[event_uid] = event_dot;
+            component_dots[component_uid] = event_dot;
 
             event_grid.add (event_dot);
         }
     }
 
-    public void remove_event_dot (string event_uid) {
-        var dot = event_dots[event_uid];
+    public void remove_component_dot (string component_uid) {
+        var dot = component_dots[component_uid];
         if (dot != null) {
             dot.destroy ();
-            event_dots.unset (event_uid);
+            component_dots.unset (component_uid);
         }
     }
 

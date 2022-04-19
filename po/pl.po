@@ -2,10 +2,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-07-14 15:49+0000\n"
-"PO-Revision-Date: 2018-07-26 17:04+0000\n"
-"Last-Translator: Piotr Strebski <strebski@gmail.com>\n"
-"Language-Team: Polish <https://weblate.elementary.io/projects/wingpanel/"
+"POT-Creation-Date: 2021-12-11 05:33+0000\n"
+"PO-Revision-Date: 2021-12-09 10:59+0000\n"
+"Last-Translator: Marcin Serwin <marcin.serwin0@protonmail.com>\n"
+"Language-Team: Polish <https://l10n.elementary.io/projects/wingpanel/"
 "wingpanel-indicator-datetime/pl/>\n"
 "Language: pl\n"
 "MIME-Version: 1.0\n"
@@ -13,41 +13,55 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
 "|| n%100>=20) ? 1 : 2;\n"
-"X-Generator: Weblate 3.0.1\n"
+"X-Generator: Weblate 4.4.2\n"
 "X-Launchpad-Export-Date: 2017-02-19 05:57+0000\n"
 
-#: src/Indicator.vala:56
-msgid "No Events on This Day"
-msgstr ""
+#: src/Indicator.vala:53
+msgid "Middle-click to open Calendar"
+msgstr "Kliknij środkowym przyciskiem by otworzyć kalendarz"
 
-#: src/Indicator.vala:80
+#: src/Indicator.vala:64 src/Widgets/calendar/CalendarView.vala:252
+msgid "Unable To Launch Calendar"
+msgstr "Nie można uruchomić Kalendarza"
+
+#: src/Indicator.vala:65 src/Widgets/calendar/CalendarView.vala:253
+msgid "The program \"io.elementary.calendar\" may not be installed"
+msgstr "Program \"io.elementary.calendar\" może nie być zainstalowany"
+
+#: src/Indicator.vala:87
+msgid "No events this day"
+msgstr "Brak wydarzeń tego dnia"
+
+#: src/Indicator.vala:111
 msgid "Date & Time Settings…"
 msgstr "Ustawienia daty i czasu…"
 
-#: src/Indicator.vala:128
+#: src/Indicator.vala:149
+msgid "Unable To launch Tasks"
+msgstr "Nie można uruchomić Zadań"
+
+#: src/Indicator.vala:150
+msgid "The program \"io.elementary.tasks\" may not be installed"
+msgstr "Program \"io.elementary.tasks\" może nie być zainstalowany"
+
+#: src/Indicator.vala:183
 msgid "During the Day"
-msgstr ""
+msgstr "W trakcie dnia"
 
-#: src/Indicator.vala:136
+#: src/Indicator.vala:191
 msgid "All Day"
-msgstr ""
+msgstr "Cały dzień"
 
-#: src/Widgets/calendar/CalendarView.vala:33
-#: src/Widgets/calendar/CalendarView.vala:85
+#: src/Widgets/calendar/CalendarView.vala:39
+#: src/Widgets/calendar/CalendarView.vala:138
+#: src/Widgets/calendar/CalendarView.vala:173
+#: src/Widgets/calendar/CalendarView.vala:234
 msgid "%OB, %Y"
-msgstr ""
+msgstr "%OB, %Y"
 
-#: src/Widgets/calendar/CalendarView.vala:48
+#: src/Widgets/calendar/CalendarView.vala:55
 msgid "Go to today's date"
-msgstr ""
-
-#: src/Widgets/calendar/CalendarView.vala:145
-msgid "Unable To Launch Calendar"
-msgstr ""
-
-#: src/Widgets/calendar/CalendarView.vala:146
-msgid "The program \"io.elementary.calendar\" may not be installed"
-msgstr ""
+msgstr "Idź do dzisiejszej daty"
 
 #~ msgid "Date & Time"
 #~ msgstr "Data i czas"

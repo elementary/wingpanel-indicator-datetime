@@ -23,8 +23,8 @@ public class DateTime.Indicator : Wingpanel.Indicator {
     private Widgets.PanelLabel panel_label;
     private Gtk.Grid main_grid;
     private Widgets.CalendarView calendar;
-    private Gtk.ListBox event_listbox;
-    private uint update_events_idle_source = 0;
+    private Gtk.ListBox component_listbox;
+    private uint update_components_idle_source = 0;
 
     public Indicator () {
         Object (
@@ -33,6 +33,9 @@ public class DateTime.Indicator : Wingpanel.Indicator {
     }
 
     static construct {
+        GLib.Intl.bindtextdomain (GETTEXT_PACKAGE, LOCALEDIR);
+        GLib.Intl.bind_textdomain_codeset (GETTEXT_PACKAGE, "UTF-8");
+
         settings = new GLib.Settings ("io.elementary.desktop.wingpanel.datetime");
     }
 
@@ -40,9 +43,37 @@ public class DateTime.Indicator : Wingpanel.Indicator {
         visible = true;
     }
 
+    ~Indicator () {
+        ICal.Object.free_global_objects ();
+    }
+
     public override Gtk.Widget get_display_widget () {
         if (panel_label == null) {
-            panel_label = new Widgets.PanelLabel ();
+            panel_label = new Widgets.PanelLabel () {
+                tooltip_markup = Granite.TOOLTIP_SECONDARY_TEXT_MARKUP.printf (_("Middle-click to open Calendar"))
+            };
+
+            panel_label.button_press_event.connect ((e) => {
+                if (e.button == Gdk.BUTTON_MIDDLE) {
+                    var command = "io.elementary.calendar --show-day %s".printf (new GLib.DateTime.now_local ().format ("%F"));
+                    try {
+                        var appinfo = AppInfo.create_from_commandline (command, null, AppInfoCreateFlags.NONE);
+                        appinfo.launch_uris (null, null);
+                    } catch (GLib.Error e) {
+                        var dialog = new Granite.MessageDialog.with_image_from_icon_name (
+                            _("Unable To Launch Calendar"),
+                            _("The program \"io.elementary.calendar\" may not be installed"),
+                            "dialog-error"
+                        );
+                        dialog.show_error_details (e.message);
+                        dialog.run ();
+                        dialog.destroy ();
+                    }
+                    return Gdk.EVENT_STOP;
+                }
+
+                return Gdk.EVENT_PROPAGATE;
+            });
         }
 
         return panel_label;
@@ -53,7 +84,7 @@ public class DateTime.Indicator : Wingpanel.Indicator {
             calendar = new Widgets.CalendarView ();
             calendar.margin_bottom = 6;
 
-            var placeholder_label = new Gtk.Label (_("No Events on This Day"));
+            var placeholder_label = new Gtk.Label (_("No events this day"));
             placeholder_label.wrap = true;
             placeholder_label.wrap_mode = Pango.WrapMode.WORD;
             placeholder_label.margin_start = 12;
@@ -66,48 +97,72 @@ public class DateTime.Indicator : Wingpanel.Indicator {
             placeholder_style_context.add_class (Gtk.STYLE_CLASS_DIM_LABEL);
             placeholder_style_context.add_class (Granite.STYLE_CLASS_H3_LABEL);
 
-            event_listbox = new Gtk.ListBox ();
-            event_listbox.selection_mode = Gtk.SelectionMode.NONE;
-            event_listbox.set_header_func (header_update_func);
-            event_listbox.set_placeholder (placeholder_label);
-            event_listbox.set_sort_func (sort_function);
+            component_listbox = new Gtk.ListBox ();
+            component_listbox.selection_mode = Gtk.SelectionMode.NONE;
+            component_listbox.set_header_func (header_update_func);
+            component_listbox.set_placeholder (placeholder_label);
+            component_listbox.set_sort_func (sort_function);
 
             var scrolled_window = new Gtk.ScrolledWindow (null, null);
             scrolled_window.hscrollbar_policy = Gtk.PolicyType.NEVER;
-            scrolled_window.add (event_listbox);
+            scrolled_window.add (component_listbox);
 
             var settings_button = new Gtk.ModelButton ();
             settings_button.text = _("Date & Time Settings…");
+
+            var sep = new Gtk.Separator (Gtk.Orientation.HORIZONTAL) {
+                margin_bottom = 3,
+                margin_top = 3
+            };
 
             main_grid = new Gtk.Grid ();
             main_grid.margin_top = 12;
             main_grid.attach (calendar, 0, 0);
             main_grid.attach (scrolled_window, 1, 0);
-            main_grid.attach (new Wingpanel.Widgets.Separator (), 0, 2, 2);
+            main_grid.attach (sep, 0, 2, 2);
             main_grid.attach (settings_button, 0, 3, 2);
 
             var size_group = new Gtk.SizeGroup (Gtk.SizeGroupMode.HORIZONTAL);
             size_group.add_widget (calendar);
-            size_group.add_widget (event_listbox);
+            size_group.add_widget (component_listbox);
 
             calendar.day_double_click.connect (() => {
                 close ();
             });
 
             calendar.selection_changed.connect ((date) => {
-                idle_update_events ();
+                idle_update_components ();
             });
 
-            event_listbox.row_activated.connect ((row) => {
-                calendar.show_date_in_maya (((DateTime.EventRow) row).date);
-                close ();
+            component_listbox.row_activated.connect ((row) => {
+                var component_row = (DateTime.ComponentRow) row;
+
+                if (component_row.source_selectable is E.SourceCalendar) {
+                    calendar.show_date_in_maya (((DateTime.ComponentRow) row).date);
+                    close ();
+                } else if (component_row.source_selectable is E.SourceTaskList) {
+                    var appinfo = new DesktopAppInfo ("io.elementary.tasks.desktop");
+                    try {
+                        appinfo.launch (null, null);
+                    } catch (Error e) {
+                        var dialog = new Granite.MessageDialog.with_image_from_icon_name (
+                            _("Unable To launch Tasks"),
+                            _("The program \"io.elementary.tasks\" may not be installed"),
+                            "dialog-error"
+                        );
+                        dialog.show_error_details (e.message);
+                        dialog.run ();
+                        dialog.destroy ();
+                    }
+                    close ();
+                }
             });
 
             settings_button.clicked.connect (() => {
                 try {
                     AppInfo.launch_default_for_uri ("settings://time", null);
                 } catch (Error e) {
-                    warning ("Failed to open time and date settings: %s", e.message);
+                    warning ("Could not open time and date settings: %s", e.message);
                 }
             });
         }
@@ -116,9 +171,9 @@ public class DateTime.Indicator : Wingpanel.Indicator {
     }
 
     private void header_update_func (Gtk.ListBoxRow lbrow, Gtk.ListBoxRow? lbbefore) {
-        var row = (DateTime.EventRow) lbrow;
+        var row = (DateTime.ComponentRow) lbrow;
         if (lbbefore != null) {
-            var before = (DateTime.EventRow) lbbefore;
+            var before = (DateTime.ComponentRow) lbbefore;
             if (row.is_allday == before.is_allday) {
                 row.set_header (null);
                 return;
@@ -144,8 +199,8 @@ public class DateTime.Indicator : Wingpanel.Indicator {
 
     [CCode (instance_pos = -1)]
     private int sort_function (Gtk.ListBoxRow child1, Gtk.ListBoxRow child2) {
-        var e1 = (EventRow) child1;
-        var e2 = (EventRow) child2;
+        var e1 = (ComponentRow) child1;
+        var e2 = (ComponentRow) child2;
 
         if (e1.start_time.compare (e2.start_time) != 0) {
             return e1.start_time.compare (e2.start_time);
@@ -161,65 +216,96 @@ public class DateTime.Indicator : Wingpanel.Indicator {
         return 0;
     }
 
-    private void update_events_model (E.Source source, Gee.Collection<ECal.Component> events) {
-        idle_update_events ();
+    private void update_components_model (E.Source source, Gee.Collection<ECal.Component> events) {
+        idle_update_components ();
     }
 
-    private void idle_update_events () {
-        if (update_events_idle_source > 0) {
-            GLib.Source.remove (update_events_idle_source);
+    private void idle_update_components () {
+        if (update_components_idle_source > 0) {
+            GLib.Source.remove (update_components_idle_source);
         }
 
-        update_events_idle_source = GLib.Idle.add (update_events);
+        update_components_idle_source = GLib.Idle.add (update_components);
     }
 
-    private bool update_events () {
-        foreach (unowned Gtk.Widget widget in event_listbox.get_children ()) {
+    private bool update_components () {
+        foreach (unowned Gtk.Widget widget in component_listbox.get_children ()) {
             widget.destroy ();
         }
 
         if (calendar.selected_date == null) {
-            update_events_idle_source = 0;
+            update_components_idle_source = 0;
             return GLib.Source.REMOVE;
         }
 
         var date = calendar.selected_date;
 
-        var model = Widgets.CalendarModel.get_default ();
+        var events_model = Widgets.CalendarModel.get_default (ECal.ClientSourceType.EVENTS);
+        var tasks_model = Widgets.CalendarModel.get_default (ECal.ClientSourceType.TASKS);
 
-        var events_on_day = new Gee.TreeMap<string, DateTime.EventRow> ();
+        var components_on_day = new Gee.TreeMap<string, DateTime.ComponentRow> ();
 
-        model.source_events.@foreach ((source, component_map) => {
+        events_model.source_components.@foreach ((source, component_map) => {
             foreach (var comp in component_map.get_values ()) {
                 if (Util.calcomp_is_on_day (comp, date)) {
                     unowned ICal.Component ical = comp.get_icalcomponent ();
-                    var event_uid = ical.get_uid ();
-                    if (!events_on_day.has_key (event_uid)) {
-                        events_on_day[event_uid] = new DateTime.EventRow (date, ical, source);
+                    var component_uid = ical.get_uid ();
+                    if (!components_on_day.has_key (component_uid)) {
+                        components_on_day[component_uid] = new DateTime.ComponentRow (date, ical, source);
 
-                        event_listbox.add (events_on_day[event_uid]);
+                        component_listbox.add (components_on_day[component_uid]);
                     }
                 }
             }
         });
 
-        event_listbox.show_all ();
-        update_events_idle_source = 0;
+        tasks_model.source_components.@foreach ((source, component_map) => {
+            foreach (var comp in component_map.get_values ()) {
+                if (Util.calcomp_is_on_day (comp, date)) {
+                    unowned ICal.Component ical = comp.get_icalcomponent ();
+                    var component_uid = ical.get_uid ();
+                    if (!components_on_day.has_key (component_uid)) {
+                        components_on_day[component_uid] = new DateTime.ComponentRow (date, ical, source);
+
+                        component_listbox.add (components_on_day[component_uid]);
+                    }
+                }
+            }
+        });
+
+        component_listbox.show_all ();
+        update_components_idle_source = 0;
         return GLib.Source.REMOVE;
     }
 
     public override void opened () {
-        calendar.show_today ();
+        var events_model = Widgets.CalendarModel.get_default (ECal.ClientSourceType.EVENTS);
+        var tasks_model = Widgets.CalendarModel.get_default (ECal.ClientSourceType.TASKS);
 
-        Widgets.CalendarModel.get_default ().events_added.connect (update_events_model);
-        Widgets.CalendarModel.get_default ().events_updated.connect (update_events_model);
-        Widgets.CalendarModel.get_default ().events_removed.connect (update_events_model);
+        events_model.components_added.connect (update_components_model);
+        tasks_model.components_added.connect (update_components_model);
+
+        events_model.components_updated.connect (update_components_model);
+        tasks_model.components_updated.connect (update_components_model);
+
+        events_model.components_removed.connect (update_components_model);
+        tasks_model.components_removed.connect (update_components_model);
+
+        calendar.refresh ();
     }
 
     public override void closed () {
-        Widgets.CalendarModel.get_default ().events_added.disconnect (update_events_model);
-        Widgets.CalendarModel.get_default ().events_updated.disconnect (update_events_model);
-        Widgets.CalendarModel.get_default ().events_removed.disconnect (update_events_model);
+        var events_model = Widgets.CalendarModel.get_default (ECal.ClientSourceType.EVENTS);
+        var tasks_model = Widgets.CalendarModel.get_default (ECal.ClientSourceType.TASKS);
+
+        events_model.components_added.disconnect (update_components_model);
+        tasks_model.components_added.disconnect (update_components_model);
+
+        events_model.components_updated.disconnect (update_components_model);
+        tasks_model.components_updated.disconnect (update_components_model);
+
+        events_model.components_removed.disconnect (update_components_model);
+        tasks_model.components_removed.disconnect (update_components_model);
     }
 }
 
