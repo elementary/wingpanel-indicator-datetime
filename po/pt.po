@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-12-11 05:33+0000\n"
-"PO-Revision-Date: 2021-06-24 00:23+0000\n"
+"PO-Revision-Date: 2022-05-24 18:54+0000\n"
 "Last-Translator: Hugo Carvalho <hugokarvalho@hotmail.com>\n"
 "Language-Team: Portuguese <https://l10n.elementary.io/projects/wingpanel/"
 "wingpanel-indicator-datetime/pt/>\n"
@@ -17,7 +17,7 @@ msgstr ""
 
 #: src/Indicator.vala:53
 msgid "Middle-click to open Calendar"
-msgstr ""
+msgstr "Botão do meio do rato para abrir o Calendário"
 
 #: src/Indicator.vala:64 src/Widgets/calendar/CalendarView.vala:252
 msgid "Unable To Launch Calendar"
@@ -36,16 +36,12 @@ msgid "Date & Time Settings…"
 msgstr "Definições de Data e Hora…"
 
 #: src/Indicator.vala:149
-#, fuzzy
-#| msgid "Unable To Launch Calendar"
 msgid "Unable To launch Tasks"
-msgstr "Não é possível lançar o calendário"
+msgstr "Não é possível lançar o Tarefas"
 
 #: src/Indicator.vala:150
-#, fuzzy
-#| msgid "The program \"io.elementary.calendar\" may not be installed"
 msgid "The program \"io.elementary.tasks\" may not be installed"
-msgstr "O programa \"io.elementary.calendar\" pode não estar instalado"
+msgstr "O programa \"io.elementary.tasks\" pode não estar instalado"
 
 #: src/Indicator.vala:183
 msgid "During the Day"

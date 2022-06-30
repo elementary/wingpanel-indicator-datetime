@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: extra\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-12-11 05:33+0000\n"
-"PO-Revision-Date: 2021-12-26 01:10+0000\n"
+"PO-Revision-Date: 2022-04-24 23:51+0000\n"
 "Last-Translator: TomiOhl <ohlslager.tom@gmail.com>\n"
 "Language-Team: Hungarian <https://l10n.elementary.io/projects/wingpanel/"
 "indicator-datetime-extra/hu/>\n"
@@ -33,7 +33,7 @@ msgstr "Új funkciók:"
 
 #: data/datetime.appdata.xml.in:14
 msgid "Open Calendar on middle-click"
-msgstr ""
+msgstr "Naptár megnyitása középső egérgomb megnyomására"
 
 #: data/datetime.appdata.xml.in:15
 msgid "Show due Tasks for the selected day"
