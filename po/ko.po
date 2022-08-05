@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-12-11 05:33+0000\n"
-"PO-Revision-Date: 2022-08-04 00:55+0000\n"
+"PO-Revision-Date: 2022-08-05 09:01+0000\n"
 "Last-Translator: Jung-Kyu Park <bagjunggyu@gmail.com>\n"
 "Language-Team: Korean <https://l10n.elementary.io/projects/wingpanel/"
 "wingpanel-indicator-datetime/ko/>\n"
@@ -25,7 +25,7 @@ msgstr "캘린더를 열 수 없습니다."
 
 #: src/Indicator.vala:65 src/Widgets/calendar/CalendarView.vala:253
 msgid "The program \"io.elementary.calendar\" may not be installed"
-msgstr ""
+msgstr "\"io.elementary.calendar\" 프로그램이 설치되지 않은 것 같습니다."
 
 #: src/Indicator.vala:87
 msgid "No events this day"
@@ -60,7 +60,7 @@ msgstr ""
 
 #: src/Widgets/calendar/CalendarView.vala:55
 msgid "Go to today's date"
-msgstr ""
+msgstr "오늘 날짜 보기"
 
 #~ msgid "Date & Time"
 #~ msgstr "날짜와 시간"
