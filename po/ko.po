@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-12-11 05:33+0000\n"
-"PO-Revision-Date: 2022-08-05 13:40+0000\n"
+"PO-Revision-Date: 2022-08-06 10:54+0000\n"
 "Last-Translator: Jung-Kyu Park <bagjunggyu@gmail.com>\n"
 "Language-Team: Korean <https://l10n.elementary.io/projects/wingpanel/"
 "wingpanel-indicator-datetime/ko/>\n"
@@ -17,7 +17,7 @@ msgstr ""
 
 #: src/Indicator.vala:53
 msgid "Middle-click to open Calendar"
-msgstr ""
+msgstr "마우스 가운데 버튼을 클릭하여 달력 열기"
 
 #: src/Indicator.vala:64 src/Widgets/calendar/CalendarView.vala:252
 msgid "Unable To Launch Calendar"
@@ -29,7 +29,7 @@ msgstr "\"io.elementary.calendar\" 프로그램이 설치되지 않은 것 같�
 
 #: src/Indicator.vala:87
 msgid "No events this day"
-msgstr ""
+msgstr "이날은 이벤트가 없습니다"
 
 #: src/Indicator.vala:111
 msgid "Date & Time Settings…"
@@ -37,26 +37,26 @@ msgstr "날짜와 시간 설정…"
 
 #: src/Indicator.vala:149
 msgid "Unable To launch Tasks"
-msgstr ""
+msgstr "작업을 실행할 수 없습니다"
 
 #: src/Indicator.vala:150
 msgid "The program \"io.elementary.tasks\" may not be installed"
-msgstr ""
+msgstr "\"io.elementary.tasks\" 프로그램이 설치되지 않은 것 같습니다"
 
 #: src/Indicator.vala:183
 msgid "During the Day"
-msgstr ""
+msgstr "하루 동안"
 
 #: src/Indicator.vala:191
 msgid "All Day"
-msgstr ""
+msgstr "하루 종일"
 
 #: src/Widgets/calendar/CalendarView.vala:39
 #: src/Widgets/calendar/CalendarView.vala:138
 #: src/Widgets/calendar/CalendarView.vala:173
 #: src/Widgets/calendar/CalendarView.vala:234
 msgid "%OB, %Y"
-msgstr ""
+msgstr "%Y %OB"
 
 #: src/Widgets/calendar/CalendarView.vala:55
 msgid "Go to today's date"
