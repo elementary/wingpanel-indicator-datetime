@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: extra\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-12-11 05:33+0000\n"
-"PO-Revision-Date: 2022-08-05 09:01+0000\n"
+"PO-Revision-Date: 2022-08-08 11:31+0000\n"
 "Last-Translator: Jung-Kyu Park <bagjunggyu@gmail.com>\n"
 "Language-Team: Korean <https://l10n.elementary.io/projects/wingpanel/"
 "indicator-datetime-extra/ko/>\n"
@@ -57,7 +57,7 @@ msgstr ""
 
 #: data/datetime.appdata.xml.in:24 data/datetime.appdata.xml.in:86
 msgid "Performance improvements"
-msgstr ""
+msgstr "성능 개선"
 
 #: data/datetime.appdata.xml.in:25 data/datetime.appdata.xml.in:39
 #: data/datetime.appdata.xml.in:47 data/datetime.appdata.xml.in:53
@@ -65,7 +65,7 @@ msgstr ""
 #: data/datetime.appdata.xml.in:71 data/datetime.appdata.xml.in:77
 #: data/datetime.appdata.xml.in:88
 msgid "Updated translations"
-msgstr ""
+msgstr "최신 번역"
 
 #: data/datetime.appdata.xml.in:34
 msgid "Fix disappearing dates when changing between dark and light styles"
