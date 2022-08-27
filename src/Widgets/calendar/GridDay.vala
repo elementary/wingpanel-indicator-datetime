@@ -48,7 +48,7 @@ public class DateTime.Widgets.GridDay : Gtk.EventBox {
     construct {
         label = new Gtk.Label (null);
 
-        var label_style_context = label.get_style_context ();
+        unowned var label_style_context = label.get_style_context ();
         label_style_context.add_provider (provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
         label_style_context.add_class ("circular");
 
@@ -98,7 +98,7 @@ public class DateTime.Widgets.GridDay : Gtk.EventBox {
                 pixel_size = 6
             };
 
-            var style_context = event_dot.get_style_context ();
+            unowned var style_context = event_dot.get_style_context ();
             style_context.add_class (Granite.STYLE_CLASS_ACCENT);
             style_context.add_provider (provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
 

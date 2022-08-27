@@ -91,7 +91,7 @@ public class DateTime.ComponentRow : Gtk.ListBoxRow {
             valign = Gtk.Align.START
         };
 
-        var component_image_context = component_image.get_style_context ();
+        unowned var component_image_context = component_image.get_style_context ();
         component_image_context.add_provider (css_provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
 
         name_label = new Gtk.Label (component.get_summary ()) {
@@ -127,7 +127,7 @@ public class DateTime.ComponentRow : Gtk.ListBoxRow {
             grid.attach (time_label, 1, 1);
         }
 
-        var grid_context = grid.get_style_context ();
+        unowned var grid_context = grid.get_style_context ();
         grid_context.add_class ("event");
         grid_context.add_provider (css_provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
 
