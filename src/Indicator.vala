@@ -81,46 +81,52 @@ public class DateTime.Indicator : Wingpanel.Indicator {
 
     public override Gtk.Widget? get_widget () {
         if (main_grid == null) {
-            calendar = new Widgets.CalendarView ();
-            calendar.margin_bottom = 6;
+            calendar = new Widgets.CalendarView () {
+                margin_bottom = 6
+            };
 
-            var placeholder_label = new Gtk.Label (_("No events this day"));
-            placeholder_label.wrap = true;
-            placeholder_label.wrap_mode = Pango.WrapMode.WORD;
-            placeholder_label.margin_start = 12;
-            placeholder_label.margin_end = 12;
-            placeholder_label.max_width_chars = 20;
-            placeholder_label.justify = Gtk.Justification.CENTER;
+            var placeholder_label = new Gtk.Label (_("No events this day")) {
+                wrap = true,
+                wrap_mode = Pango.WrapMode.WORD,
+                margin_start = 12,
+                margin_end = 12,
+                max_width_chars = 20,
+                justify = Gtk.Justification.CENTER
+            };
             placeholder_label.show_all ();
 
             var placeholder_style_context = placeholder_label.get_style_context ();
             placeholder_style_context.add_class (Gtk.STYLE_CLASS_DIM_LABEL);
             placeholder_style_context.add_class (Granite.STYLE_CLASS_H3_LABEL);
 
-            component_listbox = new Gtk.ListBox ();
-            component_listbox.selection_mode = Gtk.SelectionMode.NONE;
+            component_listbox = new Gtk.ListBox () {
+                selection_mode = Gtk.SelectionMode.NONE
+            };
             component_listbox.set_header_func (header_update_func);
             component_listbox.set_placeholder (placeholder_label);
             component_listbox.set_sort_func (sort_function);
 
-            var scrolled_window = new Gtk.ScrolledWindow (null, null);
-            scrolled_window.hscrollbar_policy = Gtk.PolicyType.NEVER;
+            var scrolled_window = new Gtk.ScrolledWindow (null, null) {
+                hscrollbar_policy = Gtk.PolicyType.NEVER
+            };
             scrolled_window.add (component_listbox);
 
-            var settings_button = new Gtk.ModelButton ();
-            settings_button.text = _("Date & Time Settings…");
+            var settings_button = new Gtk.ModelButton () {
+                text = _("Date & Time Settings…")
+            };
 
             var sep = new Gtk.Separator (Gtk.Orientation.HORIZONTAL) {
                 margin_bottom = 3,
                 margin_top = 3
             };
 
-            main_grid = new Gtk.Grid ();
-            main_grid.margin_top = 12;
+            main_grid = new Gtk.Grid () {
+                margin_top = 12
+            };
             main_grid.attach (calendar, 0, 0);
             main_grid.attach (scrolled_window, 1, 0);
-            main_grid.attach (sep, 0, 2, 2);
-            main_grid.attach (settings_button, 0, 3, 2);
+            main_grid.attach (sep, 0, 2, 2, 1);
+            main_grid.attach (settings_button, 0, 3, 2, 1);
 
             var size_group = new Gtk.SizeGroup (Gtk.SizeGroupMode.HORIZONTAL);
             size_group.add_widget (calendar);

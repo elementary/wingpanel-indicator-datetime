@@ -80,48 +80,54 @@ public class DateTime.ComponentRow : Gtk.ListBoxRow {
             }
         }
 
-        unowned string icon_name = "office-calendar-symbolic";
+        var icon_name = "office-calendar-symbolic";
         if (source_selectable is E.SourceTaskList) {
             icon_name = "office-task-symbolic";
         } else if (end_time == null) {
             icon_name = "alarm-symbolic";
         }
 
-        component_image = new Gtk.Image.from_icon_name (icon_name, Gtk.IconSize.MENU);
-        component_image.valign = Gtk.Align.START;
+        component_image = new Gtk.Image.from_icon_name (icon_name, Gtk.IconSize.MENU) {
+            valign = Gtk.Align.START
+        };
 
-        unowned Gtk.StyleContext component_image_context = component_image.get_style_context ();
+        unowned var component_image_context = component_image.get_style_context ();
         component_image_context.add_provider (css_provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
 
-        name_label = new Gtk.Label (component.get_summary ());
-        name_label.hexpand = true;
-        name_label.ellipsize = Pango.EllipsizeMode.END;
-        name_label.lines = 3;
-        name_label.max_width_chars = 30;
-        name_label.wrap = true;
-        name_label.wrap_mode = Pango.WrapMode.WORD_CHAR;
-        name_label.xalign = 0;
+        name_label = new Gtk.Label (component.get_summary ()) {
+            hexpand = true,
+            ellipsize = Pango.EllipsizeMode.END,
+            lines = 3,
+            max_width_chars = 30,
+            wrap = true,
+            wrap_mode = Pango.WrapMode.WORD_CHAR,
+            xalign = 0
+        };
 
-        unowned Gtk.StyleContext name_label_context = name_label.get_style_context ();
+        var name_label_context = name_label.get_style_context ();
         name_label_context.add_class ("title");
         name_label_context.add_provider (css_provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
 
-        time_label = new Gtk.Label (null);
-        time_label.use_markup = true;
-        time_label.xalign = 0;
+        time_label = new Gtk.Label (null) {
+            use_markup = true,
+            xalign = 0,
+        };
         time_label.get_style_context ().add_class (Gtk.STYLE_CLASS_DIM_LABEL);
 
-        grid = new Gtk.Grid ();
-        grid.column_spacing = 6;
-        grid.margin = 3;
-        grid.margin_start = grid.margin_end = 6;
+        grid = new Gtk.Grid () {
+            column_spacing = 6,
+            margin_top = 3,
+            margin_bottom = 3,
+            margin_start = 6,
+            margin_end = 6
+        };
         grid.attach (component_image, 0, 0);
         grid.attach (name_label, 1, 0);
         if (!is_allday) {
             grid.attach (time_label, 1, 1);
         }
 
-        unowned Gtk.StyleContext grid_context = grid.get_style_context ();
+        unowned var grid_context = grid.get_style_context ();
         grid_context.add_class ("event");
         grid_context.add_provider (css_provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
 

@@ -17,7 +17,7 @@
  * Boston, MA 02110-1301 USA.
  */
 
-public class DateTime.Widgets.PanelLabel : Gtk.Grid {
+public class DateTime.Widgets.PanelLabel : Gtk.Box {
     private Gtk.Label date_label;
     private Gtk.Label time_label;
     private Services.TimeManager time_manager;
@@ -27,11 +27,13 @@ public class DateTime.Widgets.PanelLabel : Gtk.Grid {
     public bool clock_show_weekday { get; set; }
 
     construct {
-        date_label = new Gtk.Label (null);
-        date_label.margin_end = 12;
+        date_label = new Gtk.Label (null) {
+            margin_end = 12
+        };
 
-        var date_revealer = new Gtk.Revealer ();
-        date_revealer.transition_type = Gtk.RevealerTransitionType.SLIDE_LEFT;
+        var date_revealer = new Gtk.Revealer () {
+            transition_type = Gtk.RevealerTransitionType.SLIDE_LEFT
+        };
         date_revealer.add (date_label);
 
         time_label = new Gtk.Label (null) {
