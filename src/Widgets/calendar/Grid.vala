@@ -35,7 +35,7 @@ namespace DateTime.Widgets {
         public signal void selection_changed (GLib.DateTime new_date);
 
         private Gee.HashMap<uint, GridDay> data;
-        private GridDay selected_gridday;
+        private GridDay selected_GridDay;
         private Gtk.Label[] header_labels;
         private Gtk.Revealer[] week_labels;
 
@@ -56,12 +56,14 @@ namespace DateTime.Widgets {
                 attach (header_labels[c], c + 2, 0);
             }
 
-            var week_sep = new Gtk.Separator (Gtk.Orientation.VERTICAL);
-            week_sep.margin_start = 9;
-            week_sep.margin_end = 3;
+            var week_sep = new Gtk.Separator (Gtk.Orientation.VERTICAL) {
+                margin_start = 9,
+                margin_end = 3
+            };
 
-            var week_sep_revealer = new Gtk.Revealer ();
-            week_sep_revealer.transition_type = Gtk.RevealerTransitionType.SLIDE_LEFT;
+            var week_sep_revealer = new Gtk.Revealer () {
+                transition_type = Gtk.RevealerTransitionType.SLIDE_LEFT
+            };
             week_sep_revealer.add (week_sep);
 
             hexpand = true;
@@ -111,12 +113,12 @@ namespace DateTime.Widgets {
 
         private void on_day_focus_in (GridDay day) {
             debug ("on_day_focus_in %s", day.date.to_string ());
-            if (selected_gridday != null) {
-                selected_gridday.set_selected (false);
+            if (selected_GridDay != null) {
+                selected_GridDay.set_selected (false);
             }
 
             var selected_date = day.date;
-            selected_gridday = day;
+            selected_GridDay = day;
             day.set_selected (true);
             day.set_state_flags (Gtk.StateFlags.FOCUSED, false);
             selection_changed (selected_date);
@@ -246,13 +248,15 @@ namespace DateTime.Widgets {
 
             week_labels = new Gtk.Revealer[nr_of_weeks];
             for (int c = 0; c < nr_of_weeks; c++) {
-                var week_label = new Gtk.Label (next.get_week_of_year ().to_string ());
-                week_label.margin_bottom = 6;
-                week_label.width_chars = 2;
+                var week_label = new Gtk.Label (next.get_week_of_year ().to_string ()) {
+                    margin_bottom = 6,
+                    width_chars = 2
+                };
                 week_label.get_style_context ().add_class (Granite.STYLE_CLASS_H4_LABEL);
 
-                week_labels[c] = new Gtk.Revealer ();
-                week_labels[c].transition_type = Gtk.RevealerTransitionType.SLIDE_LEFT;
+                week_labels[c] = new Gtk.Revealer () {
+                    transition_type = Gtk.RevealerTransitionType.SLIDE_LEFT
+                };
                 week_labels[c].add (week_label);
                 week_labels[c].show_all ();
 
@@ -282,12 +286,12 @@ namespace DateTime.Widgets {
             if (date.get_day_of_year () == today.get_day_of_year () && date.get_year () == today.get_year ()) {
                 day.name = "today";
                 day.get_style_context ().add_class (Granite.STYLE_CLASS_ACCENT);
-                day.set_receives_default (true);
+                day.receives_default = true;
                 day.show_all ();
             } else if (day.name == "today") {
                 day.name = "";
                 day.get_style_context ().remove_class (Granite.STYLE_CLASS_ACCENT);
-                day.set_receives_default (false);
+                day.receives_default = false;
                 day.show_all ();
             }
         }

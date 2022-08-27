@@ -36,26 +36,28 @@ public class DateTime.Widgets.CalendarView : Gtk.Grid {
     private bool showtoday;
 
     construct {
-        label = new Gtk.Label (new GLib.DateTime.now_local ().format (_("%OB, %Y")));
-        label.hexpand = true;
-        label.margin_start = 6;
-        label.xalign = 0;
-        label.width_chars = 13;
+        label = new Gtk.Label (new GLib.DateTime.now_local ().format (_("%OB, %Y"))) {
+            hexpand = true,
+            margin_start = 6,
+            xalign = 0,
+            width_chars = 13
+        };
 
         var provider = new Gtk.CssProvider ();
         provider.load_from_resource ("/io/elementary/desktop/wingpanel/datetime/ControlHeader.css");
 
-        unowned var label_style_context = label.get_style_context ();
+        var label_style_context = label.get_style_context ();
         label_style_context.add_class (Granite.STYLE_CLASS_ACCENT);
         label_style_context.add_class ("header-label");
         label_style_context.add_provider (provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
 
         var left_button = new Gtk.Button.from_icon_name ("pan-start-symbolic");
-        var center_button = new Gtk.Button.from_icon_name ("office-calendar-symbolic");
-        center_button.tooltip_text = _("Go to today's date");
+        var center_button = new Gtk.Button.from_icon_name ("office-calendar-symbolic") {
+            tooltip_text = _("Go to today's date")
+        };
         var right_button = new Gtk.Button.from_icon_name ("pan-end-symbolic");
 
-        var box_buttons = new Gtk.Grid () {
+        var box_buttons = new Gtk.Box (Gtk.Orientation.HORIZONTAL, 0) {
             margin_end = 6,
             valign = Gtk.Align.CENTER
         };
@@ -88,7 +90,8 @@ public class DateTime.Widgets.CalendarView : Gtk.Grid {
 
         carousel = new Hdy.Carousel () {
             interactive = true,
-            expand = true,
+            hexpand = true,
+            vexpand = true,
             spacing = 15
         };
 

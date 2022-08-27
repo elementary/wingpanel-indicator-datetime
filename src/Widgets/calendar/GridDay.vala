@@ -32,7 +32,7 @@ public class DateTime.Widgets.GridDay : Gtk.EventBox {
     private static Gtk.CssProvider provider;
 
     private Gee.HashMap<string, Gtk.Widget> component_dots;
-    private Gtk.Grid event_grid;
+    private Gtk.Box event_box;
     private Gtk.Label label;
     private bool valid_grab = false;
 
@@ -48,18 +48,22 @@ public class DateTime.Widgets.GridDay : Gtk.EventBox {
     construct {
         label = new Gtk.Label (null);
 
-        unowned Gtk.StyleContext label_style_context = label.get_style_context ();
+        var label_style_context = label.get_style_context ();
         label_style_context.add_provider (provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
         label_style_context.add_class ("circular");
 
-        event_grid = new Gtk.Grid ();
-        event_grid.halign = Gtk.Align.CENTER;
-        event_grid.height_request = 6;
+        event_box = new Gtk.Box (Gtk.Orientation.HORIZONTAL, 0) {
+            halign = Gtk.Align.CENTER,
+            height_request = 6
+        };
 
-        var grid = new Gtk.Grid ();
-        grid.halign = grid.valign = Gtk.Align.CENTER;
-        grid.attach (label, 0, 0);
-        grid.attach (event_grid, 0, 1);
+        var box = new Gtk.Box (Gtk.Orientation.VERTICAL, 0) {
+            halign = Gtk.Align.CENTER,
+            valign = Gtk.Align.CENTER
+
+        };
+        box.add (label);
+        box.add (event_box);
 
         can_focus = true;
         events |= Gdk.EventMask.BUTTON_PRESS_MASK;
@@ -68,7 +72,7 @@ public class DateTime.Widgets.GridDay : Gtk.EventBox {
         halign = Gtk.Align.CENTER;
         hexpand = true;
         get_style_context ().add_provider (provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
-        add (grid);
+        add (box);
         show_all ();
 
         // Signals and handlers
@@ -89,11 +93,12 @@ public class DateTime.Widgets.GridDay : Gtk.EventBox {
 
         var component_uid = ical.get_uid ();
         if (!component_dots.has_key (component_uid)) {
-            var event_dot = new Gtk.Image ();
-            event_dot.gicon = new ThemedIcon ("pager-checked-symbolic");
-            event_dot.pixel_size = 6;
+            var event_dot = new Gtk.Image () {
+                gicon = new ThemedIcon ("pager-checked-symbolic"),
+                pixel_size = 6
+            };
 
-            unowned Gtk.StyleContext style_context = event_dot.get_style_context ();
+            var style_context = event_dot.get_style_context ();
             style_context.add_class (Granite.STYLE_CLASS_ACCENT);
             style_context.add_provider (provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
 
@@ -107,7 +112,7 @@ public class DateTime.Widgets.GridDay : Gtk.EventBox {
 
             component_dots[component_uid] = event_dot;
 
-            event_grid.add (event_dot);
+            event_box.add (event_dot);
         }
     }
 
@@ -141,12 +146,13 @@ public class DateTime.Widgets.GridDay : Gtk.EventBox {
 
     public void sensitive_container (bool sens) {
         label.sensitive = sens;
-        event_grid.sensitive = sens;
+        event_box.sensitive = sens;
     }
 
     private bool on_button_press (Gdk.EventButton event) {
-        if (event.type == Gdk.EventType.2BUTTON_PRESS && event.button == Gdk.BUTTON_PRIMARY)
+        if (event.type == Gdk.EventType.2BUTTON_PRESS && event.button == Gdk.BUTTON_PRIMARY) {
             on_event_add (date);
+        }
         valid_grab = true;
         grab_focus ();
         return false;
