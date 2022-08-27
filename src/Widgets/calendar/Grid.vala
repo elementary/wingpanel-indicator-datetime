@@ -113,12 +113,12 @@ namespace DateTime.Widgets {
 
         private void on_day_focus_in (GridDay day) {
             debug ("on_day_focus_in %s", day.date.to_string ());
-            if (selected_GridDay != null) {
-                selected_GridDay.set_selected (false);
+            if (selected_gridday != null) {
+                selected_gridday.set_selected (false);
             }
 
             var selected_date = day.date;
-            selected_GridDay = day;
+            selected_gridday = day;
             day.set_selected (true);
             day.set_state_flags (Gtk.StateFlags.FOCUSED, false);
             selection_changed (selected_date);
