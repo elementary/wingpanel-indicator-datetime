@@ -35,7 +35,7 @@ namespace DateTime.Widgets {
         public signal void selection_changed (GLib.DateTime new_date);
 
         private Gee.HashMap<uint, GridDay> data;
-        private GridDay selected_GridDay;
+        private GridDay selected_gridday;
         private Gtk.Label[] header_labels;
         private Gtk.Revealer[] week_labels;
 
