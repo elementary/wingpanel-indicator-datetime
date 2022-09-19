@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: extra\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-12-11 05:33+0000\n"
-"PO-Revision-Date: 2021-12-08 21:52+0000\n"
-"Last-Translator: Ciarán Ainsworth <ciaranainsworth@outlook.com>\n"
+"PO-Revision-Date: 2022-09-19 03:03+0000\n"
+"Last-Translator: Joel Jose <joel750jose@gmail.com>\n"
 "Language-Team: English (United Kingdom) <https://l10n.elementary.io/projects/"
 "wingpanel/indicator-datetime-extra/en_GB/>\n"
 "Language: en_GB\n"
@@ -28,10 +28,8 @@ msgid "The date and time indicator"
 msgstr "The date and time indicator"
 
 #: data/datetime.appdata.xml.in:12
-#, fuzzy
-#| msgid "New Features:"
 msgid "New features:"
-msgstr "New Features:"
+msgstr "New features:"
 
 #: data/datetime.appdata.xml.in:14
 msgid "Open Calendar on middle-click"
