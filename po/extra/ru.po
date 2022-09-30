@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: extra\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-12-11 05:33+0000\n"
-"PO-Revision-Date: 2022-09-30 09:34+0000\n"
+"PO-Revision-Date: 2022-09-30 09:38+0000\n"
 "Last-Translator: lenemter <lenemter@gmail.com>\n"
 "Language-Team: Russian <https://l10n.elementary.io/projects/wingpanel/"
 "indicator-datetime-extra/ru/>\n"
@@ -91,7 +91,7 @@ msgstr "Улучшена производительность при перек�
 
 #: data/datetime.appdata.xml.in:64
 msgid "Fix missing event dots in the calendar view"
-msgstr "Исправлено ошибку отсутствия точек событий в окне календаря"
+msgstr "Исправлены отсутствующие точки событий в окне календаря"
 
 #: data/datetime.appdata.xml.in:65
 msgid "Fix event appearance with dark style"
