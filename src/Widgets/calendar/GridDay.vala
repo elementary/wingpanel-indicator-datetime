@@ -78,10 +78,11 @@ public class DateTime.Widgets.GridDay : Gtk.EventBox {
         // Signals and handlers
         button_press_event.connect (on_button_press);
         key_press_event.connect (on_key_press);
-
-        notify["date"].connect (() => {
-            label.label = date.get_day_of_month ().to_string ();
-        });
+        bind_property ("date", label, "label", GLib.BindingFlags.SYNC_CREATE, (binding, from_value, ref to_value) => {
+            unowned var new_date = (GLib.DateTime) from_value.get_boxed ();
+            to_value.take_string (new_date.get_day_of_month ().to_string ());
+            return true;
+        }, null);
 
         component_dots = new Gee.HashMap<string, Gtk.Widget> ();
     }
