@@ -7,7 +7,7 @@
   <summary>The date and time indicator</summary>
   <icon type="stock">preferences-system-time</icon>
   <releases>
-    <release version="2.4.1" date="2022-10-14" urgency="medium">
+    <release version="2.4.1" date="2022-10-15" urgency="medium">
       <description>
         <p>Improvements:</p>
         <ul>
