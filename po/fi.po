@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-12-11 05:33+0000\n"
+"POT-Creation-Date: 2022-10-14 18:35+0000\n"
 "PO-Revision-Date: 2021-12-09 20:40+0000\n"
 "Last-Translator: Jiri Grönroos <jiri.gronroos@iki.fi>\n"
 "Language-Team: Finnish <https://l10n.elementary.io/projects/wingpanel/"
@@ -19,46 +19,46 @@ msgstr ""
 msgid "Middle-click to open Calendar"
 msgstr "Keskimmäisen napin napsautus avaa kalenterin"
 
-#: src/Indicator.vala:64 src/Widgets/calendar/CalendarView.vala:252
+#: src/Indicator.vala:64 src/Widgets/calendar/CalendarView.vala:255
 msgid "Unable To Launch Calendar"
 msgstr "Kalenterin käynnistäminen ei onnistu"
 
-#: src/Indicator.vala:65 src/Widgets/calendar/CalendarView.vala:253
+#: src/Indicator.vala:65 src/Widgets/calendar/CalendarView.vala:256
 msgid "The program \"io.elementary.calendar\" may not be installed"
 msgstr "Ohjelmaa \"io.elementary.calendar\" ei ole välttämättä asennettu"
 
-#: src/Indicator.vala:87
+#: src/Indicator.vala:88
 msgid "No events this day"
 msgstr "Ei tapahtumia tänä päivänä"
 
-#: src/Indicator.vala:111
+#: src/Indicator.vala:115
 msgid "Date & Time Settings…"
 msgstr "Ajan ja päiväyksen asetukset…"
 
-#: src/Indicator.vala:149
+#: src/Indicator.vala:155
 msgid "Unable To launch Tasks"
 msgstr "Tehtävien käynnistäminen ei onnistu"
 
-#: src/Indicator.vala:150
+#: src/Indicator.vala:156
 msgid "The program \"io.elementary.tasks\" may not be installed"
 msgstr "Ohjelmaa \"io.elementary.tasks\" ei ole välttämättä asennettu"
 
-#: src/Indicator.vala:183
+#: src/Indicator.vala:189
 msgid "During the Day"
 msgstr "Päivän aikana"
 
-#: src/Indicator.vala:191
+#: src/Indicator.vala:197
 msgid "All Day"
 msgstr "Koko päivä"
 
 #: src/Widgets/calendar/CalendarView.vala:39
-#: src/Widgets/calendar/CalendarView.vala:138
-#: src/Widgets/calendar/CalendarView.vala:173
-#: src/Widgets/calendar/CalendarView.vala:234
+#: src/Widgets/calendar/CalendarView.vala:141
+#: src/Widgets/calendar/CalendarView.vala:176
+#: src/Widgets/calendar/CalendarView.vala:237
 msgid "%OB, %Y"
 msgstr ""
 
-#: src/Widgets/calendar/CalendarView.vala:55
+#: src/Widgets/calendar/CalendarView.vala:56
 msgid "Go to today's date"
 msgstr "Siirry kuluvaan päivään"
 
