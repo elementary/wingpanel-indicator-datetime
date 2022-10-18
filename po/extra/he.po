@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: extra\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-10-14 18:35+0000\n"
-"PO-Revision-Date: 2021-12-11 16:46+0000\n"
+"PO-Revision-Date: 2022-10-19 13:57+0000\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: Hebrew <https://l10n.elementary.io/projects/wingpanel/"
 "indicator-datetime-extra/he/>\n"
@@ -38,7 +38,7 @@ msgstr "שיפורים:"
 #: data/datetime.appdata.xml.in:75 data/datetime.appdata.xml.in:80
 #: data/datetime.appdata.xml.in:86 data/datetime.appdata.xml.in:97
 msgid "Updated translations"
-msgstr "התרגומים עודכנו"
+msgstr "עודכנו התרגומים"
 
 #: data/datetime.appdata.xml.in:21
 msgid "New features:"
