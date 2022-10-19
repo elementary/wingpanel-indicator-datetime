@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-12-11 05:33+0000\n"
+"POT-Creation-Date: 2022-10-14 18:35+0000\n"
 "PO-Revision-Date: 2021-12-09 08:30+0000\n"
 "Last-Translator: Ryo Nakano <ryonakaknock3@gmail.com>\n"
 "Language-Team: Japanese <https://l10n.elementary.io/projects/wingpanel/"
@@ -19,49 +19,49 @@ msgstr ""
 msgid "Middle-click to open Calendar"
 msgstr "“カレンダー”を開くには中クリックしてください"
 
-#: src/Indicator.vala:64 src/Widgets/calendar/CalendarView.vala:252
+#: src/Indicator.vala:64 src/Widgets/calendar/CalendarView.vala:255
 msgid "Unable To Launch Calendar"
 msgstr "“カレンダー”を起動できません"
 
-#: src/Indicator.vala:65 src/Widgets/calendar/CalendarView.vala:253
+#: src/Indicator.vala:65 src/Widgets/calendar/CalendarView.vala:256
 msgid "The program \"io.elementary.calendar\" may not be installed"
 msgstr ""
 "プログラム \"io.elementary.calendar\" がインストールされていない可能性があり"
 "ます"
 
-#: src/Indicator.vala:87
+#: src/Indicator.vala:88
 msgid "No events this day"
 msgstr "予定はありません"
 
-#: src/Indicator.vala:111
+#: src/Indicator.vala:115
 msgid "Date & Time Settings…"
 msgstr "日付と時刻の設定…"
 
-#: src/Indicator.vala:149
+#: src/Indicator.vala:155
 msgid "Unable To launch Tasks"
 msgstr "“タスク”を起動できません"
 
-#: src/Indicator.vala:150
+#: src/Indicator.vala:156
 msgid "The program \"io.elementary.tasks\" may not be installed"
 msgstr ""
 "プログラム \"io.elementary.tasks\" がインストールされていない可能性があります"
 
-#: src/Indicator.vala:183
+#: src/Indicator.vala:189
 msgid "During the Day"
 msgstr "日中"
 
-#: src/Indicator.vala:191
+#: src/Indicator.vala:197
 msgid "All Day"
 msgstr "終日"
 
 #: src/Widgets/calendar/CalendarView.vala:39
-#: src/Widgets/calendar/CalendarView.vala:138
-#: src/Widgets/calendar/CalendarView.vala:173
-#: src/Widgets/calendar/CalendarView.vala:234
+#: src/Widgets/calendar/CalendarView.vala:141
+#: src/Widgets/calendar/CalendarView.vala:176
+#: src/Widgets/calendar/CalendarView.vala:237
 msgid "%OB, %Y"
 msgstr "%Y年%OB"
 
-#: src/Widgets/calendar/CalendarView.vala:55
+#: src/Widgets/calendar/CalendarView.vala:56
 msgid "Go to today's date"
 msgstr "今日の日付に移動"
 
