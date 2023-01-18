@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: extra\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-10-14 18:35+0000\n"
-"PO-Revision-Date: 2022-04-24 23:51+0000\n"
+"PO-Revision-Date: 2023-01-20 00:25+0000\n"
 "Last-Translator: TomiOhl <ohlslager.tom@gmail.com>\n"
 "Language-Team: Hungarian <https://l10n.elementary.io/projects/wingpanel/"
 "indicator-datetime-extra/hu/>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.4.2\n"
+"X-Generator: Weblate 4.14.2\n"
 
 #: data/datetime.appdata.xml.in:6
 msgid "Date &amp; Time Indicator"
@@ -50,7 +50,7 @@ msgstr "Naptár megnyitása középső egérgomb megnyomására"
 
 #: data/datetime.appdata.xml.in:24
 msgid "Show due Tasks for the selected day"
-msgstr ""
+msgstr "Az adott napon határidős feladatok kijelzése"
 
 #: data/datetime.appdata.xml.in:26 data/datetime.appdata.xml.in:40
 msgid "Fixes:"
