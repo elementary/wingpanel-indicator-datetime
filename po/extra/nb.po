@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: extra\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-10-14 18:35+0000\n"
-"PO-Revision-Date: 2021-07-15 06:10+0000\n"
+"PO-Revision-Date: 2023-03-02 10:25+0000\n"
 "Last-Translator: Allan Nordhøy <epost@anotheragency.no>\n"
 "Language-Team: Norwegian Bokmål <https://l10n.elementary.io/projects/"
 "wingpanel/indicator-datetime-extra/nb/>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.4.2\n"
+"X-Generator: Weblate 4.14.2\n"
 
 #: data/datetime.appdata.xml.in:6
 msgid "Date &amp; Time Indicator"
@@ -30,7 +30,7 @@ msgstr "Dato- og tidsindikatoren"
 #: data/datetime.appdata.xml.in:12 data/datetime.appdata.xml.in:31
 #: data/datetime.appdata.xml.in:46
 msgid "Improvements:"
-msgstr ""
+msgstr "Forbedringer:"
 
 #: data/datetime.appdata.xml.in:14 data/datetime.appdata.xml.in:34
 #: data/datetime.appdata.xml.in:48 data/datetime.appdata.xml.in:56
@@ -38,11 +38,11 @@ msgstr ""
 #: data/datetime.appdata.xml.in:75 data/datetime.appdata.xml.in:80
 #: data/datetime.appdata.xml.in:86 data/datetime.appdata.xml.in:97
 msgid "Updated translations"
-msgstr "Nye oversettelser"
+msgstr "Oppdaterte oversettelser"
 
 #: data/datetime.appdata.xml.in:21
 msgid "New features:"
-msgstr ""
+msgstr "Nye funksjoner:"
 
 #: data/datetime.appdata.xml.in:23
 msgid "Open Calendar on middle-click"
@@ -54,7 +54,7 @@ msgstr ""
 
 #: data/datetime.appdata.xml.in:26 data/datetime.appdata.xml.in:40
 msgid "Fixes:"
-msgstr ""
+msgstr "Fikser:"
 
 #: data/datetime.appdata.xml.in:28 data/datetime.appdata.xml.in:42
 msgid "Update current day when opening"
@@ -62,7 +62,7 @@ msgstr ""
 
 #: data/datetime.appdata.xml.in:29 data/datetime.appdata.xml.in:44
 msgid "Fix potential memory leak"
-msgstr ""
+msgstr "Fikset potensiell minnelekkasje"
 
 #: data/datetime.appdata.xml.in:33 data/datetime.appdata.xml.in:95
 msgid "Performance improvements"
@@ -114,11 +114,11 @@ msgstr ""
 
 #: data/datetime.appdata.xml.in:94
 msgid "Better handling of recurring events"
-msgstr ""
+msgstr "Bedre håndtering av gjentagende begivenheter"
 
 #: data/datetime.appdata.xml.in:96
 msgid "Display an error dialog if Calendar fails to open"
-msgstr ""
+msgstr "Vis feil hvis Kalender ikke kan åpnes"
 
 #: data/datetime.appdata.xml.in:106
 msgid "elementary, Inc."
