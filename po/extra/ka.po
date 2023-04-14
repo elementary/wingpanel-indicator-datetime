@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: extra\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-10-14 18:35+0000\n"
-"PO-Revision-Date: 2023-03-12 18:25+0000\n"
+"PO-Revision-Date: 2023-04-14 00:38+0000\n"
 "Last-Translator: NorwayFun <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <https://l10n.elementary.io/projects/wingpanel/"
 "indicator-datetime-extra/ka/>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.14.2\n"
+"X-Generator: Weblate 4.16.4\n"
 
 #: data/datetime.appdata.xml.in:6
 msgid "Date &amp; Time Indicator"
@@ -30,7 +30,7 @@ msgstr ""
 #: data/datetime.appdata.xml.in:12 data/datetime.appdata.xml.in:31
 #: data/datetime.appdata.xml.in:46
 msgid "Improvements:"
-msgstr ""
+msgstr "გაუმჯობესებები:"
 
 #: data/datetime.appdata.xml.in:14 data/datetime.appdata.xml.in:34
 #: data/datetime.appdata.xml.in:48 data/datetime.appdata.xml.in:56
@@ -54,7 +54,7 @@ msgstr ""
 
 #: data/datetime.appdata.xml.in:26 data/datetime.appdata.xml.in:40
 msgid "Fixes:"
-msgstr ""
+msgstr "შეცდომების გასწორებები:"
 
 #: data/datetime.appdata.xml.in:28 data/datetime.appdata.xml.in:42
 msgid "Update current day when opening"
@@ -66,7 +66,7 @@ msgstr ""
 
 #: data/datetime.appdata.xml.in:33 data/datetime.appdata.xml.in:95
 msgid "Performance improvements"
-msgstr ""
+msgstr "წარმადობის გაუმჯობესებები"
 
 #: data/datetime.appdata.xml.in:43
 msgid "Fix disappearing dates when changing between dark and light styles"
