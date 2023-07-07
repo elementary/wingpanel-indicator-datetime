@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: extra\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-10-14 18:35+0000\n"
-"PO-Revision-Date: 2023-03-02 10:25+0000\n"
+"PO-Revision-Date: 2023-07-08 21:07+0000\n"
 "Last-Translator: Allan Nordhøy <epost@anotheragency.no>\n"
 "Language-Team: Norwegian Bokmål <https://l10n.elementary.io/projects/"
 "wingpanel/indicator-datetime-extra/nb/>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.14.2\n"
+"X-Generator: Weblate 4.17\n"
 
 #: data/datetime.appdata.xml.in:6
 msgid "Date &amp; Time Indicator"
@@ -45,8 +45,9 @@ msgid "New features:"
 msgstr "Nye funksjoner:"
 
 #: data/datetime.appdata.xml.in:23
+#, fuzzy
 msgid "Open Calendar on middle-click"
-msgstr ""
+msgstr "Åpne kalender ved midt-klikk"
 
 #: data/datetime.appdata.xml.in:24
 msgid "Show due Tasks for the selected day"
@@ -110,7 +111,7 @@ msgstr ""
 
 #: data/datetime.appdata.xml.in:93
 msgid "Show dots on days with events"
-msgstr ""
+msgstr "Vis punkter på dager med begivenheter"
 
 #: data/datetime.appdata.xml.in:94
 msgid "Better handling of recurring events"
