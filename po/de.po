@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-12-11 05:33+0000\n"
+"POT-Creation-Date: 2022-10-14 18:35+0000\n"
 "PO-Revision-Date: 2021-12-11 16:46+0000\n"
 "Last-Translator: Uwe S <saabisto@gmx.de>\n"
 "Language-Team: German <https://l10n.elementary.io/projects/wingpanel/"
@@ -19,48 +19,48 @@ msgstr ""
 msgid "Middle-click to open Calendar"
 msgstr "Kalender mit Mittelklick öffnen"
 
-#: src/Indicator.vala:64 src/Widgets/calendar/CalendarView.vala:252
+#: src/Indicator.vala:64 src/Widgets/calendar/CalendarView.vala:255
 msgid "Unable To Launch Calendar"
 msgstr "Starten von Kalender nicht möglich"
 
-#: src/Indicator.vala:65 src/Widgets/calendar/CalendarView.vala:253
+#: src/Indicator.vala:65 src/Widgets/calendar/CalendarView.vala:256
 msgid "The program \"io.elementary.calendar\" may not be installed"
 msgstr ""
 "Das Programm »io.elementary.calendar« ist möglicherweise nicht installiert"
 
-#: src/Indicator.vala:87
+#: src/Indicator.vala:88
 msgid "No events this day"
 msgstr "Keine Termine an diesem Tag"
 
-#: src/Indicator.vala:111
+#: src/Indicator.vala:115
 msgid "Date & Time Settings…"
 msgstr "Datums- & Zeiteinstellungen …"
 
-#: src/Indicator.vala:149
+#: src/Indicator.vala:155
 msgid "Unable To launch Tasks"
 msgstr "Starten von Aufgaben nicht möglich"
 
-#: src/Indicator.vala:150
+#: src/Indicator.vala:156
 msgid "The program \"io.elementary.tasks\" may not be installed"
 msgstr ""
 "Das Programm »io.elementary.tasks« ist möglicherweise nicht installiert"
 
-#: src/Indicator.vala:183
+#: src/Indicator.vala:189
 msgid "During the Day"
 msgstr "Im Laufe des Tages"
 
-#: src/Indicator.vala:191
+#: src/Indicator.vala:197
 msgid "All Day"
 msgstr "Ganztägig"
 
 #: src/Widgets/calendar/CalendarView.vala:39
-#: src/Widgets/calendar/CalendarView.vala:138
-#: src/Widgets/calendar/CalendarView.vala:173
-#: src/Widgets/calendar/CalendarView.vala:234
+#: src/Widgets/calendar/CalendarView.vala:141
+#: src/Widgets/calendar/CalendarView.vala:176
+#: src/Widgets/calendar/CalendarView.vala:237
 msgid "%OB, %Y"
 msgstr "%OB %Y"
 
-#: src/Widgets/calendar/CalendarView.vala:55
+#: src/Widgets/calendar/CalendarView.vala:56
 msgid "Go to today's date"
 msgstr "Zum heutigen Datum wechseln"
 

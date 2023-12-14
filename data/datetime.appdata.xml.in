@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Copyright 2019 elementary, Inc. <contact@elementary.io> -->
+<!-- Copyright 2019-2022 elementary, Inc. <contact@elementary.io> -->
 <component type="addon">
   <id>io.elementary.wingpanel.datetime</id>
   <extends>io.elementary.wingpanel</extends>
@@ -7,6 +7,15 @@
   <summary>The date and time indicator</summary>
   <icon type="stock">preferences-system-time</icon>
   <releases>
+    <release version="2.4.1" date="2022-10-15" urgency="medium">
+      <description>
+        <p>Improvements:</p>
+        <ul>
+          <li>Updated translations</li>
+        </ul>
+      </description>
+    </release>
+
     <release version="2.4.0" date="2021-12-10" urgency="medium">
       <description>
         <p>New features:</p>
