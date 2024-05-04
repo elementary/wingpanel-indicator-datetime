@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: extra\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-10-14 18:35+0000\n"
+"POT-Creation-Date: 2024-05-04 04:54+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -115,8 +115,4 @@ msgstr ""
 
 #: data/datetime.appdata.xml.in:96
 msgid "Display an error dialog if Calendar fails to open"
-msgstr ""
-
-#: data/datetime.appdata.xml.in:106
-msgid "elementary, Inc."
 msgstr ""

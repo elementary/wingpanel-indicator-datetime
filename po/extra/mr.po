@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: extra\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-10-14 18:35+0000\n"
+"POT-Creation-Date: 2024-05-04 04:54+0000\n"
 "PO-Revision-Date: 2020-10-09 15:14+0000\n"
 "Last-Translator: Prachi Joshi <josprachi@yahoo.com>\n"
 "Language-Team: Marathi <https://l10n.elementary.io/projects/wingpanel/"
@@ -120,6 +120,5 @@ msgstr "आवर्ती इव्हेंट्सची चांगली 
 msgid "Display an error dialog if Calendar fails to open"
 msgstr "कॅलेंडर उघडण्यात अयशस्वी झाल्यास त्रुटी संवाद प्रदर्शित करा"
 
-#: data/datetime.appdata.xml.in:106
-msgid "elementary, Inc."
-msgstr "एलिमेंटरी, Inc."
+#~ msgid "elementary, Inc."
+#~ msgstr "एलिमेंटरी, Inc."
