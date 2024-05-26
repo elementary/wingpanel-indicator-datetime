@@ -9,7 +9,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-05-04 04:54+0000\n"
 "PO-Revision-Date: 2024-05-26 16:16+0000\n"
-"Last-Translator: Italo Felipe Capasso Ballesteros <edwood.grant@gmail.com>\n"
+"Last-Translator: Lucas Cesa <lucascesa455@gmail.com>\n"
 "Language-Team: Spanish <https://l10n.elementary.io/projects/wingpanel/"
 "indicator-datetime-extra/es/>\n"
 "Language: es\n"
@@ -42,7 +42,7 @@ msgstr "Traducciones actualizadas"
 
 #: data/datetime.appdata.xml.in:21
 msgid "New features:"
-msgstr "Nuevas características:"
+msgstr "Novedades:"
 
 #: data/datetime.appdata.xml.in:23
 msgid "Open Calendar on middle-click"
