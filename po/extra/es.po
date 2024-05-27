@@ -9,7 +9,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-05-04 04:54+0000\n"
 "PO-Revision-Date: 2024-05-27 01:33+0000\n"
-"Last-Translator: Lucas Cesa <lucascesa455@gmail.com>\n"
+"Last-Translator: Italo Felipe Capasso Ballesteros <edwood.grant@gmail.com>\n"
 "Language-Team: Spanish <https://l10n.elementary.io/projects/wingpanel/"
 "indicator-datetime-extra/es/>\n"
 "Language: es\n"
@@ -54,7 +54,7 @@ msgstr "Se muestran las tareas pendientes para el día seleccionado"
 
 #: data/datetime.appdata.xml.in:26 data/datetime.appdata.xml.in:40
 msgid "Fixes:"
-msgstr "Corecciones:"
+msgstr "Correcciones:"
 
 #: data/datetime.appdata.xml.in:28 data/datetime.appdata.xml.in:42
 msgid "Update current day when opening"
