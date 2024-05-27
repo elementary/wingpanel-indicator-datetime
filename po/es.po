@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-05-04 04:54+0000\n"
-"PO-Revision-Date: 2024-05-27 01:30+0000\n"
-"Last-Translator: Lucas Cesa <lucascesa455@gmail.com>\n"
+"PO-Revision-Date: 2024-05-27 01:31+0000\n"
+"Last-Translator: lain <grandmaxy@gmail.com>\n"
 "Language-Team: Spanish <https://l10n.elementary.io/projects/wingpanel/"
 "wingpanel-indicator-datetime/es/>\n"
 "Language: es\n"
@@ -40,10 +40,8 @@ msgid "Unable To launch Tasks"
 msgstr "No se puede iniciar Tareas"
 
 #: src/Indicator.vala:156
-#, fuzzy
-#| msgid "The program \"io.elementary.calendar\" may not be installed"
 msgid "The program \"io.elementary.tasks\" may not be installed"
-msgstr "Es posible que el programa «io.elementary.calendar» no esté instalado"
+msgstr "Es posible que el programa «io.elementary.tasks» no esté instalado"
 
 #: src/Indicator.vala:189
 msgid "During the Day"
