@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: extra\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-05-04 04:54+0000\n"
-"PO-Revision-Date: 2024-05-27 01:33+0000\n"
-"Last-Translator: Tomas Gonzalez Zarzar <tomasgzarzar@gmail.com>\n"
+"PO-Revision-Date: 2024-05-27 01:34+0000\n"
+"Last-Translator: Lucas Cesa <lucascesa455@gmail.com>\n"
 "Language-Team: Spanish <https://l10n.elementary.io/projects/wingpanel/"
 "indicator-datetime-extra/es/>\n"
 "Language: es\n"
@@ -62,7 +62,7 @@ msgstr "Actualiza el día actual al abrir"
 
 #: data/datetime.appdata.xml.in:29 data/datetime.appdata.xml.in:44
 msgid "Fix potential memory leak"
-msgstr ""
+msgstr "Arreglada potencial fuga de memoria"
 
 #: data/datetime.appdata.xml.in:33 data/datetime.appdata.xml.in:95
 msgid "Performance improvements"
