@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: extra\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-05-04 04:54+0000\n"
-"PO-Revision-Date: 2024-05-29 16:13+0000\n"
+"PO-Revision-Date: 2024-06-12 19:40+0000\n"
 "Last-Translator: Italo Felipe Capasso Ballesteros <edwood.grant@gmail.com>\n"
 "Language-Team: Spanish <https://l10n.elementary.io/projects/wingpanel/"
 "indicator-datetime-extra/es/>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.5\n"
+"X-Generator: Weblate 5.5.5\n"
 
 #: data/datetime.appdata.xml.in:6
 msgid "Date &amp; Time Indicator"
@@ -62,7 +62,7 @@ msgstr "Se actualiza el día actual al abrir"
 
 #: data/datetime.appdata.xml.in:29 data/datetime.appdata.xml.in:44
 msgid "Fix potential memory leak"
-msgstr "Corregida potencial fuga de memoria"
+msgstr "Se corrigió una posible fuga de memoria"
 
 #: data/datetime.appdata.xml.in:33 data/datetime.appdata.xml.in:95
 msgid "Performance improvements"
@@ -101,8 +101,8 @@ msgstr "Se adecua la apariencia de los eventos en el estilo oscuro"
 #: data/datetime.appdata.xml.in:85
 msgid "Fix potential crash when loading events with no start or end time"
 msgstr ""
-"Reparado un cierre inesperado potencial al cargar eventos sin hora de inicio "
-"o de finalización"
+"Reparado una posible falla grave al cargar eventos sin hora de inicio o de "
+"finalización"
 
 #: data/datetime.appdata.xml.in:91
 msgid "Redesigned the way upcoming events are displayed"
