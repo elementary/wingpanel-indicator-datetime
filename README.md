@@ -14,7 +14,7 @@ You'll need the following dependencies:
 * libical-dev
 * libgranite-dev >= 6.0.0
 * libwingpanel-dev
-* meson
+* meson (>= 0.57.0)
 * valac >= 0.40.3
 
 Run `meson` to configure the build environment and then `ninja` to build
