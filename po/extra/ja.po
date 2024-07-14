@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: extra\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-05-04 04:54+0000\n"
-"PO-Revision-Date: 2024-05-26 16:16+0000\n"
+"PO-Revision-Date: 2024-07-14 09:16+0000\n"
 "Last-Translator: Ryo Nakano <ryonakaknock3@gmail.com>\n"
 "Language-Team: Japanese <https://l10n.elementary.io/projects/wingpanel/"
 "indicator-datetime-extra/ja/>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 5.5\n"
+"X-Generator: Weblate 5.6.2\n"
 
 #: data/datetime.appdata.xml.in:6
 msgid "Date &amp; Time Indicator"
@@ -94,7 +94,7 @@ msgstr "カレンダー表示で予定を示す点が表示されなくなった
 
 #: data/datetime.appdata.xml.in:74
 msgid "Fix event appearance with dark style"
-msgstr "ダークスタイルで予定が見にくくなる不具合を修正"
+msgstr "ダークモードで予定が見にくくなる不具合を修正"
 
 #: data/datetime.appdata.xml.in:85
 msgid "Fix potential crash when loading events with no start or end time"
