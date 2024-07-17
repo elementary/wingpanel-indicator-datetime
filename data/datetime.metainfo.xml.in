@@ -30,6 +30,15 @@
   <update_contact>contact_at_elementary.io</update_contact>
 
   <releases>
+    <release version="2.4.2" date="2024-07-17" urgency="medium">
+      <description>
+        <p>Improvements:</p>
+        <ul>
+          <li>Updated translations</li>
+        </ul>
+      </description>
+    </release>
+
     <release version="2.4.1" date="2022-10-15" urgency="medium">
       <description>
         <p>Improvements:</p>
@@ -82,13 +91,7 @@
       </description>
     </release>
 
-    <release version="2.2.5" date="2020-06-30" urgency="medium">
-      <description>
-        <p>Fix issues with time zones not being recognized</p>
-        <p>Updated translations</p>
-      </description>
-    </release>
-
+    <release version="2.2.5" date="2020-06-30" />
     <release version="2.2.4" date="2020-05-28" />
     <release version="2.2.3" date="2020-05-17" />
     <release version="2.2.2" date="2020-03-27" />
