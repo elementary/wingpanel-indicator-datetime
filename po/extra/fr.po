@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: extra\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-07-17 17:38+0000\n"
+"POT-Creation-Date: 2024-07-17 17:58+0000\n"
 "PO-Revision-Date: 2023-02-18 12:25+0000\n"
 "Last-Translator: Nathan <bonnemainsnathan@gmail.com>\n"
 "Language-Team: French <https://l10n.elementary.io/projects/wingpanel/"
@@ -27,63 +27,63 @@ msgstr "Indicateur de la date et de l'heure"
 msgid "The date and time indicator"
 msgstr "L'indicateur de la date et de l'heure"
 
-#: data/datetime.metainfo.xml.in:35 data/datetime.metainfo.xml.in:54
-#: data/datetime.metainfo.xml.in:70
+#: data/datetime.metainfo.xml.in:35 data/datetime.metainfo.xml.in:44
+#: data/datetime.metainfo.xml.in:63 data/datetime.metainfo.xml.in:79
 msgid "Improvements:"
 msgstr "Améliorations :"
 
-#: data/datetime.metainfo.xml.in:37 data/datetime.metainfo.xml.in:57
-#: data/datetime.metainfo.xml.in:72 data/datetime.metainfo.xml.in:81
-#: data/datetime.metainfo.xml.in:88
+#: data/datetime.metainfo.xml.in:37 data/datetime.metainfo.xml.in:46
+#: data/datetime.metainfo.xml.in:66 data/datetime.metainfo.xml.in:81
+#: data/datetime.metainfo.xml.in:90
 msgid "Updated translations"
 msgstr "Mise à jour des traductions"
 
-#: data/datetime.metainfo.xml.in:44
+#: data/datetime.metainfo.xml.in:53
 msgid "New features:"
 msgstr "Nouvelles fonctionnalités :"
 
-#: data/datetime.metainfo.xml.in:46
+#: data/datetime.metainfo.xml.in:55
 msgid "Open Calendar on middle-click"
 msgstr "Ouvrez le Calendrier en effectuant un clic central"
 
-#: data/datetime.metainfo.xml.in:47
+#: data/datetime.metainfo.xml.in:56
 msgid "Show due Tasks for the selected day"
 msgstr "Affichage des Tâches dues pour le jour sélectionné"
 
-#: data/datetime.metainfo.xml.in:49 data/datetime.metainfo.xml.in:64
+#: data/datetime.metainfo.xml.in:58 data/datetime.metainfo.xml.in:73
 msgid "Fixes:"
 msgstr "Corrections :"
 
-#: data/datetime.metainfo.xml.in:51 data/datetime.metainfo.xml.in:66
+#: data/datetime.metainfo.xml.in:60 data/datetime.metainfo.xml.in:75
 msgid "Update current day when opening"
 msgstr "Mise à jour vers le jour courant lors de l'ouverture"
 
-#: data/datetime.metainfo.xml.in:52 data/datetime.metainfo.xml.in:68
+#: data/datetime.metainfo.xml.in:61 data/datetime.metainfo.xml.in:77
 msgid "Fix potential memory leak"
 msgstr "Correction d'une fuite de mémoire potentielle"
 
-#: data/datetime.metainfo.xml.in:56
+#: data/datetime.metainfo.xml.in:65
 msgid "Performance improvements"
 msgstr "Améliorations des performances"
 
-#: data/datetime.metainfo.xml.in:67
+#: data/datetime.metainfo.xml.in:76
 msgid "Fix disappearing dates when changing between dark and light styles"
 msgstr ""
 "Correction des dates qui disparaissaient lors du passage entre le thème "
 "sombre et le thème clair"
 
-#: data/datetime.metainfo.xml.in:79
+#: data/datetime.metainfo.xml.in:88
 msgid "Add multitouch gestures"
 msgstr "Ajout du multi-touch"
 
-#: data/datetime.metainfo.xml.in:80
+#: data/datetime.metainfo.xml.in:89
 msgid "Improve time zone handling"
 msgstr "Amélioration de la gestion du fuseau horaire"
 
-#: data/datetime.metainfo.xml.in:87
-msgid "Fix issues with time zones not being recognized"
-msgstr ""
-"Correction de problèmes avec les fuseaux horaires qui n'étaient pas reconnus"
+#~ msgid "Fix issues with time zones not being recognized"
+#~ msgstr ""
+#~ "Correction de problèmes avec les fuseaux horaires qui n'étaient pas "
+#~ "reconnus"
 
 #~ msgid "Improved performance when switching months"
 #~ msgstr "Amélioration des performances lors du passage d'un mois à un autre"

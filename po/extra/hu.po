@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: extra\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-07-17 17:38+0000\n"
+"POT-Creation-Date: 2024-07-17 17:58+0000\n"
 "PO-Revision-Date: 2023-06-08 00:07+0000\n"
 "Last-Translator: TomiOhl <ohlslager.tom@gmail.com>\n"
 "Language-Team: Hungarian <https://l10n.elementary.io/projects/wingpanel/"
@@ -27,60 +27,59 @@ msgstr "Dátum- és időkijelzés"
 msgid "The date and time indicator"
 msgstr "A dátum és idő kijelzése"
 
-#: data/datetime.metainfo.xml.in:35 data/datetime.metainfo.xml.in:54
-#: data/datetime.metainfo.xml.in:70
+#: data/datetime.metainfo.xml.in:35 data/datetime.metainfo.xml.in:44
+#: data/datetime.metainfo.xml.in:63 data/datetime.metainfo.xml.in:79
 msgid "Improvements:"
 msgstr "Javítások:"
 
-#: data/datetime.metainfo.xml.in:37 data/datetime.metainfo.xml.in:57
-#: data/datetime.metainfo.xml.in:72 data/datetime.metainfo.xml.in:81
-#: data/datetime.metainfo.xml.in:88
+#: data/datetime.metainfo.xml.in:37 data/datetime.metainfo.xml.in:46
+#: data/datetime.metainfo.xml.in:66 data/datetime.metainfo.xml.in:81
+#: data/datetime.metainfo.xml.in:90
 msgid "Updated translations"
 msgstr "Frissített fordítások"
 
-#: data/datetime.metainfo.xml.in:44
+#: data/datetime.metainfo.xml.in:53
 msgid "New features:"
 msgstr "Új funkciók:"
 
-#: data/datetime.metainfo.xml.in:46
+#: data/datetime.metainfo.xml.in:55
 msgid "Open Calendar on middle-click"
 msgstr "Naptár megnyitása középső egérgomb megnyomására"
 
-#: data/datetime.metainfo.xml.in:47
+#: data/datetime.metainfo.xml.in:56
 msgid "Show due Tasks for the selected day"
 msgstr "Az adott napon határidős feladatok kijelzése"
 
-#: data/datetime.metainfo.xml.in:49 data/datetime.metainfo.xml.in:64
+#: data/datetime.metainfo.xml.in:58 data/datetime.metainfo.xml.in:73
 msgid "Fixes:"
 msgstr "Javítások:"
 
-#: data/datetime.metainfo.xml.in:51 data/datetime.metainfo.xml.in:66
+#: data/datetime.metainfo.xml.in:60 data/datetime.metainfo.xml.in:75
 msgid "Update current day when opening"
 msgstr "A jelenlegi nap frissítése megnyitáskor"
 
-#: data/datetime.metainfo.xml.in:52 data/datetime.metainfo.xml.in:68
+#: data/datetime.metainfo.xml.in:61 data/datetime.metainfo.xml.in:77
 msgid "Fix potential memory leak"
 msgstr "Lehetséges memóriaszivárgás javítva"
 
-#: data/datetime.metainfo.xml.in:56
+#: data/datetime.metainfo.xml.in:65
 msgid "Performance improvements"
 msgstr "Teljesítménybeli javítások"
 
-#: data/datetime.metainfo.xml.in:67
+#: data/datetime.metainfo.xml.in:76
 msgid "Fix disappearing dates when changing between dark and light styles"
 msgstr "Sötét és világos témák közti váltás közben eltűnő dátumok javítva"
 
-#: data/datetime.metainfo.xml.in:79
+#: data/datetime.metainfo.xml.in:88
 msgid "Add multitouch gestures"
 msgstr "Többujjas gesztusok támogatása"
 
-#: data/datetime.metainfo.xml.in:80
+#: data/datetime.metainfo.xml.in:89
 msgid "Improve time zone handling"
 msgstr "Időzónakezelés javítva"
 
-#: data/datetime.metainfo.xml.in:87
-msgid "Fix issues with time zones not being recognized"
-msgstr "Időzónák fel nem ismerése javítva"
+#~ msgid "Fix issues with time zones not being recognized"
+#~ msgstr "Időzónák fel nem ismerése javítva"
 
 #~ msgid "Improved performance when switching months"
 #~ msgstr "Hónapváltások teljesítménye javítva"
