@@ -1,3 +1,9 @@
+wingpanel-indicator-datetime (2.4.2) jammy; urgency=medium
+
+  * Release 2.4.2
+
+ -- Danielle Foré <danielle@elementary.io>  Wed, 21 Aug 2024 11:22:05 -0700
+
 wingpanel-indicator-datetime (2.4.1) bionic; urgency=medium
 
   * Release 2.4.1 (#306)
