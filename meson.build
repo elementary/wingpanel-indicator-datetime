@@ -2,7 +2,7 @@ project(
     'datetime',
     'vala', 'c',
     version: '2.4.2',
-    meson_version: '>= 0.57.0'
+    meson_version: '>= 0.58.0'
 )
 
 i18n = import('i18n')
@@ -11,21 +11,20 @@ gnome = import('gnome')
 gettext_name = meson.project_name() + '-indicator'
 
 prefix = get_option('prefix')
-libdir = join_paths(prefix, get_option('libdir'))
+libdir = prefix / get_option('libdir')
 
 add_global_arguments('-DGETTEXT_PACKAGE="@0@"'.format(gettext_name), language:'c')
-add_project_arguments(['--vapidir', join_paths(meson.current_source_dir(), 'vapi')], language: 'vala')
+add_project_arguments(['--vapidir', meson.current_source_dir() / 'vapi'], language: 'vala')
 add_project_arguments('-DG_LOG_DOMAIN="io.elementary.wingpanel.datetime"', language:'c')
 
 gresource = gnome.compile_resources(
     'gresource',
-    join_paths('data', 'datetime.gresource.xml'),
+    'data' / 'datetime.gresource.xml',
     source_dir: 'data'
 )
 
 wingpanel_dep = dependency('wingpanel')
-wingpanel_indicatorsdir = wingpanel_dep.get_pkgconfig_variable('indicatorsdir', define_variable: ['libdir', libdir])
-
+wingpanel_indicatorsdir = wingpanel_dep.get_variable('indicatorsdir', pkgconfig_define: ['libdir', libdir])
 
 libecal_dep = dependency('libecal-2.0', required: false)
 if libecal_dep.found()
@@ -35,11 +34,11 @@ if libecal_dep.found()
 else
     libecal_dep = dependency('libecal-1.2', version: '>=3.8.0')
     libical_dep = dependency('libical')
-    add_project_arguments('--vapidir', join_paths(meson.current_source_dir(), 'vapi'), language: 'vala')
+    add_project_arguments('--vapidir', meson.current_source_dir() / 'vapi', language: 'vala')
 endif
 
 config_data = configuration_data()
-config_data.set_quoted('LOCALEDIR', join_paths(get_option('prefix'), get_option('localedir')))
+config_data.set_quoted('LOCALEDIR', prefix / get_option('localedir'))
 config_data.set_quoted('GETTEXT_PACKAGE', meson.project_name() + '-indicator')
 config_file = configure_file(
     input: 'src/Config.vala.in',
