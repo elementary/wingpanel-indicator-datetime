@@ -3,31 +3,33 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-07-17 17:58+0000\n"
-"PO-Revision-Date: 2016-09-15 18:59+0000\n"
-"Last-Translator: Cheng-Chia Tseng <pswo10680@gmail.com>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"PO-Revision-Date: 2024-09-05 16:16+0000\n"
+"Last-Translator: Kisaragi Hiu <mail@kisaragi-hiu.com>\n"
+"Language-Team: Chinese (Traditional) <https://l10n.elementary.io/projects/"
+"wingpanel/wingpanel-indicator-datetime/zh_Hant/>\n"
+"Language: zh_TW\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Weblate 5.6.2\n"
 "X-Launchpad-Export-Date: 2017-02-19 05:58+0000\n"
-"X-Generator: Launchpad (build 18326)\n"
 
 #: src/Indicator.vala:53
 msgid "Middle-click to open Calendar"
-msgstr ""
+msgstr "中鍵點擊來開啟行事曆"
 
 #: src/Indicator.vala:64 src/Widgets/calendar/CalendarView.vala:255
 msgid "Unable To Launch Calendar"
-msgstr ""
+msgstr "無法啟動行事曆"
 
 #: src/Indicator.vala:65 src/Widgets/calendar/CalendarView.vala:256
 msgid "The program \"io.elementary.calendar\" may not be installed"
-msgstr ""
+msgstr "「io.elementary.calendar」程式可能沒有安裝"
 
 #: src/Indicator.vala:88
 msgid "No events this day"
-msgstr ""
+msgstr "這一天沒有活動"
 
 #: src/Indicator.vala:115
 msgid "Date & Time Settings…"
@@ -35,30 +37,30 @@ msgstr "日期與時間設定…"
 
 #: src/Indicator.vala:155
 msgid "Unable To launch Tasks"
-msgstr ""
+msgstr "無法啟動待辦事項"
 
 #: src/Indicator.vala:156
 msgid "The program \"io.elementary.tasks\" may not be installed"
-msgstr ""
+msgstr "「io.elementary.tasks」程式可能沒有安裝"
 
 #: src/Indicator.vala:189
 msgid "During the Day"
-msgstr ""
+msgstr "當日"
 
 #: src/Indicator.vala:197
 msgid "All Day"
-msgstr ""
+msgstr "整天"
 
 #: src/Widgets/calendar/CalendarView.vala:39
 #: src/Widgets/calendar/CalendarView.vala:141
 #: src/Widgets/calendar/CalendarView.vala:176
 #: src/Widgets/calendar/CalendarView.vala:237
 msgid "%OB, %Y"
-msgstr ""
+msgstr "%Y年%-m月"
 
 #: src/Widgets/calendar/CalendarView.vala:56
 msgid "Go to today's date"
-msgstr ""
+msgstr "前往今天的日期"
 
 #~ msgid "Date & Time"
 #~ msgstr "日期與時間"
