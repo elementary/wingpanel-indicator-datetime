@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: extra\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-07-17 17:58+0000\n"
-"PO-Revision-Date: 2023-04-15 14:59+0000\n"
+"PO-Revision-Date: 2024-09-13 00:01+0000\n"
 "Last-Translator: NorwayFun <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <https://l10n.elementary.io/projects/wingpanel/"
 "indicator-datetime-extra/ka/>\n"
@@ -17,11 +17,11 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.16.4\n"
+"X-Generator: Weblate 5.6.2\n"
 
 #: data/datetime.metainfo.xml.in:11
 msgid "Date &amp; Time Indicator"
-msgstr ""
+msgstr "თარიღისა &amp; და დროის მაჩვენებელი"
 
 #: data/datetime.metainfo.xml.in:12
 msgid "The date and time indicator"
@@ -72,11 +72,11 @@ msgstr ""
 
 #: data/datetime.metainfo.xml.in:88
 msgid "Add multitouch gestures"
-msgstr ""
+msgstr "მუტლითაჩის ჟესტების დამატება"
 
 #: data/datetime.metainfo.xml.in:89
 msgid "Improve time zone handling"
-msgstr ""
+msgstr "დროის სარტყლების დამუშავების გაუმჯობესება"
 
 #~ msgid "elementary, Inc."
 #~ msgstr "elementary, Inc."
