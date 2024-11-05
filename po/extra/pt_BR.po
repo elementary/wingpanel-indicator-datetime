@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: extra\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-07-17 17:58+0000\n"
-"PO-Revision-Date: 2020-05-31 16:11+0000\n"
-"Last-Translator: Rodrigo Oliveira <rod.oliveira@gmail.com>\n"
+"PO-Revision-Date: 2024-11-05 19:01+0000\n"
+"Last-Translator: Guilherme Faura <guilhermefaura@gmail.com>\n"
 "Language-Team: Portuguese (Brazil) <https://l10n.elementary.io/projects/"
 "wingpanel/indicator-datetime-extra/pt_BR/>\n"
 "Language: pt_BR\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 3.9.1\n"
+"X-Generator: Weblate 5.6.2\n"
 
 #: data/datetime.metainfo.xml.in:11
 msgid "Date &amp; Time Indicator"
@@ -52,7 +52,7 @@ msgstr ""
 
 #: data/datetime.metainfo.xml.in:58 data/datetime.metainfo.xml.in:73
 msgid "Fixes:"
-msgstr ""
+msgstr "Correções:"
 
 #: data/datetime.metainfo.xml.in:60 data/datetime.metainfo.xml.in:75
 msgid "Update current day when opening"
