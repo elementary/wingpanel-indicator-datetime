@@ -62,9 +62,9 @@ namespace DateTime.Widgets {
             };
 
             var week_sep_revealer = new Gtk.Revealer () {
-                transition_type = Gtk.RevealerTransitionType.SLIDE_LEFT
+                transition_type = Gtk.RevealerTransitionType.SLIDE_LEFT,
+                child = week_sep
             };
-            week_sep_revealer.add (week_sep);
 
             hexpand = true;
             attach (week_sep_revealer, 1, 1, 1, 6);
@@ -255,9 +255,9 @@ namespace DateTime.Widgets {
                 week_label.get_style_context ().add_class (Granite.STYLE_CLASS_H4_LABEL);
 
                 week_labels[c] = new Gtk.Revealer () {
-                    transition_type = Gtk.RevealerTransitionType.SLIDE_LEFT
+                    transition_type = Gtk.RevealerTransitionType.SLIDE_LEFT,
+                    child = week_label
                 };
-                week_labels[c].add (week_label);
                 week_labels[c].show_all ();
 
                 DateTime.Indicator.settings.bind ("show-weeks", week_labels[c], "reveal-child", GLib.SettingsBindFlags.DEFAULT);
