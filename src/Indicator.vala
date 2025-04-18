@@ -85,9 +85,9 @@ public class DateTime.Indicator : Wingpanel.Indicator {
             component_listbox.set_sort_func (sort_function);
 
             var scrolled_window = new Gtk.ScrolledWindow (null, null) {
-                hscrollbar_policy = Gtk.PolicyType.NEVER
+                hscrollbar_policy = Gtk.PolicyType.NEVER,
+                child = component_listbox
             };
-            scrolled_window.add (component_listbox);
 
             var settings_button = new Gtk.ModelButton () {
                 text = _("Date & Time Settings…")
@@ -135,8 +135,8 @@ public class DateTime.Indicator : Wingpanel.Indicator {
                             "dialog-error"
                         );
                         dialog.show_error_details (e.message);
-                        dialog.run ();
-                        dialog.destroy ();
+                        dialog.response.connect ((_dialog, response) => _dialog.destroy ());
+                        dialog.present ();
                     }
                     close ();
                 }
