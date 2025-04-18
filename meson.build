@@ -23,7 +23,7 @@ gresource = gnome.compile_resources(
     source_dir: 'data'
 )
 
-wingpanel_dep = dependency('wingpanel')
+wingpanel_dep = dependency('wingpanel-8')
 wingpanel_indicatorsdir = wingpanel_dep.get_variable('indicatorsdir', pkgconfig_define: ['libdir', libdir])
 
 libecal_dep = dependency('libecal-2.0', required: false)
@@ -64,11 +64,11 @@ shared_module(
     dependencies: [
         dependency('glib-2.0'),
         dependency('gobject-2.0'),
-        dependency('granite', version: '>=6.0.0'),
-        dependency('gtk+-3.0'),
+        dependency('granite-7'),
+        dependency('gtk4'),
         libecal_dep,
         dependency('libedataserver-1.2'),
-        dependency('libhandy-1'),
+        dependency('libadwaita-1'),
         libical_dep,
         wingpanel_dep,
     ],
