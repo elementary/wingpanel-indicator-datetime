@@ -32,7 +32,7 @@ interface FDO.Accounts : Object {
     public abstract string find_user_by_name (string username) throws GLib.Error;
 }
 
-public class DateTime.Services.TimeManager : Gtk.Calendar {
+public class DateTime.Services.TimeManager : Object {
     private static TimeManager? instance = null;
 
     public signal void minute_changed ();

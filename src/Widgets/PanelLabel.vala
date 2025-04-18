@@ -32,17 +32,17 @@ public class DateTime.Widgets.PanelLabel : Gtk.Box {
         };
 
         var date_revealer = new Gtk.Revealer () {
-            transition_type = Gtk.RevealerTransitionType.SLIDE_LEFT
+            transition_type = Gtk.RevealerTransitionType.SLIDE_LEFT,
+            child = date_label
         };
-        date_revealer.add (date_label);
 
         time_label = new Gtk.Label (null) {
             use_markup = true
         };
 
         valign = Gtk.Align.CENTER;
-        add (date_revealer);
-        add (time_label);
+        append (date_revealer);
+        append (time_label);
 
         var clock_settings = new GLib.Settings ("io.elementary.desktop.wingpanel.datetime");
         clock_settings.bind ("clock-format", this, "clock-format", SettingsBindFlags.DEFAULT);
@@ -57,6 +57,12 @@ public class DateTime.Widgets.PanelLabel : Gtk.Box {
         time_manager = Services.TimeManager.get_default ();
         time_manager.minute_changed.connect (update_labels);
         time_manager.notify["is-12h"].connect (update_labels);
+
+        var gesture_click = new Gtk.GestureClick () {
+            button = Gdk.BUTTON_MIDDLE
+        };
+        gesture_click.pressed.connect (on_pressed);
+        add_controller (gesture_click);
     }
 
     private void update_labels () {
@@ -71,5 +77,21 @@ public class DateTime.Widgets.PanelLabel : Gtk.Box {
 
         string time_format = Granite.DateTime.get_default_time_format (time_manager.is_12h, clock_show_seconds);
         time_label.label = GLib.Markup.printf_escaped ("<span font_features='tnum'>%s</span>", time_manager.format (time_format));
+    }
+
+    private void on_pressed () {
+        var command = "io.elementary.calendar --show-day %s".printf (new GLib.DateTime.now_local ().format ("%F"));
+        try {
+            var appinfo = AppInfo.create_from_commandline (command, null, AppInfoCreateFlags.NONE);
+            appinfo.launch_uris (null, null);
+        } catch (GLib.Error e) {
+            var dialog = new Granite.MessageDialog.with_image_from_icon_name (
+                _("Unable To Launch Calendar"),
+                _("The program \"io.elementary.calendar\" may not be installed"),
+                "dialog-error"
+            );
+            dialog.show_error_details (e.message);
+            dialog.present ();
+        }
     }
 }

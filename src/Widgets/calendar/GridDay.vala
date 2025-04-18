@@ -21,7 +21,7 @@
 /**
  * Represents a single day on the grid.
  */
-public class DateTime.Widgets.GridDay : Gtk.EventBox {
+public class DateTime.Widgets.GridDay : Granite.Bin {
     /*
      * Event emitted when the day is double clicked or the ENTER key is pressed.
      */
@@ -62,22 +62,25 @@ public class DateTime.Widgets.GridDay : Gtk.EventBox {
             valign = Gtk.Align.CENTER
 
         };
-        box.add (label);
-        box.add (event_box);
+        box.append (label);
+        box.append (event_box);
 
-        can_focus = true;
-        events |= Gdk.EventMask.BUTTON_PRESS_MASK;
-        events |= Gdk.EventMask.KEY_PRESS_MASK;
+        focusable = true;
         set_css_name ("grid-day");
         halign = Gtk.Align.CENTER;
         hexpand = true;
         get_style_context ().add_provider (provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
-        add (box);
-        show_all ();
+        child = box;
 
         // Signals and handlers
-        button_press_event.connect (on_button_press);
-        key_press_event.connect (on_key_press);
+        var click_gesture = new Gtk.GestureClick ();
+        click_gesture.pressed.connect (on_button_press);
+        add_controller (click_gesture);
+
+        var key_controller = new Gtk.EventControllerKey ();
+        key_controller.key_pressed.connect (on_key_press);
+        add_controller (key_controller);
+
         bind_property ("date", label, "label", GLib.BindingFlags.SYNC_CREATE, (binding, from_value, ref to_value) => {
             unowned var new_date = (GLib.DateTime) from_value.get_boxed ();
             to_value.take_string (new_date.get_day_of_month ().to_string ());
@@ -113,7 +116,7 @@ public class DateTime.Widgets.GridDay : Gtk.EventBox {
 
             component_dots[component_uid] = event_dot;
 
-            event_box.add (event_dot);
+            event_box.append (event_dot);
         }
     }
 
@@ -138,11 +141,14 @@ public class DateTime.Widgets.GridDay : Gtk.EventBox {
         grab_focus ();
     }
 
-    public override void grab_focus () {
+    public override bool grab_focus () {
         if (valid_grab) {
             base.grab_focus ();
             valid_grab = false;
+            return true;
         }
+
+        return false;
     }
 
     public void sensitive_container (bool sens) {
@@ -150,17 +156,16 @@ public class DateTime.Widgets.GridDay : Gtk.EventBox {
         event_box.sensitive = sens;
     }
 
-    private bool on_button_press (Gdk.EventButton event) {
-        if (event.type == Gdk.EventType.2BUTTON_PRESS && event.button == Gdk.BUTTON_PRIMARY) {
+    private void on_button_press (int n_press) {
+        if (n_press == 2) {
             on_event_add (date);
         }
         valid_grab = true;
         grab_focus ();
-        return false;
     }
 
-    private bool on_key_press (Gdk.EventKey event) {
-        if (event.keyval == Gdk.keyval_from_name ("Return") ) {
+    private bool on_key_press (uint keyval) {
+        if (keyval == Gdk.keyval_from_name ("Return") ) {
             on_event_add (date);
             return true;
         }
