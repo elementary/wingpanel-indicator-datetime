@@ -36,6 +36,9 @@ public class DateTime.Widgets.GridDay : Gtk.EventBox {
     private Gtk.Label label;
     private bool valid_grab = false;
 
+    private Gtk.GestureMultiPress click_gesture;
+    private Gtk.EventControllerKey key_controller;
+
     public GridDay (GLib.DateTime date) {
         Object (date: date);
     }
@@ -76,8 +79,12 @@ public class DateTime.Widgets.GridDay : Gtk.EventBox {
         show_all ();
 
         // Signals and handlers
-        button_press_event.connect (on_button_press);
-        key_press_event.connect (on_key_press);
+        click_gesture = new Gtk.GestureMultiPress (this);
+        click_gesture.pressed.connect (on_button_press);
+
+        key_controller = new Gtk.EventControllerKey (this);
+        key_controller.key_pressed.connect (on_key_press);
+
         bind_property ("date", label, "label", GLib.BindingFlags.SYNC_CREATE, (binding, from_value, ref to_value) => {
             unowned var new_date = (GLib.DateTime) from_value.get_boxed ();
             to_value.take_string (new_date.get_day_of_month ().to_string ());
@@ -150,17 +157,16 @@ public class DateTime.Widgets.GridDay : Gtk.EventBox {
         event_box.sensitive = sens;
     }
 
-    private bool on_button_press (Gdk.EventButton event) {
-        if (event.type == Gdk.EventType.2BUTTON_PRESS && event.button == Gdk.BUTTON_PRIMARY) {
+    private void on_button_press (int n_press) {
+        if (n_press == 2) {
             on_event_add (date);
         }
         valid_grab = true;
         grab_focus ();
-        return false;
     }
 
-    private bool on_key_press (Gdk.EventKey event) {
-        if (event.keyval == Gdk.keyval_from_name ("Return") ) {
+    private bool on_key_press (uint keyval) {
+        if (keyval == Gdk.keyval_from_name ("Return") ) {
             on_event_add (date);
             return true;
         }
