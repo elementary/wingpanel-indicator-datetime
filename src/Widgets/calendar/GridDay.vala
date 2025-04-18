@@ -21,7 +21,7 @@
 /**
  * Represents a single day on the grid.
  */
-public class DateTime.Widgets.GridDay : Gtk.EventBox {
+public class DateTime.Widgets.GridDay : Granite.Bin {
     /*
      * Event emitted when the day is double clicked or the ENTER key is pressed.
      */
@@ -65,18 +65,15 @@ public class DateTime.Widgets.GridDay : Gtk.EventBox {
             valign = Gtk.Align.CENTER
 
         };
-        box.add (label);
-        box.add (event_box);
+        box.append (label);
+        box.append (event_box);
 
-        can_focus = true;
-        events |= Gdk.EventMask.BUTTON_PRESS_MASK;
-        events |= Gdk.EventMask.KEY_PRESS_MASK;
+        focusable = true;
         set_css_name ("grid-day");
         halign = Gtk.Align.CENTER;
         hexpand = true;
         get_style_context ().add_provider (provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
-        add (box);
-        show_all ();
+        child = box;
 
         // Signals and handlers
         click_gesture = new Gtk.GestureMultiPress (this);
@@ -120,7 +117,7 @@ public class DateTime.Widgets.GridDay : Gtk.EventBox {
 
             component_dots[component_uid] = event_dot;
 
-            event_box.add (event_dot);
+            event_box.append (event_dot);
         }
     }
 
@@ -145,11 +142,14 @@ public class DateTime.Widgets.GridDay : Gtk.EventBox {
         grab_focus ();
     }
 
-    public override void grab_focus () {
+    public override bool grab_focus () {
         if (valid_grab) {
             base.grab_focus ();
             valid_grab = false;
+            return true;
         }
+
+        return false;
     }
 
     public void sensitive_container (bool sens) {
