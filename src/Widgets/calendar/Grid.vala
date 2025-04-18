@@ -92,8 +92,6 @@ namespace DateTime.Widgets {
                     data[date_hash].add_component_dot (source, ical);
                 }
             }
-
-            show_all ();
         }
 
         private void remove_component_dots (E.Source source, Gee.Collection<ECal.Component> components) {
@@ -187,14 +185,12 @@ namespace DateTime.Widgets {
                     /* Still update_day to get the color of etc. right */
                     day = update_day (new GridDay (new_date), new_date, today, month_start);
                     day.on_event_add.connect ((date) => on_event_add (date));
-                    day.focus_in_event.connect ((event) => {
-                        on_day_focus_in (day);
 
-                        return false;
-                    });
+                    var focus_controller = new Gtk.EventControllerFocus ();
+                    focus_controller.enter.connect ((controller) => on_day_focus_in ((GridDay) controller.widget));
+                    day.add_controller (focus_controller);
 
                     attach (day, col + 2, row);
-                    day.show_all ();
                 }
 
                 col = (col + 1) % 7;
@@ -258,7 +254,6 @@ namespace DateTime.Widgets {
                     transition_type = Gtk.RevealerTransitionType.SLIDE_LEFT,
                     child = week_label
                 };
-                week_labels[c].show_all ();
 
                 DateTime.Indicator.settings.bind ("show-weeks", week_labels[c], "reveal-child", GLib.SettingsBindFlags.DEFAULT);
 
@@ -287,12 +282,10 @@ namespace DateTime.Widgets {
                 day.name = "today";
                 day.get_style_context ().add_class (Granite.STYLE_CLASS_ACCENT);
                 day.receives_default = true;
-                day.show_all ();
             } else if (day.name == "today") {
                 day.name = "";
                 day.get_style_context ().remove_class (Granite.STYLE_CLASS_ACCENT);
                 day.receives_default = false;
-                day.show_all ();
             }
         }
 
