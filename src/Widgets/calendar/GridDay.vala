@@ -36,9 +36,6 @@ public class DateTime.Widgets.GridDay : Granite.Bin {
     private Gtk.Label label;
     private bool valid_grab = false;
 
-    private Gtk.GestureMultiPress click_gesture;
-    private Gtk.EventControllerKey key_controller;
-
     public GridDay (GLib.DateTime date) {
         Object (date: date);
     }
@@ -76,11 +73,13 @@ public class DateTime.Widgets.GridDay : Granite.Bin {
         child = box;
 
         // Signals and handlers
-        click_gesture = new Gtk.GestureMultiPress (this);
+        var click_gesture = new Gtk.GestureClick ();
         click_gesture.pressed.connect (on_button_press);
+        add_controller (click_gesture);
 
-        key_controller = new Gtk.EventControllerKey (this);
+        var key_controller = new Gtk.EventControllerKey ();
         key_controller.key_pressed.connect (on_key_press);
+        add_controller (key_controller);
 
         bind_property ("date", label, "label", GLib.BindingFlags.SYNC_CREATE, (binding, from_value, ref to_value) => {
             unowned var new_date = (GLib.DateTime) from_value.get_boxed ();
