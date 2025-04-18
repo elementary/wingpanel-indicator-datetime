@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-07-17 17:58+0000\n"
+"POT-Creation-Date: 2025-04-18 22:02+0000\n"
 "PO-Revision-Date: 2021-12-11 16:46+0000\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: Hebrew <https://l10n.elementary.io/projects/wingpanel/"
@@ -20,37 +20,37 @@ msgstr ""
 msgid "Middle-click to open Calendar"
 msgstr "לחיצה אמצעית פותחת את לוח השנה"
 
-#: src/Indicator.vala:64 src/Widgets/calendar/CalendarView.vala:255
-msgid "Unable To Launch Calendar"
-msgstr "לא ניתן לטעון את לוח השנה"
-
-#: src/Indicator.vala:65 src/Widgets/calendar/CalendarView.vala:256
-msgid "The program \"io.elementary.calendar\" may not be installed"
-msgstr "יתכן כי התכנית „io.elementary.calendar” לא מותקנת"
-
-#: src/Indicator.vala:88
+#: src/Indicator.vala:66
 msgid "No events this day"
 msgstr "אין אירועים ביום הזה"
 
-#: src/Indicator.vala:115
+#: src/Indicator.vala:93
 msgid "Date & Time Settings…"
 msgstr "הגדרות תאריך ושעה…"
 
-#: src/Indicator.vala:155
+#: src/Indicator.vala:133
 msgid "Unable To launch Tasks"
 msgstr "לא ניתן לטעון משימות"
 
-#: src/Indicator.vala:156
+#: src/Indicator.vala:134
 msgid "The program \"io.elementary.tasks\" may not be installed"
 msgstr "יתכן כי התכנית „io.elementary.tasks” לא מותקנת"
 
-#: src/Indicator.vala:189
+#: src/Indicator.vala:167
 msgid "During the Day"
 msgstr "במהלך היום"
 
-#: src/Indicator.vala:197
+#: src/Indicator.vala:175
 msgid "All Day"
 msgstr "כל היום"
+
+#: src/Widgets/PanelLabel.vala:90 src/Widgets/calendar/CalendarView.vala:255
+msgid "Unable To Launch Calendar"
+msgstr "לא ניתן לטעון את לוח השנה"
+
+#: src/Widgets/PanelLabel.vala:91 src/Widgets/calendar/CalendarView.vala:256
+msgid "The program \"io.elementary.calendar\" may not be installed"
+msgstr "יתכן כי התכנית „io.elementary.calendar” לא מותקנת"
 
 #: src/Widgets/calendar/CalendarView.vala:39
 #: src/Widgets/calendar/CalendarView.vala:141

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-07-17 17:58+0000\n"
+"POT-Creation-Date: 2025-04-18 22:02+0000\n"
 "PO-Revision-Date: 2023-06-01 14:07+0000\n"
 "Last-Translator: Faisal Rachmadin <frachmadin@users.noreply.l10n.elementary."
 "io>\n"
@@ -20,37 +20,37 @@ msgstr ""
 msgid "Middle-click to open Calendar"
 msgstr ""
 
-#: src/Indicator.vala:64 src/Widgets/calendar/CalendarView.vala:255
-msgid "Unable To Launch Calendar"
-msgstr "Tidak Dapat Membuka Kalender"
-
-#: src/Indicator.vala:65 src/Widgets/calendar/CalendarView.vala:256
-msgid "The program \"io.elementary.calendar\" may not be installed"
-msgstr ""
-
-#: src/Indicator.vala:88
+#: src/Indicator.vala:66
 msgid "No events this day"
 msgstr ""
 
-#: src/Indicator.vala:115
+#: src/Indicator.vala:93
 msgid "Date & Time Settings…"
 msgstr "Pengaturan Tanggal & Waktu…"
 
-#: src/Indicator.vala:155
+#: src/Indicator.vala:133
 msgid "Unable To launch Tasks"
 msgstr ""
 
-#: src/Indicator.vala:156
+#: src/Indicator.vala:134
 msgid "The program \"io.elementary.tasks\" may not be installed"
 msgstr ""
 
-#: src/Indicator.vala:189
+#: src/Indicator.vala:167
 msgid "During the Day"
 msgstr ""
 
-#: src/Indicator.vala:197
+#: src/Indicator.vala:175
 msgid "All Day"
 msgstr "Semua Hari"
+
+#: src/Widgets/PanelLabel.vala:90 src/Widgets/calendar/CalendarView.vala:255
+msgid "Unable To Launch Calendar"
+msgstr "Tidak Dapat Membuka Kalender"
+
+#: src/Widgets/PanelLabel.vala:91 src/Widgets/calendar/CalendarView.vala:256
+msgid "The program \"io.elementary.calendar\" may not be installed"
+msgstr ""
 
 #: src/Widgets/calendar/CalendarView.vala:39
 #: src/Widgets/calendar/CalendarView.vala:141

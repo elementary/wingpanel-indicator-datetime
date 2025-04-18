@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-07-17 17:58+0000\n"
+"POT-Creation-Date: 2025-04-18 22:02+0000\n"
 "PO-Revision-Date: 2019-08-29 17:23+0000\n"
 "Last-Translator: Rodrigo Oliveira <rod.oliveira@gmail.com>\n"
 "Language-Team: Portuguese (Brazil) <https://l10n.elementary.io/projects/"
@@ -19,43 +19,43 @@ msgstr ""
 msgid "Middle-click to open Calendar"
 msgstr ""
 
-#: src/Indicator.vala:64 src/Widgets/calendar/CalendarView.vala:255
-msgid "Unable To Launch Calendar"
-msgstr "Não é possível iniciar o Calendário"
-
-#: src/Indicator.vala:65 src/Widgets/calendar/CalendarView.vala:256
-msgid "The program \"io.elementary.calendar\" may not be installed"
-msgstr "O programa \"io.elementary.calendar\" pode não estar instalado"
-
-#: src/Indicator.vala:88
+#: src/Indicator.vala:66
 #, fuzzy
 #| msgid "No Events on This Day"
 msgid "No events this day"
 msgstr "Não há eventos para este dia"
 
-#: src/Indicator.vala:115
+#: src/Indicator.vala:93
 msgid "Date & Time Settings…"
 msgstr "Configurações de Data e Hora…"
 
-#: src/Indicator.vala:155
+#: src/Indicator.vala:133
 #, fuzzy
 #| msgid "Unable To Launch Calendar"
 msgid "Unable To launch Tasks"
 msgstr "Não é possível iniciar o Calendário"
 
-#: src/Indicator.vala:156
+#: src/Indicator.vala:134
 #, fuzzy
 #| msgid "The program \"io.elementary.calendar\" may not be installed"
 msgid "The program \"io.elementary.tasks\" may not be installed"
 msgstr "O programa \"io.elementary.calendar\" pode não estar instalado"
 
-#: src/Indicator.vala:189
+#: src/Indicator.vala:167
 msgid "During the Day"
 msgstr "Durante o dia"
 
-#: src/Indicator.vala:197
+#: src/Indicator.vala:175
 msgid "All Day"
 msgstr "Dia inteiro"
+
+#: src/Widgets/PanelLabel.vala:90 src/Widgets/calendar/CalendarView.vala:255
+msgid "Unable To Launch Calendar"
+msgstr "Não é possível iniciar o Calendário"
+
+#: src/Widgets/PanelLabel.vala:91 src/Widgets/calendar/CalendarView.vala:256
+msgid "The program \"io.elementary.calendar\" may not be installed"
+msgstr "O programa \"io.elementary.calendar\" pode não estar instalado"
 
 #: src/Widgets/calendar/CalendarView.vala:39
 #: src/Widgets/calendar/CalendarView.vala:141

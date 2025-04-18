@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-07-17 17:58+0000\n"
+"POT-Creation-Date: 2025-04-18 22:02+0000\n"
 "PO-Revision-Date: 2024-06-15 01:16+0000\n"
 "Last-Translator: Italo Felipe Capasso Ballesteros <edwood.grant@gmail.com>\n"
 "Language-Team: Spanish <https://l10n.elementary.io/projects/wingpanel/"
@@ -19,37 +19,37 @@ msgstr ""
 msgid "Middle-click to open Calendar"
 msgstr "Haga clic con el botón central del ratón para abrir Calendario"
 
-#: src/Indicator.vala:64 src/Widgets/calendar/CalendarView.vala:255
-msgid "Unable To Launch Calendar"
-msgstr "No se puede iniciar Calendario"
-
-#: src/Indicator.vala:65 src/Widgets/calendar/CalendarView.vala:256
-msgid "The program \"io.elementary.calendar\" may not be installed"
-msgstr "Es posible que el programa «io.elementary.calendar» no esté instalado"
-
-#: src/Indicator.vala:88
+#: src/Indicator.vala:66
 msgid "No events this day"
 msgstr "No hay eventos el día de hoy"
 
-#: src/Indicator.vala:115
+#: src/Indicator.vala:93
 msgid "Date & Time Settings…"
 msgstr "Configuración de Fecha y hora…"
 
-#: src/Indicator.vala:155
+#: src/Indicator.vala:133
 msgid "Unable To launch Tasks"
 msgstr "No se puede iniciar Tareas"
 
-#: src/Indicator.vala:156
+#: src/Indicator.vala:134
 msgid "The program \"io.elementary.tasks\" may not be installed"
 msgstr "Es posible que el programa «io.elementary.tasks» no esté instalado"
 
-#: src/Indicator.vala:189
+#: src/Indicator.vala:167
 msgid "During the Day"
 msgstr "Durante el día"
 
-#: src/Indicator.vala:197
+#: src/Indicator.vala:175
 msgid "All Day"
 msgstr "Todo el día"
+
+#: src/Widgets/PanelLabel.vala:90 src/Widgets/calendar/CalendarView.vala:255
+msgid "Unable To Launch Calendar"
+msgstr "No se puede iniciar Calendario"
+
+#: src/Widgets/PanelLabel.vala:91 src/Widgets/calendar/CalendarView.vala:256
+msgid "The program \"io.elementary.calendar\" may not be installed"
+msgstr "Es posible que el programa «io.elementary.calendar» no esté instalado"
 
 #: src/Widgets/calendar/CalendarView.vala:39
 #: src/Widgets/calendar/CalendarView.vala:141

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-07-17 17:58+0000\n"
+"POT-Creation-Date: 2025-04-18 22:02+0000\n"
 "PO-Revision-Date: 2022-05-24 18:54+0000\n"
 "Last-Translator: Hugo Carvalho <hugokarvalho@hotmail.com>\n"
 "Language-Team: Portuguese <https://l10n.elementary.io/projects/wingpanel/"
@@ -19,37 +19,37 @@ msgstr ""
 msgid "Middle-click to open Calendar"
 msgstr "Botão do meio do rato para abrir o Calendário"
 
-#: src/Indicator.vala:64 src/Widgets/calendar/CalendarView.vala:255
-msgid "Unable To Launch Calendar"
-msgstr "Não é possível lançar o calendário"
-
-#: src/Indicator.vala:65 src/Widgets/calendar/CalendarView.vala:256
-msgid "The program \"io.elementary.calendar\" may not be installed"
-msgstr "O programa \"io.elementary.calendar\" pode não estar instalado"
-
-#: src/Indicator.vala:88
+#: src/Indicator.vala:66
 msgid "No events this day"
 msgstr "Sem eventos neste dia"
 
-#: src/Indicator.vala:115
+#: src/Indicator.vala:93
 msgid "Date & Time Settings…"
 msgstr "Definições de Data e Hora…"
 
-#: src/Indicator.vala:155
+#: src/Indicator.vala:133
 msgid "Unable To launch Tasks"
 msgstr "Não é possível lançar o Tarefas"
 
-#: src/Indicator.vala:156
+#: src/Indicator.vala:134
 msgid "The program \"io.elementary.tasks\" may not be installed"
 msgstr "O programa \"io.elementary.tasks\" pode não estar instalado"
 
-#: src/Indicator.vala:189
+#: src/Indicator.vala:167
 msgid "During the Day"
 msgstr "Durante o dia"
 
-#: src/Indicator.vala:197
+#: src/Indicator.vala:175
 msgid "All Day"
 msgstr "Todo o dia"
+
+#: src/Widgets/PanelLabel.vala:90 src/Widgets/calendar/CalendarView.vala:255
+msgid "Unable To Launch Calendar"
+msgstr "Não é possível lançar o calendário"
+
+#: src/Widgets/PanelLabel.vala:91 src/Widgets/calendar/CalendarView.vala:256
+msgid "The program \"io.elementary.calendar\" may not be installed"
+msgstr "O programa \"io.elementary.calendar\" pode não estar instalado"
 
 #: src/Widgets/calendar/CalendarView.vala:39
 #: src/Widgets/calendar/CalendarView.vala:141
