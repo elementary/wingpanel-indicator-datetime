@@ -26,8 +26,6 @@ public class DateTime.Widgets.PanelLabel : Gtk.Box {
     public bool clock_show_seconds { get; set; }
     public bool clock_show_weekday { get; set; }
 
-    private Gtk.GestureMultiPress gesture_click;
-
     construct {
         date_label = new Gtk.Label (null) {
             margin_end = 12
@@ -60,10 +58,11 @@ public class DateTime.Widgets.PanelLabel : Gtk.Box {
         time_manager.minute_changed.connect (update_labels);
         time_manager.notify["is-12h"].connect (update_labels);
 
-        gesture_click = new Gtk.GestureMultiPress (this) {
+        var gesture_click = new Gtk.GestureClick () {
             button = Gdk.BUTTON_MIDDLE
         };
         gesture_click.pressed.connect (on_pressed);
+        add_controller (gesture_click);
     }
 
     private void update_labels () {
