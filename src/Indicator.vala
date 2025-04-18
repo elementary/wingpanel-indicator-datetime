@@ -52,28 +52,6 @@ public class DateTime.Indicator : Wingpanel.Indicator {
             panel_label = new Widgets.PanelLabel () {
                 tooltip_markup = Granite.TOOLTIP_SECONDARY_TEXT_MARKUP.printf (_("Middle-click to open Calendar"))
             };
-
-            panel_label.button_press_event.connect ((e) => {
-                if (e.button == Gdk.BUTTON_MIDDLE) {
-                    var command = "io.elementary.calendar --show-day %s".printf (new GLib.DateTime.now_local ().format ("%F"));
-                    try {
-                        var appinfo = AppInfo.create_from_commandline (command, null, AppInfoCreateFlags.NONE);
-                        appinfo.launch_uris (null, null);
-                    } catch (GLib.Error e) {
-                        var dialog = new Granite.MessageDialog.with_image_from_icon_name (
-                            _("Unable To Launch Calendar"),
-                            _("The program \"io.elementary.calendar\" may not be installed"),
-                            "dialog-error"
-                        );
-                        dialog.show_error_details (e.message);
-                        dialog.run ();
-                        dialog.destroy ();
-                    }
-                    return Gdk.EVENT_STOP;
-                }
-
-                return Gdk.EVENT_PROPAGATE;
-            });
         }
 
         return panel_label;
