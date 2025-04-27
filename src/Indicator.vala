@@ -88,8 +88,7 @@ public class DateTime.Indicator : Wingpanel.Indicator {
                 child = component_listbox
             };
 
-            var settings_button = new Gtk.Button.with_label (_("Date & Time Settings…"));
-            settings_button.add_css_class (Granite.STYLE_CLASS_MENUITEM);
+            var settings_button = new Wingpanel.PopoverMenuItem.with_text (_("Date & Time Settings…"));
 
             var sep = new Gtk.Separator (Gtk.Orientation.HORIZONTAL) {
                 margin_bottom = 3,
