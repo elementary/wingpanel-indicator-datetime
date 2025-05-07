@@ -198,7 +198,6 @@ public class DateTime.Widgets.CalendarView : Gtk.Grid {
         selected_date = today;
         if (start.equal (start_month) && !refresh) {
             position -= rel_postion;
-            //todo as prep
             carousel.scroll_to (carousel.get_nth_page (position), true);
         } else {
             /*reset Carousel if center_child != the grid of the month of today*/
@@ -246,13 +245,13 @@ public class DateTime.Widgets.CalendarView : Gtk.Grid {
             var appinfo = AppInfo.create_from_commandline (command, null, AppInfoCreateFlags.NONE);
             appinfo.launch_uris (null, null);
         } catch (GLib.Error e) {
-            //todo: gtk4 prep
             var dialog = new Granite.MessageDialog.with_image_from_icon_name (
                 _("Unable To Launch Calendar"),
                 _("The program \"io.elementary.calendar\" may not be installed"),
                 "dialog-error"
             );
             dialog.show_error_details (e.message);
+            dialog.response.connect (dialog.destroy);
             dialog.present ();
         }
     }
