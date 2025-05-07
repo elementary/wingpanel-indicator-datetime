@@ -71,10 +71,9 @@ public class DateTime.Indicator : Wingpanel.Indicator {
                 max_width_chars = 20,
                 justify = Gtk.Justification.CENTER
             };
-            placeholder_label.show_all ();
 
             var placeholder_style_context = placeholder_label.get_style_context ();
-            placeholder_style_context.add_class (Gtk.STYLE_CLASS_DIM_LABEL);
+            placeholder_style_context.add_class (Granite.STYLE_CLASS_DIM_LABEL);
             placeholder_style_context.add_class (Granite.STYLE_CLASS_H3_LABEL);
 
             component_listbox = new Gtk.ListBox () {
@@ -84,14 +83,12 @@ public class DateTime.Indicator : Wingpanel.Indicator {
             component_listbox.set_placeholder (placeholder_label);
             component_listbox.set_sort_func (sort_function);
 
-            var scrolled_window = new Gtk.ScrolledWindow (null, null) {
+            var scrolled_window = new Gtk.ScrolledWindow () {
                 hscrollbar_policy = Gtk.PolicyType.NEVER,
                 child = component_listbox
             };
 
-            var settings_button = new Gtk.ModelButton () {
-                text = _("Date & Time Settings…")
-            };
+            var settings_button = new Wingpanel.PopoverMenuItem.with_text (_("Date & Time Settings…"));
 
             var sep = new Gtk.Separator (Gtk.Orientation.HORIZONTAL) {
                 margin_bottom = 3,
@@ -213,9 +210,7 @@ public class DateTime.Indicator : Wingpanel.Indicator {
     }
 
     private bool update_components () {
-        foreach (unowned Gtk.Widget widget in component_listbox.get_children ()) {
-            widget.destroy ();
-        }
+        component_listbox.remove_all ();
 
         if (calendar.selected_date == null) {
             update_components_idle_source = 0;
@@ -237,7 +232,7 @@ public class DateTime.Indicator : Wingpanel.Indicator {
                     if (!components_on_day.has_key (component_uid)) {
                         components_on_day[component_uid] = new DateTime.ComponentRow (date, ical, source);
 
-                        component_listbox.add (components_on_day[component_uid]);
+                        component_listbox.append (components_on_day[component_uid]);
                     }
                 }
             }
@@ -251,13 +246,12 @@ public class DateTime.Indicator : Wingpanel.Indicator {
                     if (!components_on_day.has_key (component_uid)) {
                         components_on_day[component_uid] = new DateTime.ComponentRow (date, ical, source);
 
-                        component_listbox.add (components_on_day[component_uid]);
+                        component_listbox.append (components_on_day[component_uid]);
                     }
                 }
             }
         });
 
-        component_listbox.show_all ();
         update_components_idle_source = 0;
         return GLib.Source.REMOVE;
     }
