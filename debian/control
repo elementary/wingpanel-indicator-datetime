@@ -1,23 +1,23 @@
-Source: wingpanel-indicator-datetime
+Source: io.elementary.panel.datetime
 Section: x11
 Priority: optional
-Maintainer: Cody Garver <cody@elementary.io>
+Maintainer: elementary, Inc. <builds@elementary.io>
 Build-Depends: debhelper (>= 10.5.1),
                gettext,
                gobject-introspection,
-               libecal2.0-dev | libecal1.2-dev,
+               libadwaita-1-dev,
+               libecal2.0-dev,
                libedataserver1.2-dev,
                libical-dev,
-               libgranite-dev,
-               libgtk-3-dev (>= 3.12),
-               libhandy-1-dev,
-               libwingpanel-dev,
+               libgranite-7-dev,
+               libgtk-4-dev (>= 3.12),
+               libwingpanel-8-dev,
                meson (>= 0.57.0),
                valac (>= 0.40.3)
 Standards-Version: 4.1.1
-Homepage: https://github.com/elementary/wingpanel-indicator-datetime
+Homepage: https://github.com/elementary/panel-datetime
 
-Package: wingpanel-indicator-datetime
+Package: io.elementary.panel.datetime
 Architecture: any
 Depends: ${misc:Depends}, ${shlibs:Depends}
 Recommends: elementary-default-settings (>= 5.2)

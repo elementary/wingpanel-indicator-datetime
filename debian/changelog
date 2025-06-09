@@ -1,10 +1,10 @@
-wingpanel-indicator-datetime (2.4.2) jammy; urgency=medium
+io.elementary.panel.datetime (2.4.2) jammy; urgency=medium
 
   * Release 2.4.2
 
  -- Danielle Foré <danielle@elementary.io>  Wed, 21 Aug 2024 11:22:05 -0700
 
-wingpanel-indicator-datetime (2.4.1) bionic; urgency=medium
+io.elementary.panel.datetime (2.4.1) bionic; urgency=medium
 
   * Release 2.4.1 (#306)
   * Update translation files
@@ -14,7 +14,7 @@ wingpanel-indicator-datetime (2.4.1) bionic; urgency=medium
 
  -- Cody Garver <cody@elementary.io>  Wed, 19 Oct 2022 02:49:37 +0000
 
-wingpanel-indicator-datetime (2.4.0) bionic; urgency=medium
+io.elementary.panel.datetime (2.4.0) bionic; urgency=medium
 
   * Release 2.4.0 (#288)
   * meson: require granite >= 6.0.0 (#296)
@@ -31,7 +31,7 @@ wingpanel-indicator-datetime (2.4.0) bionic; urgency=medium
 
  -- Cody Garver <cody@elementary.io>  Sat, 11 Dec 2021 05:33:56 +0000
 
-wingpanel-indicator-datetime (2.3.1) bionic; urgency=medium
+io.elementary.panel.datetime (2.3.1) bionic; urgency=medium
 
   * Release 2.3.1 (#282)
   * Update translation files
@@ -44,7 +44,7 @@ wingpanel-indicator-datetime (2.3.1) bionic; urgency=medium
 
  -- Cody Garver <cody@elementary.io>  Fri, 29 Oct 2021 23:16:55 +0000
 
-wingpanel-indicator-datetime (2.3.0) bionic; urgency=medium
+io.elementary.panel.datetime (2.3.0) bionic; urgency=medium
 
   * Release 2.3.0 (#266)
   * Update translation files
@@ -68,7 +68,7 @@ wingpanel-indicator-datetime (2.3.0) bionic; urgency=medium
 
  -- Cody Garver <cody@elementary.io>  Wed, 14 Jul 2021 20:36:29 +0000
 
-wingpanel-indicator-datetime (2.2.5) bionic; urgency=medium
+io.elementary.panel.datetime (2.2.5) bionic; urgency=medium
 
   * Release 2.2.5 (#227)
   * Update translation files
@@ -79,7 +79,7 @@ wingpanel-indicator-datetime (2.2.5) bionic; urgency=medium
 
  -- Cody Garver <cody@elementary.io>  Tue, 30 Jun 2020 19:57:20 +0000
 
-wingpanel-indicator-datetime (2.2.4) bionic; urgency=medium
+io.elementary.panel.datetime (2.2.4) bionic; urgency=medium
 
   * Release 2.2.4 (#223)
   * Indicator: Remove vertical seperator (#220)
@@ -90,7 +90,7 @@ wingpanel-indicator-datetime (2.2.4) bionic; urgency=medium
 
  -- Cody Garver <cody@elementary.io>  Thu, 28 May 2020 18:55:06 +0000
 
-wingpanel-indicator-datetime (2.2.3) bionic; urgency=medium
+io.elementary.panel.datetime (2.2.3) bionic; urgency=medium
 
   * Release 2.2.3 (#215)
   * Update translation files
@@ -104,7 +104,7 @@ wingpanel-indicator-datetime (2.2.3) bionic; urgency=medium
 
  -- Cody Garver <cody@elementary.io>  Mon, 18 May 2020 03:13:05 +0000
 
-wingpanel-indicator-datetime (2.2.2) bionic; urgency=medium
+io.elementary.panel.datetime (2.2.2) bionic; urgency=medium
 
   * Release 2.2.2 (#205)
   * Update translation files
@@ -113,7 +113,7 @@ wingpanel-indicator-datetime (2.2.2) bionic; urgency=medium
 
  -- Cody Garver <cody@elementary.io>  Sun, 29 Mar 2020 19:42:08 +0000
 
-wingpanel-indicator-datetime (2.2.1) bionic; urgency=medium
+io.elementary.panel.datetime (2.2.1) bionic; urgency=medium
 
   * Release 2.2.1 (#201)
   * Utils: fix several crashes with event processing (#200)
@@ -121,7 +121,7 @@ wingpanel-indicator-datetime (2.2.1) bionic; urgency=medium
 
  -- Cody Garver <cody@elementary.io>  Tue, 26 Nov 2019 18:11:42 +0000
 
-wingpanel-indicator-datetime (2.2.0) bionic; urgency=medium
+io.elementary.panel.datetime (2.2.0) bionic; urgency=medium
 
   * Release 2.2.0 (#197)
   * Add AppData & translations (#196)
@@ -191,49 +191,49 @@ wingpanel-indicator-datetime (2.2.0) bionic; urgency=medium
 
  -- Cody Garver <cody@elementary.io>  Thu, 31 Oct 2019 20:39:07 +0000
 
-wingpanel-indicator-datetime (2.1.3) bionic; urgency=medium
+io.elementary.panel.datetime (2.1.3) bionic; urgency=medium
 
   * New upstream release.
 
  -- Cody Garver <cody@elementary.io>  Tue, 11 Dec 2018 19:04:37 -0600
 
-wingpanel-indicator-datetime (2.1.2) bionic; urgency=medium
+io.elementary.panel.datetime (2.1.2) bionic; urgency=medium
 
   * New upstream release.
 
  -- Cody Garver <cody@elementary.io>  Mon, 15 Oct 2018 21:35:35 -0500
 
-wingpanel-indicator-datetime (2.1.1) bionic; urgency=medium
+io.elementary.panel.datetime (2.1.1) bionic; urgency=medium
 
   * New upstream release.
 
  -- Cody Garver <cody@elementary.io>  Tue, 02 Oct 2018 06:40:06 -0500
 
-wingpanel-indicator-datetime (2.1.0) bionic; urgency=medium
+io.elementary.panel.datetime (2.1.0) bionic; urgency=medium
 
   * New upstream release..
 
  -- Cody Garver <cody@elementary.io>  Mon, 18 Jun 2018 21:20:08 -0500
 
-wingpanel-indicator-datetime (2.0.2) xenial; urgency=medium
+io.elementary.panel.datetime (2.0.2) xenial; urgency=medium
 
   * New upstream release.
 
  -- Cody Garver <cody@elementary.io>  Fri, 30 Jun 2017 11:13:11 +0100
 
-wingpanel-indicator-datetime (2.0.1) xenial; urgency=medium
+io.elementary.panel.datetime (2.0.1) xenial; urgency=medium
 
   * New upstream release.
 
  -- Cody Garver <cody@elementary.io>  Sun, 30 Oct 2016 23:09:58 +0100
 
-wingpanel-indicator-datetime (2.0) xenial; urgency=medium
+io.elementary.panel.datetime (2.0) xenial; urgency=medium
 
   * New upstream release.
 
  -- Cody Garver <cody@elementary.io>  Sun, 14 Aug 2016 03:30:05 -0500
 
-wingpanel-indicator-datetime (0.1) trusty; urgency=low
+io.elementary.panel.datetime (0.1) trusty; urgency=low
 
   * Initial Release.
 
