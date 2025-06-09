@@ -8,14 +8,14 @@ project(
 i18n = import('i18n')
 gnome = import('gnome')
 
-gettext_name = meson.project_name() + '-indicator'
+gettext_name = 'io.elementary.panel.' + meson.project_name()
 
 prefix = get_option('prefix')
 libdir = prefix / get_option('libdir')
 
 add_global_arguments('-DGETTEXT_PACKAGE="@0@"'.format(gettext_name), language:'c')
 add_project_arguments(['--vapidir', meson.current_source_dir() / 'vapi'], language: 'vala')
-add_project_arguments('-DG_LOG_DOMAIN="io.elementary.wingpanel.datetime"', language:'c')
+add_project_arguments('-DG_LOG_DOMAIN="io.elementary.panel.datetime"', language:'c')
 
 gresource = gnome.compile_resources(
     'gresource',
