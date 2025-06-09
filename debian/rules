@@ -15,5 +15,3 @@
 override_dh_missing:
 	dh_missing --fail-missing --list-missing
 
-override_dh_strip:
-	dh_strip -p wingpanel-indicator-datetime --dbgsym-migration='wingpanel-indicator-datetime-dbg (<< 2.0.2)'
