@@ -114,14 +114,10 @@ namespace Util {
                 @define-color accent_color %s;
             """.printf (color);
 
-            try {
-                var style_provider = new Gtk.CssProvider ();
-                style_provider.load_from_data (style, style.length);
+            var style_provider = new Gtk.CssProvider ();
+            style_provider.load_from_string (style);
 
-                providers[color] = style_provider;
-            } catch (Error e) {
-                critical ("Unable to set calendar color: %s", e.message);
-            }
+            providers[color] = style_provider;
         }
 
         unowned Gtk.StyleContext style_context = widget.get_style_context ();

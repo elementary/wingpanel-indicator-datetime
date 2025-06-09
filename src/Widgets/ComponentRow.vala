@@ -87,7 +87,7 @@ public class DateTime.ComponentRow : Gtk.ListBoxRow {
             icon_name = "alarm-symbolic";
         }
 
-        component_image = new Gtk.Image.from_icon_name (icon_name, Gtk.IconSize.MENU) {
+        component_image = new Gtk.Image.from_icon_name (icon_name) {
             valign = Gtk.Align.START
         };
 
@@ -112,7 +112,7 @@ public class DateTime.ComponentRow : Gtk.ListBoxRow {
             use_markup = true,
             xalign = 0,
         };
-        time_label.get_style_context ().add_class (Gtk.STYLE_CLASS_DIM_LABEL);
+        time_label.get_style_context ().add_class (Granite.STYLE_CLASS_DIM_LABEL);
 
         grid = new Gtk.Grid () {
             column_spacing = 6,
@@ -131,7 +131,7 @@ public class DateTime.ComponentRow : Gtk.ListBoxRow {
         grid_context.add_class ("event");
         grid_context.add_provider (css_provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
 
-        add (grid);
+        child = grid;
 
         set_color ();
         source_selectable.notify["color"].connect (set_color);

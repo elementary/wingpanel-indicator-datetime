@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Copyright 2019-2022 elementary, Inc. <contact@elementary.io> -->
 <component type="addon">
-  <id>io.elementary.wingpanel.datetime</id>
+  <id>io.elementary.panel.datetime</id>
   <extends>io.elementary.wingpanel</extends>
-  <translation type="gettext">datetime-indicator</translation>
+  <translation type="gettext">io.elementary.panel.datetime</translation>
   <metadata_license>CC0-1.0</metadata_license>
   <project_license>GPL-3.0+</project_license>
 

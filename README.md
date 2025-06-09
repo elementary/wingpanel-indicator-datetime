@@ -9,11 +9,12 @@
 You'll need the following dependencies:
 
 * gobject-introspection
+* libadwaita-1-dev
 * libecal1.2-dev
 * libedataserver1.2-dev
 * libical-dev
-* libgranite-dev >= 6.0.0
-* libwingpanel-dev
+* libgranite-7-dev >= 7.6.0
+* libwingpanel-8-dev
 * meson (>= 0.57.0)
 * valac >= 0.40.3
 

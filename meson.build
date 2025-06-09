@@ -8,14 +8,14 @@ project(
 i18n = import('i18n')
 gnome = import('gnome')
 
-gettext_name = meson.project_name() + '-indicator'
+gettext_name = 'io.elementary.panel.' + meson.project_name()
 
 prefix = get_option('prefix')
 libdir = prefix / get_option('libdir')
 
 add_global_arguments('-DGETTEXT_PACKAGE="@0@"'.format(gettext_name), language:'c')
 add_project_arguments(['--vapidir', meson.current_source_dir() / 'vapi'], language: 'vala')
-add_project_arguments('-DG_LOG_DOMAIN="io.elementary.wingpanel.datetime"', language:'c')
+add_project_arguments('-DG_LOG_DOMAIN="io.elementary.panel.datetime"', language:'c')
 
 gresource = gnome.compile_resources(
     'gresource',
@@ -23,7 +23,7 @@ gresource = gnome.compile_resources(
     source_dir: 'data'
 )
 
-wingpanel_dep = dependency('wingpanel')
+wingpanel_dep = dependency('wingpanel-8')
 wingpanel_indicatorsdir = wingpanel_dep.get_variable('indicatorsdir', pkgconfig_define: ['libdir', libdir])
 
 libecal_dep = dependency('libecal-2.0', required: false)
@@ -64,11 +64,11 @@ shared_module(
     dependencies: [
         dependency('glib-2.0'),
         dependency('gobject-2.0'),
-        dependency('granite', version: '>=6.0.0'),
-        dependency('gtk+-3.0'),
+        dependency('granite-7', version: '>=7.6.0'),
+        dependency('gtk4'),
         libecal_dep,
         dependency('libedataserver-1.2'),
-        dependency('libhandy-1'),
+        dependency('libadwaita-1'),
         libical_dep,
         wingpanel_dep,
     ],
